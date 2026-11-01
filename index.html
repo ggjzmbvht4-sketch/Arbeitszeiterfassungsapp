@@ -1,0 +1,988 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#174ea6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Arbeitszeit">
+  <title>Arbeitszeit</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      color-scheme: light;
+      --blue: #174ea6;
+      --blue-dark: #123b7a;
+      --bg: #f3f6fb;
+      --surface: #fff;
+      --text: #152033;
+      --muted: #667085;
+      --border: #d8deea;
+      --green: #16794a;
+      --red: #b42318;
+      --radius: 14px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0 0 max(24px, env(safe-area-inset-bottom));
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: max(14px, env(safe-area-inset-top)) 16px 14px;
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 2px 8px #102a5033;
+    }
+
+    header h1 { margin: 0; font-size: 1.15rem; }
+
+    main {
+      width: min(100%, 900px);
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    section, .card {
+      margin-bottom: 16px;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px #14213d0a;
+    }
+
+    h2 { margin: 0 0 14px; font-size: 1.08rem; }
+    h3 { margin: 18px 0 8px; font-size: 1rem; }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-size: .92rem;
+      font-weight: 600;
+    }
+
+    input, select, button {
+      min-height: 44px;
+      font: inherit;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 9px 11px;
+      color: var(--text);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    input[type="checkbox"] {
+      width: 20px;
+      min-height: 20px;
+      accent-color: var(--blue);
+    }
+
+    button {
+      padding: 9px 13px;
+      color: #fff;
+      background: var(--blue);
+      border: 0;
+      border-radius: 10px;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    button:hover { background: var(--blue-dark); }
+    button.secondary { color: var(--blue); background: #eaf0fb; }
+    button.danger { color: #a1241a; background: #fff0ef; }
+    button.small { min-height: 36px; padding: 6px 10px; font-size: .88rem; }
+
+    .toolbar, .row, .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar input[type="month"] { flex: 1; min-width: 160px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      min-height: 105px;
+      padding: 13px;
+      background: #f8faff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .metric span { display: block; color: var(--muted); font-size: .84rem; }
+    .metric strong { display: block; margin-top: 7px; font-size: 1.35rem; }
+    .positive { color: var(--green); }
+    .negative { color: var(--red); }
+    .muted { color: var(--muted); }
+    .hint { color: var(--muted); font-size: .87rem; line-height: 1.45; }
+    .hidden { display: none !important; }
+
+    .weekday-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .weekday {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0;
+      padding: 8px;
+      background: #f8faff;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font-size: .88rem;
+    }
+
+    .entry {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .entry:first-child { border-top: 0; }
+    .entry-title { font-weight: 700; }
+    .entry-detail { margin-top: 3px; color: var(--muted); font-size: .88rem; }
+    .entry-hours { white-space: nowrap; font-weight: 700; }
+    .status { min-height: 1.2em; margin-top: 8px; color: var(--muted); font-size: .9rem; }
+    .status.error { color: var(--red); }
+    .status.success { color: var(--green); }
+
+    .file-label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 9px 13px;
+      color: var(--blue);
+      background: #eaf0fb;
+      border-radius: 10px;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    .file-label input { display: none; }
+    footer { padding: 4px 16px 20px; text-align: center; }
+
+    @media (min-width: 650px) {
+      .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    }
+
+    @media print {
+      body { padding: 0; background: #fff; }
+      header, .no-print, footer { display: none !important; }
+      main { width: 100%; padding: 0; }
+      section, .card { break-inside: avoid; box-shadow: none; }
+      .entry { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Arbeitszeit</h1>
+    <button id="settingsToggle" class="secondary" type="button">Einstellungen</button>
+  </header>
+
+  <main>
+    <section class="no-print">
+      <h2>Monatsübersicht</h2>
+      <div class="toolbar">
+        <button id="previousMonth" class="secondary" type="button" aria-label="Vorheriger Monat">‹</button>
+        <input id="monthPicker" type="month" aria-label="Monat auswählen">
+        <button id="nextMonth" class="secondary" type="button" aria-label="Nächster Monat">›</button>
+        <button id="printButton" type="button">PDF / Drucken</button>
+      </div>
+      <div class="grid" style="margin-top:12px">
+        <div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
+        <div class="metric"><span>Angerechnet</span><strong id="creditedMetric">–</strong></div>
+        <div class="metric"><span>Noch bis zum Soll</span><strong id="remainingMetric">–</strong></div>
+        <div class="metric"><span>Zeitkonto inkl. Übertrag</span><strong id="balanceMetric">–</strong></div>
+      </div>
+      <p id="vacationBalance" class="hint"></p>
+    </section>
+
+    <section id="entrySection" class="no-print">
+      <h2>Eintrag erfassen</h2>
+      <form id="entryForm">
+        <label for="entryDate">Datum</label>
+        <input id="entryDate" type="date" required>
+
+        <label for="entryType">Art des Eintrags</label>
+        <select id="entryType">
+          <option value="work">Arbeitszeit</option>
+          <option value="vacation">Urlaub</option>
+          <option value="sick">Krankheit</option>
+        </select>
+
+        <div id="workFields">
+          <label for="workMode">Eingabeart</label>
+          <select id="workMode">
+            <option value="range">Start- und Endzeit</option>
+            <option value="duration">Dauer direkt eingeben</option>
+          </select>
+
+          <div id="rangeFields" class="row">
+            <div style="flex:1;min-width:130px">
+              <label for="startTime">Beginn</label>
+              <input id="startTime" type="time">
+            </div>
+            <div style="flex:1;min-width:130px">
+              <label for="endTime">Ende</label>
+              <input id="endTime" type="time">
+            </div>
+          </div>
+
+          <div id="durationFields" class="hidden">
+            <label for="durationHours">Arbeitsdauer in Stunden</label>
+            <input id="durationHours" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="z. B. 7,5">
+          </div>
+
+          <label for="breakMinutes">Pause in Minuten (manuell)</label>
+          <input id="breakMinutes" type="number" min="0" step="1" value="0" inputmode="numeric">
+          <label for="workNote">Notiz (optional)</label>
+          <input id="workNote" type="text" maxlength="200" autocomplete="off">
+        </div>
+
+        <div id="vacationFields" class="hidden">
+          <label for="vacationDays">Urlaubstage</label>
+          <select id="vacationDays">
+            <option value="1">Ganzer Tag</option>
+            <option value="0.5">Halber Tag</option>
+          </select>
+          <p class="hint">Die angerechneten Stunden werden aus den Einstellungen übernommen.</p>
+        </div>
+
+        <div id="sickFields" class="hidden">
+          <p class="hint">Die angerechneten Stunden pro Krankheitstag werden aus den Einstellungen übernommen.</p>
+        </div>
+
+        <div class="actions" style="margin-top:14px">
+          <button type="submit">Eintrag speichern</button>
+        </div>
+        <div id="entryStatus" class="status" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <section>
+      <h2 id="entriesHeading">Einträge</h2>
+      <div id="entriesList"></div>
+    </section>
+
+    <section id="settingsSection" class="hidden no-print">
+      <h2>Einstellungen</h2>
+      <form id="settingsForm">
+        <div class="two-col">
+          <div>
+            <label for="monthlyTarget">Monatliches Soll (Stunden)</label>
+            <input id="monthlyTarget" type="number" min="0" step="0.01" required>
+
+            <label for="openingBalance">Anfangssaldo des Zeitkontos (Stunden)</label>
+            <input id="openingBalance" type="number" step="0.01" required>
+
+            <label for="accountStartMonth">Zeitkonto beginnt ab Monat</label>
+            <input id="accountStartMonth" type="month" required>
+          </div>
+          <div>
+            <label for="holidayHours">Stunden pro zählendem Feiertag</label>
+            <input id="holidayHours" type="number" min="0" step="0.01" required>
+
+            <label for="vacationEntitlement">Urlaubsanspruch pro Jahr (Tage)</label>
+            <input id="vacationEntitlement" type="number" min="0" step="0.5" required>
+
+            <label for="vacationHours">Angerechnete Stunden pro Urlaubstag</label>
+            <input id="vacationHours" type="number" min="0" step="0.01" required>
+
+            <label for="sickHours">Angerechnete Stunden pro Krankheitstag</label>
+            <input id="sickHours" type="number" min="0" step="0.01" required>
+          </div>
+        </div>
+
+        <h3>Feiertage in Baden-Württemberg zählen, wenn sie auf … fallen</h3>
+        <div id="weekdaySettings" class="weekday-list"></div>
+        <p class="hint">Feiertage werden automatisch ermittelt. Die gewählten Wochentage und der Stundenwert werden auf alle passenden Feiertage angewendet.</p>
+
+        <label for="vacationStartYear">Urlaubsberechnung beginnt ab Jahr</label>
+        <input id="vacationStartYear" type="number" min="2000" max="2200" step="1" required>
+        <p class="hint">Nicht genommene Urlaubstage werden automatisch in die Folgejahre übertragen.</p>
+
+        <div class="actions" style="margin-top:14px">
+          <button type="submit">Einstellungen speichern</button>
+        </div>
+        <div id="settingsStatus" class="status" role="status" aria-live="polite"></div>
+      </form>
+
+      <h3>Datensicherung</h3>
+      <p class="hint">Die Sicherung enthält deine lokal gespeicherten Einträge und Einstellungen. Sie wird nicht verschlüsselt.</p>
+      <div class="actions">
+        <button id="exportButton" class="secondary" type="button">Backup exportieren</button>
+        <label class="file-label">Backup importieren
+          <input id="importFile" type="file" accept="application/json,.json">
+        </label>
+      </div>
+      <div id="backupStatus" class="status" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="hint">Deine Daten werden lokal auf diesem Gerät gespeichert.</footer>
+
+  <script type="module">
+    const DB_NAME = "arbeitszeit-app";
+    const DB_VERSION = 1;
+    const STORE_NAME = "state";
+    const STATE_KEY = "main";
+    const WEEKDAYS = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+    const DEFAULT_SETTINGS = {
+      monthlyTarget: 160,
+      holidayHours: 8,
+      holidayWeekdays: [1, 2, 3, 4, 5],
+      vacationEntitlement: 30,
+      vacationHours: 8,
+      sickHours: 8,
+      vacationStartYear: new Date().getFullYear(),
+      accountStartMonth: currentMonth(),
+      openingBalance: 0
+    };
+
+    let state = { settings: { ...DEFAULT_SETTINGS }, records: [] };
+    let db;
+    let selectedMonth = currentMonth();
+
+    const $ = (id) => document.getElementById(id);
+    const byDate = (a, b) => a.date.localeCompare(b.date);
+
+    function currentMonth() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    }
+
+    function localDateString(date = new Date()) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, "0");
+      const d = String(date.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function parseDate(value) {
+      const [year, month, day] = value.split("-").map(Number);
+      return new Date(year, month - 1, day, 12);
+    }
+
+    function openDatabase() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onupgradeneeded = () => {
+          if (!request.result.objectStoreNames.contains(STORE_NAME)) {
+            request.result.createObjectStore(STORE_NAME);
+          }
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    function loadState() {
+      return new Promise((resolve, reject) => {
+        const request = db.transaction(STORE_NAME, "readonly")
+          .objectStore(STORE_NAME).get(STATE_KEY);
+        request.onsuccess = () => resolve(request.result ?? null);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    function persistState() {
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(STORE_NAME, "readwrite");
+        transaction.objectStore(STORE_NAME).put(state, STATE_KEY);
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+        transaction.onabort = () => reject(transaction.error);
+      });
+    }
+
+    function makeId() {
+      return crypto.randomUUID
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+
+    function hoursText(value) {
+      const safe = Math.abs(value) < 0.005 ? 0 : value;
+      return `${safe.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Std.`;
+    }
+
+    function signedHoursText(value) {
+      if (Math.abs(value) < 0.005) return hoursText(0);
+      return `${value > 0 ? "+" : "−"}${hoursText(Math.abs(value))}`;
+    }
+
+    function monthTitle(ym) {
+      const [year, month] = ym.split("-").map(Number);
+      return new Intl.DateTimeFormat("de-DE", { month: "long", year: "numeric" })
+        .format(new Date(year, month - 1, 1));
+    }
+
+    function addMonths(ym, amount) {
+      const [year, month] = ym.split("-").map(Number);
+      const date = new Date(year, month - 1 + amount, 1);
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+    }
+
+    function easterSunday(year) {
+      const a = year % 19;
+      const b = Math.floor(year / 100);
+      const c = year % 100;
+      const d = Math.floor(b / 4);
+      const e = b % 4;
+      const f = Math.floor((b + 8) / 25);
+      const g = Math.floor((b - f + 1) / 3);
+      const h = (19 * a + b - d - g + 15) % 30;
+      const i = Math.floor(c / 4);
+      const k = c % 4;
+      const l = (32 + 2 * e + 2 * i - h - k) % 7;
+      const m = Math.floor((a + 11 * h + 22 * l) / 451);
+      const month = Math.floor((h + l - 7 * m + 114) / 31);
+      const day = ((h + l - 7 * m + 114) % 31) + 1;
+      return new Date(year, month - 1, day, 12);
+    }
+
+    function formatDateKey(date) {
+      return localDateString(date);
+    }
+
+    function getBadenWuerttembergHolidays(year) {
+      const easter = easterSunday(year);
+      const move = (days) => {
+        const date = new Date(easter);
+        date.setDate(date.getDate() + days);
+        return date;
+      };
+
+      const fixed = [
+        [`${year}-01-01`, "Neujahr"],
+        [`${year}-01-06`, "Heilige Drei Könige"],
+        [`${year}-05-01`, "Tag der Arbeit"],
+        [`${year}-10-03`, "Tag der Deutschen Einheit"],
+        [`${year}-11-01`, "Allerheiligen"],
+        [`${year}-12-25`, "1. Weihnachtstag"],
+        [`${year}-12-26`, "2. Weihnachtstag"]
+      ];
+
+      const movable = [
+        [move(-2), "Karfreitag"],
+        [move(1), "Ostermontag"],
+        [move(39), "Christi Himmelfahrt"],
+        [move(50), "Pfingstmontag"],
+        [move(60), "Fronleichnam"]
+      ];
+
+      return new Map([
+        ...fixed,
+        ...movable.map(([date, name]) => [formatDateKey(date), name])
+      ]);
+    }
+
+    function holidayCreditForDate(dateKey) {
+      const date = parseDate(dateKey);
+      const holidays = getBadenWuerttembergHolidays(date.getFullYear());
+      const name = holidays.get(dateKey);
+      const qualifies = name && state.settings.holidayWeekdays.includes(date.getDay());
+      return qualifies ? { name, hours: Number(state.settings.holidayHours) || 0 } : null;
+    }
+
+    function monthStats(ym) {
+      const records = state.records.filter((record) => record.date.startsWith(`${ym}-`));
+      const work = records.filter((r) => r.type === "work")
+        .reduce((sum, r) => sum + Number(r.hours || 0), 0);
+      const vacationDays = records.filter((r) => r.type === "vacation")
+        .reduce((sum, r) => sum + Number(r.days || 0), 0);
+      const vacationHours = vacationDays * Number(state.settings.vacationHours || 0);
+      const sickDays = records.filter((r) => r.type === "sick").length;
+      const sickHours = sickDays * Number(state.settings.sickHours || 0);
+
+      const [year, month] = ym.split("-").map(Number);
+      const daysInMonth = new Date(year, month, 0).getDate();
+      let holidayHours = 0;
+      for (let day = 1; day <= daysInMonth; day++) {
+        const key = `${ym}-${String(day).padStart(2, "0")}`;
+        const credit = holidayCreditForDate(key);
+        if (credit) holidayHours += credit.hours;
+      }
+
+      const credited = work + vacationHours + sickHours + holidayHours;
+      const target = Number(state.settings.monthlyTarget) || 0;
+      return {
+        records, work, vacationDays, vacationHours, sickDays, sickHours,
+        holidayHours, credited, target, delta: credited - target
+      };
+    }
+
+    function accountBalanceAt(ym) {
+      const start = state.settings.accountStartMonth || currentMonth();
+      if (ym < start) return Number(state.settings.openingBalance) || 0;
+      let balance = Number(state.settings.openingBalance) || 0;
+      let cursor = start;
+      let count = 0;
+      while (cursor <= ym && count < 1200) {
+        balance += monthStats(cursor).delta;
+        cursor = addMonths(cursor, 1);
+        count++;
+      }
+      return balance;
+    }
+
+    function vacationBalanceAt(year) {
+      const firstYear = Number(state.settings.vacationStartYear) || year;
+      if (year < firstYear) return 0;
+      const entitlement = Number(state.settings.vacationEntitlement) || 0;
+      let accrued = entitlement * (year - firstYear + 1);
+      for (const record of state.records) {
+        if (record.type !== "vacation") continue;
+        const recordYear = Number(record.date.slice(0, 4));
+        if (recordYear >= firstYear && recordYear <= year) {
+          accrued -= Number(record.days || 0);
+        }
+      }
+      return accrued;
+    }
+
+    function renderDashboard() {
+      $("monthPicker").value = selectedMonth;
+      $("entriesHeading").textContent = `Einträge – ${monthTitle(selectedMonth)}`;
+
+      const stats = monthStats(selectedMonth);
+      const remaining = Math.max(0, stats.target - stats.credited);
+      const balance = accountBalanceAt(selectedMonth);
+      $("targetMetric").textContent = hoursText(stats.target);
+      $("creditedMetric").textContent = hoursText(stats.credited);
+      $("remainingMetric").textContent = hoursText(remaining);
+      $("balanceMetric").textContent = signedHoursText(balance);
+      $("balanceMetric").className = balance >= 0 ? "positive" : "negative";
+
+      const year = Number(selectedMonth.slice(0, 4));
+      $("vacationBalance").textContent =
+        `Urlaubsstand ${year}: ${vacationBalanceAt(year).toLocaleString("de-DE", {
+          minimumFractionDigits: 0, maximumFractionDigits: 2
+        })} Tage verfügbar.`;
+
+      renderEntries(stats.records);
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[char]);
+    }
+
+    function describeRecord(record) {
+      if (record.type === "work") {
+        const source = record.mode === "range"
+          ? `${record.start}–${record.end}, Pause ${record.breakMinutes || 0} Min.`
+          : "Dauer direkt eingegeben";
+        return `${source}${record.note ? ` · ${escapeHtml(record.note)}` : ""}`;
+      }
+      if (record.type === "vacation") {
+        return `${Number(record.days) === 0.5 ? "Halber Urlaubstag" : "Urlaub"} · ${hoursText(Number(record.days) * Number(state.settings.vacationHours))}`;
+      }
+      return `Krankheit · ${hoursText(Number(state.settings.sickHours))}`;
+    }
+
+    function renderEntries(records) {
+      const container = $("entriesList");
+      const [year, month] = selectedMonth.split("-").map(Number);
+      const dayCount = new Date(year, month, 0).getDate();
+      const items = [];
+
+      for (let day = 1; day <= dayCount; day++) {
+        const dateKey = `${selectedMonth}-${String(day).padStart(2, "0")}`;
+        const dayRecords = records.filter((record) => record.date === dateKey);
+        const holiday = holidayCreditForDate(dateKey);
+
+        if (!dayRecords.length && !holiday) continue;
+
+        const dateText = new Intl.DateTimeFormat("de-DE", {
+          weekday: "short", day: "numeric", month: "short"
+        }).format(parseDate(dateKey));
+
+        if (holiday) {
+          items.push(`
+            <div class="entry">
+              <div>
+                <div class="entry-title">${dateText} · Feiertag: ${escapeHtml(holiday.name)}</div>
+                <div class="entry-detail">Wird angerechnet</div>
+              </div>
+              <div class="entry-hours">${hoursText(holiday.hours)}</div>
+            </div>`);
+        }
+
+        for (const record of dayRecords) {
+          let title = record.type === "work" ? "Arbeitszeit"
+            : record.type === "vacation" ? "Urlaub" : "Krankheit";
+          const hours = record.type === "work" ? Number(record.hours)
+            : record.type === "vacation" ? Number(record.days) * Number(state.settings.vacationHours)
+              : Number(state.settings.sickHours);
+          items.push(`
+            <div class="entry">
+              <div>
+                <div class="entry-title">${dateText} · ${title}</div>
+                <div class="entry-detail">${describeRecord(record)}</div>
+              </div>
+              <div class="row">
+                <div class="entry-hours">${hoursText(hours)}</div>
+                <button class="danger small no-print" type="button" data-delete="${escapeHtml(record.id)}" aria-label="Eintrag löschen">Löschen</button>
+              </div>
+            </div>`);
+        }
+      }
+
+      container.innerHTML = items.length
+        ? items.join("")
+        : `<p class="muted">Für diesen Monat sind noch keine Einträge vorhanden.</p>`;
+
+      container.querySelectorAll("[data-delete]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const id = button.dataset.delete;
+          if (!confirm("Diesen Eintrag wirklich löschen?")) return;
+          state.records = state.records.filter((record) => record.id !== id);
+          await persistState();
+          renderDashboard();
+        });
+      });
+    }
+
+    function setEntryTypeVisibility() {
+      const type = $("entryType").value;
+      $("workFields").classList.toggle("hidden", type !== "work");
+      $("vacationFields").classList.toggle("hidden", type !== "vacation");
+      $("sickFields").classList.toggle("hidden", type !== "sick");
+    }
+
+    function setWorkModeVisibility() {
+      const isRange = $("workMode").value === "range";
+      $("rangeFields").classList.toggle("hidden", !isRange);
+      $("durationFields").classList.toggle("hidden", isRange);
+    }
+
+    function timeToMinutes(value) {
+      const [hours, minutes] = value.split(":").map(Number);
+      return hours * 60 + minutes;
+    }
+
+    function showStatus(element, message, type = "") {
+      element.textContent = message;
+      element.className = `status${type ? ` ${type}` : ""}`;
+    }
+
+    function renderSettings() {
+      const settings = state.settings;
+      $("monthlyTarget").value = settings.monthlyTarget;
+      $("openingBalance").value = settings.openingBalance;
+      $("accountStartMonth").value = settings.accountStartMonth;
+      $("holidayHours").value = settings.holidayHours;
+      $("vacationEntitlement").value = settings.vacationEntitlement;
+      $("vacationHours").value = settings.vacationHours;
+      $("sickHours").value = settings.sickHours;
+      $("vacationStartYear").value = settings.vacationStartYear;
+
+      $("weekdaySettings").innerHTML = WEEKDAYS.map((name, day) => `
+        <label class="weekday">
+          <input type="checkbox" name="holidayWeekday" value="${day}"
+            ${settings.holidayWeekdays.includes(day) ? "checked" : ""}>
+          ${name}
+        </label>`).join("");
+    }
+
+    $("entryType").addEventListener("change", setEntryTypeVisibility);
+    $("workMode").addEventListener("change", setWorkModeVisibility);
+
+    $("entryForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const status = $("entryStatus");
+      const date = $("entryDate").value;
+      if (!date) {
+        showStatus(status, "Bitte ein Datum auswählen.", "error");
+        return;
+      }
+
+      if (!date.startsWith(`${selectedMonth}-`)) {
+        selectedMonth = date.slice(0, 7);
+        $("monthPicker").value = selectedMonth;
+      }
+
+      const type = $("entryType").value;
+      const record = { id: makeId(), date, type };
+
+      if (type === "work") {
+        const mode = $("workMode").value;
+        const breakMinutes = Number($("breakMinutes").value || 0);
+        if (!Number.isFinite(breakMinutes) || breakMinutes < 0) {
+          showStatus(status, "Bitte eine gültige Pausenzeit eingeben.", "error");
+          return;
+        }
+
+        let hours;
+        if (mode === "range") {
+          const start = $("startTime").value;
+          const end = $("endTime").value;
+          if (!start || !end) {
+            showStatus(status, "Bitte Beginn und Ende eingeben.", "error");
+            return;
+          }
+          const elapsed = timeToMinutes(end) - timeToMinutes(start);
+          if (elapsed <= 0) {
+            showStatus(status, "Das Ende muss nach dem Beginn liegen. Schichten über Mitternacht werden nicht unterstützt.", "error");
+            return;
+          }
+          if (breakMinutes >= elapsed) {
+            showStatus(status, "Die Pause muss kürzer als die Arbeitszeit sein.", "error");
+            return;
+          }
+          hours = (elapsed - breakMinutes) / 60;
+          Object.assign(record, { mode, start, end, breakMinutes });
+        } else {
+          const duration = Number($("durationHours").value);
+          if (!Number.isFinite(duration) || duration <= 0) {
+            showStatus(status, "Bitte eine gültige Arbeitsdauer eingeben.", "error");
+            return;
+          }
+          hours = duration - breakMinutes / 60;
+          if (hours <= 0) {
+            showStatus(status, "Die Pause darf nicht länger als die eingegebene Dauer sein.", "error");
+            return;
+          }
+          Object.assign(record, { mode, breakMinutes });
+        }
+        record.hours = Math.round(hours * 10000) / 10000;
+        record.note = $("workNote").value.trim();
+      } else if (type === "vacation") {
+        record.days = Number($("vacationDays").value);
+      }
+
+      state.records.push(record);
+      try {
+        await persistState();
+        renderDashboard();
+        showStatus(status, "Eintrag gespeichert.", "success");
+        $("workNote").value = "";
+        $("durationHours").value = "";
+        $("breakMinutes").value = "0";
+      } catch {
+        state.records = state.records.filter((item) => item.id !== record.id);
+        showStatus(status, "Der Eintrag konnte nicht gespeichert werden.", "error");
+      }
+    });
+
+    $("settingsForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const status = $("settingsStatus");
+      const numericFields = [
+        ["monthlyTarget", "Monatssoll"],
+        ["openingBalance", "Anfangssaldo"],
+        ["holidayHours", "Feiertagsstunden"],
+        ["vacationEntitlement", "Urlaubsanspruch"],
+        ["vacationHours", "Urlaubsstunden"],
+        ["sickHours", "Krankheitsstunden"],
+        ["vacationStartYear", "Urlaubsstartjahr"]
+      ];
+      const next = { ...state.settings };
+
+      for (const [id, label] of numericFields) {
+        const input = $(id);
+        const value = Number(input.value);
+        if (!input.value.trim() || !Number.isFinite(value)) {
+          showStatus(status, `Bitte einen gültigen Wert für „${label}“ eingeben.`, "error");
+          input.focus();
+          return;
+        }
+        if (id !== "openingBalance" && value < 0) {
+          showStatus(status, `„${label}“ darf nicht negativ sein.`, "error");
+          input.focus();
+          return;
+        }
+        next[id] = value;
+      }
+
+      const startMonth = $("accountStartMonth").value;
+      if (!/^\d{4}-\d{2}$/.test(startMonth)) {
+        showStatus(status, "Bitte einen gültigen Startmonat für das Zeitkonto wählen.", "error");
+        return;
+      }
+
+      next.accountStartMonth = startMonth;
+      next.holidayWeekdays = [...document.querySelectorAll('input[name="holidayWeekday"]:checked')]
+        .map((input) => Number(input.value));
+
+      if (!Number.isInteger(next.vacationStartYear) || next.vacationStartYear < 2000 || next.vacationStartYear > 2200) {
+        showStatus(status, "Bitte ein gültiges Jahr für den Urlaubsstart eingeben.", "error");
+        return;
+      }
+
+      const previous = state.settings;
+      state.settings = next;
+      try {
+        await persistState();
+        renderDashboard();
+        showStatus(status, "Einstellungen gespeichert.", "success");
+      } catch {
+        state.settings = previous;
+        showStatus(status, "Die Einstellungen konnten nicht gespeichert werden.", "error");
+      }
+    });
+
+    $("monthPicker").addEventListener("change", () => {
+      if (!/^\d{4}-\d{2}$/.test($("monthPicker").value)) return;
+      selectedMonth = $("monthPicker").value;
+      const currentDate = $("entryDate").value;
+      $("entryDate").value = currentDate.startsWith(`${selectedMonth}-`)
+        ? currentDate : `${selectedMonth}-01`;
+      renderDashboard();
+    });
+
+    $("previousMonth").addEventListener("click", () => {
+      selectedMonth = addMonths(selectedMonth, -1);
+      $("entryDate").value = `${selectedMonth}-01`;
+      renderDashboard();
+    });
+
+    $("nextMonth").addEventListener("click", () => {
+      selectedMonth = addMonths(selectedMonth, 1);
+      $("entryDate").value = `${selectedMonth}-01`;
+      renderDashboard();
+    });
+
+    $("settingsToggle").addEventListener("click", () => {
+      const section = $("settingsSection");
+      section.classList.toggle("hidden");
+      if (!section.classList.contains("hidden")) {
+        renderSettings();
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+
+    $("printButton").addEventListener("click", () => window.print());
+
+    $("exportButton").addEventListener("click", () => {
+      const backup = {
+        format: "arbeitszeit-backup",
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        state
+      };
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `arbeitszeit-backup-${localDateString()}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+      showStatus($("backupStatus"), "Backup exportiert.", "success");
+    });
+
+    $("importFile").addEventListener("change", async (event) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const status = $("backupStatus");
+
+      try {
+        const imported = JSON.parse(await file.text());
+        const candidate = imported?.state;
+        if (imported?.format !== "arbeitszeit-backup" ||
+            imported?.version !== 1 ||
+            !candidate ||
+            !candidate.settings ||
+            !Array.isArray(candidate.records)) {
+          throw new Error("Ungültiges Backup-Format.");
+        }
+
+        const validRecords = candidate.records.every((record) =>
+          record &&
+          typeof record.id === "string" &&
+          /^\d{4}-\d{2}-\d{2}$/.test(record.date) &&
+          ["work", "vacation", "sick"].includes(record.type)
+        );
+        if (!validRecords) throw new Error("Das Backup enthält ungültige Einträge.");
+
+        const confirmed = confirm("Das Backup ersetzt die aktuell gespeicherten Daten. Fortfahren?");
+        if (!confirmed) return;
+
+        state = {
+          settings: { ...DEFAULT_SETTINGS, ...candidate.settings },
+          records: candidate.records
+        };
+        await persistState();
+        renderSettings();
+        renderDashboard();
+        showStatus(status, "Backup importiert.", "success");
+      } catch (error) {
+        showStatus(status, `Import fehlgeschlagen: ${error.message}`, "error");
+      } finally {
+        event.target.value = "";
+      }
+    });
+
+    async function initialize() {
+      try {
+        db = await openDatabase();
+        const saved = await loadState();
+        if (saved && saved.settings && Array.isArray(saved.records)) {
+          state = {
+            settings: { ...DEFAULT_SETTINGS, ...saved.settings },
+            records: saved.records
+          };
+        } else {
+          await persistState();
+        }
+
+        selectedMonth = currentMonth();
+        $("entryDate").value = localDateString();
+        renderSettings();
+        renderDashboard();
+      } catch (error) {
+        document.body.innerHTML = `
+          <main>
+            <section>
+              <h1>Speicher nicht verfügbar</h1>
+              <p>Die App konnte den lokalen Speicher nicht öffnen. Bitte verwende Safari im normalen Modus und lade die Seite erneut.</p>
+              <p class="hint">${escapeHtml(error?.message || "Unbekannter Fehler")}</p>
+            </section>
+          </main>`;
+        return;
+      }
+
+      if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      }
+    }
+
+    initialize();
+  </script>
+</body>
+</html>
