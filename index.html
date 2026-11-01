@@ -21,24 +21,18 @@
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       --blue: #087cff;
-      --blue-dark: #0065d9;
       --green: #248a55;
       --red: #d64545;
       --text: #182230;
       --muted: #697586;
       --bg: #edf2f8;
-      --border-subtle: rgba(108, 126, 152, 0.16);
-      --shadow:
-        0 18px 50px rgba(33, 55, 87, 0.08),
-        0 2px 8px rgba(33, 55, 87, 0.04);
+      --border: rgba(108, 126, 152, .16);
+      --shadow: 0 18px 50px rgba(33, 55, 87, .08), 0 2px 8px rgba(33, 55, 87, .04);
       --blur: 24px;
-      --radius: 26px;
+      --radius: 25px;
     }
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     html {
       min-height: 100%;
@@ -49,145 +43,112 @@
     body {
       min-height: 100vh;
       margin: 0;
-      padding: 0 0 max(28px, env(safe-area-inset-bottom));
+      padding-bottom: max(28px, env(safe-area-inset-bottom));
       color: var(--text);
       background:
-        radial-gradient(ellipse at 5% 0%, rgba(112, 180, 255, 0.28), transparent 38%),
-        radial-gradient(ellipse at 95% 12%, rgba(180, 160, 255, 0.2), transparent 34%),
+        radial-gradient(ellipse at 5% 0%, rgba(112, 180, 255, .28), transparent 38%),
+        radial-gradient(ellipse at 95% 12%, rgba(180, 160, 255, .20), transparent 34%),
         linear-gradient(155deg, #f7f9fc 0%, #edf2f8 48%, #e9eff7 100%);
     }
 
     header {
       position: sticky;
-      z-index: 10;
+      z-index: 5;
       top: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 14px;
-      min-height: 68px;
-      padding:
-        max(12px, env(safe-area-inset-top))
-        max(18px, calc((100vw - 860px) / 2))
-        12px;
+      min-height: 66px;
+      padding: max(12px, env(safe-area-inset-top)) 18px 12px;
       color: var(--text);
-      background: rgba(247, 250, 255, 0.7);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.66);
-      box-shadow: 0 8px 26px rgba(31, 52, 81, 0.055);
+      background: rgba(247, 250, 255, .72);
+      border-bottom: 1px solid rgba(255, 255, 255, .7);
+      box-shadow: 0 8px 26px rgba(31, 52, 81, .05);
       -webkit-backdrop-filter: saturate(180%) blur(var(--blur));
       backdrop-filter: saturate(180%) blur(var(--blur));
     }
 
     header h1 {
       margin: 0;
-      font-size: clamp(1.08rem, 4vw, 1.28rem);
-      font-weight: 720;
-      letter-spacing: -0.035em;
+      font-size: 1.2rem;
+      font-weight: 730;
+      letter-spacing: -.035em;
     }
 
     main {
-      width: min(100%, 900px);
+      width: min(100%, 920px);
       margin: 0 auto;
-      padding: 22px 16px;
+      padding: 20px 15px;
     }
 
-    section,
-    .card {
+    section {
       position: relative;
-      margin-bottom: 18px;
-      padding: clamp(17px, 4vw, 24px);
+      margin-bottom: 17px;
+      padding: clamp(16px, 4vw, 23px);
       overflow: hidden;
-      background: linear-gradient(145deg, rgba(255,255,255,.82), rgba(255,255,255,.48));
-      border: 1px solid rgba(255,255,255,.76);
+      background: linear-gradient(145deg, rgba(255,255,255,.82), rgba(255,255,255,.5));
+      border: 1px solid rgba(255,255,255,.78);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       -webkit-backdrop-filter: saturate(175%) blur(var(--blur));
       backdrop-filter: saturate(175%) blur(var(--blur));
     }
 
-    section::before,
-    .card::before {
+    section::before {
       position: absolute;
       inset: 0;
-      z-index: 0;
       border-radius: inherit;
-      background: linear-gradient(
-        135deg,
-        rgba(255,255,255,.48),
-        transparent 42%,
-        rgba(255,255,255,.08)
-      );
+      background: linear-gradient(135deg, rgba(255,255,255,.45), transparent 45%);
       content: "";
       pointer-events: none;
     }
 
-    section > *,
-    .card > * {
-      position: relative;
-      z-index: 1;
-    }
+    section > * { position: relative; }
 
     h2 {
-      margin: 0 0 17px;
-      font-size: 1.12rem;
+      margin: 0 0 15px;
+      font-size: 1.1rem;
       font-weight: 720;
-      letter-spacing: -0.025em;
+      letter-spacing: -.025em;
     }
 
     h3 {
-      margin: 22px 0 10px;
+      margin: 20px 0 9px;
       font-size: 1rem;
       font-weight: 700;
-      letter-spacing: -0.015em;
     }
 
     label {
       display: block;
-      margin: 13px 0 6px;
-      color: var(--text);
+      margin: 12px 0 6px;
       font-size: .9rem;
       font-weight: 620;
     }
 
-    input,
-    select,
-    button {
-      min-height: 46px;
-      font: inherit;
-    }
+    input, select, button { min-height: 45px; font: inherit; }
 
-    input,
-    select {
+    input, select {
       width: 100%;
-      padding: 11px 13px;
+      padding: 10px 12px;
       color: var(--text);
-      background: rgba(255,255,255,.72);
+      background: rgba(255,255,255,.76);
       border: 1px solid rgba(104,123,151,.19);
       border-radius: 14px;
       outline: none;
-      box-shadow:
-        inset 0 1px 1px rgba(255,255,255,.82),
-        0 2px 5px rgba(37,55,81,.035);
-      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.8);
     }
 
-    input::placeholder { color: #9aa5b4; }
-
-    input:focus,
-    select:focus {
-      background: rgba(255,255,255,.94);
-      border-color: rgba(10,132,255,.58);
-      box-shadow:
-        0 0 0 4px rgba(10,132,255,.12),
-        inset 0 1px 1px rgba(255,255,255,.9);
+    input:focus, select:focus {
+      border-color: rgba(10,132,255,.6);
+      box-shadow: 0 0 0 4px rgba(10,132,255,.12);
     }
 
     input[type="checkbox"] {
-      width: 21px;
-      min-height: 21px;
+      width: 20px;
+      min-height: 20px;
       margin: 0;
       accent-color: var(--blue);
-      box-shadow: none;
     }
 
     button {
@@ -196,129 +157,103 @@
       align-items: center;
       justify-content: center;
       gap: 7px;
-      min-height: 46px;
-      padding: 10px 16px;
+      min-height: 45px;
+      padding: 9px 15px;
       overflow: hidden;
-      color: #fff;
-      background: linear-gradient(180deg, #2490ff 0%, #087cff 52%, #0670ed 100%);
+      color: white;
+      background: linear-gradient(180deg, #2490ff, #087cff 58%, #0670ed);
       border: 1px solid rgba(255,255,255,.35);
       border-radius: 15px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.38),
-        0 5px 14px rgba(8,124,255,.2);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 5px 14px rgba(8,124,255,.2);
       font-weight: 680;
-      letter-spacing: -.015em;
       cursor: pointer;
       touch-action: manipulation;
-      transition: transform 150ms ease, filter 150ms ease, box-shadow 150ms ease;
     }
 
-    button::after {
-      position: absolute;
-      top: 0;
-      left: 10%;
-      width: 80%;
-      height: 42%;
-      border-radius: 0 0 50% 50%;
-      background: linear-gradient(180deg, rgba(255,255,255,.22), transparent);
-      content: "";
-      pointer-events: none;
-    }
+    button:active { transform: scale(.975); }
 
-    button:hover {
-      filter: brightness(1.04);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.42),
-        0 7px 18px rgba(8,124,255,.24);
-    }
-
-    button:active {
-      transform: scale(.975);
-      filter: brightness(.97);
-    }
-
-    button:focus-visible,
-    .file-label:focus-within {
-      outline: 3px solid rgba(10,132,255,.36);
-      outline-offset: 3px;
-    }
-
-    button.secondary,
-    .file-label {
+    button.secondary, .file-label {
       color: #176bc4;
-      background: rgba(255,255,255,.68);
-      border: 1px solid rgba(255,255,255,.8);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.9),
-        0 4px 12px rgba(33,55,87,.08);
+      background: rgba(255,255,255,.7);
+      border: 1px solid rgba(255,255,255,.85);
+      box-shadow: 0 4px 12px rgba(33,55,87,.07);
       -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
     }
 
-    button.secondary::after,
-    button.danger::after {
-      display: none;
-    }
-
     button.danger {
       color: #b63131;
-      background: rgba(255,242,241,.86);
-      border-color: rgba(255,255,255,.82);
-      box-shadow: 0 3px 10px rgba(120,39,39,.07);
+      background: rgba(255,242,241,.9);
+      border-color: rgba(255,255,255,.8);
+      box-shadow: none;
     }
 
-    button.small {
-      min-height: 36px;
-      padding: 7px 11px;
-      border-radius: 12px;
-      font-size: .84rem;
-    }
+    button.small { min-height: 35px; padding: 6px 10px; font-size: .84rem; }
 
-    .toolbar,
-    .row,
-    .actions {
+    .toolbar, .row, .actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
       flex-wrap: wrap;
     }
 
-    .toolbar input[type="month"] {
-      flex: 1;
-      min-width: 150px;
+    .toolbar input[type="month"] { flex: 1; min-width: 145px; }
+    .toolbar input[type="number"] { width: 115px; }
+
+    .view-switch {
+      display: flex;
+      gap: 6px;
+      width: fit-content;
+      margin-bottom: 15px;
+      padding: 4px;
+      background: rgba(120,135,155,.12);
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 15px;
     }
 
-    .toolbar input[type="number"] { width: 118px; }
+    .view-switch button {
+      min-height: 38px;
+      padding: 7px 15px;
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .view-switch button::after { display: none; }
+
+    .view-switch button.active {
+      color: var(--text);
+      background: rgba(255,255,255,.88);
+      box-shadow: 0 2px 7px rgba(31,52,81,.1);
+    }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 11px;
+      gap: 10px;
     }
 
     .metric {
-      min-height: 105px;
-      padding: 15px;
-      background: linear-gradient(145deg, rgba(255,255,255,.82), rgba(245,249,255,.68));
-      border: 1px solid rgba(255,255,255,.9);
-      border-radius: 19px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.95),
-        0 5px 16px rgba(34,57,90,.045);
+      min-height: 96px;
+      padding: 14px;
+      background: linear-gradient(145deg, rgba(255,255,255,.85), rgba(245,249,255,.7));
+      border: 1px solid rgba(255,255,255,.88);
+      border-radius: 18px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 5px 16px rgba(34,57,90,.04);
     }
 
     .metric span {
       display: block;
       color: var(--muted);
-      font-size: .82rem;
-      font-weight: 560;
+      font-size: .81rem;
       line-height: 1.35;
     }
 
     .metric strong {
       display: block;
-      margin-top: 8px;
-      font-size: clamp(1.17rem, 4.8vw, 1.42rem);
+      margin-top: 7px;
+      font-size: clamp(1.1rem, 4vw, 1.36rem);
       font-weight: 740;
       letter-spacing: -.04em;
       font-variant-numeric: tabular-nums;
@@ -326,8 +261,7 @@
 
     .positive { color: var(--green); }
     .negative { color: var(--red); }
-    .muted,
-    .hint { color: var(--muted); }
+    .muted, .hint { color: var(--muted); }
 
     .hint {
       font-size: .87rem;
@@ -347,91 +281,146 @@
       display: flex;
       align-items: center;
       gap: 9px;
-      min-height: 43px;
+      min-height: 42px;
       margin: 0;
-      padding: 8px 11px;
-      background: rgba(255,255,255,.56);
-      border: 1px solid rgba(255,255,255,.84);
+      padding: 8px 10px;
+      background: rgba(255,255,255,.6);
+      border: 1px solid rgba(255,255,255,.85);
       border-radius: 13px;
       font-size: .88rem;
-      font-weight: 560;
     }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .calendar-weekday {
+      padding: 5px 1px;
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .calendar-day {
+      display: flex;
+      min-width: 0;
+      min-height: 76px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 3px;
+      padding: 6px 5px;
+      color: var(--text);
+      background: rgba(255,255,255,.64);
+      border: 1px solid rgba(255,255,255,.88);
+      border-radius: 12px;
+      box-shadow: none;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .calendar-day::after { display: none; }
+    .calendar-day.outside { visibility: hidden; }
+    .calendar-day.selected { outline: 2px solid var(--blue); outline-offset: 1px; }
+    .calendar-day.workday { background: rgba(220,239,255,.9); }
+    .calendar-day.vacation { background: rgba(222,246,232,.9); }
+    .calendar-day.sick { background: rgba(255,231,230,.9); }
+    .calendar-day.holiday { border-color: rgba(220,170,54,.65); }
+
+    .calendar-day-number {
+      font-size: .82rem;
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .calendar-day-status {
+      max-width: 100%;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: .62rem;
+      line-height: 1.15;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .calendar-day-hours {
+      color: #075da9;
+      font-size: .63rem;
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .calendar-legend {
+      display: flex;
+      gap: 8px 14px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .legend-item { display: inline-flex; align-items: center; gap: 5px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-work { background: #58aafa; }
+    .dot-free { background: #b9c1cc; }
+    .dot-vacation { background: #57b777; }
+    .dot-sick { background: #ed7772; }
+    .dot-holiday { background: #d4a83c; }
 
     .entry {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
-      padding: 14px 0;
-      border-top: 1px solid var(--border-subtle);
+      gap: 10px;
+      padding: 13px 0;
+      border-top: 1px solid var(--border);
     }
 
     .entry:first-child { border-top: 0; }
-    .entry-title { font-weight: 680; letter-spacing: -.015em; }
+    .entry-title { font-weight: 680; }
+    .entry-detail { margin-top: 3px; color: var(--muted); font-size: .85rem; line-height: 1.4; }
+    .entry-hours { white-space: nowrap; font-weight: 700; font-variant-numeric: tabular-nums; }
 
-    .entry-detail {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: .86rem;
-      line-height: 1.4;
-    }
-
-    .entry-hours {
-      white-space: nowrap;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .status {
-      min-height: 1.2em;
-      margin-top: 9px;
-      color: var(--muted);
-      font-size: .9rem;
-    }
-
+    .status { min-height: 1.2em; margin-top: 8px; color: var(--muted); font-size: .9rem; }
     .status.error { color: var(--red); }
     .status.success { color: var(--green); }
 
     .file-label {
       display: inline-flex;
       align-items: center;
-      min-height: 46px;
-      padding: 10px 15px;
+      min-height: 45px;
+      padding: 9px 14px;
       border-radius: 15px;
       font-weight: 680;
       cursor: pointer;
     }
 
     .file-label input { display: none; }
+    footer { padding: 4px 16px 20px; text-align: center; }
 
-    footer {
-      padding: 4px 16px 20px;
-      text-align: center;
-    }
-
-    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-      header { background: rgba(247,250,255,.96); }
-      section, .card { background: rgba(255,255,255,.94); }
-    }
-
-    @media (min-width: 650px) {
-      main { padding: 28px 22px; }
-      .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    @media (min-width: 680px) {
+      main { padding: 26px 22px; }
+      .grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
       .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
       .weekday-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .calendar-grid { gap: 7px; }
+      .calendar-day { min-height: 92px; padding: 8px; }
+      .calendar-day-status, .calendar-day-hours { font-size: .72rem; }
     }
 
-    @media (max-width: 420px) {
-      header { min-height: 62px; }
-      .toolbar { gap: 7px; }
-      .toolbar button { padding-inline: 12px; }
-      .entry { gap: 8px; }
-      .entry .row { justify-content: flex-end; }
+    @media (max-width: 390px) {
+      main { padding-inline: 10px; }
+      .calendar-grid { gap: 3px; }
+      .calendar-day { min-height: 66px; padding: 5px 3px; border-radius: 9px; }
+      .calendar-day-status, .calendar-day-hours { font-size: .56rem; }
+      .toolbar { gap: 6px; }
+      .toolbar button { padding-inline: 11px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         scroll-behavior: auto !important;
         transition-duration: .01ms !important;
         animation-duration: .01ms !important;
@@ -445,70 +434,29 @@
         --text: #f1f4f9;
         --muted: #a5afbd;
         --bg: #10151d;
-        --border-subtle: rgba(220,230,245,.12);
-        --shadow:
-          0 18px 50px rgba(0,0,0,.2),
-          0 2px 8px rgba(0,0,0,.12);
+        --border: rgba(220,230,245,.13);
+        --shadow: 0 18px 50px rgba(0,0,0,.2), 0 2px 8px rgba(0,0,0,.12);
       }
 
       body {
         background:
           radial-gradient(ellipse at 0% 0%, rgba(26,82,145,.34), transparent 38%),
           radial-gradient(ellipse at 100% 8%, rgba(93,61,145,.22), transparent 34%),
-          linear-gradient(155deg, #151b25 0%, #10151d 55%, #141b26 100%);
+          linear-gradient(155deg, #151b25, #10151d 55%, #141b26);
       }
 
-      header {
-        color: var(--text);
-        background: rgba(24,31,42,.76);
-        border-bottom-color: rgba(255,255,255,.1);
-      }
-
-      section,
-      .card {
-        background: linear-gradient(145deg, rgba(39,49,64,.82), rgba(27,35,47,.76));
-        border-color: rgba(255,255,255,.12);
-      }
-
-      section::before,
-      .card::before {
-        background: linear-gradient(135deg, rgba(255,255,255,.08), transparent 42%, rgba(255,255,255,.025));
-      }
-
-      input,
-      select {
-        color: var(--text);
-        background: rgba(20,27,37,.74);
-        border-color: rgba(255,255,255,.14);
-        box-shadow: inset 0 1px 1px rgba(255,255,255,.04);
-      }
-
-      input:focus,
-      select:focus { background: rgba(24,33,46,.96); }
-
-      .metric {
-        background: linear-gradient(145deg, rgba(52,65,83,.78), rgba(34,44,59,.74));
-        border-color: rgba(255,255,255,.13);
-      }
-
-      .weekday {
-        background: rgba(25,34,46,.62);
-        border-color: rgba(255,255,255,.11);
-      }
-
-      button.secondary,
-      .file-label {
-        color: #9dccff;
-        background: rgba(46,61,79,.78);
-        border-color: rgba(255,255,255,.13);
-      }
-
-      button.danger {
-        color: #ffaaaa;
-        background: rgba(107,46,49,.45);
-        border-color: rgba(255,255,255,.1);
-      }
-
+      header { background: rgba(24,31,42,.78); }
+      section { background: linear-gradient(145deg, rgba(39,49,64,.85), rgba(27,35,47,.8)); }
+      input, select { color: var(--text); background: rgba(20,27,37,.78); border-color: rgba(255,255,255,.14); }
+      .metric { background: linear-gradient(145deg, rgba(52,65,83,.8), rgba(34,44,59,.76)); }
+      .weekday { background: rgba(25,34,46,.72); border-color: rgba(255,255,255,.12); }
+      button.secondary, .file-label { color: #9dccff; background: rgba(46,61,79,.8); border-color: rgba(255,255,255,.13); }
+      .calendar-day { color: var(--text); background: rgba(35,45,59,.85); border-color: rgba(255,255,255,.1); }
+      .calendar-day.workday { background: rgba(28,75,117,.72); }
+      .calendar-day.vacation { background: rgba(32,86,55,.72); }
+      .calendar-day.sick { background: rgba(105,47,49,.72); }
+      .calendar-day-hours { color: #a5d2ff; }
+      button.danger { color: #ffaaaa; background: rgba(107,46,49,.5); }
       .positive { color: #62d494; }
       .negative { color: #ff8a83; }
     }
@@ -523,35 +471,61 @@
 
   <main>
     <section>
-      <h2>Monatsübersicht</h2>
-
+      <h2>Arbeitszeitübersicht</h2>
       <div class="toolbar">
         <button id="previousMonth" class="secondary" type="button" aria-label="Vorheriger Monat">‹</button>
         <input id="monthPicker" type="month" aria-label="Monat auswählen">
         <button id="nextMonth" class="secondary" type="button" aria-label="Nächster Monat">›</button>
-        <button id="printMonthButton" type="button">Monats-PDF erstellen</button>
       </div>
 
-      <div class="grid" style="margin-top:12px">
-        <div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
-        <div class="metric"><span>Angerechnet</span><strong id="creditedMetric">–</strong></div>
-        <div class="metric"><span>Noch bis zum Soll</span><strong id="remainingMetric">–</strong></div>
-        <div class="metric"><span>Monatsdifferenz</span><strong id="deltaMetric">–</strong></div>
-        <div class="metric"><span>Zeitkonto inkl. Übertrag</span><strong id="balanceMetric">–</strong></div>
+      <div class="view-switch" role="tablist" aria-label="Ansicht auswählen" style="margin-top:14px">
+        <button id="overviewTab" class="active" type="button" role="tab" aria-selected="true">Übersicht</button>
+        <button id="calendarTab" type="button" role="tab" aria-selected="false">Kalender</button>
       </div>
 
-      <p id="vacationBalance" class="hint"></p>
+      <div id="overviewPanel">
+        <div class="grid">
+          <div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
+          <div class="metric"><span>Angerechnet</span><strong id="creditedMetric">–</strong></div>
+          <div class="metric"><span>Noch bis zum Soll</span><strong id="remainingMetric">–</strong></div>
+          <div class="metric"><span>Monatsdifferenz</span><strong id="deltaMetric">–</strong></div>
+          <div class="metric"><span>Zeitkonto inkl. Übertrag</span><strong id="balanceMetric">–</strong></div>
+        </div>
+        <p id="vacationBalance" class="hint"></p>
 
-      <h3>Jahresübersicht als PDF</h3>
-      <div class="toolbar">
-        <label for="reportYear" class="hidden">Berichtsjahr</label>
-        <input id="reportYear" type="number" min="2000" max="2200" step="1" aria-label="Jahr für Jahresbericht">
-        <button id="printYearButton" type="button">Jahres-PDF erstellen</button>
+        <div class="actions">
+          <button id="monthlyPdfButton" type="button">Monats-PDF exportieren</button>
+        </div>
+
+        <h3>Jahresübersicht als PDF</h3>
+        <div class="toolbar">
+          <label for="reportYear" class="hidden">Berichtsjahr</label>
+          <input id="reportYear" type="number" min="2000" max="2200" step="1" aria-label="Jahr für Jahresbericht">
+          <button id="yearlyPdfButton" type="button">Jahres-PDF exportieren</button>
+        </div>
+        <p class="hint">Die PDFs enthalten Kalenderansicht und Tagesdetails.</p>
       </div>
-      <p class="hint">Enthält Monatswerte sowie Tagesdetails mit Arbeitszeiten, Pausen und gearbeiteten Stunden.</p>
+
+      <div id="calendarPanel" class="hidden">
+        <div id="calendarTitle" class="hint"></div>
+        <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="Monatskalender"></div>
+        <div class="calendar-legend" aria-label="Kalenderlegende">
+          <span class="legend-item"><i class="legend-dot dot-work"></i>Gearbeitet</span>
+          <span class="legend-item"><i class="legend-dot dot-free"></i>Frei</span>
+          <span class="legend-item"><i class="legend-dot dot-vacation"></i>Urlaub</span>
+          <span class="legend-item"><i class="legend-dot dot-sick"></i>Krankheit</span>
+          <span class="legend-item"><i class="legend-dot dot-holiday"></i>Feiertag</span>
+        </div>
+
+        <div id="selectedDayPanel" style="margin-top:18px">
+          <h3 id="selectedDayHeading">Tag auswählen</h3>
+          <div id="selectedDayEntries"></div>
+          <button id="addDayEntryButton" type="button">Arbeitsbezogenen Eintrag hinzufügen</button>
+        </div>
+      </div>
     </section>
 
-    <section>
+    <section id="entrySection">
       <h2>Eintrag erfassen</h2>
       <form id="entryForm">
         <label for="entryDate">Datum</label>
@@ -590,7 +564,7 @@
           <label for="breakMinutes">Pause in Minuten (manuell)</label>
           <input id="breakMinutes" type="number" min="0" step="1" value="0" inputmode="numeric">
 
-          <label for="workNote">Notiz (optional)</label>
+          <label for="workNote">Arbeitsnotiz (optional)</label>
           <input id="workNote" type="text" maxlength="200" autocomplete="off">
         </div>
 
@@ -600,11 +574,10 @@
             <option value="1">Ganzer Tag</option>
             <option value="0.5">Halber Tag</option>
           </select>
-          <p class="hint">Die angerechneten Stunden werden aus den Einstellungen übernommen.</p>
         </div>
 
         <div id="sickFields" class="hidden">
-          <p class="hint">Die Stunden pro Krankheitstag werden aus den Einstellungen übernommen.</p>
+          <p class="hint">Die Anrechnungsstunden werden aus den Einstellungen übernommen.</p>
         </div>
 
         <div class="actions" style="margin-top:14px">
@@ -614,37 +587,30 @@
       </form>
     </section>
 
-    <section>
+    <section id="entriesSection">
       <h2 id="entriesHeading">Einträge</h2>
       <div id="entriesList"></div>
     </section>
 
     <section id="settingsSection" class="hidden">
       <h2>Einstellungen</h2>
-
       <form id="settingsForm">
         <div class="two-col">
           <div>
             <label for="monthlyTarget">Monatliches Soll (Stunden)</label>
             <input id="monthlyTarget" type="number" min="0" step="0.01" required>
-
-            <label for="openingBalance">Anfangssaldo des Zeitkontos (Stunden)</label>
+            <label for="openingBalance">Anfangssaldo Zeitkonto (Stunden)</label>
             <input id="openingBalance" type="number" step="0.01" required>
-
             <label for="accountStartMonth">Zeitkonto beginnt ab Monat</label>
             <input id="accountStartMonth" type="month" required>
           </div>
-
           <div>
             <label for="holidayHours">Stunden pro zählendem Feiertag</label>
             <input id="holidayHours" type="number" min="0" step="0.01" required>
-
             <label for="vacationEntitlement">Urlaubsanspruch pro Jahr (Tage)</label>
             <input id="vacationEntitlement" type="number" min="0" step="0.5" required>
-
             <label for="vacationHours">Angerechnete Stunden pro Urlaubstag</label>
             <input id="vacationHours" type="number" min="0" step="0.01" required>
-
             <label for="sickHours">Angerechnete Stunden pro Krankheitstag</label>
             <input id="sickHours" type="number" min="0" step="0.01" required>
           </div>
@@ -652,7 +618,7 @@
 
         <h3>Feiertage in Baden-Württemberg zählen, wenn sie auf … fallen</h3>
         <div id="weekdaySettings" class="weekday-list"></div>
-        <p class="hint">Feiertage und Stunden werden entsprechend dieser Einstellungen angerechnet.</p>
+        <p class="hint">Feiertage werden automatisch ermittelt. Wochentage und Stundenwert gelten für alle passenden Feiertage.</p>
 
         <label for="vacationStartYear">Urlaubsberechnung beginnt ab Jahr</label>
         <input id="vacationStartYear" type="number" min="2000" max="2200" step="1" required>
@@ -665,9 +631,9 @@
       </form>
 
       <h3>Datensicherung</h3>
-      <p class="hint">Die Sicherung enthält lokal gespeicherte Einträge und Einstellungen. Sie wird nicht verschlüsselt.</p>
+      <p class="hint">Backups enthalten deine Einstellungen und Einträge. Sie werden nicht verschlüsselt.</p>
       <div class="actions">
-        <button id="exportButton" class="secondary" type="button">Backup exportieren</button>
+        <button id="exportBackupButton" class="secondary" type="button">Backup exportieren</button>
         <label class="file-label">Backup importieren
           <input id="importFile" type="file" accept="application/json,.json">
         </label>
@@ -684,11 +650,12 @@
     const STORE_NAME = "state";
     const STATE_KEY = "main";
     const WEEKDAYS = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+    const WEEKDAYS_MON_FIRST = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
     const holidayCache = new Map();
 
     function currentMonth() {
-      const now = new Date();
-      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+      const date = new Date();
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
     }
 
     const DEFAULT_SETTINGS = {
@@ -706,14 +673,12 @@
     let state = { settings: { ...DEFAULT_SETTINGS }, records: [] };
     let db;
     let selectedMonth = currentMonth();
+    let selectedCalendarDate = localDateString();
 
     const $ = (id) => document.getElementById(id);
 
     function localDateString(date = new Date()) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
     }
 
     function parseDate(value) {
@@ -736,8 +701,7 @@
 
     function loadState() {
       return new Promise((resolve, reject) => {
-        const request = db.transaction(STORE_NAME, "readonly")
-          .objectStore(STORE_NAME).get(STATE_KEY);
+        const request = db.transaction(STORE_NAME, "readonly").objectStore(STORE_NAME).get(STATE_KEY);
         request.onsuccess = () => resolve(request.result ?? null);
         request.onerror = () => reject(request.error);
       });
@@ -761,10 +725,7 @@
 
     function hoursText(value) {
       const safe = Math.abs(value) < 0.005 ? 0 : value;
-      return `${safe.toLocaleString("de-DE", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })} Std.`;
+      return `${safe.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Std.`;
     }
 
     function signedHoursText(value) {
@@ -802,7 +763,7 @@
       return new Date(year, month - 1, day, 12);
     }
 
-    function getBadenWuerttembergHolidays(year) {
+    function getHolidays(year) {
       if (holidayCache.has(year)) return holidayCache.get(year);
 
       const easter = easterSunday(year);
@@ -839,11 +800,16 @@
       return holidays;
     }
 
+    function holidayNameForDate(dateKey) {
+      const date = parseDate(dateKey);
+      return getHolidays(date.getFullYear()).get(dateKey) || null;
+    }
+
     function holidayCreditForDate(dateKey) {
       const date = parseDate(dateKey);
-      const name = getBadenWuerttembergHolidays(date.getFullYear()).get(dateKey);
-      const qualifies = name && state.settings.holidayWeekdays.includes(date.getDay());
-      return qualifies ? { name, hours: Number(state.settings.holidayHours) || 0 } : null;
+      const name = holidayNameForDate(dateKey);
+      if (!name || !state.settings.holidayWeekdays.includes(date.getDay())) return null;
+      return { name, hours: Number(state.settings.holidayHours) || 0 };
     }
 
     function monthStats(ym) {
@@ -862,42 +828,30 @@
 
       for (let day = 1; day <= daysInMonth; day++) {
         const dateKey = `${ym}-${String(day).padStart(2, "0")}`;
-        const credit = holidayCreditForDate(dateKey);
-        if (credit) holidayHours += credit.hours;
+        holidayHours += holidayCreditForDate(dateKey)?.hours || 0;
       }
 
       const credited = work + vacationHours + sickHours + holidayHours;
       const target = Number(state.settings.monthlyTarget) || 0;
 
       return {
-        records,
-        work,
-        vacationDays,
-        vacationHours,
-        sickDays,
-        sickHours,
-        holidayHours,
-        credited,
-        target,
-        delta: credited - target
+        records, work, vacationDays, vacationHours, sickDays, sickHours,
+        holidayHours, credited, target, delta: credited - target
       };
     }
 
     function accountBalanceAt(ym) {
       const start = state.settings.accountStartMonth || currentMonth();
       let balance = Number(state.settings.openingBalance) || 0;
-
       if (ym < start) return balance;
 
       let cursor = start;
       let count = 0;
-
       while (cursor <= ym && count < 1200) {
         balance += monthStats(cursor).delta;
         cursor = addMonths(cursor, 1);
         count++;
       }
-
       return balance;
     }
 
@@ -906,25 +860,37 @@
       if (year < firstYear) return 0;
 
       let balance = (Number(state.settings.vacationEntitlement) || 0) * (year - firstYear + 1);
-
       for (const record of state.records) {
-        if (record.type !== "vacation") continue;
         const recordYear = Number(record.date.slice(0, 4));
-        if (recordYear >= firstYear && recordYear <= year) {
+        if (record.type === "vacation" && recordYear >= firstYear && recordYear <= year) {
           balance -= Number(record.days || 0);
         }
       }
-
       return balance;
+    }
+
+    function dateRecords(dateKey) {
+      return state.records
+        .filter((record) => record.date === dateKey)
+        .sort((a, b) => String(a.start || "").localeCompare(String(b.start || "")));
+    }
+
+    function dayInfo(dateKey) {
+      const records = dateRecords(dateKey);
+      const workRecords = records.filter((record) => record.type === "work");
+      const workHours = workRecords.reduce((sum, record) => sum + Number(record.hours || 0), 0);
+      const vacationDays = records.filter((record) => record.type === "vacation")
+        .reduce((sum, record) => sum + Number(record.days || 0), 0);
+      const sick = records.some((record) => record.type === "sick");
+      const holidayName = holidayNameForDate(dateKey);
+      const holidayCredit = holidayCreditForDate(dateKey);
+
+      return { records, workRecords, workHours, vacationDays, sick, holidayName, holidayCredit };
     }
 
     function escapeHtml(value) {
       return String(value).replace(/[&<>"']/g, (char) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
       })[char]);
     }
 
@@ -947,78 +913,84 @@
       const year = Number(selectedMonth.slice(0, 4));
       $("vacationBalance").textContent =
         `Urlaubsstand ${year}: ${vacationBalanceAt(year).toLocaleString("de-DE", {
-          minimumFractionDigits: 0,
           maximumFractionDigits: 2
         })} Tage verfügbar.`;
 
       $("reportYear").value = year;
       renderEntries(stats.records);
+      renderCalendar();
     }
 
-    function describeRecord(record) {
-      if (record.type === "work") {
-        const source = record.mode === "range"
-          ? `${record.start}–${record.end}, Pause ${record.breakMinutes || 0} Min.`
-          : `Dauer direkt eingegeben, Pause ${record.breakMinutes || 0} Min.`;
-        return `${source}${record.note ? ` · ${escapeHtml(record.note)}` : ""}`;
-      }
-
+    function recordTypeName(record) {
+      if (record.type === "work") return "Arbeitszeit";
       if (record.type === "vacation") {
-        const hours = Number(record.days) * Number(state.settings.vacationHours);
-        return `${Number(record.days) === 0.5 ? "Halber Urlaubstag" : "Urlaub"} · ${hoursText(hours)}`;
+        return Number(record.days) === 0.5 ? "Urlaub (halber Tag)" : "Urlaub";
       }
+      return "Krankheit";
+    }
 
-      return `Krankheit · ${hoursText(Number(state.settings.sickHours))}`;
+    function recordHours(record) {
+      if (record.type === "work") return Number(record.hours || 0);
+      if (record.type === "vacation") {
+        return Number(record.days || 0) * Number(state.settings.vacationHours || 0);
+      }
+      return Number(state.settings.sickHours || 0);
+    }
+
+    function recordDetail(record) {
+      if (record.type === "work") {
+        const time = record.mode === "range"
+          ? `${record.start}–${record.end}`
+          : "Dauer direkt eingegeben";
+        const note = record.note ? ` · ${escapeHtml(record.note)}` : "";
+        return `${time} · Pause ${Number(record.breakMinutes || 0)} Min.${note}`;
+      }
+      if (record.type === "vacation") {
+        return `${Number(record.days) === 0.5 ? "Halber Urlaubstag" : "Urlaub"} · ${hoursText(recordHours(record))}`;
+      }
+      return `Krankheit · ${hoursText(recordHours(record))}`;
     }
 
     function renderEntries(records) {
       const container = $("entriesList");
       const [year, month] = selectedMonth.split("-").map(Number);
-      const dayCount = new Date(year, month, 0).getDate();
+      const daysInMonth = new Date(year, month, 0).getDate();
       const items = [];
 
-      for (let day = 1; day <= dayCount; day++) {
+      for (let day = 1; day <= daysInMonth; day++) {
         const dateKey = `${selectedMonth}-${String(day).padStart(2, "0")}`;
-        const dayRecords = records.filter((record) => record.date === dateKey);
-        const holiday = holidayCreditForDate(dateKey);
+        const dailyRecords = records.filter((record) => record.date === dateKey);
+        const info = dayInfo(dateKey);
 
-        if (!dayRecords.length && !holiday) continue;
+        if (!dailyRecords.length && !info.holidayName) continue;
 
         const dateText = new Intl.DateTimeFormat("de-DE", {
-          weekday: "short",
-          day: "numeric",
-          month: "short"
+          weekday: "short", day: "numeric", month: "short"
         }).format(parseDate(dateKey));
 
-        if (holiday) {
+        if (info.holidayName) {
+          const creditText = info.holidayCredit
+            ? ` · ${hoursText(info.holidayCredit.hours)} angerechnet`
+            : " · nicht angerechnet";
           items.push(`
             <div class="entry">
               <div>
-                <div class="entry-title">${dateText} · Feiertag: ${escapeHtml(holiday.name)}</div>
-                <div class="entry-detail">Wird angerechnet</div>
+                <div class="entry-title">${dateText} · Feiertag: ${escapeHtml(info.holidayName)}</div>
+                <div class="entry-detail">${creditText}</div>
               </div>
-              <div class="entry-hours">${hoursText(holiday.hours)}</div>
             </div>`);
         }
 
-        for (const record of dayRecords) {
-          const title = record.type === "work" ? "Arbeitszeit"
-            : record.type === "vacation" ? "Urlaub" : "Krankheit";
-          const hours = record.type === "work" ? Number(record.hours)
-            : record.type === "vacation"
-              ? Number(record.days) * Number(state.settings.vacationHours)
-              : Number(state.settings.sickHours);
-
+        for (const record of dailyRecords) {
           items.push(`
             <div class="entry">
               <div>
-                <div class="entry-title">${dateText} · ${title}</div>
-                <div class="entry-detail">${describeRecord(record)}</div>
+                <div class="entry-title">${dateText} · ${recordTypeName(record)}</div>
+                <div class="entry-detail">${recordDetail(record)}</div>
               </div>
               <div class="row">
-                <div class="entry-hours">${hoursText(hours)}</div>
-                <button class="danger small" type="button"
-                  data-delete="${escapeHtml(record.id)}" aria-label="Eintrag löschen">Löschen</button>
+                <div class="entry-hours">${hoursText(recordHours(record))}</div>
+                <button class="danger small" type="button" data-delete="${escapeHtml(record.id)}">Löschen</button>
               </div>
             </div>`);
         }
@@ -1026,7 +998,7 @@
 
       container.innerHTML = items.length
         ? items.join("")
-        : `<p class="muted">Für diesen Monat sind noch keine Einträge vorhanden.</p>`;
+        : `<p class="muted">Für diesen Monat sind noch keine Arbeitszeiteinträge vorhanden.</p>`;
 
       container.querySelectorAll("[data-delete]").forEach((button) => {
         button.addEventListener("click", async () => {
@@ -1036,6 +1008,133 @@
           renderDashboard();
         });
       });
+    }
+
+    function calendarStatus(info) {
+      if (info.workHours > 0) return `Arbeit ${info.workHours.toLocaleString("de-DE", { maximumFractionDigits: 1 })}h`;
+      if (info.vacationDays > 0) return "Urlaub";
+      if (info.sick) return "Krank";
+      if (info.holidayName) return info.holidayCredit ? "Feiertag" : "Feiertag*";
+      return "Frei";
+    }
+
+    function renderCalendar() {
+      const [year, month] = selectedMonth.split("-").map(Number);
+      $("calendarTitle").textContent = `${monthTitle(selectedMonth)} · Frei bedeutet: keine Arbeitszeit erfasst.`;
+
+      const grid = $("calendarGrid");
+      const firstDay = new Date(year, month - 1, 1, 12);
+      const daysInMonth = new Date(year, month, 0).getDate();
+      const offset = (firstDay.getDay() + 6) % 7;
+      const cells = WEEKDAYS_MON_FIRST.map((name) =>
+        `<div class="calendar-weekday" role="columnheader">${name}</div>`
+      );
+
+      for (let index = 0; index < offset; index++) {
+        cells.push(`<div class="calendar-day outside" aria-hidden="true"></div>`);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateKey = `${selectedMonth}-${String(day).padStart(2, "0")}`;
+        const info = dayInfo(dateKey);
+        const classes = ["calendar-day"];
+        if (info.workHours > 0) classes.push("workday");
+        else if (info.vacationDays > 0) classes.push("vacation");
+        else if (info.sick) classes.push("sick");
+        if (info.holidayName) classes.push("holiday");
+        if (dateKey === selectedCalendarDate) classes.push("selected");
+
+        const status = calendarStatus(info);
+        const holidayMark = info.holidayName ? " · Feiertag" : "";
+        const hourText = info.workHours > 0 ? hoursText(info.workHours) : "";
+
+        cells.push(`
+          <button class="${classes.join(" ")}" type="button" role="gridcell"
+            data-calendar-date="${dateKey}" aria-label="${escapeHtml(dateKey)}: ${escapeHtml(status)}${escapeHtml(holidayMark)}">
+            <span class="calendar-day-number">${day}</span>
+            <span class="calendar-day-status">${escapeHtml(status)}</span>
+            ${hourText ? `<span class="calendar-day-hours">${escapeHtml(hourText)}</span>` : ""}
+          </button>`);
+      }
+
+      const totalCells = offset + daysInMonth;
+      const trailing = (7 - totalCells % 7) % 7;
+      for (let index = 0; index < trailing; index++) {
+        cells.push(`<div class="calendar-day outside" aria-hidden="true"></div>`);
+      }
+
+      grid.innerHTML = cells.join("");
+      grid.querySelectorAll("[data-calendar-date]").forEach((button) => {
+        button.addEventListener("click", () => {
+          selectedCalendarDate = button.dataset.calendarDate;
+          renderCalendar();
+          renderSelectedDay();
+        });
+      });
+
+      renderSelectedDay();
+    }
+
+    function renderSelectedDay() {
+      const panel = $("selectedDayEntries");
+      if (!selectedCalendarDate) {
+        $("selectedDayHeading").textContent = "Tag auswählen";
+        panel.innerHTML = "";
+        return;
+      }
+
+      const info = dayInfo(selectedCalendarDate);
+      const dateLabel = new Intl.DateTimeFormat("de-DE", {
+        weekday: "long", day: "numeric", month: "long", year: "numeric"
+      }).format(parseDate(selectedCalendarDate));
+
+      $("selectedDayHeading").textContent = dateLabel;
+
+      const items = [];
+      if (info.holidayName) {
+        items.push(`<div class="entry"><div>
+          <div class="entry-title">Feiertag: ${escapeHtml(info.holidayName)}</div>
+          <div class="entry-detail">${info.holidayCredit
+            ? `${hoursText(info.holidayCredit.hours)} werden angerechnet.`
+            : "Dieser Feiertag wird nach den Einstellungen nicht angerechnet."}</div>
+        </div></div>`);
+      }
+
+      for (const record of info.records) {
+        items.push(`<div class="entry">
+          <div>
+            <div class="entry-title">${recordTypeName(record)}</div>
+            <div class="entry-detail">${recordDetail(record)}</div>
+          </div>
+          <div class="entry-hours">${hoursText(recordHours(record))}</div>
+        </div>`);
+      }
+
+      if (!info.workRecords.length) {
+        items.push(`<p class="hint">An diesem Tag ist keine Arbeitszeit erfasst – der Tag wird als frei angezeigt.</p>`);
+      }
+
+      panel.innerHTML = items.join("");
+    }
+
+    function setView(view) {
+      const isCalendar = view === "calendar";
+      $("calendarPanel").classList.toggle("hidden", !isCalendar);
+      $("overviewPanel").classList.toggle("hidden", isCalendar);
+      $("entriesSection").classList.toggle("hidden", isCalendar);
+      $("calendarTab").classList.toggle("active", isCalendar);
+      $("overviewTab").classList.toggle("active", !isCalendar);
+      $("calendarTab").setAttribute("aria-selected", String(isCalendar));
+      $("overviewTab").setAttribute("aria-selected", String(!isCalendar));
+      if (isCalendar) renderCalendar();
+    }
+
+    function showEntryFormFor(dateKey) {
+      $("entryDate").value = dateKey;
+      $("entryType").value = "work";
+      setEntryTypeVisibility();
+      $("entrySection").scrollIntoView({ behavior: "smooth", block: "start" });
+      $("startTime").focus({ preventScroll: true });
     }
 
     function setEntryTypeVisibility() {
@@ -1082,39 +1181,11 @@
 
     function formatDateLong(dateKey) {
       return new Intl.DateTimeFormat("de-DE", {
-        weekday: "long",
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
+        weekday: "long", day: "2-digit", month: "2-digit", year: "numeric"
       }).format(parseDate(dateKey));
     }
 
-    function recordTypeName(record) {
-      if (record.type === "work") return "Arbeitszeit";
-      if (record.type === "vacation") {
-        return Number(record.days) === 0.5 ? "Urlaub (halber Tag)" : "Urlaub";
-      }
-      return "Krankheit";
-    }
-
-    function recordReportTime(record) {
-      if (record.type !== "work") return "–";
-
-      const pause = Number(record.breakMinutes || 0);
-      return record.mode === "range"
-        ? `${record.start}–${record.end} · Pause ${pause} Min.`
-        : `Dauerangabe · Pause ${pause} Min.`;
-    }
-
-    function recordCreditedHours(record) {
-      if (record.type === "work") return Number(record.hours || 0);
-      if (record.type === "vacation") {
-        return Number(record.days || 0) * Number(state.settings.vacationHours || 0);
-      }
-      return Number(state.settings.sickHours || 0);
-    }
-
-    function winAnsiHex(value) {
+    function cp1252Hex(value) {
       const special = new Map([
         [0x20ac, 0x80], [0x201a, 0x82], [0x0192, 0x83], [0x201e, 0x84],
         [0x2026, 0x85], [0x2020, 0x86], [0x2021, 0x87], [0x02c6, 0x88],
@@ -1125,61 +1196,92 @@
         [0x0153, 0x9c], [0x017e, 0x9e], [0x0178, 0x9f], [0x2212, 0x2d]
       ]);
 
-      let result = "";
-
-      for (const character of String(value)) {
-        const codePoint = character.codePointAt(0);
-        let byte;
-
-        if ((codePoint >= 0x20 && codePoint <= 0x7e) ||
-            (codePoint >= 0xa0 && codePoint <= 0xff)) {
-          byte = codePoint;
-        } else if (special.has(codePoint)) {
-          byte = special.get(codePoint);
-        } else {
-          byte = 0x3f;
-        }
-
-        result += byte.toString(16).padStart(2, "0");
+      let hex = "";
+      for (const char of String(value)) {
+        const code = char.codePointAt(0);
+        const byte = (code >= 0x20 && code <= 0x7e) || (code >= 0xa0 && code <= 0xff)
+          ? code
+          : (special.get(code) ?? 0x3f);
+        hex += byte.toString(16).padStart(2, "0");
       }
-
-      return result.toUpperCase();
+      return hex.toUpperCase();
     }
 
-    function wrapPdfText(value, maxCharacters) {
-      const words = String(value).split(/\s+/);
-      const lines = [];
-      let line = "";
+    const PT_PER_MM = 72 / 25.4;
 
-      for (const word of words) {
-        if (!word) continue;
-
-        if (word.length > maxCharacters) {
-          if (line) {
-            lines.push(line);
-            line = "";
-          }
-          for (let offset = 0; offset < word.length; offset += maxCharacters) {
-            lines.push(word.slice(offset, offset + maxCharacters));
-          }
-          continue;
-        }
-
-        const candidate = line ? `${line} ${word}` : word;
-        if (candidate.length > maxCharacters && line) {
-          lines.push(line);
-          line = word;
-        } else {
-          line = candidate;
-        }
-      }
-
-      if (line) lines.push(line);
-      return lines.length ? lines : [""];
+    function pdfText(commands, text, xMm, yMm, size = 9, bold = false, color = [0.12, 0.16, 0.22]) {
+      const x = (xMm * PT_PER_MM).toFixed(2);
+      const y = (yMm * PT_PER_MM).toFixed(2);
+      commands.push(
+        `BT /${bold ? "F2" : "F1"} ${size} Tf ${color.join(" ")} rg 1 0 0 1 ${x} ` +
+        `${(pageHeightPt - Number(y)).toFixed(2)} Tm <${cp1252Hex(text)}> Tj ET\n`
+      );
     }
 
-    async function savePdfFile(pdfString, filename) {
-      const blob = new Blob([pdfString], { type: "application/pdf" });
+    let pageHeightPt = 297 * PT_PER_MM;
+
+    function pdfRect(commands, xMm, yMm, widthMm, heightMm, fill = null, stroke = [0.82, 0.85, 0.9]) {
+      const x = xMm * PT_PER_MM;
+      const y = pageHeightPt - (yMm + heightMm) * PT_PER_MM;
+      const width = widthMm * PT_PER_MM;
+      const height = heightMm * PT_PER_MM;
+
+      if (fill) commands.push(`${fill.join(" ")} rg\n`);
+      if (stroke) commands.push(`${stroke.join(" ")} RG 0.45 w\n`);
+      commands.push(`${x.toFixed(2)} ${y.toFixed(2)} ${width.toFixed(2)} ${height.toFixed(2)} re `);
+      commands.push(fill && stroke ? "B\n" : fill ? "f\n" : "S\n");
+    }
+
+    function pdfLine(commands, x1Mm, y1Mm, x2Mm, y2Mm, color = [0.78, 0.81, 0.86]) {
+      const x1 = x1Mm * PT_PER_MM;
+      const y1 = pageHeightPt - y1Mm * PT_PER_MM;
+      const x2 = x2Mm * PT_PER_MM;
+      const y2 = pageHeightPt - y2Mm * PT_PER_MM;
+      commands.push(`${color.join(" ")} RG 0.45 w ${x1.toFixed(2)} ${y1.toFixed(2)} m ${x2.toFixed(2)} ${y2.toFixed(2)} l S\n`);
+    }
+
+    async function deliverPdf(pages, filename) {
+      const objects = [];
+      objects[1] = "<< /Type /Catalog /Pages 2 0 R >>";
+      objects[3] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
+      objects[4] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";
+
+      const kids = [];
+
+      pages.forEach((page, index) => {
+        const widthPt = page.widthMm * PT_PER_MM;
+        const heightPt = page.heightMm * PT_PER_MM;
+        const pageId = 5 + index * 2;
+        const contentId = pageId + 1;
+        const content = page.commands.join("");
+
+        pageHeightPt = heightPt;
+        kids.push(`${pageId} 0 R`);
+
+        objects[pageId] =
+          `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${widthPt.toFixed(2)} ${heightPt.toFixed(2)}] ` +
+          `/Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentId} 0 R >>`;
+        objects[contentId] = `<< /Length ${content.length} >>\nstream\n${content}endstream`;
+      });
+
+      objects[2] = `<< /Type /Pages /Kids [${kids.join(" ")}] /Count ${pages.length} >>`;
+
+      let pdf = "%PDF-1.4\n";
+      const offsets = [0];
+
+      for (let id = 1; id < objects.length; id++) {
+        offsets[id] = pdf.length;
+        pdf += `${id} 0 obj\n${objects[id]}\nendobj\n`;
+      }
+
+      const xref = pdf.length;
+      pdf += `xref\n0 ${objects.length}\n0000000000 65535 f \n`;
+      for (let id = 1; id < objects.length; id++) {
+        pdf += `${String(offsets[id]).padStart(10, "0")} 00000 n \n`;
+      }
+      pdf += `trailer\n<< /Size ${objects.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+
+      const blob = new Blob([pdf], { type: "application/pdf" });
       const file = new File([blob], filename, { type: "application/pdf" });
 
       if (navigator.share && navigator.canShare?.({ files: [file] })) {
@@ -1202,296 +1304,358 @@
       setTimeout(() => URL.revokeObjectURL(url), 60_000);
     }
 
-    async function buildPdf(title, lines, filename, landscape = false) {
-      const pageWidth = landscape ? 841.89 : 595.28;
-      const pageHeight = landscape ? 595.28 : 841.89;
-      const margin = 42;
-      const lineHeight = 13;
-      const maxCharacters = landscape ? 145 : 96;
-      const bodyCapacity = Math.floor((pageHeight - 130) / lineHeight);
-      const expandedLines = [];
+    function newPdfPage(widthMm, heightMm) {
+      return { widthMm, heightMm, commands: [] };
+    }
 
-      for (const item of lines) {
-        if (item.kind === "blank") {
-          expandedLines.push({ text: "", kind: "blank" });
+    function dayFill(info) {
+      if (info.workHours > 0) return [0.86, 0.93, 1];
+      if (info.vacationDays > 0) return [0.87, 0.96, 0.89];
+      if (info.sick) return [1, 0.9, 0.89];
+      if (info.holidayName) return [1, 0.96, 0.82];
+      return [0.96, 0.97, 0.98];
+    }
+
+    function drawMonthCalendarPage(ym) {
+      const page = newPdfPage(210, 297);
+      const c = page.commands;
+      const [year, month] = ym.split("-").map(Number);
+      const monthName = monthTitle(ym);
+
+      pageHeightPt = page.heightMm * PT_PER_MM;
+      pdfText(c, `Kalender — ${monthName}`, 8, 13, 16, true, [0.06, 0.25, 0.5]);
+      pdfText(c, "W = gearbeitet · F = frei · U = Urlaub · K = Krankheit · H = Feiertag", 8, 20, 8, false, [0.38, 0.43, 0.5]);
+
+      const stats = monthStats(ym);
+      pdfText(c, `Soll ${hoursText(stats.target)} | gearbeitet ${hoursText(stats.work)} | angerechnet ${hoursText(stats.credited)} | Monatsdifferenz ${signedHoursText(stats.delta)}`, 8, 28, 8.2, true);
+
+      const left = 8;
+      const top = 47;
+      const colWidth = 194 / 7;
+      const rowHeight = 38.2;
+
+      WEEKDAYS_MON_FIRST.forEach((name, index) => {
+        pdfText(c, name, left + index * colWidth + 2, top - 2, 7, true, [0.38, 0.43, 0.5]);
+      });
+
+      const first = new Date(year, month - 1, 1, 12);
+      const offset = (first.getDay() + 6) % 7;
+      const days = new Date(year, month, 0).getDate();
+
+      for (let cell = 0; cell < 42; cell++) {
+        const day = cell - offset + 1;
+        const row = Math.floor(cell / 7);
+        const col = cell % 7;
+        const x = left + col * colWidth;
+        const y = top + row * rowHeight;
+
+        if (day < 1 || day > days) {
+          pdfRect(c, x, y, colWidth - 1, rowHeight - 1, [0.985, 0.988, 0.993]);
           continue;
         }
-        for (const text of wrapPdfText(item.text, maxCharacters)) {
-          expandedLines.push({ text, kind: item.kind || "normal" });
+
+        const dateKey = `${ym}-${String(day).padStart(2, "0")}`;
+        const info = dayInfo(dateKey);
+        pdfRect(c, x, y, colWidth - 1, rowHeight - 1, dayFill(info));
+        pdfText(c, String(day), x + 2, y + 5, 8, true);
+
+        let status = "Frei";
+        if (info.workHours > 0) status = "Gearbeitet";
+        else if (info.vacationDays > 0) status = "Urlaub";
+        else if (info.sick) status = "Krank";
+        else if (info.holidayName) status = "Feiertag";
+
+        pdfText(c, status, x + 2, y + 11, 6.5, false, [0.28, 0.34, 0.42]);
+
+        if (info.workHours > 0) {
+          pdfText(c, hoursText(info.workHours), x + 2, y + 17, 6.4, true, [0.05, 0.34, 0.62]);
+        } else if (info.holidayName) {
+          const holidayLabel = info.holidayCredit
+            ? `${info.holidayName} (${hoursText(info.holidayCredit.hours)})`
+            : info.holidayName;
+          pdfText(c, holidayLabel.slice(0, 25), x + 2, y + 17, 5.4, false, [0.48, 0.36, 0.08]);
+        }
+
+        let extraY = y + 23;
+        if (info.vacationDays > 0) {
+          pdfText(c, "Urlaub", x + 2, extraY, 5.8, false, [0.12, 0.46, 0.25]);
+          extraY += 5;
+        }
+        if (info.sick) {
+          pdfText(c, "Krankheit", x + 2, extraY, 5.8, false, [0.62, 0.2, 0.18]);
         }
       }
 
-      const pages = [];
-      for (let offset = 0; offset < expandedLines.length; offset += bodyCapacity) {
-        pages.push(expandedLines.slice(offset, offset + bodyCapacity));
+      return page;
+    }
+
+    function drawYearCalendarPage(year) {
+      const page = newPdfPage(297, 210);
+      const c = page.commands;
+      pageHeightPt = page.heightMm * PT_PER_MM;
+
+      pdfText(c, `Jahreskalender ${year}`, 8, 9, 14, true, [0.06, 0.25, 0.5]);
+      pdfText(c, "W = gearbeitet · F = frei · U = Urlaub · K = Krankheit · H = Feiertag", 8, 15, 7.2, false, [0.38, 0.43, 0.5]);
+
+      const marginX = 8;
+      const startY = 22;
+      const gapX = 3;
+      const gapY = 3;
+      const boxW = (297 - 2 * marginX - 3 * gapX) / 4;
+      const boxH = 61;
+
+      for (let month = 1; month <= 12; month++) {
+        const row = Math.floor((month - 1) / 4);
+        const col = (month - 1) % 4;
+        const x = marginX + col * (boxW + gapX);
+        const y = startY + row * (boxH + gapY);
+        const ym = `${year}-${String(month).padStart(2, "0")}`;
+        const monthStatsValue = monthStats(ym);
+
+        pdfRect(c, x, y, boxW, boxH, [0.99, 0.995, 1], [0.82, 0.85, 0.9]);
+        pdfText(c, monthTitle(ym).split(" ")[0], x + 2, y + 4, 7.2, true, [0.06, 0.25, 0.5]);
+        pdfText(c, `Soll ${monthStatsValue.target.toLocaleString("de-DE")}h · Ist ${monthStatsValue.work.toLocaleString("de-DE", { maximumFractionDigits: 1 })}h`, x + 2, y + 8, 5.1, false, [0.35, 0.4, 0.47]);
+
+        const gridX = x + 1.5;
+        const gridY = y + 11;
+        const cellW = (boxW - 3) / 7;
+        const cellH = 7.8;
+
+        WEEKDAYS_MON_FIRST.forEach((name, index) => {
+          pdfText(c, name, gridX + index * cellW + .5, gridY + 2.7, 4.2, true, [0.42, 0.47, 0.54]);
+        });
+
+        const [monthYear, monthNumber] = ym.split("-").map(Number);
+        const first = new Date(monthYear, monthNumber - 1, 1, 12);
+        const offset = (first.getDay() + 6) % 7;
+        const days = new Date(monthYear, monthNumber, 0).getDate();
+
+        for (let cell = 0; cell < 42; cell++) {
+          const day = cell - offset + 1;
+          if (day < 1 || day > days) continue;
+
+          const cellRow = Math.floor(cell / 7);
+          const cellCol = cell % 7;
+          const cellX = gridX + cellCol * cellW;
+          const cellY = gridY + 3.5 + cellRow * cellH;
+          const dateKey = `${ym}-${String(day).padStart(2, "0")}`;
+          const info = dayInfo(dateKey);
+          const marker = info.workHours > 0 ? "W"
+            : info.vacationDays > 0 ? "U"
+              : info.sick ? "K"
+                : info.holidayName ? "H" : "F";
+
+          pdfRect(c, cellX, cellY, cellW - .3, cellH - .3, dayFill(info), null);
+          const label = info.workHours > 0
+            ? `${day} ${Math.min(99, Math.round(info.workHours))}`
+            : `${day} ${marker}`;
+          pdfText(c, label, cellX + .6, cellY + 5.2, 4.6, marker === "W", [0.16, 0.24, 0.34]);
+        }
       }
-      if (!pages.length) pages.push([]);
 
-      function textCommand(text, x, top, size, bold, color = "0.10 0.14 0.20") {
-        const y = pageHeight - top;
-        const font = bold ? "F2" : "F1";
-        return `BT /${font} ${size} Tf ${color} rg 1 0 0 1 ${x.toFixed(2)} ${y.toFixed(2)} Tm <${winAnsiHex(text)}> Tj ET\n`;
+      return page;
+    }
+
+    function wrapPdfLine(text, maxChars) {
+      const words = String(text).split(/\s+/);
+      const lines = [];
+      let line = "";
+
+      for (const word of words) {
+        const candidate = line ? `${line} ${word}` : word;
+        if (candidate.length > maxChars && line) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = candidate;
+        }
+      }
+      if (line) lines.push(line);
+      return lines.length ? lines : [""];
+    }
+
+    function makeTextPages(title, sourceLines, landscape = false) {
+      const width = landscape ? 297 : 210;
+      const height = landscape ? 210 : 297;
+      const maxChars = landscape ? 145 : 96;
+      const rowHeight = 5;
+      const capacity = landscape ? 33 : 49;
+      const lines = [];
+
+      for (const item of sourceLines) {
+        if (item.kind === "blank") {
+          lines.push(item);
+          continue;
+        }
+        for (const text of wrapPdfLine(item.text, maxChars)) {
+          lines.push({ text, kind: item.kind || "normal" });
+        }
       }
 
-      const objects = [];
-      objects[1] = "<< /Type /Catalog /Pages 2 0 R >>";
-      objects[3] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
-      objects[4] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";
+      const chunks = [];
+      for (let i = 0; i < lines.length; i += capacity) {
+        chunks.push(lines.slice(i, i + capacity));
+      }
+      if (!chunks.length) chunks.push([]);
 
-      const pageReferences = [];
+      return chunks.map((chunk, pageIndex) => {
+        const page = newPdfPage(width, height);
+        const c = page.commands;
+        pageHeightPt = height * PT_PER_MM;
 
-      pages.forEach((pageLines, pageIndex) => {
-        const pageObjectId = 5 + pageIndex * 2;
-        const contentObjectId = pageObjectId + 1;
-        pageReferences.push(`${pageObjectId} 0 R`);
+        pdfText(c, title, 9, 13, 13, true, [0.06, 0.25, 0.5]);
+        pdfLine(c, 9, 17, width - 9, 17);
+        let y = 23;
 
-        let content = "";
-        content += textCommand(title, margin, 38, 16, true, "0.06 0.25 0.50");
-        content += `0.78 w 0.72 0.79 0.86 RG ${margin} ${pageHeight - 49} m ${pageWidth - margin} ${pageHeight - 49} l S\n`;
-
-        let top = 68;
-
-        for (const item of pageLines) {
+        for (const item of chunk) {
           if (item.kind === "blank") {
-            top += 6;
+            y += 2;
             continue;
           }
 
           if (item.kind === "section") {
-            top += 3;
-            content += textCommand(item.text, margin, top, 11, true, "0.06 0.25 0.50");
-            top += lineHeight + 2;
+            y += 1;
+            pdfText(c, item.text, 9, y, 9.5, true, [0.06, 0.25, 0.5]);
+            y += rowHeight + 1;
           } else {
-            content += textCommand(
-              item.text,
-              margin,
-              top,
-              item.kind === "summary" ? 9.5 : 9,
-              item.kind === "summary"
-            );
-            top += lineHeight;
+            pdfText(c, item.text, 9, y, item.kind === "summary" ? 8.3 : 7.8, item.kind === "summary");
+            y += rowHeight;
           }
         }
 
-        content += textCommand(
-          `Seite ${pageIndex + 1} von ${pages.length}`,
-          pageWidth - margin - 75,
-          pageHeight - 24,
-          8,
-          false,
-          "0.35 0.39 0.45"
-        );
-
-        objects[pageObjectId] =
-          `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] ` +
-          `/Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentObjectId} 0 R >>`;
-        objects[contentObjectId] =
-          `<< /Length ${content.length} >>\nstream\n${content}endstream`;
+        pdfText(c, `Seite ${pageIndex + 1} von ${chunks.length}`, width - 32, height - 7, 7, false, [0.4, 0.44, 0.5]);
+        return page;
       });
+    }
 
-      objects[2] =
-        `<< /Type /Pages /Kids [${pageReferences.join(" ")}] /Count ${pages.length} >>`;
+    function reportRecordLine(record) {
+      const timeText = record.type === "work"
+        ? record.mode === "range"
+          ? `${record.start}–${record.end}, Pause ${Number(record.breakMinutes || 0)} Min.`
+          : `Dauerangabe, Pause ${Number(record.breakMinutes || 0)} Min.`
+        : record.type === "vacation"
+          ? `${Number(record.days) === 0.5 ? "Halber Urlaubstag" : "Urlaub"}`
+          : "Krankheit";
+      const note = record.note ? ` · Notiz: ${record.note}` : "";
+      return `${formatDateLong(record.date)} — ${recordTypeName(record)} — ${timeText} — ${hoursText(recordHours(record))}${note}`;
+    }
 
-      let pdf = "%PDF-1.4\n";
-      const offsets = [0];
+    function addCalendarDetails(lines, startYear, endYear, startMonth = 1, endMonth = 12) {
+      for (let month = startMonth; month <= endMonth; month++) {
+        const ym = `${startYear}-${String(month).padStart(2, "0")}`;
+        const [year, monthNumber] = ym.split("-").map(Number);
+        const days = new Date(year, monthNumber, 0).getDate();
+        const records = state.records
+          .filter((record) => record.date.startsWith(`${ym}-`))
+          .sort((a, b) => a.date.localeCompare(b.date) || String(a.start || "").localeCompare(String(b.start || "")));
 
-      for (let objectId = 1; objectId < objects.length; objectId++) {
-        offsets[objectId] = pdf.length;
-        pdf += `${objectId} 0 obj\n${objects[objectId]}\nendobj\n`;
+        for (let day = 1; day <= days; day++) {
+          const dateKey = `${ym}-${String(day).padStart(2, "0")}`;
+          const holidayName = holidayNameForDate(dateKey);
+          const holidayCredit = holidayCreditForDate(dateKey);
+
+          if (holidayName) {
+            lines.push({
+              text: `${formatDateLong(dateKey)} — Feiertag: ${holidayName} — ${
+                holidayCredit ? `${hoursText(holidayCredit.hours)} angerechnet` : "nicht angerechnet"
+              }`,
+              kind: "normal"
+            });
+          }
+
+          for (const record of records.filter((item) => item.date === dateKey)) {
+            lines.push({ text: reportRecordLine(record), kind: "normal" });
+          }
+        }
       }
-
-      const xrefOffset = pdf.length;
-      pdf += `xref\n0 ${objects.length}\n`;
-      pdf += "0000000000 65535 f \n";
-
-      for (let objectId = 1; objectId < objects.length; objectId++) {
-        pdf += `${String(offsets[objectId]).padStart(10, "0")} 00000 n \n`;
-      }
-
-      pdf += `trailer\n<< /Size ${objects.length} /Root 1 0 R >>\n`;
-      pdf += `startxref\n${xrefOffset}\n%%EOF`;
-
-      await savePdfFile(pdf, filename);
     }
 
-    function addPdfLine(lines, text, kind = "normal") {
-      lines.push({ text: String(text), kind });
-    }
-
-    function pdfRecordType(record) {
-      if (record.type === "work") return "Arbeitszeit";
-      if (record.type === "vacation") {
-        return Number(record.days) === 0.5 ? "Urlaub (halber Tag)" : "Urlaub";
-      }
-      return "Krankheit";
-    }
-
-    function pdfRecordTime(record) {
-      if (record.type !== "work") return "–";
-      const pause = Number(record.breakMinutes || 0);
-
-      return record.mode === "range"
-        ? `${record.start}–${record.end} · Pause ${pause} Min.`
-        : `Dauerangabe · Pause ${pause} Min.`;
-    }
-
-    function pdfRecordHours(record) {
-      if (record.type === "work") return Number(record.hours || 0);
-      if (record.type === "vacation") {
-        return Number(record.days || 0) * Number(state.settings.vacationHours || 0);
-      }
-      return Number(state.settings.sickHours || 0);
-    }
-
-    async function makeMonthlyReport(ym) {
+    async function exportMonthlyPdf(ym) {
       try {
         const stats = monthStats(ym);
-        const lines = [];
-        const records = [...stats.records].sort((a, b) =>
-          a.date.localeCompare(b.date) ||
-          String(a.start || "").localeCompare(String(b.start || ""))
-        );
+        const lines = [
+          { text: `Erstellt am ${formatDateLong(localDateString())}`, kind: "normal" },
+          { text: "Monatszusammenfassung", kind: "section" },
+          { text: `Soll ${hoursText(stats.target)} · Gearbeitet ${hoursText(stats.work)} · Angerechnet ${hoursText(stats.credited)}`, kind: "summary" },
+          { text: `Feiertage ${hoursText(stats.holidayHours)} · Urlaub ${hoursText(stats.vacationHours)} · Krankheit ${hoursText(stats.sickHours)}`, kind: "normal" },
+          { text: `Monatsdifferenz ${signedHoursText(stats.delta)} · Zeitkonto ${signedHoursText(accountBalanceAt(ym))}`, kind: "summary" },
+          { text: "", kind: "blank" },
+          { text: "Tagesdetails", kind: "section" }
+        ];
 
-        addPdfLine(lines, `Erstellt am ${formatDateLong(localDateString())}`);
-        addPdfLine(lines, `Monatssoll: ${hoursText(stats.target)} | Gearbeitet: ${hoursText(stats.work)}`, "summary");
-        addPdfLine(lines, `Feiertage: ${hoursText(stats.holidayHours)} | Urlaub: ${hoursText(stats.vacationHours)} | Krankheit: ${hoursText(stats.sickHours)}`);
-        addPdfLine(lines, `Angerechnet gesamt: ${hoursText(stats.credited)}`, "summary");
-        addPdfLine(lines, `Monatsdifferenz: ${signedHoursText(stats.delta)} | Zeitkonto inkl. Übertrag: ${signedHoursText(accountBalanceAt(ym))}`, "summary");
-        addPdfLine(lines, "", "blank");
-        addPdfLine(lines, "Tagesdetails", "section");
-
-        const [year, month] = ym.split("-").map(Number);
-        const daysInMonth = new Date(year, month, 0).getDate();
-        let hasDetails = false;
-
-        for (let day = 1; day <= daysInMonth; day++) {
-          const dateKey = `${ym}-${String(day).padStart(2, "0")}`;
-          const holiday = holidayCreditForDate(dateKey);
-          const dailyRecords = records.filter((record) => record.date === dateKey);
-
-          if (!holiday && !dailyRecords.length) continue;
-          hasDetails = true;
-
-          if (holiday) {
-            addPdfLine(lines, `${formatDateLong(dateKey)} — Feiertag: ${holiday.name} — ${hoursText(holiday.hours)}`);
-          }
-
-          for (const record of dailyRecords) {
-            const note = record.note ? ` — Notiz: ${record.note}` : "";
-            addPdfLine(
-              lines,
-              `${formatDateLong(dateKey)} — ${pdfRecordType(record)} — ${pdfRecordTime(record)} — ${hoursText(pdfRecordHours(record))}${note}`
-            );
-          }
-        }
-
-        if (!hasDetails) addPdfLine(lines, "Keine Einträge in diesem Monat.");
-
-        await buildPdf(
-          `Arbeitszeitbericht — ${monthTitle(ym)}`,
+        addCalendarDetails(
           lines,
-          `arbeitszeit-${ym}.pdf`
+          Number(ym.slice(0, 4)),
+          Number(ym.slice(0, 4)),
+          Number(ym.slice(5, 7)),
+          Number(ym.slice(5, 7))
         );
+
+        const pages = [
+          drawMonthCalendarPage(ym),
+          ...makeTextPages(`Tagesdetails — ${monthTitle(ym)}`, lines)
+        ];
+
+        await deliverPdf(pages, `arbeitszeit-${ym}.pdf`);
       } catch (error) {
         alert(`Das PDF konnte nicht erstellt werden: ${error?.message || "Unbekannter Fehler"}`);
       }
     }
 
-    async function makeYearlyReport(year) {
+    async function exportYearlyPdf(year) {
       try {
-        const lines = [];
-        const yearRecords = state.records
-          .filter((record) => record.date.startsWith(`${year}-`))
-          .sort((a, b) =>
-            a.date.localeCompare(b.date) ||
-            String(a.start || "").localeCompare(String(b.start || ""))
-          );
-
-        let yearTarget = 0;
-        let yearWorked = 0;
-        let yearHoliday = 0;
-        let yearVacation = 0;
-        let yearSick = 0;
-        let yearCredited = 0;
-        let yearDelta = 0;
-
-        addPdfLine(lines, `Erstellt am ${formatDateLong(localDateString())}`);
-        addPdfLine(lines, "Jahreszusammenfassung", "section");
+        let target = 0;
+        let worked = 0;
+        let holiday = 0;
+        let vacation = 0;
+        let sick = 0;
+        let credited = 0;
+        let delta = 0;
 
         for (let month = 1; month <= 12; month++) {
           const ym = `${year}-${String(month).padStart(2, "0")}`;
           const stats = monthStats(ym);
-
-          yearTarget += stats.target;
-          yearWorked += stats.work;
-          yearHoliday += stats.holidayHours;
-          yearVacation += stats.vacationHours;
-          yearSick += stats.sickHours;
-          yearCredited += stats.credited;
-          yearDelta += stats.delta;
+          target += stats.target;
+          worked += stats.work;
+          holiday += stats.holidayHours;
+          vacation += stats.vacationHours;
+          sick += stats.sickHours;
+          credited += stats.credited;
+          delta += stats.delta;
         }
 
-        addPdfLine(lines, `Jahressoll: ${hoursText(yearTarget)} | Gearbeitet: ${hoursText(yearWorked)}`, "summary");
-        addPdfLine(lines, `Feiertage: ${hoursText(yearHoliday)} | Urlaub: ${hoursText(yearVacation)} | Krankheit: ${hoursText(yearSick)}`);
-        addPdfLine(lines, `Angerechnet gesamt: ${hoursText(yearCredited)} | Jahresdifferenz: ${signedHoursText(yearDelta)}`, "summary");
-        addPdfLine(lines, `Zeitkonto Jahresende: ${signedHoursText(accountBalanceAt(`${year}-12`))}`);
-        addPdfLine(lines, `Urlaubsstand Jahresende: ${vacationBalanceAt(year).toLocaleString("de-DE", {
-          maximumFractionDigits: 2
-        })} Tage`);
-        addPdfLine(lines, "", "blank");
-        addPdfLine(lines, "Monatsübersicht", "section");
+        const lines = [
+          { text: `Erstellt am ${formatDateLong(localDateString())}`, kind: "normal" },
+          { text: "Jahreszusammenfassung", kind: "section" },
+          { text: `Jahressoll ${hoursText(target)} · Gearbeitet ${hoursText(worked)} · Angerechnet ${hoursText(credited)}`, kind: "summary" },
+          { text: `Feiertage ${hoursText(holiday)} · Urlaub ${hoursText(vacation)} · Krankheit ${hoursText(sick)}`, kind: "normal" },
+          { text: `Jahresdifferenz ${signedHoursText(delta)} · Zeitkonto Jahresende ${signedHoursText(accountBalanceAt(`${year}-12`))}`, kind: "summary" },
+          { text: `Urlaubsstand Jahresende ${vacationBalanceAt(year).toLocaleString("de-DE", { maximumFractionDigits: 2 })} Tage`, kind: "normal" },
+          { text: "", kind: "blank" },
+          { text: "Monatsübersicht", kind: "section" }
+        ];
 
         for (let month = 1; month <= 12; month++) {
           const ym = `${year}-${String(month).padStart(2, "0")}`;
           const stats = monthStats(ym);
-
-          addPdfLine(
-            lines,
-            `${monthTitle(ym)} | Soll ${hoursText(stats.target)} | Gearbeitet ${hoursText(stats.work)} | ` +
-            `Angerechnet ${hoursText(stats.credited)} | Differenz ${signedHoursText(stats.delta)} | ` +
-            `Zeitkonto ${signedHoursText(accountBalanceAt(ym))}`
-          );
+          lines.push({
+            text: `${monthTitle(ym)} | Soll ${hoursText(stats.target)} | Gearbeitet ${hoursText(stats.work)} | ` +
+              `Angerechnet ${hoursText(stats.credited)} | Differenz ${signedHoursText(stats.delta)} | ` +
+              `Zeitkonto ${signedHoursText(accountBalanceAt(ym))}`,
+            kind: "normal"
+          });
         }
 
-        addPdfLine(lines, "", "blank");
-        addPdfLine(lines, "Tagesdetails — Arbeitszeiten, Pausen und Abwesenheiten", "section");
+        lines.push({ text: "", kind: "blank" });
+        lines.push({ text: "Tagesdetails — Arbeitszeiten, Pausen und Abwesenheiten", kind: "section" });
+        addCalendarDetails(lines, year, year);
 
-        let hasDetails = false;
-        const cursor = new Date(year, 0, 1, 12);
-        const yearEnd = new Date(year, 11, 31, 12);
+        const pages = [
+          drawYearCalendarPage(year),
+          ...makeTextPages(`Jahresbericht ${year}`, lines, true)
+        ];
 
-        while (cursor <= yearEnd) {
-          const dateKey = localDateString(cursor);
-          const holiday = holidayCreditForDate(dateKey);
-          const dailyRecords = yearRecords.filter((record) => record.date === dateKey);
-
-          if (holiday || dailyRecords.length) {
-            hasDetails = true;
-
-            if (holiday) {
-              addPdfLine(lines, `${formatDateLong(dateKey)} — Feiertag: ${holiday.name} — ${hoursText(holiday.hours)}`);
-            }
-
-            for (const record of dailyRecords) {
-              const note = record.note ? ` — Notiz: ${record.note}` : "";
-              addPdfLine(
-                lines,
-                `${formatDateLong(dateKey)} — ${pdfRecordType(record)} — ${pdfRecordTime(record)} — ${hoursText(pdfRecordHours(record))}${note}`
-              );
-            }
-          }
-
-          cursor.setDate(cursor.getDate() + 1);
-        }
-
-        if (!hasDetails) addPdfLine(lines, "Keine Einträge für dieses Jahr.");
-
-        await buildPdf(
-          `Jahresarbeitszeitbericht — ${year}`,
-          lines,
-          `arbeitszeit-jahr-${year}.pdf`,
-          true
-        );
+        await deliverPdf(pages, `arbeitszeit-jahr-${year}.pdf`);
       } catch (error) {
         alert(`Das PDF konnte nicht erstellt werden: ${error?.message || "Unbekannter Fehler"}`);
       }
@@ -1539,12 +1703,10 @@
           }
 
           const elapsed = timeToMinutes(end) - timeToMinutes(start);
-
           if (elapsed <= 0) {
             showStatus(status, "Das Ende muss nach dem Beginn liegen. Schichten über Mitternacht werden nicht unterstützt.", "error");
             return;
           }
-
           if (breakMinutes >= elapsed) {
             showStatus(status, "Die Pause muss kürzer als die Arbeitszeit sein.", "error");
             return;
@@ -1554,14 +1716,12 @@
           Object.assign(record, { mode, start, end, breakMinutes });
         } else {
           const duration = Number($("durationHours").value);
-
           if (!Number.isFinite(duration) || duration <= 0) {
             showStatus(status, "Bitte eine gültige Arbeitsdauer eingeben.", "error");
             return;
           }
 
           hours = duration - breakMinutes / 60;
-
           if (hours <= 0) {
             showStatus(status, "Die Pause darf nicht länger als die eingegebene Dauer sein.", "error");
             return;
@@ -1580,7 +1740,9 @@
 
       try {
         await persistState();
+        selectedCalendarDate = date;
         renderDashboard();
+        renderSelectedDay();
         showStatus(status, "Eintrag gespeichert.", "success");
         $("workNote").value = "";
         $("durationHours").value = "";
@@ -1594,7 +1756,7 @@
     $("settingsForm").addEventListener("submit", async (event) => {
       event.preventDefault();
       const status = $("settingsStatus");
-      const numericFields = [
+      const fields = [
         ["monthlyTarget", "Monatssoll"],
         ["openingBalance", "Anfangssaldo"],
         ["holidayHours", "Feiertagsstunden"],
@@ -1605,7 +1767,7 @@
       ];
       const next = { ...state.settings };
 
-      for (const [id, label] of numericFields) {
+      for (const [id, label] of fields) {
         const input = $(id);
         const value = Number(input.value);
 
@@ -1614,14 +1776,18 @@
           input.focus();
           return;
         }
-
         if (id !== "openingBalance" && value < 0) {
           showStatus(status, `„${label}“ darf nicht negativ sein.`, "error");
           input.focus();
           return;
         }
-
         next[id] = value;
+      }
+
+      if (!Number.isInteger(next.vacationStartYear) ||
+          next.vacationStartYear < 2000 || next.vacationStartYear > 2200) {
+        showStatus(status, "Bitte ein gültiges Urlaubsstartjahr eingeben.", "error");
+        return;
       }
 
       const startMonth = $("accountStartMonth").value;
@@ -1634,19 +1800,13 @@
       next.holidayWeekdays = [...document.querySelectorAll('input[name="holidayWeekday"]:checked')]
         .map((input) => Number(input.value));
 
-      if (!Number.isInteger(next.vacationStartYear) ||
-          next.vacationStartYear < 2000 ||
-          next.vacationStartYear > 2200) {
-        showStatus(status, "Bitte ein gültiges Jahr für den Urlaubsstart eingeben.", "error");
-        return;
-      }
-
       const previous = state.settings;
       state.settings = next;
 
       try {
         await persistState();
         renderDashboard();
+        renderSettings();
         showStatus(status, "Einstellungen gespeichert.", "success");
       } catch {
         state.settings = previous;
@@ -1657,63 +1817,63 @@
     $("monthPicker").addEventListener("change", () => {
       if (!/^\d{4}-\d{2}$/.test($("monthPicker").value)) return;
       selectedMonth = $("monthPicker").value;
-
-      const currentDate = $("entryDate").value;
-      $("entryDate").value = currentDate.startsWith(`${selectedMonth}-`)
-        ? currentDate
-        : `${selectedMonth}-01`;
-
+      selectedCalendarDate = `${selectedMonth}-01`;
+      $("entryDate").value = selectedCalendarDate;
       renderDashboard();
     });
 
     $("previousMonth").addEventListener("click", () => {
       selectedMonth = addMonths(selectedMonth, -1);
-      $("entryDate").value = `${selectedMonth}-01`;
+      selectedCalendarDate = `${selectedMonth}-01`;
+      $("entryDate").value = selectedCalendarDate;
       renderDashboard();
     });
 
     $("nextMonth").addEventListener("click", () => {
       selectedMonth = addMonths(selectedMonth, 1);
-      $("entryDate").value = `${selectedMonth}-01`;
+      selectedCalendarDate = `${selectedMonth}-01`;
+      $("entryDate").value = selectedCalendarDate;
       renderDashboard();
+    });
+
+    $("overviewTab").addEventListener("click", () => setView("overview"));
+    $("calendarTab").addEventListener("click", () => setView("calendar"));
+
+    $("addDayEntryButton").addEventListener("click", () => {
+      if (!selectedCalendarDate) return;
+      showEntryFormFor(selectedCalendarDate);
     });
 
     $("settingsToggle").addEventListener("click", () => {
       const section = $("settingsSection");
       section.classList.toggle("hidden");
-
       if (!section.classList.contains("hidden")) {
         renderSettings();
         section.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
 
-    $("printMonthButton").addEventListener("click", () => {
-      void makeMonthlyReport(selectedMonth);
+    $("monthlyPdfButton").addEventListener("click", () => {
+      void exportMonthlyPdf(selectedMonth);
     });
 
-    $("printYearButton").addEventListener("click", () => {
+    $("yearlyPdfButton").addEventListener("click", () => {
       const year = Number($("reportYear").value);
-
       if (!Number.isInteger(year) || year < 2000 || year > 2200) {
         alert("Bitte ein gültiges Berichtsjahr zwischen 2000 und 2200 eingeben.");
         return;
       }
-
-      void makeYearlyReport(year);
+      void exportYearlyPdf(year);
     });
 
-    $("exportButton").addEventListener("click", () => {
+    $("exportBackupButton").addEventListener("click", () => {
       const backup = {
         format: "arbeitszeit-backup",
         version: 1,
         exportedAt: new Date().toISOString(),
         state
       };
-
-      const blob = new Blob([JSON.stringify(backup, null, 2)], {
-        type: "application/json"
-      });
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -1727,12 +1887,9 @@
       const file = event.target.files?.[0];
       if (!file) return;
 
-      const status = $("backupStatus");
-
       try {
         const imported = JSON.parse(await file.text());
         const candidate = imported?.state;
-
         if (imported?.format !== "arbeitszeit-backup" ||
             imported?.version !== 1 ||
             !candidate?.settings ||
@@ -1740,27 +1897,25 @@
           throw new Error("Ungültiges Backup-Format.");
         }
 
-        const validRecords = candidate.records.every((record) =>
+        const valid = candidate.records.every((record) =>
           record &&
           typeof record.id === "string" &&
           /^\d{4}-\d{2}-\d{2}$/.test(record.date) &&
           ["work", "vacation", "sick"].includes(record.type)
         );
-
-        if (!validRecords) throw new Error("Das Backup enthält ungültige Einträge.");
+        if (!valid) throw new Error("Das Backup enthält ungültige Einträge.");
         if (!confirm("Das Backup ersetzt die aktuell gespeicherten Daten. Fortfahren?")) return;
 
         state = {
           settings: { ...DEFAULT_SETTINGS, ...candidate.settings },
           records: candidate.records
         };
-
         await persistState();
         renderSettings();
         renderDashboard();
-        showStatus(status, "Backup importiert.", "success");
+        showStatus($("backupStatus"), "Backup importiert.", "success");
       } catch (error) {
-        showStatus(status, `Import fehlgeschlagen: ${error.message}`, "error");
+        showStatus($("backupStatus"), `Import fehlgeschlagen: ${error.message}`, "error");
       } finally {
         event.target.value = "";
       }
@@ -1781,19 +1936,18 @@
         }
 
         selectedMonth = currentMonth();
-        $("entryDate").value = localDateString();
+        selectedCalendarDate = localDateString();
+        $("entryDate").value = selectedCalendarDate;
         $("reportYear").value = new Date().getFullYear();
         renderSettings();
         renderDashboard();
       } catch (error) {
         document.body.innerHTML = `
-          <main>
-            <section>
-              <h1>Speicher nicht verfügbar</h1>
-              <p>Die App konnte den lokalen Speicher nicht öffnen. Bitte verwende Safari im normalen Modus und lade die Seite erneut.</p>
-              <p>${escapeHtml(error?.message || "Unbekannter Fehler")}</p>
-            </section>
-          </main>`;
+          <main><section>
+            <h1>Speicher nicht verfügbar</h1>
+            <p>Die App konnte den lokalen Speicher nicht öffnen. Bitte verwende Safari im normalen Modus und lade die Seite erneut.</p>
+            <p>${escapeHtml(error?.message || "Unbekannter Fehler")}</p>
+          </section></main>`;
         return;
       }
 
