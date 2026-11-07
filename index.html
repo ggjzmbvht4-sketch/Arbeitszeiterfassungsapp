@@ -1,0 +1,2721 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#eef8f6">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#102321">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Arbeitszeit">
+  <title>Arbeitszeit</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      --bg: #f4faf9;
+      --surface: #ffffff;
+      --surface-muted: #f7fbfb;
+      --text: #203331;
+      --muted: #738c8a;
+      --line: #e5eeed;
+      --accent: #1ecbbc;
+      --accent-light: #edfcfb;
+      --green: #248179;
+      --green-light: #e9f6f5;
+      --red: #3ebdb2;
+      --red-light: #f1fdfc;
+      --gold: #1e9288;
+      --gold-light: #e3fbf9;
+      --shadow: 0 5px 18px rgba(30,61,58,.055);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    html { min-height: 100%; scroll-behavior: smooth; background: var(--bg); }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0 0 calc(84px + env(safe-area-inset-bottom));
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    button, input, select { font: inherit; }
+    button { touch-action: manipulation; }
+
+    .app-header {
+      position: sticky;
+      z-index: 5;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 58px;
+      padding: max(10px, env(safe-area-inset-top)) 17px 10px;
+      background: rgba(244,250,249,.93);
+      border-bottom: 1px solid var(--line);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+    }
+
+    .app-header h1 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 720;
+      letter-spacing: -.035em;
+    }
+
+    main {
+      width: min(100%, 760px);
+      margin: 0 auto;
+      padding: 16px 14px 24px;
+    }
+
+    .month-bar {
+      display: grid;
+      grid-template-columns: 44px 1fr 44px;
+      gap: 9px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .month-bar input {
+      min-width: 0;
+      text-align: center;
+      font-weight: 650;
+    }
+
+    .panel {
+      margin-bottom: 14px;
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 1.05rem;
+      font-weight: 720;
+      letter-spacing: -.02em;
+    }
+
+    h3 {
+      margin: 20px 0 9px;
+      font-size: .97rem;
+      font-weight: 700;
+    }
+
+    p { margin: 8px 0; }
+
+    .muted, .hint { color: var(--muted); }
+
+    .hint {
+      font-size: .86rem;
+      line-height: 1.45;
+    }
+
+    .toolbar, .row, .actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      min-height: 44px;
+      padding: 9px 14px;
+      color: #ffffff;
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    button:active { transform: scale(.98); }
+
+    button.secondary {
+      color: var(--text);
+      background: var(--surface-muted);
+      border-color: var(--line);
+    }
+
+    button.outline {
+      color: var(--accent);
+      background: #ffffff;
+      border-color: #cbf1ee;
+    }
+
+    button.danger {
+      color: var(--red);
+      background: var(--red-light);
+      border-color: #cef4f1;
+    }
+
+    button.small {
+      min-height: 34px;
+      padding: 6px 10px;
+      font-size: .84rem;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    .file-label:focus-within {
+      outline: 3px solid rgba(30,203,188,.25);
+      outline-offset: 2px;
+    }
+
+    input, select {
+      min-height: 44px;
+      width: 100%;
+      padding: 9px 11px;
+      color: var(--text);
+      background: #ffffff;
+      border: 1px solid #d7e5e4;
+      border-radius: 11px;
+      outline: none;
+    }
+
+    input:focus, select:focus { border-color: #76e5dc; }
+
+    input[type="checkbox"] {
+      width: 19px;
+      min-height: 19px;
+      margin: 0;
+      accent-color: var(--accent);
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 5px;
+      font-size: .89rem;
+      font-weight: 620;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .metric {
+      min-height: 91px;
+      padding: 13px;
+      background: var(--surface-muted);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: .79rem;
+      line-height: 1.3;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 7px;
+      font-size: clamp(1.02rem, 4vw, 1.25rem);
+      font-weight: 730;
+      letter-spacing: -.035em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .positive { color: var(--green); }
+    .negative { color: var(--red); }
+    .hidden { display: none !important; }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      position: fixed;
+      z-index: 10;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 8px 10px max(8px, env(safe-area-inset-bottom));
+      background: rgba(255,255,255,.96);
+      border-top: 1px solid var(--line);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+    }
+
+    .tab {
+      min-height: 48px;
+      padding: 5px 4px;
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+      font-size: .78rem;
+      font-weight: 620;
+    }
+
+    .tab.active { color: var(--accent); }
+    .tab-icon { display: block; margin-bottom: 2px; font-size: 1.05rem; }
+
+    .weekday-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .weekday {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      margin: 0;
+      padding: 7px 9px;
+      background: var(--surface-muted);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: .86rem;
+    }
+
+    .calendar-weekdays,
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 4px;
+    }
+
+    .calendar-weekday {
+      padding: 5px 0;
+      color: var(--muted);
+      font-size: .7rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .calendar-day {
+      display: flex;
+      min-width: 0;
+      min-height: 72px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      padding: 5px 4px;
+      color: var(--text);
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .calendar-day.outside { visibility: hidden; }
+    .calendar-day.selected { border: 2px solid var(--accent); padding: 4px 3px; }
+    .calendar-day.workday { background: var(--accent-light); }
+    .calendar-day.vacation { background: var(--green-light); }
+    .calendar-day.sick { background: var(--red-light); }
+    .calendar-day.holiday { box-shadow: inset 0 0 0 1px #5ed7cd; }
+
+    .day-number { font-size: .8rem; font-weight: 750; }
+    .day-status {
+      max-width: 100%;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: .59rem;
+      line-height: 1.15;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .day-hours {
+      color: #179d92;
+      font-size: .58rem;
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .legend {
+      display: flex;
+      gap: 8px 12px;
+      flex-wrap: wrap;
+      margin-top: 11px;
+      color: var(--muted);
+      font-size: .77rem;
+    }
+
+    .legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .legend i { width: 10px; height: 10px; border-radius: 50%; }
+    .legend-work { background: #7cebe2; }
+    .legend-free { background: #c7d5d4; }
+    .legend-vacation { background: #77c0ba; }
+    .legend-sick { background: #85e5dd; }
+    .legend-holiday { background: #54d4c9; }
+
+    .entry {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 9px;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .entry > div { min-width: 0; }
+    .entry-detail { overflow-wrap: anywhere; }
+    .entry .row { max-width: 100%; }
+
+    .entry:first-child { border-top: 0; }
+    .entry-title { font-weight: 660; }
+    .entry-detail { margin-top: 3px; color: var(--muted); font-size: .84rem; line-height: 1.4; }
+    .entry-hours { white-space: nowrap; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .status { min-height: 1.2em; margin-top: 8px; color: var(--muted); font-size: .88rem; }
+    .status.error { color: var(--red); }
+    .status.success { color: var(--green); }
+
+    .file-label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 8px 12px;
+      color: var(--accent);
+      background: var(--surface-muted);
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    .file-label input { display: none; }
+
+    .overlay {
+      position: fixed;
+      z-index: 20;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 12px 10px max(10px, env(safe-area-inset-bottom));
+      background: rgba(20,42,40,.38);
+    }
+
+    .sheet {
+      width: min(100%, 600px);
+      max-height: min(92vh, 850px);
+      overflow-y: auto;
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: 0 16px 48px rgba(0,0,0,.2);
+    }
+
+    .sheet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .sheet-header h2 { margin: 0; }
+
+    .toast {
+      position: fixed;
+      z-index: 30;
+      right: 12px;
+      bottom: calc(76px + env(safe-area-inset-bottom));
+      left: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: min(520px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 11px 13px;
+      background: #203331;
+      border-radius: 13px;
+      color: #ffffff;
+      box-shadow: 0 7px 24px rgba(0,0,0,.22);
+    }
+
+    .toast button {
+      min-height: 34px;
+      padding: 5px 10px;
+      color: #ffffff;
+      background: #37918a;
+      border-color: #52a8a1;
+    }
+
+    .settings-group {
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    @media (min-width: 620px) {
+      main { padding: 22px 20px 28px; }
+      .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .weekday-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .calendar-grid, .calendar-weekdays { gap: 7px; }
+      .calendar-day { min-height: 88px; padding: 7px; }
+      .calendar-day.selected { padding: 6px; }
+      .day-status, .day-hours { font-size: .7rem; }
+      .tabs { right: 50%; left: 50%; width: min(760px, 100%); transform: translateX(-50%); }
+    }
+
+    @media (max-width: 360px) {
+      main { padding-inline: 9px; }
+      .panel { padding: 14px; }
+      .calendar-grid, .calendar-weekdays { gap: 2px; }
+      .calendar-day { min-height: 62px; padding: 4px 2px; border-radius: 8px; }
+      .day-status, .day-hours { font-size: .52rem; }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: dark;
+        --bg: #111c1b;
+        --surface: #20302f;
+        --surface-muted: #293a39;
+        --text: #f0f6f6;
+        --muted: #a4bbb9;
+        --line: #364b49;
+        --accent-light: #205551;
+        --green-light: #203b39;
+        --red-light: #2b4543;
+        --gold-light: #244441;
+      }
+
+      body { background: var(--bg); }
+      .app-header, .tabs { background: rgba(28,43,42,.97); }
+      input, select { color: var(--text); background: #293a39; border-color: #455a58; }
+      button.secondary, .file-label { color: #abf2ec; background: #293a39; border-color: #455a58; }
+      .calendar-day { color: var(--text); background: #253635; border-color: #3b504e; }
+      .day-hours { color: #b5f4ef; }
+      .sheet { background: var(--surface); }
+      .positive { color: #67d4cb; }
+      .negative { color: #97f0e8; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
+    }
+  :root{--glass:rgba(255,255,255,.78);--rim:rgba(255,255,255,.9);--ink:#184743;--frost:#edfbfa;--bg:#edfbfa;--accent:#23bbae;--text:#1c403d;--muted:#517673}
+html{background:var(--frost)}body{background:radial-gradient(ellipse at 3% 20%,#d9f1ef 0,transparent 46%),radial-gradient(ellipse at 95% 5%,#ddf5f3 0,transparent 54%),var(--frost);background-attachment:fixed;padding-bottom:calc(100px + env(safe-area-inset-bottom))}
+.app-header{background:var(--glass);border-bottom:1px solid var(--rim);padding-inline:max(18px,calc((100vw - 724px)/2));color:var(--ink)}
+.panel,.day-metrics,.tabs,.sheet,.glass-button{background:var(--glass);border:1px solid var(--rim);box-shadow:inset 0 1px 0 var(--rim),0 8px 32px rgba(39,95,90,.07);border-radius:24px}
+.tabs,.sheet,.app-header,.glass-button{backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%)}
+.tabs{left:50%;right:auto;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(440px,calc(100% - 24px));padding:5px;gap:4px;border-radius:30px}.tab{border-radius:25px;min-height:48px}.tab.active{background:var(--accent-light);color:var(--accent)}
+.today-title,.section-head,.account-line{display:flex;justify-content:space-between;align-items:center;gap:10px}.today-title{padding:12px 4px 18px}.today-title h2{font-size:clamp(2.3rem,6vw,3.4rem);letter-spacing:-.065em;line-height:1.03;margin:4px 0 0}.today-title span,.day-metrics span,.clock-caption{font-size:.85rem;color:var(--muted)}.glass-button{color:var(--ink);font-size:1.25rem;width:44px;border-radius:50%;padding:0}
+.clock-card{position:relative;isolation:isolate;overflow:hidden;padding:clamp(23px,5vw,40px);border-radius:30px;color:#144a46;background:radial-gradient(ellipse at 4% 15%,#effdfc 0,transparent 58%),linear-gradient(118deg,#bce2df,#c3eeea 72%,#dcf7f5);border:1px solid var(--rim);box-shadow:inset 0 1px 2px white,0 12px 32px #20615c16}.clock-card:before{content:"";position:absolute;z-index:-1;right:-100px;top:-124px;width:270px;height:310px;transform:rotate(37deg);border-radius:45%;border:2px solid #ffffff80;box-shadow:inset 4px 1px 22px #ffffff88, -8px 5px 28px #71c2bb37;background:linear-gradient(130deg,#ffffff66,#ffffff00 57%,#ffffff77)}
+.clock-state{display:inline-flex;align-items:center;gap:8px;border-radius:24px;background:#ffffffa6;padding:7px 13px;font-size:.84rem;font-weight:650}.clock-state:before{content:"";width:8px;height:8px;border-radius:100%;background:#658986}.clock-state.working:before{background:#187971}.clock-state.paused:before{background:#189f94}.clock-value{font-size:clamp(4.5rem,13vw,7.5rem);line-height:1.08;margin-top:15px;font-weight:600;letter-spacing:-.08em;font-variant-numeric:tabular-nums}.clock-caption{color:#41706c}.clock-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}.clock-actions button{border-radius:25px}.clock-actions button:first-child{background:#1b5651;border-color:#1b5651}.clock-actions .secondary{color:#195752;background:#ffffffb8;border-color:#ffffffbd}#clockMessage:not(:empty){margin-top:12px}
+.day-metrics{display:grid;grid-template-columns:repeat(3,1fr);margin:14px 0;padding:16px 4px}.day-metrics div{padding:0 10px}.day-metrics div+div{border-left:1px solid var(--line)}.day-metrics strong{display:block;font-size:clamp(.95rem,3vw,1.25rem);margin-top:5px}.section-head h2{margin:0}.quiet{background:transparent;color:var(--accent);border:0;font-size:.87rem}.stamp{border-top:1px solid var(--line);padding:11px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}.stamp input{width:auto;max-width:65%}.stamp label{margin:0}.account-line strong{font-variant-numeric:tabular-nums}
+@media(prefers-color-scheme:dark){:root{--ink:#e7fbfa;--glass:rgba(32,61,59,.87);--rim:rgba(184,240,235,.18);--frost:#112927;--text:#effdfc;--muted:#b2d6d3;--accent:#9df0e9}body{background:radial-gradient(ellipse at top right,#264e4b,transparent 65%),var(--frost)}button:not(.secondary,.quiet,.tab,.outline,.danger,.glass-button){background:#28aca1;border-color:#28aca1}.clock-card{background:radial-gradient(ellipse at left top,#205b56,transparent 65%),linear-gradient(125deg,#18413e,#34615d);color:#f5fdfd}.clock-caption{color:#ceeae8}.clock-state{background:#143936;color:#e5fbf9}}
+@media(prefers-reduced-transparency:reduce){.tabs,.panel,.sheet,.app-header,.day-metrics,.glass-button{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none}.clock-card:before{display:none}}
+/* Glass surfaces and controls for secondary screens */
+:root {
+  --field-glass: #ffffffc9;
+  --control-edge: #6498942e;
+  --primary-ink: #1b5651;
+  --reflection: inset 0 1px 0 #ffffffa6, 0 4px 14px #25595509;
+}
+.page-title { margin: 12px 4px 18px; color: var(--ink); font-size: clamp(2.3rem,6vw,3.4rem); letter-spacing: -.065em; line-height: 1.05; }
+.view-stack > .panel, .view-stack > .clock-card { margin-bottom: 14px; }
+.view-stack > .panel, .sheet { padding: clamp(16px,3vw,26px); }
+.view-stack h3:first-child, .settings-group > .toolbar h3 { margin-top: 0; }
+.view-stack .panel, .month-bar { box-shadow: inset 0 1px 0 var(--rim), 0 8px 28px #21504c0b; }
+.month-bar { background: var(--glass); border: 1px solid var(--rim); padding: 5px; border-radius: 30px; }
+.month-bar input, .month-bar button { border: 0; background: transparent; border-radius: 30px; color: var(--ink); }
+.month-bar button { background: var(--field-glass); box-shadow: var(--reflection); font-size: 1.35rem; }
+.report-hero .report-total { display: block; font-size: clamp(2.8rem,9vw,4.8rem); margin: 12px 0 0; font-weight: 650; line-height: 1.1; letter-spacing: -.065em; font-variant-numeric: tabular-nums; }
+.report-hero h2, .calendar-heading h2 { font-weight: 650; margin: 0; letter-spacing: -.04em; }
+.calendar-heading { padding: 22px; margin-bottom: 14px; }
+.calendar-heading h2 { font-size: clamp(1.55rem,5vw,2.25rem); }
+.view-stack .metric { border-radius: 17px; background: var(--field-glass); border: 1px solid var(--control-edge); min-height: 78px; }
+.calendar-weekday { color: var(--ink); }
+#calendarGrid .calendar-day { background: var(--field-glass); color: var(--text); border: 1px solid var(--control-edge); border-radius: 13px; }
+#calendarGrid .workday { background: var(--accent-light); }
+#calendarGrid .vacation { background: var(--green-light); }
+#calendarGrid .sick { background: var(--red-light); }
+#calendarGrid .holiday { border-bottom: 3px solid #31b3a8; }
+#calendarGrid .selected { outline: 2px solid var(--accent); outline-offset: -2px; }
+#calendarGrid .day-number { font-size: .94rem; letter-spacing: -.03em; }
+#calendarGrid .day-hours { color: var(--ink); }
+.legend span { padding: 3px 7px; background: var(--field-glass); border-radius: 12px; }
+.entry { align-items: center; }
+.entry-hours { border-radius: 20px; background: var(--field-glass); padding: 5px 9px; }
+.view-stack button:not(.calendar-day), .sheet button, .view-stack .file-label, .toast button { border-radius: 22px; }
+.view-stack button:not(.secondary,.outline,.danger,.calendar-day), .sheet button[type=submit] {
+  background: var(--primary-ink); color: #ffffff; border-color: transparent;
+}
+.view-stack .secondary, .sheet .secondary, .view-stack .file-label {
+  color: var(--ink); background: var(--field-glass); border: 1px solid var(--control-edge);
+}
+.view-stack input:not([type=checkbox],[type=file]), .view-stack select,
+.sheet input:not([type=checkbox]), .sheet select {
+  border-radius: 14px; color: var(--text); background: var(--field-glass); border-color: var(--control-edge);
+  box-shadow: var(--reflection); min-width: 0;
+}
+#weekPlan label { margin: 0; font-size: .82rem; }
+#weekPlan input { margin-top: 4px; }
+.weekday { border-radius: 14px; background: var(--field-glass); border-color: var(--control-edge); }
+.weekday:has(:checked) { background: var(--accent-light); border-color: var(--accent); }
+#settingsContent { scroll-margin-top: 78px; }
+#settingsForm h3 { margin-top: 24px; }
+#reportYear { flex: 1 1 100px; }
+.sheet { position: relative; border-radius: 28px; max-height: 90dvh; }
+.sheet::before { content: ""; display: block; width: 36px; height: 4px; margin: -4px auto 15px; border-radius: 4px; background: var(--control-edge); }
+.sheet-header { padding-bottom: 13px; border-bottom: 1px solid var(--control-edge); }
+.sheet-header h2 { font-size: 1.35rem; letter-spacing: -.04em; }
+.overlay { background: #103b3755; }
+.toast { border-radius: 22px; background: #1b5651; }
+@media(max-width:440px) {
+  .calendar-card.panel { padding: 12px 8px; }
+  #calendarGrid .calendar-day { border-radius: 9px; }
+  #calendarGrid .day-status { font-size: .59rem; }
+}
+@media(prefers-color-scheme:dark) {
+  :root { --field-glass:#284a47; --control-edge:#c8f2ee35; --primary-ink:#318a83; --reflection:inset 0 1px 0 #ffffff12; }
+  .sheet,.view-stack .panel { background: var(--glass); }
+  #calendarGrid .day-status { color: #c3dfdd; }
+}
+@media(prefers-reduced-transparency:reduce) {
+  :root { --field-glass:var(--surface-muted); }
+  .month-bar,.view-stack .panel,.sheet { background:var(--surface); }
+  .report-hero,.calendar-heading { background:var(--surface-muted); color:var(--text); }
+}
+
+.flex-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.month-control { position:relative; display:grid; place-items:center; min-height:44px; border-radius:14px; font-weight:650; }
+.month-control:focus-within { outline:2px solid var(--accent); }
+.month-control input { position:absolute; inset:0; opacity:0; width:100%; height:100%; cursor:pointer; }
+.month-control input::-webkit-calendar-picker-indicator { position:absolute; inset:0; width:auto; height:auto; cursor:pointer; }
+#settingsContent .month-control { background:var(--field-glass); border:1px solid var(--control-edge); }
+
+/* Shared turquoise accents for navigation, actions and calendar status. */
+:root {
+  --accent: #006964;
+  --accent-light: #c9eee9;
+  --primary-ink: #075a56;
+  --ink: #103b38;
+  --work-fill: #bfe9e5;
+  --leave-fill: #e1f4ee;
+  --sick-fill: #d6e4e2;
+  --holiday-mark: #30716e;
+}
+#calendarGrid .workday { background: var(--work-fill); }
+#calendarGrid .vacation { background: var(--leave-fill); }
+#calendarGrid .sick { background: repeating-linear-gradient(135deg,transparent 0 6px,#648d8915 6px 8px),var(--sick-fill); }
+#calendarGrid .holiday { border-bottom-color: var(--holiday-mark); }
+.legend-work { background: #198b84; }
+.legend-vacation { background: #91c9b9; }
+.legend-sick { background: repeating-linear-gradient(135deg,#829e9a 0 2px,#c5d9d5 2px 4px); }
+.legend-holiday { background: transparent; border: 2px solid var(--holiday-mark); }
+.clock-state.paused:before { background: transparent; box-shadow: inset 0 0 0 2px currentColor; }
+@media(prefers-color-scheme:dark) {
+  :root {
+    --accent: #83e4da;
+    --accent-light: #174642;
+    --primary-ink: #14645f;
+    --ink: #e0f6f3;
+    --work-fill: #17504c;
+    --leave-fill: #233e37;
+    --sick-fill: #293c3a;
+    --holiday-mark: #98c9c3;
+  }
+}
+</style>
+</head>
+
+<body>
+  <header class="app-header">
+    <h1>Arbeitszeit</h1>
+    <button id="quickAddButton" class="outline small" type="button">+ Eintrag</button>
+  </header>
+
+  <main>
+    <section id="todayPanel">
+  <div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div><button id="preferences" class="glass-button" aria-label="Einstellungen öffnen">⚙</button></div>
+  <section class="clock-card" aria-label="Stempeluhr">
+    <span class="clock-state" id="clockState"></span>
+    <div class="clock-value" id="netTime">0:00</div>
+    <span class="clock-caption">Arbeitszeit · Std. und Min.</span>
+    <div class="clock-actions"><button id="punch"></button><button id="finish" class="secondary">Feierabend</button></div>
+    <div id="clockMessage" role="status"></div>
+  </section>
+  <div class="day-metrics flex-metrics"><div><span>Arbeitsbeginn</span><strong id="dayStart"></strong></div><div><span>Pause heute</span><strong id="dayBreak"></strong></div></div>
+  <section class="panel"><div class="section-head"><h2>Tagesverlauf</h2><button id="addToday" class="quiet">Nachtragen</button></div><div id="timeline"></div></section>
+  <section class="panel account-line"><span id="balanceLabel">Zeitkonto</span><strong id="todayBalance"></strong></section>
+</section>
+
+<h2 id="sectionTitle" class="page-title hidden">Kalender</h2>
+    <div id="monthBar" class="month-bar hidden" aria-label="Monat auswählen">
+      <button id="previousMonth" class="secondary" type="button" aria-label="Vorheriger Monat">‹</button>
+      <div class="month-control"><span aria-hidden="true" id="monthPickerText"></span><input id="monthPicker" type="month" min="2000-01" max="2200-12" aria-label="Monat auswählen"></div>
+      <button id="nextMonth" class="secondary" type="button" aria-label="Nächster Monat">›</button>
+    </div>
+
+    <section id="overviewPanel" class="view-stack hidden">
+      <div class="clock-card report-hero"><h2 id="overviewHeading">Monatsübersicht</h2>
+        <strong class="report-total" id="creditedMetric">–</strong><span class="clock-caption">Angerechnete Zeit</span></div>
+      <div class="panel">
+      <div class="grid">
+        <div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
+        <div class="metric"><span>Noch bis zum Soll</span><strong id="remainingMetric">–</strong></div>
+        <div class="metric" id="closedDelta"><span>Abgeschlossene Monatsdifferenz</span><strong id="deltaMetric">–</strong></div>
+        <div class="metric"><span>Überstunden am Ende des Vormonats</span><strong id="carryMetric">–</strong></div>
+        <div class="metric"><span>Zeitkonto Monatsende</span><strong id="closingMetric">–</strong></div>
+      </div>
+      <p id="accountExplanation" class="hint"></p>
+      <p id="vacationBalance" class="hint"></p>
+
+      </div>
+      <div class="panel"><h3>Einträge des Monats</h3>
+      <div id="entriesList"></div></div>
+    </section>
+
+    <section id="calendarPanel" class="view-stack hidden">
+      <div class="clock-card calendar-heading"><h2 id="calendarSubtitle"></h2></div>
+      <div class="panel calendar-card">
+      <div id="calendarWeekdays" class="calendar-weekdays" role="row"></div>
+      <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="Monatskalender"></div>
+      <div class="legend" aria-label="Kalenderlegende">
+        <span><i class="legend-work"></i>Gearbeitet</span>
+        <span><i class="legend-free"></i>Frei</span>
+        <span><i class="legend-vacation"></i>Urlaub</span>
+        <span><i class="legend-sick"></i>Krankheit</span>
+        <span><i class="legend-holiday"></i>Feiertag</span>
+      </div>
+
+      </div>
+      <div class="panel" id="selectedDayPanel">
+        <h3 id="selectedDayHeading">Tag auswählen</h3>
+        <div id="selectedDayEntries"></div>
+        <button id="addDayEntryButton" type="button">Eintrag für diesen Tag hinzufügen</button>
+      </div>
+    </section>
+
+    <section id="morePanel" class="view-stack hidden">
+
+
+      <div class="panel settings-group">
+        <h3>PDF-Export</h3>
+        <button id="monthlyPdfButton" type="button">Monats-PDF exportieren</button>
+        <p class="hint">Enthält die Kalenderansicht und die Tagesdetails.</p>
+
+        <label for="reportYear">Jahr für den Jahresbericht</label>
+        <div class="toolbar">
+          <input id="reportYear" type="number" min="2000" max="2200" step="1">
+          <button id="yearlyPdfButton" type="button">Jahres-PDF exportieren</button>
+        </div>
+        <p class="hint">Enthält eine Jahreskalenderübersicht, Monatswerte und tägliche Arbeitszeiten mit Pausen.</p>
+      </div>
+
+      <div class="panel settings-group">
+        <div class="toolbar" style="justify-content:space-between">
+          <h3>Einstellungen</h3>
+          <button id="settingsToggle" class="secondary small" type="button">Anzeigen</button>
+        </div>
+
+        <div id="settingsContent" class="hidden">
+          <form id="settingsForm">
+            <div class="two-col">
+              <div>
+                <label for="monthlyTarget">Monatliches Soll (Stunden)</label>
+                <input id="monthlyTarget" type="number" min="0" step="0.01" required>
+                <label for="openingBalance">Anfangssaldo Zeitkonto (Stunden)</label>
+                <input id="openingBalance" type="number" step="0.01" required>
+                <label for="accountStartMonth">Zeitkonto beginnt ab Monat</label>
+                <div class="month-control"><span aria-hidden="true" id="accountStartMonthText"></span><input id="accountStartMonth" type="month" min="2000-01" max="2200-12" required></div>
+              </div>
+              <div>
+                <label for="holidayHours">Stunden pro zählendem Feiertag</label>
+                <input id="holidayHours" type="number" min="0" step="0.01" required>
+                <label for="vacationEntitlement">Urlaubsanspruch pro Jahr (Tage)</label>
+                <input id="vacationEntitlement" type="number" min="0" step="0.5" required>
+                <label for="vacationHours">Angerechnete Stunden pro Urlaubstag</label>
+                <input id="vacationHours" type="number" min="0" step="0.01" required>
+                <label for="sickHours">Angerechnete Stunden pro Krankheitstag</label>
+                <input id="sickHours" type="number" min="0" step="0.01" required>
+              </div>
+            </div>
+
+            <h3>Automatische Zeiterfassung</h3>
+            <label for="rounding">Stempelzeit aufrunden</label>
+            <select id="rounding"><option value="1">Minutengenau</option><option value="5">Nächster 5-Minuten-Schritt</option><option value="10">Nächster 10-Minuten-Schritt</option><option value="15">Nächste Viertelstunde</option><option value="30">Nächste halbe Stunde</option><option value="60">Nächste volle Stunde</option><option value="marks">Bestimmte Minuten jeder Stunde</option></select>
+            <div id="marksField" class="hidden"><label for="roundMarks">Minuten nach der vollen Stunde</label><input id="roundMarks" placeholder="05, 15, 30, 45"><p class="hint">Bei 05 und 15 wird 08:07 zu 08:15 und 08:16 zu 09:05.</p></div>
+            <div id="scopeField"><label for="roundScope">Aufrunden bei</label><select id="roundScope"><option value="all">Allen automatischen Stempeln</option><option value="start">Nur Arbeitsbeginn</option></select></div>
+            <p class="hint">Ein passender Minutenwert bleibt erhalten. Nachträge und manuelle Korrekturen sind minutengenau.</p>
+            <h3>Urlaubszeiträume</h3><label>Wochentage bei mehrtägigem Urlaub berücksichtigen</label><div id="leaveDays" class="weekday-list"></div>
+            <h3>Feiertage in Baden-Württemberg zählen, wenn sie auf … fallen</h3>
+            <div id="weekdaySettings" class="weekday-list"></div>
+
+            <label for="vacationStartYear">Urlaubsberechnung beginnt ab Jahr</label>
+            <input id="vacationStartYear" type="number" min="2000" max="2200" step="1" required>
+            <p class="hint">Nicht genommene Urlaubstage werden automatisch in Folgejahre übertragen.</p>
+
+            <button type="submit">Einstellungen speichern</button>
+            <div id="settingsStatus" class="status" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Datensicherung</h3>
+        <p class="hint">Backups enthalten deine Einstellungen und Einträge. Sie werden nicht verschlüsselt.</p>
+        <div class="actions">
+          <button id="exportBackupButton" class="secondary" type="button">Backup exportieren</button>
+          <label class="file-label">Backup importieren
+            <input id="importFile" type="file" accept="application/json,.json">
+          </label>
+        </div>
+        <div id="backupStatus" class="status" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabs" aria-label="Hauptnavigation">
+    <button id="overviewTab" class="tab active" type="button" aria-current="page">
+      <span class="tab-icon" aria-hidden="true">◷</span>Heute
+    </button>
+    <button id="calendarTab" class="tab" type="button">
+      <span class="tab-icon" aria-hidden="true">▦</span>Kalender
+    </button>
+    <button id="moreTab" class="tab" type="button">
+      <span class="tab-icon" aria-hidden="true">▥</span>Auswertung
+    </button>
+  </nav>
+
+  <div id="entryOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="entryDialogTitle">
+    <div class="sheet">
+      <div class="sheet-header">
+        <h2 id="entryDialogTitle">Eintrag erfassen</h2>
+        <button id="closeEntryButton" class="secondary small" type="button" aria-label="Schließen">Schließen</button>
+      </div>
+
+      <form id="entryForm">
+        <label for="entryDate">Datum</label>
+        <input id="entryDate" type="date" min="2000-01-01" max="2200-12-31" required>
+
+        <label for="entryType">Art des Eintrags</label>
+        <select id="entryType">
+          <option value="work">Arbeitszeit</option>
+          <option value="vacation">Urlaub</option>
+          <option value="sick">Krankheit</option>
+        </select>
+
+        <div id="workFields">
+          <label for="workMode">Arbeitszeit eingeben als</label>
+          <select id="workMode">
+            <option value="range">Beginn und Ende</option>
+            <option value="duration">Dauer</option>
+          </select>
+
+          <div id="rangeFields" class="row">
+            <div style="flex:1;min-width:130px">
+              <label for="startTime">Beginn</label>
+              <input id="startTime" type="time">
+            </div>
+            <div style="flex:1;min-width:130px">
+              <label for="endTime">Ende</label>
+              <input id="endTime" type="time">
+            </div>
+          </div>
+
+          <div id="durationFields" class="hidden">
+            <label for="durationHours">Dauer vor Pausen in Stunden</label>
+            <input id="durationHours" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="z. B. 7,5">
+          </div>
+
+          <label for="breakMinutes">Gesamtpause in Minuten</label>
+          <input id="breakMinutes" type="number" min="0" step="1" value="0" inputmode="numeric">
+
+          <label for="workNote">Arbeitsnotiz (optional)</label>
+          <input id="workNote" type="text" maxlength="200" autocomplete="off">
+        </div>
+
+        <div id="vacationFields" class="hidden">
+          <div id="vacationInterval"><label for="vacationEnd">Bis einschließlich (optional)</label><input id="vacationEnd" type="date" min="2000-01-01" max="2200-12-31"><p class="hint" id="vacationPreview" aria-live="polite"></p></div>
+          <label for="vacationDays">Urlaubstage pro Datum</label>
+          <select id="vacationDays">
+            <option value="1">Ganzer Tag</option>
+            <option value="0.5">Halber Tag</option>
+          </select>
+        </div>
+
+        <div id="sickFields" class="hidden">
+          <p class="hint">Die Anrechnungsstunden werden aus den Einstellungen übernommen.</p>
+        </div>
+
+        <div class="actions" style="margin-top:14px">
+          <button id="saveEntryButton" type="submit">Eintrag speichern</button>
+          <button id="cancelEditButton" class="secondary hidden" type="button">Abbrechen</button>
+        </div>
+        <div id="entryStatus" class="status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <div id="undoToast" class="toast hidden" role="status" aria-live="polite">
+    <span>Eintrag gelöscht.</span>
+    <button id="undoDeleteButton" type="button">Rückgängig</button>
+  </div>
+
+  <script type="module">
+    const DB_NAME = "arbeitszeit-app";
+    const DB_VERSION = 1;
+    const STORE_NAME = "state";
+    const STATE_KEY = "main";
+    const WEEKDAYS = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+    const WEEKDAYS_MON_FIRST = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+    const holidayCache = new Map();
+
+    function currentMonth() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    }
+
+    function localDateString(date = new Date()) {
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    }
+
+    const DEFAULT_SETTINGS = {
+      monthlyTarget: 160,
+      holidayHours: 8,
+      holidayWeekdays: [1, 2, 3, 4, 5],
+      vacationEntitlement: 30,
+      vacationHours: 8,
+      sickHours: 8,
+      vacationStartYear: new Date().getFullYear(),
+      accountStartMonth: currentMonth(),
+      openingBalance: 0
+    };
+
+    let state = { settings: { ...DEFAULT_SETTINGS }, records: [] };
+    let db;
+    let revision = 0;
+    let writeBusy = false;
+    let returnFocus = null;
+
+    // One mutation at a time, including save, import, delete and undo.
+    function withWriteLock(handler) {
+      return async function(event) {
+        event?.preventDefault?.();
+        if (writeBusy || !db) return;
+        writeBusy = true;
+        const controls = [...document.querySelectorAll("button, input, select")];
+        const disabled = controls.map(control => control.disabled);
+        controls.forEach(control => { control.disabled = true; });
+        try { await handler(event); }
+        catch (error) { alert(`Speichern fehlgeschlagen. Bitte die App neu laden. ${error?.message || ""}`); }
+        finally {
+          controls.forEach((control, index) => { control.disabled = disabled[index]; });
+          writeBusy = false;
+        }
+      };
+    }
+    let selectedMonth = currentMonth();
+    let selectedCalendarDate = localDateString();
+    let editingId = null;
+    let deletedRecord = null;
+    let undoTimeout = null;
+
+    const $ = (id) => document.getElementById(id);
+
+    function parseDate(value) {
+      const [year, month, day] = value.split("-").map(Number);
+      return new Date(year, month - 1, day, 12);
+    }
+
+    function addMonths(ym, amount) {
+      const [year, month] = ym.split("-").map(Number);
+      const date = new Date(year, month - 1 + amount, 1);
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+    }
+
+    function openDatabase() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onupgradeneeded = () => {
+          if (!request.result.objectStoreNames.contains(STORE_NAME)) {
+            request.result.createObjectStore(STORE_NAME);
+          }
+        };
+        let blocked = false;
+        request.onblocked = () => {
+          blocked = true;
+          reject(new Error("Bitte andere geöffnete Fenster dieser App schließen und neu laden."));
+        };
+        request.onsuccess = () => {
+          if (blocked) { request.result.close(); return; }
+          resolve(request.result);
+        };
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    function loadState() {
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(STORE_NAME, "readonly");
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.get(STATE_KEY);
+        const revisionRequest = store.get("revision");
+        transaction.oncomplete = () => {
+          revision = revisionRequest.result || 0;
+          resolve(request.result ?? null);
+        };
+        transaction.onerror = () => reject(transaction.error);
+        transaction.onabort = () => reject(transaction.error);
+      });
+    }
+
+    function persistState() {
+      const snapshot = structuredClone(state);
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(STORE_NAME, "readwrite");
+        const store = transaction.objectStore(STORE_NAME);
+        let conflict = false;
+        const request = store.get("revision");
+        request.onsuccess = () => {
+          if ((request.result || 0) !== revision) {
+            conflict = true;
+            transaction.abort();
+            return;
+          }
+          store.put(snapshot, STATE_KEY);
+          store.put(revision + 1, "revision");
+        };
+        transaction.oncomplete = () => { revision++; resolve(); };
+        transaction.onerror = () => reject(transaction.error);
+        transaction.onabort = () => reject(conflict
+          ? new Error("Die Daten wurden in einem anderen Fenster geändert. Bitte neu laden.")
+          : transaction.error || new Error("Speichertransaktion abgebrochen."));
+      });
+    }
+
+    function validMonth(value) {
+      return typeof value === "string" && /^(20\d{2}|21\d{2}|2200)-(0[1-9]|1[0-2])$/.test(value);
+    }
+
+    function validDate(value) {
+      return typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)
+        && validMonth(value.slice(0, 7)) && localDateString(parseDate(value)) === value;
+    }
+
+    function validateState(candidate) {
+      if (!candidate || !candidate.settings || !Array.isArray(candidate.records)) {
+        throw new Error("Einstellungen oder Einträge fehlen.");
+      }
+      const settings = { ...DEFAULT_SETTINGS, ...candidate.settings };
+      for (const key of ["monthlyTarget", "openingBalance", "holidayHours", "vacationEntitlement", "vacationHours", "sickHours"]) {
+        if (typeof settings[key] !== "number" || !Number.isFinite(settings[key]) ||
+            Math.abs(settings[key]) > 1000000 || (key !== "openingBalance" && settings[key] < 0)) {
+          throw new Error(`Ungültige Einstellung: ${key}`);
+        }
+      }
+      if (!validMonth(settings.accountStartMonth) || !Number.isInteger(settings.vacationStartYear) ||
+          settings.vacationStartYear < 2000 || settings.vacationStartYear > 2200 ||
+          !Array.isArray(settings.holidayWeekdays) || settings.holidayWeekdays.some(day => !Number.isInteger(day) || day < 0 || day > 6)) {
+        throw new Error("Ungültige Kalender- oder Feiertagseinstellungen.");
+      }
+      settings.holidayWeekdays = [...new Set(settings.holidayWeekdays)];
+      const ids = new Set();
+      const records = candidate.records.map(record => {
+        if (!record || typeof record.id !== "string" || !record.id.trim() || ids.has(record.id) ||
+            !validDate(record.date) || !["work", "vacation", "sick"].includes(record.type)) {
+          throw new Error("Ungültiger Eintrag oder doppelte Eintrags-ID.");
+        }
+        ids.add(record.id);
+        const result = { id: record.id, date: record.date, type: record.type };
+        if (record.type === "vacation") {
+          if (![0.5, 1].includes(record.days)) throw new Error("Ungültige Urlaubstage.");
+          result.days = record.days;
+        }
+        if (record.type === "work") {
+          const mode = record.mode || "range";
+          const pause = record.breakMinutes ?? 0;
+          if (!["range", "duration"].includes(mode) || !Number.isInteger(pause) || pause < 0 || pause >= 1440) {
+            throw new Error("Ungültiger Arbeitsmodus oder Pause.");
+          }
+          let hours = record.hours;
+          if (mode === "range") {
+            const time = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+            if (!time.test(record.start) || !time.test(record.end)) throw new Error("Ungültige Uhrzeit.");
+            hours = (timeToMinutes(record.end) - timeToMinutes(record.start) - pause) / 60;
+            Object.assign(result, { start: record.start, end: record.end });
+          }
+          if (typeof hours !== "number" || !Number.isFinite(hours) || hours <= 0 || hours + pause / 60 > 24) {
+            throw new Error("Ungültige Arbeitsdauer.");
+          }
+          if (record.note != null && typeof record.note !== "string") throw new Error("Ungültige Notiz.");
+          Object.assign(result, { mode, breakMinutes: pause, hours, note: (record.note || "").slice(0, 200) });
+        }
+        return result;
+      });
+      settings.week ??= [0,8,8,8,8,8,0];
+      settings.targetMode ??= "fixed";
+      if (!["week","fixed"].includes(settings.targetMode) || !Array.isArray(settings.week) || settings.week.length !== 7 ||
+          !settings.week.every(h=>Number.isFinite(h) && h>=0 && h<=24)) throw new Error("Ungültiges Wochenmodell.");
+      if (settings.targetMode === "week" && !settings.weekBefore) settings.weekBefore=currentMonth();
+      settings.targetMode="fixed";
+      if (settings.weekBefore && !validMonth(settings.weekBefore)) throw new Error("Ungültiger Wechselmonat.");
+      settings.leaveDays ??= settings.week.flatMap((hours,day)=>hours>0?[day]:[]);
+      settings.rounding ??= "1"; settings.roundScope ??= "all"; settings.roundMarks ??= [5,15];
+      if (!["1","5","10","15","30","60","marks"].includes(settings.rounding) ||
+          !["all","start"].includes(settings.roundScope) || !Array.isArray(settings.roundMarks) ||
+          !settings.roundMarks.length || !settings.roundMarks.every(n=>Number.isInteger(n)&&n>=0&&n<60) ||
+          !Array.isArray(settings.leaveDays) || !settings.leaveDays.every(n=>Number.isInteger(n)&&n>=0&&n<=6))
+        throw new Error("Ungültige Rundungs- oder Urlaubseinstellungen.");
+      const stamps=candidate.stamps ?? [];
+      if (!validStamps(stamps)) throw new Error("Ungültige Stempelzeiten.");
+      return { settings, records, stamps };
+    }
+
+    function absenceError(record) {
+      const others = state.records.filter(item => item.id !== record.id && item.date === record.date);
+      const holiday = holidayCreditForDate(record.date);
+      if (record.type === "vacation" && holiday && holiday.hours > 0) return "Für einen angerechneten Feiertag wird kein Urlaub benötigt.";
+      const entries = [...others, record];
+      const vacations = entries.filter(item => item.type === "vacation");
+      const vacationDays = vacations.reduce((sum, item) => sum + item.days, 0);
+      const sick = entries.filter(item => item.type === "sick");
+      const worked = entries.some(item => item.type === "work");
+      if (vacationDays > 1) return "Pro Datum ist höchstens ein Urlaubstag möglich.";
+      if (sick.length > 1) return "Für diesen Tag ist bereits Krankheit eingetragen.";
+      if (sick.length && (vacations.length || worked)) return "Krankheit kann nicht gleichzeitig mit Urlaub oder Arbeit eingetragen werden.";
+      if (vacationDays >= 1 && worked) return "Ein voller Urlaubstag kann nicht gleichzeitig mit Arbeit eingetragen werden. Wähle gegebenenfalls einen halben Tag.";
+      return "";
+    }
+
+    function makeId() {
+      return crypto.randomUUID
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+
+    function hoursText(value) {
+      const rounded = Math.abs(value) < 0.005 ? 0 : value;
+      return `${rounded.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Std.`;
+    }
+
+    function signedHoursText(value) {
+      if (Math.abs(value) < 0.005) return hoursText(0);
+      return `${value > 0 ? "+" : "-"}${hoursText(Math.abs(value))}`;
+    }
+
+    function monthTitle(ym) {
+      const [year, month] = ym.split("-").map(Number);
+      return new Intl.DateTimeFormat("de-DE", { month: "long", year: "numeric" })
+        .format(new Date(year, month - 1, 1));
+    }
+
+    function easterSunday(year) {
+      const a = year % 19;
+      const b = Math.floor(year / 100);
+      const c = year % 100;
+      const d = Math.floor(b / 4);
+      const e = b % 4;
+      const f = Math.floor((b + 8) / 25);
+      const g = Math.floor((b - f + 1) / 3);
+      const h = (19 * a + b - d - g + 15) % 30;
+      const i = Math.floor(c / 4);
+      const k = c % 4;
+      const l = (32 + 2 * e + 2 * i - h - k) % 7;
+      const m = Math.floor((a + 11 * h + 22 * l) / 451);
+      const month = Math.floor((h + l - 7 * m + 114) / 31);
+      const day = ((h + l - 7 * m + 114) % 31) + 1;
+      return new Date(year, month - 1, day, 12);
+    }
+
+    function holidaysForYear(year) {
+      if (holidayCache.has(year)) return holidayCache.get(year);
+
+      const easter = easterSunday(year);
+      const move = (days) => {
+        const date = new Date(easter);
+        date.setDate(date.getDate() + days);
+        return date;
+      };
+
+      const fixed = [
+        [`${year}-01-01`, "Neujahr"],
+        [`${year}-01-06`, "Heilige Drei Könige"],
+        [`${year}-05-01`, "Tag der Arbeit"],
+        [`${year}-10-03`, "Tag der Deutschen Einheit"],
+        [`${year}-11-01`, "Allerheiligen"],
+        [`${year}-12-25`, "1. Weihnachtstag"],
+        [`${year}-12-26`, "2. Weihnachtstag"]
+      ];
+
+      const movable = [
+        [move(-2), "Karfreitag"],
+        [move(1), "Ostermontag"],
+        [move(39), "Christi Himmelfahrt"],
+        [move(50), "Pfingstmontag"],
+        [move(60), "Fronleichnam"]
+      ];
+
+      const holidays = new Map([
+        ...fixed,
+        ...movable.map(([date, name]) => [localDateString(date), name])
+      ]);
+      holidayCache.set(year, holidays);
+      return holidays;
+    }
+
+    function holidayNameForDate(dateKey) {
+      return holidaysForYear(parseDate(dateKey).getFullYear()).get(dateKey) || null;
+    }
+
+    function holidayCreditForDate(dateKey) {
+      const date = parseDate(dateKey);
+      const name = holidayNameForDate(dateKey);
+      if (!name || !state.settings.holidayWeekdays.includes(date.getDay())) return null;
+      return { name, hours: Number(state.settings.holidayHours) || 0 };
+    }
+
+    function monthStats(ym) {
+      const records = state.records.filter((record) => record.date.startsWith(`${ym}-`));
+      const work = records.filter((record) => record.type === "work")
+        .reduce((sum, record) => sum + Number(record.hours || 0), 0);
+      const vacationDays = records.filter(record => record.type === "vacation")
+        .reduce((sum, record) => sum + effectiveVacationDays(record), 0);
+      const vacationHours = records.filter(record => record.type === "vacation")
+        .reduce((sum, record) => sum + recordHours(record), 0);
+      const sickRecords = records.filter(record => record.type === "sick");
+      const sickDays = new Set(sickRecords.map(record => record.date)).size;
+      const sickHours = sickRecords.reduce((sum, record) => sum + recordHours(record), 0);
+      const [year, month] = ym.split("-").map(Number);
+      const days = new Date(year, month, 0).getDate();
+
+      let holidayHours = 0;
+      for (let day = 1; day <= days; day++) {
+        holidayHours += holidayCreditForDate(`${ym}-${String(day).padStart(2, "0")}`)?.hours || 0;
+      }
+
+      const credited = work + vacationHours + sickHours + holidayHours;
+      const target = state.settings.weekBefore && ym < state.settings.weekBefore ? weekMonthGoal(ym) : Number(state.settings.monthlyTarget) || 0;
+
+      return {
+        records, work, vacationDays, vacationHours, sickDays, sickHours,
+        holidayHours, credited, target, delta: credited - target
+      };
+    }
+
+    function balanceBeforeMonth(ym) {
+      const start = state.settings.accountStartMonth || currentMonth();
+      let balance = Number(state.settings.openingBalance) || 0;
+      if (ym < start) return 0;
+      if (ym === start) return balance;
+
+      const current = currentMonth();
+      let cursor = start;
+      let iterations = 0;
+
+      while (cursor < ym && cursor < current && iterations < 2412) {
+        balance += monthStats(cursor).delta;
+        cursor = addMonths(cursor, 1);
+        iterations++;
+      }
+
+      return balance;
+    }
+
+    function monthIsClosed(ym) {
+      return ym < currentMonth() && ym >= (state.settings.accountStartMonth || currentMonth());
+    }
+
+    function closingBalanceForMonth(ym) {
+      const opening = balanceBeforeMonth(ym);
+      return monthIsClosed(ym) ? opening + monthStats(ym).delta : opening;
+    }
+
+    function vacationBalanceAt(year) {
+      const firstYear = Number(state.settings.vacationStartYear) || year;
+      if (year < firstYear) return 0;
+
+      let balance = (Number(state.settings.vacationEntitlement) || 0) * (year - firstYear + 1);
+      for (const record of state.records) {
+        const recordYear = Number(record.date.slice(0, 4));
+        if (record.type === "vacation" && recordYear >= firstYear && recordYear <= year) {
+          balance -= effectiveVacationDays(record);
+        }
+      }
+      return balance;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[char]);
+    }
+
+    function dateRecords(dateKey) {
+      return state.records
+        .filter((record) => record.date === dateKey)
+        .sort((a, b) => String(a.start || "").localeCompare(String(b.start || "")));
+    }
+
+    function dayInfo(dateKey) {
+      const records = dateRecords(dateKey);
+      const workRecords = records.filter((record) => record.type === "work");
+      return {
+        records,
+        workRecords,
+        workHours: workRecords.reduce((sum, record) => sum + Number(record.hours || 0), 0),
+        vacationDays: records.filter((record) => record.type === "vacation")
+          .reduce((sum, record) => sum + Number(record.days || 0), 0),
+        sick: records.some((record) => record.type === "sick"),
+        holidayName: holidayNameForDate(dateKey),
+        holidayCredit: holidayCreditForDate(dateKey)
+      };
+    }
+
+    function recordTypeName(record) {
+      if (record.type === "work") return "Arbeitszeit";
+      if (record.type === "vacation") {
+        return Number(record.days) === 0.5 ? "Urlaub (halber Tag)" : "Urlaub";
+      }
+      return "Krankheit";
+    }
+
+    function effectiveVacationDays(record) {
+      if (record.type !== "vacation" || (holidayCreditForDate(record.date)?.hours || 0) > 0) return 0;
+      const sameDay = state.records.filter(item => item.date === record.date);
+      if (sameDay.some(item => item.type === "sick")) return 0;
+      let used = 0;
+      for (const item of sameDay.filter(item => item.type === "vacation")) {
+        const days = Math.min(item.days, Math.max(0, 1 - used));
+        if (item.id === record.id) return days;
+        used += days;
+      }
+      return 0;
+    }
+
+    function recordHours(record) {
+      if (record.type === "work") return record.hours;
+      if (record.type === "vacation") return effectiveVacationDays(record) * state.settings.vacationHours;
+      if ((holidayCreditForDate(record.date)?.hours || 0) > 0) return 0;
+      const first = state.records.find(item => item.date === record.date && item.type === "sick");
+      return first?.id === record.id ? state.settings.sickHours : 0;
+    }
+
+    function recordDetail(record) {
+      if (record.type === "work") {
+        const time = record.mode === "range"
+          ? `${record.start}–${record.end}`
+          : "Dauer direkt eingegeben";
+        const note = record.note ? ` · ${escapeHtml(record.note)}` : "";
+        return `${time} · Gesamtpause ${Number(record.breakMinutes || 0)} Min.${note}`;
+      }
+      if (record.type === "vacation") {
+        return `${Number(record.days) === 0.5 ? "Halber Urlaubstag" : "Urlaub"} · ${hoursText(recordHours(record))}`;
+      }
+      return `Krankheit · ${hoursText(recordHours(record))}`;
+    }
+
+    function renderOverview() {
+      const stats = monthStats(selectedMonth);
+      const opening = balanceBeforeMonth(selectedMonth);
+      const closed = monthIsClosed(selectedMonth);
+      const active = selectedMonth >= state.settings.accountStartMonth;
+      const closing = closingBalanceForMonth(selectedMonth);
+
+      $("overviewHeading").textContent = monthTitle(selectedMonth);
+      $("targetMetric").textContent = hoursText(stats.target);
+      $("creditedMetric").textContent = hoursText(stats.credited);
+      $("remainingMetric").textContent = hoursText(Math.max(0, stats.target - stats.credited));
+
+      $("closedDelta").classList.toggle("hidden", !closed);
+      $("deltaMetric").textContent = signedHoursText(stats.delta);
+      $("deltaMetric").className = stats.delta >= 0 ? "positive" : "negative";
+
+      $("carryMetric").textContent = signedHoursText(opening);
+      $("closingMetric").textContent = !active ? "Nicht aktiv" : closed ? signedHoursText(closing) : "Noch offen";
+      $("closingMetric").className = closed ? (closing >= 0 ? "positive" : "negative") : "";
+
+      $("accountExplanation").textContent = !active
+        ? "Dieser Monat liegt vor dem Start des Zeitkontos und wird nicht in den Saldo übernommen."
+        : closed
+        ? "Der Monat ist abgeschlossen. Nachträgliche Änderungen berechnen spätere Überträge neu."
+        : "Die Monatsdifferenz ist vorläufig. Sie wird erst nach Monatsende zum Zeitkonto addiert und in den Folgemonat übertragen.";
+
+      const year = Number(selectedMonth.slice(0, 4));
+      $("vacationBalance").textContent =
+        `Urlaubsstand ${year} inkl. erfasster Planung: ${vacationBalanceAt(year).toLocaleString("de-DE", { maximumFractionDigits: 2 })} Tage verfügbar.`;
+
+      renderEntries();
+    }
+
+    function renderEntries() {
+      const container = $("entriesList");
+      const [year, month] = selectedMonth.split("-").map(Number);
+      const days = new Date(year, month, 0).getDate();
+      const html = [];
+
+      for (let day = 1; day <= days; day++) {
+        const dateKey = `${selectedMonth}-${String(day).padStart(2, "0")}`;
+        const info = dayInfo(dateKey);
+        const dateLabel = new Intl.DateTimeFormat("de-DE", {
+          weekday: "short", day: "numeric", month: "short"
+        }).format(parseDate(dateKey));
+
+        if (info.holidayName) {
+          html.push(`<div class="entry"><div>
+            <div class="entry-title">${dateLabel} · Feiertag: ${escapeHtml(info.holidayName)}</div>
+            <div class="entry-detail">${info.holidayCredit
+              ? `${hoursText(info.holidayCredit.hours)} angerechnet`
+              : "Nach Einstellung nicht angerechnet"}</div>
+          </div></div>`);
+        }
+
+        for (const record of info.records) {
+          html.push(`<div class="entry">
+            <div>
+              <div class="entry-title">${dateLabel} · ${recordTypeName(record)}</div>
+              <div class="entry-detail">${recordDetail(record)}</div>
+            </div>
+            <div class="row">
+              <span class="entry-hours">${hoursText(recordHours(record))}</span>
+              <button class="secondary small" type="button" data-edit="${escapeHtml(record.id)}">Bearbeiten</button>
+              <button class="danger small" type="button" data-delete="${escapeHtml(record.id)}">Löschen</button>
+            </div>
+          </div>`);
+        }
+      }
+
+      container.innerHTML = html.length
+        ? html.join("")
+        : `<p class="muted">Für diesen Monat sind noch keine Einträge vorhanden.</p>`;
+
+      container.querySelectorAll("[data-edit]").forEach((button) => {
+        button.addEventListener("click", () => openEditor(button.dataset.edit));
+      });
+
+      container.querySelectorAll("[data-delete]").forEach((button) => {
+        button.addEventListener("click", () => deleteRecord(button.dataset.delete));
+      });
+    }
+
+    function calendarStatus(info) {
+      if (info.workHours > 0) {
+        return `Arbeit ${info.workHours.toLocaleString("de-DE", { maximumFractionDigits: 1 })}h`;
+      }
+      if (info.vacationDays > 0) return "Urlaub";
+      if (info.sick) return "Krankheit";
+      if (info.holidayName) return info.holidayCredit ? "Feiertag" : "Feiertag*";
+      return "Frei";
+    }
+
+    function renderCalendar() {
+      const [year, month] = selectedMonth.split("-").map(Number);
+      $("calendarSubtitle").textContent = monthTitle(selectedMonth);
+
+      $("calendarWeekdays").innerHTML = WEEKDAYS_MON_FIRST
+        .map((day) => `<div class="calendar-weekday" role="columnheader">${day}</div>`)
+        .join("");
+
+      const firstDay = new Date(year, month - 1, 1, 12);
+      const offset = (firstDay.getDay() + 6) % 7;
+      const daysInMonth = new Date(year, month, 0).getDate();
+      const cells = [];
+
+      for (let i = 0; i < offset; i++) {
+        cells.push(`<div class="calendar-day outside" aria-hidden="true"></div>`);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateKey = `${selectedMonth}-${String(day).padStart(2, "0")}`;
+        const info = dayInfo(dateKey);
+        const classes = ["calendar-day"];
+        if (info.workHours > 0) classes.push("workday");
+        else if (info.vacationDays > 0) classes.push("vacation");
+        else if (info.sick) classes.push("sick");
+        if (info.holidayName) classes.push("holiday");
+        if (dateKey === selectedCalendarDate) classes.push("selected");
+
+        const status = calendarStatus(info);
+        cells.push(`
+          <button class="${classes.join(" ")}" type="button" role="gridcell"
+            data-calendar-date="${dateKey}"
+            aria-label="${escapeHtml(dateKey)}: ${escapeHtml(status)}${info.holidayName ? `, Feiertag ${escapeHtml(info.holidayName)}` : ""}">
+            <span class="day-number">${day}</span>
+            <span class="day-status">${escapeHtml(status)}</span>
+            ${info.workHours > 0 ? `<span class="day-hours">${escapeHtml(hoursText(info.workHours))}</span>` : ""}
+          </button>`);
+      }
+
+      const remainder = (7 - ((offset + daysInMonth) % 7)) % 7;
+      for (let i = 0; i < remainder; i++) {
+        cells.push(`<div class="calendar-day outside" aria-hidden="true"></div>`);
+      }
+
+      $("calendarGrid").innerHTML = cells.join("");
+      $("calendarGrid").querySelectorAll("[data-calendar-date]").forEach((button) => {
+        button.addEventListener("click", () => {
+          selectedCalendarDate = button.dataset.calendarDate;
+          renderCalendar();
+        });
+      });
+
+      renderSelectedDay();
+    }
+
+    function renderSelectedDay() {
+      const title = $("selectedDayHeading");
+      const container = $("selectedDayEntries");
+      if (!selectedCalendarDate) {
+        title.textContent = "Tag auswählen";
+        container.innerHTML = "";
+        return;
+      }
+
+      const info = dayInfo(selectedCalendarDate);
+      title.textContent = new Intl.DateTimeFormat("de-DE", {
+        weekday: "long", day: "numeric", month: "long", year: "numeric"
+      }).format(parseDate(selectedCalendarDate));
+
+      const items = [];
+
+      if (info.holidayName) {
+        items.push(`<div class="entry"><div>
+          <div class="entry-title">Feiertag: ${escapeHtml(info.holidayName)}</div>
+          <div class="entry-detail">${info.holidayCredit
+            ? `${hoursText(info.holidayCredit.hours)} werden angerechnet.`
+            : "Wird nach den Feiertagseinstellungen nicht angerechnet."}</div>
+        </div></div>`);
+      }
+
+      for (const record of info.records) {
+        items.push(`<div class="entry">
+          <div>
+            <div class="entry-title">${recordTypeName(record)}</div>
+            <div class="entry-detail">${recordDetail(record)}</div>
+          </div>
+          <div class="row">
+            <span class="entry-hours">${hoursText(recordHours(record))}</span>
+            <button class="secondary small" type="button" data-day-edit="${escapeHtml(record.id)}">Bearbeiten</button>
+          </div>
+        </div>`);
+      }
+
+      if (!info.records.length && !info.holidayName) {
+        items.push(`<p class="hint">Keine Arbeitszeit erfasst – dieser Tag wird als frei angezeigt.</p>`);
+      }
+
+      container.innerHTML = items.join("");
+      container.querySelectorAll("[data-day-edit]").forEach((button) => {
+        button.addEventListener("click", () => openEditor(button.dataset.dayEdit));
+      });
+    }
+
+    let activeTab = "overview";
+    function setActiveTab(tab) {
+      activeTab = tab;
+      $("sectionTitle").classList.toggle("hidden", tab === "overview");
+      $("sectionTitle").textContent = tab === "calendar" ? "Kalender" : "Auswertung";
+      $("todayPanel").classList.toggle("hidden", tab !== "overview");
+      $("monthBar").classList.toggle("hidden", tab === "overview");
+      $("overviewPanel").classList.toggle("hidden", tab !== "more");
+      $("calendarPanel").classList.toggle("hidden", tab !== "calendar");
+      $("morePanel").classList.toggle("hidden", tab !== "more");
+
+      for (const id of ["overviewTab", "calendarTab", "moreTab"]) {
+        const active = id === `${tab}Tab`;
+        $(id).classList.toggle("active", active);
+        if (active) $(id).setAttribute("aria-current", "page");
+        else $(id).removeAttribute("aria-current");
+      }
+
+      if (tab === "calendar") renderCalendar();
+    }
+
+    function vacationDates(start,end) {
+      if (!validDate(start) || !validDate(end) || end < start) throw new Error("Bitte einen gültigen Urlaubszeitraum wählen.");
+      const dates = [];
+      const cursor=parseDate(start);
+      while(localDateString(cursor)<=end) {
+        const date=localDateString(cursor);
+        if((state.settings.leaveDays ?? [1,2,3,4,5]).includes(cursor.getDay()) && !(holidayCreditForDate(date)?.hours>0)) dates.push(date);
+        cursor.setDate(cursor.getDate()+1);
+      }
+      return dates;
+    }
+    function previewVacation() {
+      const end=$("vacationEnd").value;
+      if (!end || editingId || $("entryType").value!=="vacation") { $("vacationPreview").textContent=""; return; }
+      try {
+        const count=vacationDates($("entryDate").value,end).length;
+        $("vacationPreview").textContent = count+" geplante Arbeitstage · "+(count*Number($("vacationDays").value)).toLocaleString("de-DE")+" Urlaubstage";
+      } catch(error) { $("vacationPreview").textContent=error.message; }
+    }
+    for(const id of ["entryDate","vacationDays","vacationEnd"]) $(id).addEventListener("change",previewVacation);
+    function setEntryTypeVisibility() {
+      const type = $("entryType").value;
+      $("workFields").classList.toggle("hidden", type !== "work");
+      $("vacationFields").classList.toggle("hidden", type !== "vacation");
+      $("sickFields").classList.toggle("hidden", type !== "sick");
+      setWorkModeVisibility();
+      $("vacationDays").disabled = type !== "vacation";
+      $("vacationEnd").disabled = type !== "vacation" || Boolean(editingId);
+      $("vacationInterval").classList.toggle("hidden", Boolean(editingId));
+      previewVacation();
+    }
+
+    function setWorkModeVisibility() {
+      const isRange = $("workMode").value === "range";
+      $("rangeFields").classList.toggle("hidden", !isRange);
+      $("durationFields").classList.toggle("hidden", isRange);
+      const work = $("entryType").value === "work";
+      for (const id of ["startTime", "endTime"]) $(id).disabled = !work || !isRange;
+      $("durationHours").disabled = !work || isRange;
+      $("breakMinutes").disabled = !work;
+      $("workNote").disabled = !work;
+    }
+
+    function openEntry(date = localDateString()) {
+      returnFocus = document.activeElement;
+      editingId = null;
+      $("entryForm").reset();
+      $("entryDate").value = date;
+      $("entryType").value = "work";
+      $("workMode").value = "range";
+      $("breakMinutes").value = "0";
+      $("entryDialogTitle").textContent = "Eintrag erfassen";
+      $("saveEntryButton").textContent = "Eintrag speichern";
+      $("cancelEditButton").classList.add("hidden");
+      $("entryStatus").textContent = "";
+      setEntryTypeVisibility();
+      setWorkModeVisibility();
+      document.body.style.overflow = "hidden";
+      $("entryOverlay").classList.remove("hidden");
+      $("startTime").focus({ preventScroll: true });
+    }
+
+    function openEditor(id) {
+      const record = state.records.find((item) => item.id === id);
+      if (!record) return;
+
+      returnFocus = document.activeElement;
+      $("entryStatus").textContent = "";
+      editingId = id;
+      $("entryForm").reset();
+      $("entryDate").value = record.date;
+      $("entryType").value = record.type;
+
+      if (record.type === "work") {
+        $("workMode").value = record.mode || "range";
+        $("startTime").value = record.start || "";
+        $("endTime").value = record.end || "";
+        $("durationHours").value = record.mode === "duration"
+          ? Math.round((Number(record.hours || 0) + Number(record.breakMinutes || 0) / 60)*100)/100
+          : "";
+        $("breakMinutes").value = record.breakMinutes || 0;
+        $("workNote").value = record.note || "";
+      } else if (record.type === "vacation") {
+        $("vacationDays").value = String(record.days || 1);
+      }
+
+      $("entryDialogTitle").textContent = "Eintrag bearbeiten";
+      $("saveEntryButton").textContent = "Änderungen speichern";
+      $("cancelEditButton").classList.remove("hidden");
+      setEntryTypeVisibility();
+      setWorkModeVisibility();
+      document.body.style.overflow = "hidden";
+      $("entryOverlay").classList.remove("hidden");
+      $("entryDate").focus({ preventScroll: true });
+    }
+
+    function closeEntry() {
+      $("entryOverlay").classList.add("hidden");
+      document.body.style.overflow = "";
+      returnFocus?.focus({ preventScroll: true });
+      editingId = null;
+    }
+
+    function overlapsExistingRange(record) {
+      if (record.type !== "work" || record.mode !== "range") return false;
+
+      const start = timeToMinutes(record.start);
+      const end = timeToMinutes(record.end);
+
+      return state.records.some((existing) => {
+        if (existing.id === record.id || existing.date !== record.date ||
+            existing.type !== "work" || existing.mode !== "range") return false;
+
+        return start < timeToMinutes(existing.end) && end > timeToMinutes(existing.start);
+      });
+    }
+
+    const deleteRecord = withWriteLock(async function(id) {
+      const index = state.records.findIndex((record) => record.id === id);
+      if (index < 0) return;
+
+      clearTimeout(undoTimeout);
+      const removed = state.records[index];
+      deletedRecord = { record: removed, index };
+      state.records.splice(index, 1);
+
+      try {
+        await persistState();
+        renderAll();
+        showUndoToast();
+      } catch (error) {
+        state.records.splice(index, 0, removed);
+        deletedRecord = null;
+        alert(`Der Eintrag konnte nicht gelöscht werden. ${error.message}`);
+      }
+    });
+
+    function showUndoToast() {
+      $("undoToast").classList.remove("hidden");
+      clearTimeout(undoTimeout);
+      undoTimeout = setTimeout(() => {
+        deletedRecord = null;
+        $("undoToast").classList.add("hidden");
+      }, 7000);
+    }
+
+    const undoDelete = withWriteLock(async function() {
+      if (!deletedRecord) return;
+      const deleted = deletedRecord;
+      if (state.records.some(record => record.id === deleted.record.id)) return;
+      const conflict = absenceError(deleted.record);
+      if (conflict) { alert(conflict); return; }
+      const previous = [...state.records];
+      state.records.splice(Math.min(deleted.index, state.records.length), 0, deleted.record);
+      try {
+        await persistState();
+        deletedRecord = null;
+        clearTimeout(undoTimeout);
+        $("undoToast").classList.add("hidden");
+        renderAll();
+      } catch (error) {
+        state.records = previous;
+        alert(`Wiederherstellen fehlgeschlagen: ${error.message}`);
+      }
+    });
+
+    const defaultWeek = [0, 8, 8, 8, 8, 8, 0];
+    const minuteMs = 60000;
+    const nowMinute = () => Math.floor(Date.now() / minuteMs) * minuteMs;
+    const timeLabel = time => new Date(time).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+    function durationLabel(minutes) {
+      const n = Math.round(Math.abs(minutes));
+      return (minutes < 0 ? "−" : "") + Math.floor(n / 60) + ":" + String(n % 60).padStart(2, "0");
+    }
+    function dayGoal(date) {
+      return (state.settings.week || defaultWeek)[parseDate(date).getDay()];
+    }
+    function weekMonthGoal(month) {
+      const [year, number] = month.split("-").map(Number);
+      const count = new Date(year, number, 0).getDate();
+      let sum = 0;
+      for (let d = 1; d <= count; d++) sum += dayGoal(month + "-" + String(d).padStart(2, "0"));
+      return sum;
+    }
+    function effectivePunch(time, first) {
+      const {rounding="1", roundScope="all", roundMarks=[5,15]}=state.settings;
+      if(rounding==="1" || (!first && roundScope==="start")) return time;
+      // Advance in real minutes so the local clock is respected across DST changes.
+      for (let offset=0; offset<=60; offset++) {
+        const candidate=time+offset*minuteMs, minute=new Date(candidate).getMinutes();
+        if(rounding==="marks" ? roundMarks.includes(minute) : minute % Number(rounding)===0) return candidate;
+      }
+      return time;
+    }
+    function validStamps(stamps) {
+      return Array.isArray(stamps) && stamps.every((t,i) => Number.isSafeInteger(t) &&
+        t % minuteMs === 0 && validDate(localDateString(new Date(t))) && (!i || t >= stamps[i-1]));
+    }
+    // Even-indexed intervals are work, odd-indexed intervals are breaks.
+    function minutesInWindow(stamps, end, from, until) {
+      let work = 0, pause = 0;
+      stamps.forEach((start, index) => {
+        const stop = stamps[index+1] ?? end;
+        const minutes = Math.max(0, Math.min(stop, until, end) - Math.max(start, from)) / minuteMs;
+        if (index % 2) pause += minutes;
+        else work += minutes;
+      });
+      return {work, pause};
+    }
+    function midnight(time, offset = 0) {
+      const day = new Date(time);
+      day.setHours(0,0,0,0);
+      day.setDate(day.getDate()+offset);
+      return day.getTime();
+    }
+    function clockRecords(stamps, end) {
+      if (end < stamps.at(-1)) throw new Error("Der Feierabend liegt vor dem letzten Stempel.");
+      const records = [];
+      for (let day = midnight(stamps[0]); day <= end; day = midnight(day,1)) {
+        const next = midnight(day,1);
+        const {work,pause} = minutesInWindow(stamps,end,day,next);
+        if (!work) continue;
+        const start = timeLabel(Math.max(day,stamps[0]));
+        const stop = timeLabel(Math.min(next,end));
+        const range = timeToMinutes(stop)-timeToMinutes(start) === work+pause;
+        records.push({id:makeId(), date:localDateString(new Date(day)), type:"work",
+          mode:range ? "range" : "duration", ...(range ? {start,end:stop} : {}),
+          hours:work/60, breakMinutes:pause, note:""});
+      }
+      return records;
+    }
+    function renderClock() {
+      const now = nowMinute(), today = localDateString(new Date(now));
+      const stamps = state.stamps || [];
+      const running = stamps.length % 2 === 1;
+      const booked = dateRecords(today).filter(record => record.type === "work");
+      const live = minutesInWindow(stamps,now,midnight(now),midnight(now,1));
+      const work = live.work + booked.reduce((sum,r)=>sum+r.hours*60,0);
+      const pause = live.pause + booked.reduce((sum,r)=>sum+r.breakMinutes,0);
+
+      $("todayDate").textContent = new Date(now).toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long"});
+      $("netTime").textContent = durationLabel(work);
+      $("clockState").textContent = running ? "Arbeit läuft" : stamps.length ? "In Pause" : booked.length ? "Tag abgeschlossen" : "Noch nicht gestartet";
+      $("clockState").className = "clock-state " + (running ? "working" : stamps.length ? "paused" : "");
+      $("punch").textContent = running ? "Pause starten" : stamps.length ? "Weiterarbeiten" : "Arbeit starten";
+      $("finish").classList.toggle("hidden", !stamps.length);
+      const starts = booked.filter(r=>r.mode==="range").map(r=>r.start);
+      if (stamps.length) starts.push(timeLabel(Math.max(stamps[0],midnight(now))));
+      $("dayStart").textContent = starts.sort()[0] || "—";
+      if (stamps.length && stamps.at(-1)>now) $("clockState").textContent =
+        (running ? "Arbeitszeit ab " : "Pause ab ")+timeLabel(stamps.at(-1));
+      $("dayBreak").textContent = Math.round(pause) + " Min.";
+
+    }
+    function renderToday() {
+      renderClock();
+      const today = localDateString(), month = today.slice(0,7);
+      const records = dateRecords(today);
+      const stamps = state.stamps || [];
+      const rows = records.map(r=>'<div class="stamp"><span>'+recordTypeName(r)+(r.mode==='range'?' '+escapeHtml(r.start)+'–'+escapeHtml(r.end):'')+' · '+durationLabel(recordHours(r)*60)+' Std.</span><button class="quiet" data-today-edit="'+escapeHtml(r.id)+'">Bearbeiten</button></div>');
+      stamps.forEach((t,i)=>{
+        const value = localDateString(new Date(t))+"T"+timeLabel(t);
+        const label = i===0 ? "Arbeitsbeginn" : i%2 ? "Pausenbeginn" : "Weiterarbeit";
+        rows.push('<div class="stamp"><label for="stamp'+i+'">'+label+'</label><input type="datetime-local" id="stamp'+i+'" data-stamp="'+i+'" value="'+value+'"></div>');
+      });
+      if (stamps.length) rows.push('<button class="quiet" id="correctStamps">Zeiten übernehmen</button><button class="quiet" id="discardClock">Schicht verwerfen</button>');
+      $("timeline").innerHTML = rows.join("") || '<p class="hint">Heute sind noch keine Zeiten erfasst.</p>';
+      $("timeline").querySelectorAll("[data-today-edit]").forEach(b=>b.addEventListener("click",()=>openEditor(b.dataset.todayEdit)));
+      if (stamps.length) {
+        $("correctStamps")?.addEventListener("click", correctStamps);
+        $("discardClock")?.addEventListener("click", withWriteLock(async()=>{
+          if(confirm("Die laufende Schicht mit allen Stempeln verwerfen?")) await commitClock([]);
+        }));
+      }
+      const eligible = month >= state.settings.accountStartMonth;
+      const total = balanceBeforeMonth(month);
+      const cutoff = parseDate(month+"-01");
+      cutoff.setDate(0);
+      $("balanceLabel").textContent="Überstunden · Stand "+cutoff.toLocaleDateString("de-DE",{day:"numeric",month:"long",year:"numeric"});
+      $("todayBalance").textContent=eligible ? (total>0?"+":"")+durationLabel(total*60)+" Std." : "Nicht aktiv";
+    }
+    async function commitClock(stamps, records = []) {
+      const before = state;
+      state = {...state, stamps, records:[...state.records,...records]};
+      try { await persistState(); }
+      catch(error) { state=before; throw error; }
+      $("clockMessage").textContent="";
+      renderAll();
+    }
+    const correctStamps = withWriteLock(async () => {
+      const stamps = [...$("timeline").querySelectorAll("[data-stamp]")].map(input=>new Date(input.value).getTime());
+      if (!stamps.length || !validStamps(stamps) || stamps.some((t,i)=>t>nowMinute() && t!==state.stamps[i])) {
+        $("clockMessage").textContent="Bitte gültige Stempelzeiten in zeitlicher Reihenfolge bis jetzt eingeben."; return;
+      }
+      await commitClock(stamps);
+    });
+    $("punch").addEventListener("click",withWriteLock(async()=>{
+      const stamps=state.stamps || [], now=nowMinute();
+      const bookedAt=effectivePunch(now,!stamps.length);
+      if (bookedAt < (stamps.at(-1) || 0)) { $("clockMessage").textContent="Der letzte Stempel liegt noch in der Zukunft. Bitte korrigieren oder warten."; return; }
+      await commitClock([...stamps,bookedAt]);
+      if(bookedAt!==now) $("clockMessage").textContent="Gebucht für "+timeLabel(bookedAt)+" Uhr.";
+    }));
+    $("finish").addEventListener("click",withWriteLock(async()=>{
+      if (!state.stamps?.length) return;
+      const now=nowMinute(), end=effectivePunch(now,false);
+      if(end<state.stamps.at(-1)) { $("clockMessage").textContent="Der letzte Stempel liegt nach dem Feierabend. Bitte korrigieren oder warten."; return; }
+      const records=clockRecords(state.stamps,end);
+      if(!records.length) { $("clockMessage").textContent="Es ist noch keine volle Arbeitsminute vergangen."; return; }
+      for(const record of records){
+        const conflict=absenceError(record);
+        if(conflict){ $("clockMessage").textContent=conflict; return; }
+        if(overlapsExistingRange(record) && !confirm("Der Zeitraum überschneidet sich mit einem Eintrag. Trotzdem abschließen?")) return;
+      }
+      await commitClock([],records);
+      $("clockMessage").textContent="Feierabend gebucht für "+timeLabel(end)+" Uhr.";
+    }));
+    $("addToday").addEventListener("click",()=>openEntry(localDateString()));
+    $("preferences").addEventListener("click",()=>{
+      setActiveTab("more");
+      $("settingsContent").classList.remove("hidden"); $("settingsToggle").textContent="Ausblenden";
+      renderSettings(); $("settingsContent").scrollIntoView({block:"start"});
+    });
+
+    function showRoundingFields() {
+      $("marksField").classList.toggle("hidden",$("rounding").value!=="marks");
+      $("scopeField").classList.toggle("hidden",$("rounding").value==="1");
+    }
+    $("rounding").addEventListener("change",showRoundingFields);
+    $("accountStartMonth").addEventListener("input",()=>{
+      const month=$("accountStartMonth").value;
+      $("accountStartMonthText").textContent=validMonth(month)?monthTitle(month):"Monat wählen";
+    });
+    function renderSettings() {
+      const settings = state.settings;
+      $("rounding").value=settings.rounding || "1";
+      $("roundScope").value=settings.roundScope || "all";
+      $("roundMarks").value=(settings.roundMarks || [5,15]).join(", ");
+      showRoundingFields();
+      $("leaveDays").innerHTML=[1,2,3,4,5,6,0].map(d=>'<label class="weekday"><input type="checkbox" name="leaveDay" value="'+d+'" '+((settings.leaveDays ?? [1,2,3,4,5]).includes(d)?"checked":"")+'>'+WEEKDAYS[d]+'</label>').join("");
+      $("monthlyTarget").value = settings.monthlyTarget;
+      $("openingBalance").value = settings.openingBalance;
+      $("accountStartMonth").value = settings.accountStartMonth;
+      $("accountStartMonthText").textContent=monthTitle(settings.accountStartMonth);
+      $("holidayHours").value = settings.holidayHours;
+      $("vacationEntitlement").value = settings.vacationEntitlement;
+      $("vacationHours").value = settings.vacationHours;
+      $("sickHours").value = settings.sickHours;
+      $("vacationStartYear").value = settings.vacationStartYear;
+
+      $("weekdaySettings").innerHTML = WEEKDAYS.map((name, day) => `
+        <label class="weekday">
+          <input type="checkbox" name="holidayWeekday" value="${day}"
+            ${settings.holidayWeekdays.includes(day) ? "checked" : ""}>
+          ${name}
+        </label>`).join("");
+    }
+
+    function renderAll() {
+      renderToday();
+      $("monthPicker").value = selectedMonth;
+      $("monthPickerText").textContent=monthTitle(selectedMonth);
+      $("reportYear").value = Number(selectedMonth.slice(0, 4));
+      renderOverview();
+      renderCalendar();
+    }
+
+    function timeToMinutes(value) {
+      const [hours, minutes] = value.split(":").map(Number);
+      return hours * 60 + minutes;
+    }
+
+    function showStatus(element, message, type = "") {
+      element.textContent = message;
+      element.className = `status${type ? ` ${type}` : ""}`;
+    }
+
+    $("quickAddButton").addEventListener("click", () => openEntry(activeTab === "overview" ? localDateString() : selectedCalendarDate));
+    $("addDayEntryButton").addEventListener("click", () => openEntry(selectedCalendarDate));
+    $("closeEntryButton").addEventListener("click", closeEntry);
+    $("cancelEditButton").addEventListener("click", () => {
+      editingId = null;
+      closeEntry();
+    });
+    $("undoDeleteButton").addEventListener("click", () => void undoDelete());
+
+    $("entryOverlay").addEventListener("click", (event) => {
+      if (event.target === $("entryOverlay")) closeEntry();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !$("entryOverlay").classList.contains("hidden")) closeEntry();
+    });
+
+    $("overviewTab").addEventListener("click", () => setActiveTab("overview"));
+    $("calendarTab").addEventListener("click", () => setActiveTab("calendar"));
+    $("moreTab").addEventListener("click", () => setActiveTab("more"));
+    $("entryType").addEventListener("change", setEntryTypeVisibility);
+    $("workMode").addEventListener("change", setWorkModeVisibility);
+
+    $("settingsToggle").addEventListener("click", () => {
+      const content = $("settingsContent");
+      const opening = content.classList.contains("hidden");
+      content.classList.toggle("hidden");
+      $("settingsToggle").textContent = opening ? "Ausblenden" : "Anzeigen";
+      if (opening) renderSettings();
+    });
+
+    $("previousMonth").addEventListener("click", () => {
+      if (!validMonth(addMonths(selectedMonth, -1))) return;
+      selectedMonth = addMonths(selectedMonth, -1);
+      selectedCalendarDate = `${selectedMonth}-01`;
+      renderAll();
+    });
+
+    $("nextMonth").addEventListener("click", () => {
+      if (!validMonth(addMonths(selectedMonth, 1))) return;
+      selectedMonth = addMonths(selectedMonth, 1);
+      selectedCalendarDate = `${selectedMonth}-01`;
+      renderAll();
+    });
+
+    $("monthPicker").addEventListener("change", () => {
+      if (!validMonth($("monthPicker").value)) return;
+      selectedMonth = $("monthPicker").value;
+      selectedCalendarDate = `${selectedMonth}-01`;
+      renderAll();
+    });
+
+    $("entryForm").addEventListener("submit", withWriteLock(async (event) => {
+      event.preventDefault();
+      const status = $("entryStatus");
+      const date = $("entryDate").value;
+
+      if (!validDate(date)) {
+        showStatus(status, "Bitte ein Datum auswählen.", "error");
+        return;
+      }
+
+      const type = $("entryType").value;
+      const record = { id: editingId || makeId(), date, type };
+
+      if (type === "work") {
+        const mode = $("workMode").value;
+        const breakMinutes = Number($("breakMinutes").value || 0);
+
+        if (!Number.isInteger(breakMinutes) || breakMinutes < 0) {
+          showStatus(status, "Bitte eine gültige Pausenzeit eingeben.", "error");
+          return;
+        }
+
+        let hours;
+
+        if (mode === "range") {
+          const start = $("startTime").value;
+          const end = $("endTime").value;
+          if (!start || !end) {
+            showStatus(status, "Bitte Beginn und Ende eingeben.", "error");
+            return;
+          }
+
+          const elapsed = timeToMinutes(end) - timeToMinutes(start);
+          if (elapsed <= 0) {
+            showStatus(status, "Das Ende muss nach dem Beginn liegen. Schichten über Mitternacht werden nicht unterstützt.", "error");
+            return;
+          }
+          if (breakMinutes >= elapsed) {
+            showStatus(status, "Die Gesamtpause muss kürzer als die Arbeitszeit sein.", "error");
+            return;
+          }
+
+          hours = (elapsed - breakMinutes) / 60;
+          Object.assign(record, { mode, start, end, breakMinutes });
+        } else {
+          const duration = Number($("durationHours").value);
+          if (!Number.isFinite(duration) || duration <= 0 || duration > 24) {
+            showStatus(status, "Bitte eine gültige Arbeitsdauer eingeben.", "error");
+            return;
+          }
+
+          hours = duration - breakMinutes / 60;
+          if (hours <= 0) {
+            showStatus(status, "Die Pause darf nicht länger als die eingegebene Dauer sein.", "error");
+            return;
+          }
+          Object.assign(record, { mode, breakMinutes });
+        }
+
+        record.hours = hours;
+        record.note = $("workNote").value.trim();
+
+        if (overlapsExistingRange(record) &&
+            !confirm("Diese Arbeitszeit überschneidet sich mit einem anderen Arbeitsblock. Trotzdem speichern?")) {
+          return;
+        }
+      } else if (type === "vacation") {
+        record.days = Number($("vacationDays").value);
+      }
+
+      let additions=[record];
+      if(type==="vacation" && !editingId && $("vacationEnd").value) {
+        try {
+          additions=vacationDates(date,$("vacationEnd").value).map(day=>({...record,id:makeId(),date:day}));
+          if(!additions.length) throw new Error("Der Zeitraum enthält keine anrechenbaren Urlaubstage.");
+        } catch(error) { showStatus(status,error.message,"error"); return; }
+      }
+      for (const addition of additions) {
+        const conflict = absenceError(addition);
+        if (conflict) { showStatus(status, addition.date+" · "+conflict, "error"); return; }
+      }
+      const previousRecords = [...state.records];
+      if (editingId) {
+        const index = state.records.findIndex((item) => item.id === editingId);
+        if (index < 0) {
+          showStatus(status, "Der Eintrag wurde nicht gefunden.", "error");
+          return;
+        }
+        state.records[index] = record;
+      } else {
+        state.records.push(...additions);
+      }
+
+      try {
+        await persistState();
+        selectedMonth = date.slice(0, 7);
+        selectedCalendarDate = date;
+        closeEntry();
+        renderAll();
+      } catch (error) {
+        state.records = previousRecords;
+        showStatus(status, `Der Eintrag konnte nicht gespeichert werden. ${error.message}`, "error");
+      }
+    }));
+
+    $("settingsForm").addEventListener("submit", withWriteLock(async (event) => {
+      event.preventDefault();
+      const fields = [
+        ["monthlyTarget", "Monatssoll"],
+        ["openingBalance", "Anfangssaldo"],
+        ["holidayHours", "Feiertagsstunden"],
+        ["vacationEntitlement", "Urlaubsanspruch"],
+        ["vacationHours", "Urlaubsstunden"],
+        ["sickHours", "Krankheitsstunden"],
+        ["vacationStartYear", "Urlaubsstartjahr"]
+      ];
+      const next = { ...state.settings };
+
+      for (const [id, label] of fields) {
+        const input = $(id);
+        const value = Number(input.value);
+        if (!input.value.trim() || !Number.isFinite(value)) {
+          showStatus($("settingsStatus"), `Bitte einen gültigen Wert für „${label}“ eingeben.`, "error");
+          input.focus();
+          return;
+        }
+        if (id !== "openingBalance" && value < 0) {
+          showStatus($("settingsStatus"), `„${label}“ darf nicht negativ sein.`, "error");
+          input.focus();
+          return;
+        }
+        next[id] = value;
+      }
+
+      if (!Number.isInteger(next.vacationStartYear) ||
+          next.vacationStartYear < 2000 ||
+          next.vacationStartYear > 2200) {
+        showStatus($("settingsStatus"), "Bitte ein gültiges Urlaubsstartjahr eingeben.", "error");
+        return;
+      }
+
+      const startMonth = $("accountStartMonth").value;
+      if (!validMonth(startMonth)) {
+        showStatus($("settingsStatus"), "Bitte einen gültigen Startmonat für das Zeitkonto wählen.", "error");
+        return;
+      }
+
+      next.targetMode = "fixed";
+      next.rounding=$("rounding").value;
+      next.roundScope=$("roundScope").value;
+      if(next.rounding==="marks") {
+        const parts=$("roundMarks").value.split(",").map(part=>part.trim());
+        if(!parts.every(part=>/^\d{1,2}$/.test(part) && Number(part)<60)) {
+          showStatus($("settingsStatus"),"Bitte Minuten von 0 bis 59 durch Kommas getrennt eingeben.","error"); return;
+        }
+        next.roundMarks=[...new Set(parts.map(Number))].sort((a,b)=>a-b);
+      }
+      next.leaveDays=[...document.querySelectorAll('input[name="leaveDay"]:checked')].map(input=>Number(input.value));
+      next.accountStartMonth = startMonth;
+      next.holidayWeekdays = [...document.querySelectorAll('input[name="holidayWeekday"]:checked')]
+        .map((input) => Number(input.value));
+
+      const oldSettings = state.settings;
+      try { validateState({ settings: next, records: state.records }); }
+      catch (error) { showStatus($("settingsStatus"), error.message, "error"); return; }
+      state.settings = next;
+
+      try {
+        await persistState();
+        renderAll();
+        renderSettings();
+        showStatus($("settingsStatus"), "Einstellungen gespeichert.", "success");
+      } catch (error) {
+        state.settings = oldSettings;
+        showStatus($("settingsStatus"), `Einstellungen konnten nicht gespeichert werden. ${error.message}`, "error");
+      }
+    }));
+
+    $("exportBackupButton").addEventListener("click", () => {
+      const backup = {
+        format: "arbeitszeit-backup",
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        state
+      };
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `arbeitszeit-backup-${localDateString()}.json`;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showStatus($("backupStatus"), "Backup exportiert.", "success");
+    });
+
+    $("importFile").addEventListener("change", withWriteLock(async (event) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      try {
+        const imported = JSON.parse(await file.text());
+        const candidate = imported?.state;
+
+        if (imported?.format !== "arbeitszeit-backup" ||
+            imported?.version !== 1 ||
+            !candidate?.settings ||
+            !Array.isArray(candidate.records)) {
+          throw new Error("Ungültiges Backup-Format.");
+        }
+
+        const nextState = validateState(candidate);
+        if (!confirm("Das Backup ersetzt die aktuell gespeicherten Daten. Fortfahren?")) return;
+        const previous = state;
+        state = nextState;
+        try { await persistState(); }
+        catch (error) { state = previous; throw error; }
+        clearTimeout(undoTimeout);
+        deletedRecord = null;
+        $("undoToast").classList.add("hidden");
+        closeEntry();
+        renderSettings();
+        renderAll();
+        showStatus($("backupStatus"), "Backup importiert.", "success");
+      } catch (error) {
+        showStatus($("backupStatus"), `Import fehlgeschlagen: ${error.message}`, "error");
+      } finally {
+        event.target.value = "";
+      }
+    }));
+
+    function cp1252Hex(value) {
+      const special = new Map([
+        [0x20ac, 0x80], [0x201a, 0x82], [0x0192, 0x83], [0x201e, 0x84],
+        [0x2026, 0x85], [0x2020, 0x86], [0x2021, 0x87], [0x02c6, 0x88],
+        [0x2030, 0x89], [0x0160, 0x8a], [0x2039, 0x8b], [0x0152, 0x8c],
+        [0x017d, 0x8e], [0x2018, 0x91], [0x2019, 0x92], [0x201c, 0x93],
+        [0x201d, 0x94], [0x2022, 0x95], [0x2013, 0x96], [0x2014, 0x97],
+        [0x02dc, 0x98], [0x2122, 0x99], [0x0161, 0x9a], [0x203a, 0x9b],
+        [0x0153, 0x9c], [0x017e, 0x9e], [0x0178, 0x9f], [0x2212, 0x2d]
+      ]);
+      let result = "";
+
+      for (const char of String(value)) {
+        const code = char.codePointAt(0);
+        const byte = (code >= 0x20 && code <= 0x7e) || (code >= 0xa0 && code <= 0xff)
+          ? code
+          : special.get(code) ?? 0x3f;
+        result += byte.toString(16).padStart(2, "0");
+      }
+
+      return result.toUpperCase();
+    }
+
+    const PT_PER_MM = 72 / 25.4;
+
+    function pdfText(commands, text, xMm, yMm, size, bold, pageHeightMm, color = [0.12, 0.22, 0.212]) {
+      const x = (xMm * PT_PER_MM).toFixed(2);
+      const y = ((pageHeightMm - yMm) * PT_PER_MM).toFixed(2);
+      commands.push(`BT /${bold ? "F2" : "F1"} ${size} Tf ${color.join(" ")} rg 1 0 0 1 ${x} ${y} Tm <${cp1252Hex(text)}> Tj ET\n`);
+    }
+
+    function pdfRect(commands, xMm, yMm, widthMm, heightMm, pageHeightMm, fill, stroke = null) {
+      const x = xMm * PT_PER_MM;
+      const y = (pageHeightMm - yMm - heightMm) * PT_PER_MM;
+      const width = widthMm * PT_PER_MM;
+      const height = heightMm * PT_PER_MM;
+
+      if (fill) commands.push(`${fill.join(" ")} rg\n`);
+      if (stroke) commands.push(`${stroke.join(" ")} RG 0.45 w\n`);
+      commands.push(`${x.toFixed(2)} ${y.toFixed(2)} ${width.toFixed(2)} ${height.toFixed(2)} re `);
+      commands.push(fill && stroke ? "B\n" : fill ? "f\n" : "S\n");
+    }
+
+    function pdfLine(commands, x1, y1, x2, y2, pageHeightMm, color = [0.8, 0.87, 0.864]) {
+      commands.push(
+        `${color.join(" ")} RG 0.45 w ` +
+        `${(x1 * PT_PER_MM).toFixed(2)} ${((pageHeightMm - y1) * PT_PER_MM).toFixed(2)} m ` +
+        `${(x2 * PT_PER_MM).toFixed(2)} ${((pageHeightMm - y2) * PT_PER_MM).toFixed(2)} l S\n`
+      );
+    }
+
+    function newPdfPage(widthMm, heightMm) {
+      return { widthMm, heightMm, commands: [] };
+    }
+
+    function pdfDayColor(info) {
+      if (info.workHours > 0) return [0.878, 0.982, 0.973];
+      if (info.vacationDays > 0) return [0.87, 0.96, 0.953];
+      if (info.sick) return [0.904, 0.986, 0.979];
+      if (info.holidayName) return [0.843, 0.977, 0.966];
+      return [0.96, 0.98, 0.978];
+    }
+
+    function drawMonthCalendarPdf(ym) {
+      const page = newPdfPage(210, 297);
+      const c = page.commands;
+      const [year, month] = ym.split("-").map(Number);
+
+      pdfText(c, `Kalender — ${monthTitle(ym)}`, 8, 13, 16, true, 297, [0.082, 0.548, 0.509]);
+      pdfText(c, "Gearbeitet · Frei · Urlaub · Krankheit · Feiertage", 8, 20, 8, false, 297, [0.4, 0.5, 0.492]);
+
+      const stats = monthStats(ym);
+      pdfText(c,
+        `Soll ${hoursText(stats.target)} | Gearbeitet ${hoursText(stats.work)} | ` +
+        `Angerechnet ${hoursText(stats.credited)} | Monatsdifferenz ${signedHoursText(stats.delta)}`,
+        8, 28, 7.5, true, 297
+      );
+
+      const left = 8;
+      const top = 47;
+      const colWidth = 194 / 7;
+      const rowHeight = 38.2;
+
+      WEEKDAYS_MON_FIRST.forEach((name, index) => {
+        pdfText(c, name, left + index * colWidth + 2, top - 2, 7, true, 297, [0.4, 0.5, 0.492]);
+      });
+
+      const offset = (new Date(year, month - 1, 1, 12).getDay() + 6) % 7;
+      const daysInMonth = new Date(year, month, 0).getDate();
+
+      for (let cell = 0; cell < 42; cell++) {
+        const day = cell - offset + 1;
+        const row = Math.floor(cell / 7);
+        const col = cell % 7;
+        const x = left + col * colWidth;
+        const y = top + row * rowHeight;
+
+        if (day < 1 || day > daysInMonth) {
+          pdfRect(c, x, y, colWidth - 1, rowHeight - 1, 297, [0.985, 0.993, 0.992]);
+          continue;
+        }
+
+        const dateKey = `${ym}-${String(day).padStart(2, "0")}`;
+        const info = dayInfo(dateKey);
+        pdfRect(c, x, y, colWidth - 1, rowHeight - 1, 297, pdfDayColor(info), [0.84, 0.9, 0.895]);
+        pdfText(c, String(day), x + 2, y + 5, 8, true, 297);
+
+        const status = info.workHours > 0 ? "Gearbeitet"
+          : info.vacationDays > 0 ? "Urlaub"
+            : info.sick ? "Krankheit"
+              : info.holidayName ? "Feiertag" : "Frei";
+
+        pdfText(c, status, x + 2, y + 11, 6.2, false, 297, [0.32, 0.44, 0.43]);
+
+        if (info.workHours > 0) {
+          pdfText(c, hoursText(info.workHours), x + 2, y + 17, 6.2, true, 297, [0.091, 0.609, 0.566]);
+        }
+
+        if (info.holidayName) {
+          const label = info.holidayCredit
+            ? `${info.holidayName} (${hoursText(info.holidayCredit.hours)})`
+            : info.holidayName;
+          pdfText(c, label.slice(0, 27), x + 2, y + 23, 5.1, false, 297, [0.1, 0.48, 0.448]);
+        }
+
+        let extraY = y + 29;
+        if (info.vacationDays > 0) {
+          pdfText(c, "Urlaub", x + 2, extraY, 5.6, false, 297, [0.15, 0.48, 0.453]);
+          extraY += 5;
+        }
+        if (info.sick) {
+          pdfText(c, "Krankheit", x + 2, extraY, 5.6, false, 297, [0.18, 0.62, 0.583]);
+        }
+      }
+
+      return page;
+    }
+
+    function drawYearCalendarPdf(year) {
+      const page = newPdfPage(297, 210);
+      const c = page.commands;
+      pdfText(c, `Jahreskalender ${year}`, 8, 9, 14, true, 210, [0.082, 0.548, 0.509]);
+      pdfText(c, "W = gearbeitet (mit Stunden) · F = frei · U = Urlaub · K = Krankheit · H = Feiertag", 8, 15, 6.6, false, 210, [0.4, 0.5, 0.492]);
+
+      const margin = 8;
+      const gapX = 3;
+      const gapY = 3;
+      const boxW = (297 - 2 * margin - 3 * gapX) / 4;
+      const boxH = 58;
+
+      for (let month = 1; month <= 12; month++) {
+        const row = Math.floor((month - 1) / 4);
+        const col = (month - 1) % 4;
+        const x = margin + col * (boxW + gapX);
+        const y = 22 + row * (boxH + gapY);
+        const ym = `${year}-${String(month).padStart(2, "0")}`;
+        const stats = monthStats(ym);
+
+        pdfRect(c, x, y, boxW, boxH, 210, [0.991, 0.999, 0.998], [0.83, 0.9, 0.894]);
+        pdfText(c, monthTitle(ym).split(" ")[0], x + 2, y + 4, 7, true, 210, [0.082, 0.548, 0.509]);
+        pdfText(c, `Soll ${stats.target}h · Ist ${stats.work.toLocaleString("de-DE", { maximumFractionDigits: 1 })}h`, x + 2, y + 8, 4.8, false, 210, [0.38, 0.49, 0.481]);
+
+        const gridX = x + 1.5;
+        const gridY = y + 11;
+        const cellW = (boxW - 3) / 7;
+        const cellH = 7.2;
+
+        WEEKDAYS_MON_FIRST.forEach((weekday, index) => {
+          pdfText(c, weekday, gridX + index * cellW + .4, gridY + 2.7, 4, true, 210, [0.42, 0.52, 0.512]);
+        });
+
+        const monthOffset = (new Date(year, month - 1, 1, 12).getDay() + 6) % 7;
+        const days = new Date(year, month, 0).getDate();
+
+        for (let cell = 0; cell < 42; cell++) {
+          const day = cell - monthOffset + 1;
+          if (day < 1 || day > days) continue;
+
+          const cellRow = Math.floor(cell / 7);
+          const cellCol = cell % 7;
+          const cellX = gridX + cellCol * cellW;
+          const cellY = gridY + 3.5 + cellRow * cellH;
+          const dateKey = `${ym}-${String(day).padStart(2, "0")}`;
+          const info = dayInfo(dateKey);
+          const marker = info.workHours > 0 ? "W"
+            : info.vacationDays > 0 ? "U"
+              : info.sick ? "K"
+                : info.holidayName ? "H" : "F";
+          const label = info.workHours > 0
+            ? `${day} ${info.workHours.toLocaleString("de-DE", { maximumFractionDigits: 1 })}`
+            : `${day} ${marker}`;
+
+          pdfRect(c, cellX, cellY, cellW - .3, cellH - .3, 210, pdfDayColor(info), null);
+          pdfText(c, label, cellX + .5, cellY + 5.2, 4.5, marker === "W", 210, [0.16, 0.34, 0.325]);
+        }
+      }
+
+      return page;
+    }
+
+    function wrapText(value, maxChars) {
+      const words = String(value).split(/\s+/).flatMap(word => {
+        const parts = [];
+        for (let i = 0; i < word.length; i += maxChars) parts.push(word.slice(i, i + maxChars));
+        return parts;
+      });
+      const lines = [];
+      let current = "";
+
+      for (const word of words) {
+        const candidate = current ? `${current} ${word}` : word;
+        if (candidate.length > maxChars && current) {
+          lines.push(current);
+          current = word;
+        } else {
+          current = candidate;
+        }
+      }
+
+      if (current) lines.push(current);
+      return lines.length ? lines : [""];
+    }
+
+    function textReportPages(title, lines, landscape = false) {
+      const width = landscape ? 297 : 210;
+      const height = landscape ? 210 : 297;
+      const maxChars = landscape ? 82 : 57;
+      const expanded = [];
+
+      for (const item of lines) {
+        if (item.kind === "blank") {
+          expanded.push(item);
+        } else {
+          for (const text of wrapText(item.text, maxChars)) {
+            expanded.push({ text, kind: item.kind || "normal" });
+          }
+        }
+      }
+
+      const chunks = [];
+      let chunk = [], used = 0;
+      const capacity = height - 23 - 15;
+      for (const item of expanded) {
+        const size = item.kind === "blank" ? 2 : item.kind === "section" ? 7 : 5;
+        if (used + size > capacity && chunk.length) {
+          chunks.push(chunk); chunk = []; used = 0;
+        }
+        chunk.push(item); used += size;
+      }
+      if (chunk.length || !chunks.length) chunks.push(chunk);
+
+      return chunks.map((chunk, pageIndex) => {
+        const page = newPdfPage(width, height);
+        const c = page.commands;
+        pdfText(c, title, 9, 13, 13, true, height, [0.082, 0.548, 0.509]);
+        pdfLine(c, 9, 17, width - 9, 17, height);
+        let y = 23;
+
+        for (const item of chunk) {
+          if (item.kind === "blank") {
+            y += 2;
+            continue;
+          }
+          if (item.kind === "section") {
+            y += 1;
+            pdfText(c, item.text, 9, y, 9.4, true, height, [0.082, 0.548, 0.509]);
+            y += 6;
+          } else {
+            pdfText(c, item.text, 9, y, item.kind === "summary" ? 8.2 : 7.8, item.kind === "summary", height);
+            y += 5;
+          }
+        }
+
+        pdfText(c, `Seite ${pageIndex + 1} von ${chunks.length}`, width - 32, height - 7, 7, false, height, [0.4, 0.5, 0.492]);
+        return page;
+      });
+    }
+
+    function formatReportDate(dateKey) {
+      return new Intl.DateTimeFormat("de-DE", {
+        weekday: "long", day: "2-digit", month: "2-digit", year: "numeric"
+      }).format(parseDate(dateKey));
+    }
+
+    function reportRecordLine(record) {
+      const workDescription = record.type !== "work"
+        ? record.type === "vacation"
+          ? Number(record.days) === .5 ? "Halber Urlaubstag" : "Urlaub"
+          : "Krankheit"
+        : record.mode === "range"
+          ? `${record.start}–${record.end}, Gesamtpause ${Number(record.breakMinutes || 0)} Min.`
+          : `Dauerangabe, Gesamtpause ${Number(record.breakMinutes || 0)} Min.`;
+
+      return `${formatReportDate(record.date)} — ${recordTypeName(record)} — ${workDescription} — ${hoursText(recordHours(record))}${record.note ? ` — Notiz: ${record.note}` : ""}`;
+    }
+
+    function appendDailyDetails(lines, year, monthStart = 1, monthEnd = 12) {
+      for (let month = monthStart; month <= monthEnd; month++) {
+        const ym = `${year}-${String(month).padStart(2, "0")}`;
+        const dayCount = new Date(year, month, 0).getDate();
+
+        for (let day = 1; day <= dayCount; day++) {
+          const dateKey = `${ym}-${String(day).padStart(2, "0")}`;
+          const holidayName = holidayNameForDate(dateKey);
+          const credit = holidayCreditForDate(dateKey);
+          const records = dateRecords(dateKey);
+
+          if (holidayName) {
+            lines.push({
+              text: `${formatReportDate(dateKey)} — Feiertag: ${holidayName} — ${credit ? `${hoursText(credit.hours)} angerechnet` : "nicht angerechnet"}`,
+              kind: "normal"
+            });
+          }
+
+          for (const record of records) {
+            lines.push({ text: reportRecordLine(record), kind: "normal" });
+          }
+        }
+      }
+    }
+
+    function buildPdf(pages) {
+      const objects = [null, "<< /Type /Catalog /Pages 2 0 R >>", "",
+        "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>",
+        "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>"];
+      const kids = [];
+      for (const page of pages) {
+        const pageId = objects.length;
+        const streamId = pageId + 1;
+        const stream = page.commands.join("");
+        kids.push(`${pageId} 0 R`);
+        objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${(page.widthMm * PT_PER_MM).toFixed(2)} ${(page.heightMm * PT_PER_MM).toFixed(2)}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${streamId} 0 R >>`);
+        objects.push(`<< /Length ${stream.length} >>\nstream\n${stream}endstream`);
+      }
+      objects[2] = `<< /Type /Pages /Count ${kids.length} /Kids [${kids.join(" ")}] >>`;
+      let pdf = "%PDF-1.4\n";
+      const offsets = [0];
+      for (let i = 1; i < objects.length; i++) {
+        offsets[i] = pdf.length;
+        pdf += `${i} 0 obj\n${objects[i]}\nendobj\n`;
+      }
+      const xref = pdf.length;
+      pdf += `xref\n0 ${objects.length}\n0000000000 65535 f \n`;
+      for (let i = 1; i < objects.length; i++) pdf += `${String(offsets[i]).padStart(10, "0")} 00000 n \n`;
+      pdf += `trailer\n<< /Size ${objects.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`;
+      return new Blob([pdf], { type: "application/pdf" });
+    }
+
+    async function deliverPdf(pages, filename) {
+      const url = URL.createObjectURL(buildPdf(pages));
+      const link = document.createElement("a");
+      link.href = url; link.download = filename;
+      document.body.append(link); link.click(); link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    }
+
+    async function exportMonthlyPdf(ym) {
+      try {
+        const stats = monthStats(ym);
+        const opening = balanceBeforeMonth(ym);
+        const closed = monthIsClosed(ym);
+        const closing = closingBalanceForMonth(ym);
+        const lines = [
+          { text: `Erstellt am ${formatReportDate(localDateString())}`, kind: "normal" },
+          { text: "Monatszusammenfassung", kind: "section" },
+          { text: `Soll ${hoursText(stats.target)} · Gearbeitet ${hoursText(stats.work)} · Angerechnet ${hoursText(stats.credited)}`, kind: "summary" },
+          { text: `Feiertage ${hoursText(stats.holidayHours)} · Urlaub ${hoursText(stats.vacationHours)} · Krankheit ${hoursText(stats.sickHours)}`, kind: "normal" },
+          { text: `Vorläufige Monatsdifferenz ${signedHoursText(stats.delta)} · Übertrag aus Vormonat ${signedHoursText(opening)}`, kind: "summary" },
+          { text: `Zeitkonto Monatsende ${closed ? signedHoursText(closing) : "wird nach Monatsende festgeschrieben"}`, kind: "normal" },
+          { text: "", kind: "blank" },
+          { text: "Tagesdetails", kind: "section" }
+        ];
+
+        appendDailyDetails(lines, Number(ym.slice(0, 4)), Number(ym.slice(5, 7)), Number(ym.slice(5, 7)));
+        await deliverPdf(
+          [drawMonthCalendarPdf(ym), ...textReportPages(`Tagesdetails — ${monthTitle(ym)}`, lines)],
+          `arbeitszeit-${ym}.pdf`
+        );
+      } catch (error) {
+        alert(`Das PDF konnte nicht erstellt werden: ${error?.message || "Unbekannter Fehler"}`);
+      }
+    }
+
+    async function exportYearlyPdf(year) {
+      try {
+        let target = 0;
+        let worked = 0;
+        let holiday = 0;
+        let vacation = 0;
+        let sick = 0;
+        let credited = 0;
+        let annualDelta = 0;
+
+        for (let month = 1; month <= 12; month++) {
+          const stats = monthStats(`${year}-${String(month).padStart(2, "0")}`);
+          target += stats.target;
+          worked += stats.work;
+          holiday += stats.holidayHours;
+          vacation += stats.vacationHours;
+          sick += stats.sickHours;
+          credited += stats.credited;
+          annualDelta += stats.delta;
+        }
+
+        const lines = [
+          { text: `Erstellt am ${formatReportDate(localDateString())}`, kind: "normal" },
+          { text: "Jahreszusammenfassung", kind: "section" },
+          { text: `Jahressoll ${hoursText(target)} · Gearbeitet ${hoursText(worked)} · Angerechnet ${hoursText(credited)}`, kind: "summary" },
+          { text: `Feiertage ${hoursText(holiday)} · Urlaub ${hoursText(vacation)} · Krankheit ${hoursText(sick)}`, kind: "normal" },
+          { text: `Jahresdifferenz ${signedHoursText(annualDelta)} · Übertrag im Dezember ${signedHoursText(balanceBeforeMonth(`${year}-12`))}`, kind: "summary" },
+          { text: `Zeitkonto Jahresende ${monthIsClosed(`${year}-12`) ? signedHoursText(closingBalanceForMonth(`${year}-12`)) : "offen"}`, kind: "normal" },
+          { text: `Urlaubsstand inkl. erfasster Planung ${vacationBalanceAt(year).toLocaleString("de-DE", { maximumFractionDigits: 2 })} Tage`, kind: "normal" },
+          { text: "", kind: "blank" },
+          { text: "Monatsübersicht", kind: "section" }
+        ];
+
+        for (let month = 1; month <= 12; month++) {
+          const ym = `${year}-${String(month).padStart(2, "0")}`;
+          const stats = monthStats(ym);
+          const opening = balanceBeforeMonth(ym);
+          const closing = closingBalanceForMonth(ym);
+
+          lines.push({
+            text: `${monthTitle(ym)} | Soll ${hoursText(stats.target)} | Gearbeitet ${hoursText(stats.work)} | ` +
+              `Angerechnet ${hoursText(stats.credited)} | Differenz ${signedHoursText(stats.delta)} | ` +
+              `Übertrag ${signedHoursText(opening)} | Monatsende ${monthIsClosed(ym) ? signedHoursText(closing) : "offen"}`,
+            kind: "normal"
+          });
+        }
+
+        lines.push({ text: "", kind: "blank" });
+        lines.push({ text: "Tagesdetails — Arbeitszeiten, Pausen und Abwesenheiten", kind: "section" });
+        appendDailyDetails(lines, year);
+
+        await deliverPdf(
+          [drawYearCalendarPdf(year), ...textReportPages(`Jahresbericht ${year}`, lines, true)],
+          `arbeitszeit-jahr-${year}.pdf`
+        );
+      } catch (error) {
+        alert(`Das PDF konnte nicht erstellt werden: ${error?.message || "Unbekannter Fehler"}`);
+      }
+    }
+
+    $("monthlyPdfButton").addEventListener("click", () => void exportMonthlyPdf(selectedMonth));
+    $("yearlyPdfButton").addEventListener("click", () => {
+      const year = Number($("reportYear").value);
+      if (!Number.isInteger(year) || year < 2000 || year > 2200) {
+        alert("Bitte ein gültiges Jahr zwischen 2000 und 2200 eingeben.");
+        return;
+      }
+      void exportYearlyPdf(year);
+    });
+
+    async function initialize() {
+      document.body.inert = true;
+      try {
+        db = await openDatabase();
+        db.onversionchange = () => { db.close(); alert("Die App wurde aktualisiert. Bitte neu laden."); };
+        const saved = await loadState();
+
+        if (saved?.settings && Array.isArray(saved.records)) {
+          state = validateState(saved);
+          if(saved.settings.targetMode==="week") await persistState();
+        } else if (saved != null) {
+          throw new Error("Gespeicherte Daten sind unvollständig. Sie wurden nicht überschrieben.");
+        } else {
+          await persistState();
+        }
+
+        selectedMonth = currentMonth();
+        selectedCalendarDate = localDateString();
+        $("entryDate").value = selectedCalendarDate;
+        $("monthPicker").value = selectedMonth;
+      $("monthPickerText").textContent=monthTitle(selectedMonth);
+        $("reportYear").value = Number(selectedMonth.slice(0, 4));
+        renderSettings();
+        renderAll();
+        let lastDay = localDateString();
+        setInterval(() => {
+          if (document.visibilityState !== "visible" || writeBusy) return;
+          const day = localDateString();
+          if (day !== lastDay) { lastDay=day; renderAll(); }
+          else renderClock();
+        }, 1000);
+      } catch (error) {
+        document.body.innerHTML = `
+          <main><section class="panel">
+            <h1>App konnte nicht gestartet werden</h1>
+            <p>Die gespeicherten Daten wurden nicht überschrieben. Bitte lade die App erneut und prüfe, ob der Browser lokalen Speicher erlaubt.</p>
+            <p>${escapeHtml(error?.message || "Unbekannter Fehler")}</p>
+          </section></main>`;
+        return;
+      } finally {
+        document.body.inert = false;
+      }
+
+      if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      }
+    }
+
+    document.addEventListener("keydown", event => {
+      if (event.key !== "Tab" || $("entryOverlay").classList.contains("hidden")) return;
+      const fields = [...$("entryOverlay").querySelectorAll("button, input, select")]
+        .filter(element => !element.disabled && element.getClientRects().length);
+      const first = fields[0], last = fields.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible" && db && !writeBusy) renderAll();
+    });
+
+    initialize();
+  </script>
+</body>
+</html>
