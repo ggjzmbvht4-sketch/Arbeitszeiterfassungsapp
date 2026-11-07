@@ -649,6 +649,200 @@ html{background:var(--frost)}body{background:radial-gradient(ellipse at 3% 20%,#
 .manual-footer {border-top:1px solid var(--control-edge);margin-top:20px;padding-top:16px}
 .manual-footer output {display:block;font-size:clamp(2rem,6vw,3.1rem);font-weight:650;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
 #manualStatus:not(:empty),#oldShift .actions {margin-top:12px}
+
+/* ================================================================
+   iPhone / Mobile Layout 2026-11 — responsive, ohne Feldüberlappungen
+   Bewahrt das vorhandene türkisfarbene Design und alle App-Funktionen.
+   ================================================================ */
+
+/* Safari: Formfelder dürfen niemals breiter als ihre Grid-Zelle sein. */
+html, body { width: 100%; max-width: 100%; }
+main, .view-stack, .panel, .clock-card, .sheet, form,
+.manual-head, .manual-fields, .manual-footer, .metric,
+.entry, .stamp, .account-line, .month-control { min-width: 0; }
+
+button, input, select, textarea { max-width: 100%; }
+input, select, textarea { min-width: 0; }
+input[type="date"], input[type="time"], input[type="datetime-local"],
+input[type="month"], input[type="number"] {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+/* Verhindert das automatische Hereinzoomen in iOS beim Antippen. */
+input:not([type="checkbox"]):not([type="file"]), select, textarea {
+  font-size: 16px;
+}
+input::-webkit-date-and-time-value,
+input::-webkit-datetime-edit { min-width: 0; text-align: left; }
+
+/* Übersicht: Titel, Eingabe, Nettozeit und Zeitkonto sauber umbrechen. */
+.today-title > div { min-width: 0; }
+.today-title h2 { overflow-wrap: anywhere; }
+.manual-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(170px, 210px);
+  align-items: start;
+  gap: 15px;
+}
+.manual-head h2 { min-width: 0; line-height: 1.13; overflow-wrap: break-word; }
+.manual-head .manual-date { display: block; width: 100%; max-width: none; }
+.manual-date input { margin-top: 6px; }
+.manual-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.manual-fields > label { min-width: 0; }
+.manual-fields input { display: block; width: 100%; min-width: 0; }
+.manual-footer > div { min-width: 0; }
+.manual-footer output { line-height: 1.13; overflow-wrap: anywhere; }
+.manual-footer button { flex-shrink: 0; }
+.day-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.day-metrics > div { min-width: 0; }
+.day-metrics span, .day-metrics strong,
+.metric span, .metric strong { overflow-wrap: anywhere; }
+.account-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+.account-line span, .account-line strong { min-width: 0; overflow-wrap: anywhere; }
+.account-line strong { text-align: right; }
+.stamp > span { min-width: 0; flex: 1 1 0; overflow-wrap: anywhere; line-height: 1.4; }
+.stamp button { flex: 0 0 auto; }
+
+/* Kalender: sämtliche sieben Tage bleiben in der verfügbaren Breite. */
+.month-bar { grid-template-columns: 44px minmax(0, 1fr) 44px; }
+.month-control { min-width: 0; overflow: hidden; }
+.month-control > span {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+.calendar-grid, .calendar-weekdays { min-width: 0; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+#calendarGrid .calendar-day { min-width: 0; max-width: 100%; overflow: hidden; }
+#calendarGrid .calendar-day .day-status,
+#calendarGrid .calendar-day .day-hours {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#calendarGrid .calendar-day .day-hours { font-variant-numeric: tabular-nums; }
+.entry > div:first-child { min-width: 0; flex: 1 1 180px; }
+.entry > .row { min-width: 0; flex: 0 1 auto; }
+.entry-detail { overflow-wrap: anywhere; }
+#addDayEntryButton { max-width: 100%; white-space: normal; line-height: 1.3; }
+
+/* Dialog: übersichtliche Zwei-Spalten-Eingabe ohne inline-min-width. */
+.sheet { min-width: 0; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.sheet-header h2 { min-width: 0; overflow-wrap: anywhere; }
+.sheet-header button { flex: 0 0 auto; }
+#rangeFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+#rangeFields > div { min-width: 0 !important; width: 100%; }
+#rangeFields input { width: 100%; min-width: 0; }
+.sheet .actions > button { min-width: 0; white-space: normal; }
+
+/* Einstellungs- und Exportbereiche bleiben auch bei langen Beschriftungen lesbar. */
+.toolbar > *, .actions > * { min-width: 0; }
+.toolbar button, .actions button, .actions .file-label { white-space: normal; overflow-wrap: anywhere; }
+.settings-group h3, .view-stack h3, .view-stack h2 { overflow-wrap: break-word; }
+.weekday-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.weekday { min-width: 0; gap: 8px; overflow-wrap: anywhere; }
+.weekday input[type="checkbox"] { flex: 0 0 19px; }
+
+@media (max-width: 600px) {
+  main { padding: 14px 12px 28px; }
+  .view-stack > .panel { padding: 17px 15px; }
+  .today-title { padding: 9px 2px 16px; }
+  .today-title h2, .page-title { font-size: clamp(2.1rem, 9vw, 2.8rem); }
+  .clock-card { padding: 20px; }
+  .manual-head { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .manual-head h2 { font-size: clamp(1.45rem, 6vw, 1.85rem); }
+  .manual-date { font-size: .85rem; }
+  .manual-switch { width: 100%; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin: 16px 0 18px; }
+  #manualForm .manual-switch button { min-width: 0; padding-inline: 8px; }
+  .manual-footer { display: grid; grid-template-columns: minmax(0, 1fr); gap: 13px; }
+  .manual-footer button { width: 100%; min-height: 48px; }
+  .manual-footer output { font-size: clamp(2.15rem, 8.5vw, 3rem); }
+  .day-metrics { padding: 14px 4px; }
+  .day-metrics > div { padding: 0 12px; }
+  .day-metrics strong { font-size: clamp(1rem, 4.5vw, 1.3rem); }
+  .account-line { grid-template-columns: minmax(0, 1fr); gap: 9px; }
+  .account-line strong { text-align: left; font-size: 1.25rem; }
+  .month-bar { gap: 6px; }
+  .calendar-heading { padding: 18px 17px; }
+  .calendar-card.panel { padding: 14px 9px; }
+  .calendar-grid, .calendar-weekdays { gap: 4px; }
+  #calendarGrid .calendar-day { min-height: 67px; padding: 5px 3px; border-radius: 10px; }
+  #calendarGrid .day-number { font-size: .86rem; }
+  #calendarGrid .day-status { font-size: .55rem; }
+  #calendarGrid .day-hours { font-size: .62rem; }
+  .entry { gap: 8px; }
+  .entry > div:first-child { flex-basis: 100%; }
+  .entry > .row { width: 100%; justify-content: space-between; }
+  .tabs { width: calc(100% - 24px); bottom: max(8px, env(safe-area-inset-bottom)); }
+  .tab { min-width: 0; font-size: .76rem; }
+  .overlay { padding: 0; align-items: flex-end; }
+  .sheet {
+    width: 100%;
+    max-width: none;
+    max-height: calc(100dvh - env(safe-area-inset-top) - 8px);
+    padding: 17px max(17px, env(safe-area-inset-right))
+             calc(22px + env(safe-area-inset-bottom))
+             max(17px, env(safe-area-inset-left));
+    border-radius: 26px 26px 0 0;
+    border-bottom: 0;
+  }
+  .sheet-header { gap: 8px; }
+  .sheet-header h2 { font-size: 1.22rem; }
+  #entryForm label { margin-top: 12px; }
+  #rangeFields { gap: 9px; }
+  .sheet .actions { display: grid; grid-template-columns: minmax(0,1fr); }
+  .sheet .actions button { width: 100%; min-height: 46px; }
+  .weekday-list { gap: 7px; }
+}
+
+@media (max-width: 375px) {
+  main { padding-inline: 9px; }
+  .clock-card { padding: 16px; border-radius: 24px; }
+  .view-stack > .panel { padding: 15px 12px; }
+  .day-metrics > div { padding: 0 8px; }
+  .day-metrics span { font-size: .76rem; }
+  .manual-fields { gap: 8px; }
+  .manual-fields input { padding: 9px 7px; }
+  .month-bar { grid-template-columns: 40px minmax(0, 1fr) 40px; }
+  .calendar-card.panel { padding: 12px 7px; }
+  .calendar-grid, .calendar-weekdays { gap: 3px; }
+  #calendarGrid .calendar-day { min-height: 62px; padding: 4px 2px; }
+  #calendarGrid .day-number { font-size: .82rem; }
+  #calendarGrid .day-status { font-size: .53rem; }
+  #calendarGrid .day-hours { font-size: .58rem; }
+  .legend { gap: 5px; font-size: .71rem; }
+  .legend span { padding: 3px 5px; }
+  .sheet { padding-inline: 14px; }
+  #rangeFields { gap: 8px; }
+  #rangeFields input { padding: 9px 7px; }
+}
+
+@media (max-width: 340px) {
+  .manual-fields, #rangeFields { grid-template-columns: minmax(0,1fr); }
+  .calendar-grid, .calendar-weekdays { gap: 2px; }
+  #calendarGrid .calendar-day { min-height: 60px; border-radius: 7px; }
+  .day-metrics { padding: 13px 0; }
+  .day-metrics strong { font-size: .98rem; }
+  .tabs { width: calc(100% - 16px); }
+}
+
+@media (min-width: 601px) {
+  .sheet { max-height: min(90dvh, 850px); }
+  .manual-head { align-items: center; }
+}
 </style>
 </head>
 
@@ -812,7 +1006,7 @@ html{background:var(--frost)}body{background:radial-gradient(ellipse at 3% 20%,#
   <div id="entryOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="entryDialogTitle">
     <div class="sheet">
       <div class="sheet-header">
-        <h2 id="entryDialogTitle">Eintrag erfassen</h2>
+        <h2 id="entryDialogTitle" tabindex="-1">Eintrag erfassen</h2>
         <button id="closeEntryButton" class="secondary small" type="button" aria-label="Schließen">Schließen</button>
       </div>
 
@@ -1470,8 +1664,8 @@ html{background:var(--frost)}body{background:radial-gradient(ellipse at 3% 20%,#
             data-calendar-date="${dateKey}"
             aria-label="${escapeHtml(dateKey)}: ${escapeHtml(status)}${info.holidayName ? `, Feiertag ${escapeHtml(info.holidayName)}` : ""}">
             <span class="day-number">${day}</span>
-            <span class="day-status">${escapeHtml(status)}</span>
-            ${info.workHours > 0 ? `<span class="day-hours">${escapeHtml(hoursText(info.workHours))}</span>` : ""}
+            <span class="day-status">${escapeHtml(info.workHours > 0 ? "Arbeit" : status)}</span>
+            ${info.workHours > 0 ? `<span class="day-hours">${escapeHtml(durationLabel(info.workHours * 60))} h</span>` : ""}
           </button>`);
       }
 
@@ -1619,7 +1813,10 @@ html{background:var(--frost)}body{background:radial-gradient(ellipse at 3% 20%,#
       setWorkModeVisibility();
       document.body.style.overflow = "hidden";
       $("entryOverlay").classList.remove("hidden");
-      $("startTime").focus({ preventScroll: true });
+      // Fokus bewusst auf die Überschrift statt auf eine Uhrzeit setzen:
+      // iOS Safari öffnet sonst häufig direkt den nativen Time-Picker.
+      $("entryOverlay").querySelector(".sheet").scrollTop = 0;
+      $("entryDialogTitle").focus({ preventScroll: true });
     }
 
     function openEditor(id) {
@@ -1653,7 +1850,9 @@ html{background:var(--frost)}body{background:radial-gradient(ellipse at 3% 20%,#
       setWorkModeVisibility();
       document.body.style.overflow = "hidden";
       $("entryOverlay").classList.remove("hidden");
-      $("entryDate").focus({ preventScroll: true });
+      // Auch beim Bearbeiten keinen Date-/Time-Picker automatisch öffnen.
+      $("entryOverlay").querySelector(".sheet").scrollTop = 0;
+      $("entryDialogTitle").focus({ preventScroll: true });
     }
 
     function closeEntry() {
