@@ -512,7 +512,19 @@
         animation-duration: .01ms !important;
       }
     }
-  </style>
+  :root{--glass:rgba(255,255,255,.78);--rim:rgba(255,255,255,.9);--ink:#182b47;--frost:#edf3fb;--bg:#edf3fb;--blue:#2357bb;--text:#1c2b40;--muted:#516176}
+html{background:var(--frost)}body{background:radial-gradient(ellipse at 3% 20%,#d9f1ec 0,transparent 46%),radial-gradient(ellipse at 95% 5%,#deddf5 0,transparent 54%),var(--frost);background-attachment:fixed;padding-bottom:calc(100px + env(safe-area-inset-bottom))}
+.app-header{background:var(--glass);border-bottom:1px solid var(--rim);padding-inline:max(18px,calc((100vw - 724px)/2));color:var(--ink)}
+.panel,.day-metrics,.tabs,.sheet,.glass-button{background:var(--glass);border:1px solid var(--rim);box-shadow:inset 0 1px 0 var(--rim),0 8px 32px rgba(39,61,95,.07);border-radius:24px}
+.tabs,.sheet,.app-header,.glass-button{backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%)}
+.tabs{left:50%;right:auto;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(440px,calc(100% - 24px));padding:5px;gap:4px;border-radius:30px}.tab{border-radius:25px;min-height:48px}.tab.active{background:var(--blue-light);color:var(--blue)}
+.today-title,.section-head,.account-line{display:flex;justify-content:space-between;align-items:center;gap:10px}.today-title{padding:12px 4px 18px}.today-title h2{font-size:clamp(2.3rem,6vw,3.4rem);letter-spacing:-.065em;line-height:1.03;margin:4px 0 0}.today-title span,.day-metrics span,.clock-caption{font-size:.85rem;color:var(--muted)}.glass-button{color:var(--ink);font-size:1.25rem;width:44px;border-radius:50%;padding:0}
+.clock-card{position:relative;isolation:isolate;overflow:hidden;padding:clamp(23px,5vw,40px);border-radius:30px;color:#142e4a;background:radial-gradient(ellipse at 4% 15%,#edfff7 0,transparent 58%),linear-gradient(118deg,#bcdee2,#c3cdee 72%,#e6dcf7);border:1px solid var(--rim);box-shadow:inset 0 1px 2px white,0 12px 32px #20396116}.clock-card:before{content:"";position:absolute;z-index:-1;right:-100px;top:-124px;width:270px;height:310px;transform:rotate(37deg);border-radius:45%;border:2px solid #ffffff80;box-shadow:inset 4px 1px 22px #ffffff88, -8px 5px 28px #718ac237;background:linear-gradient(130deg,#fff6,#fff0 57%,#fff7)}
+.clock-state{display:inline-flex;align-items:center;gap:8px;border-radius:24px;background:#ffffffa6;padding:7px 13px;font-size:.84rem;font-weight:650}.clock-state:before{content:"";width:8px;height:8px;border-radius:100%;background:#657889}.clock-state.working:before{background:#187953}.clock-state.paused:before{background:#aa650d}.clock-value{font-size:clamp(4.5rem,13vw,7.5rem);line-height:1.08;margin-top:15px;font-weight:600;letter-spacing:-.08em;font-variant-numeric:tabular-nums}.clock-caption{color:#415670}.clock-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}.clock-actions button{border-radius:25px}.clock-actions button:first-child{background:#1b3556;border-color:#1b3556}.clock-actions .secondary{color:#193657;background:#ffffffb8;border-color:#ffffffbd}#clockMessage:not(:empty){margin-top:12px}
+.day-metrics{display:grid;grid-template-columns:repeat(3,1fr);margin:14px 0;padding:16px 4px}.day-metrics div{padding:0 10px}.day-metrics div+div{border-left:1px solid var(--line)}.day-metrics strong{display:block;font-size:clamp(.95rem,3vw,1.25rem);margin-top:5px}.section-head h2{margin:0}.quiet{background:transparent;color:var(--blue);border:0;font-size:.87rem}.stamp{border-top:1px solid var(--line);padding:11px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}.stamp input{width:auto;max-width:65%}.stamp label{margin:0}.account-line strong{font-variant-numeric:tabular-nums}
+@media(prefers-color-scheme:dark){:root{--ink:#e3edff;--glass:rgba(32,42,61,.87);--rim:rgba(184,204,240,.18);--frost:#111a29;--text:#edf2ff;--muted:#b2c1d6;--blue:#8eb8ff}body{background:radial-gradient(ellipse at top right,#26334e,transparent 65%),var(--frost)}button:not(.secondary,.quiet,.tab,.outline,.danger,.glass-button){background:#2859ac;border-color:#2859ac}.clock-card{background:radial-gradient(ellipse at left top,#20505b,transparent 65%),linear-gradient(125deg,#183241,#343f61);color:#f3f7ff}.clock-caption{color:#cedbea}.clock-state{background:#142739;color:#e1eeff}}
+@media(prefers-reduced-transparency:reduce){.tabs,.panel,.sheet,.app-header,.day-metrics,.glass-button{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none}.clock-card:before{display:none}}
+</style>
 </head>
 
 <body>
@@ -522,13 +534,27 @@
   </header>
 
   <main>
-    <div class="month-bar" aria-label="Monat auswählen">
+    <section id="todayPanel">
+  <div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div><button id="preferences" class="glass-button" aria-label="Einstellungen öffnen">⚙</button></div>
+  <section class="clock-card" aria-label="Stempeluhr">
+    <span class="clock-state" id="clockState"></span>
+    <div class="clock-value" id="netTime">0:00</div>
+    <span class="clock-caption">Arbeitszeit · Std. und Min.</span>
+    <div class="clock-actions"><button id="punch"></button><button id="finish" class="secondary">Feierabend</button></div>
+    <div id="clockMessage" role="status"></div>
+  </section>
+  <div class="day-metrics"><div><span>Tagesziel</span><strong id="dayTarget"></strong></div><div><span>Pause heute</span><strong id="dayBreak"></strong></div><div><span>Feierabend ca.</span><strong id="dayEnd"></strong></div></div>
+  <section class="panel"><div class="section-head"><h2>Tagesverlauf</h2><button id="addToday" class="quiet">Nachtragen</button></div><div id="timeline"></div></section>
+  <section class="panel account-line"><span id="balanceLabel">Zeitkonto</span><strong id="todayBalance"></strong></section>
+</section>
+
+<div id="monthBar" class="month-bar hidden" aria-label="Monat auswählen">
       <button id="previousMonth" class="secondary" type="button" aria-label="Vorheriger Monat">‹</button>
       <input id="monthPicker" type="month" min="2000-01" max="2200-12" aria-label="Monat auswählen">
       <button id="nextMonth" class="secondary" type="button" aria-label="Nächster Monat">›</button>
     </div>
 
-    <section id="overviewPanel" class="panel">
+    <section id="overviewPanel" class="panel hidden">
       <h2 id="overviewHeading">Monatsübersicht</h2>
       <div class="grid">
         <div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
@@ -610,6 +636,7 @@
               </div>
             </div>
 
+            <h3>Wochenmodell</h3><label for="targetMode">Monatssoll berechnen</label><select id="targetMode"><option value="fixed">Festen Monatswert verwenden</option><option value="week">Aus den Wochentagen berechnen</option></select><p class="hint">Tagesziel in Stunden, z. B. 7,5 für 7 Std. 30 Min. Änderungen gelten für die gesamte Auswertung.</p><div id="weekPlan" class="weekday-list"></div>
             <h3>Feiertage in Baden-Württemberg zählen, wenn sie auf … fallen</h3>
             <div id="weekdaySettings" class="weekday-list"></div>
 
@@ -639,13 +666,13 @@
 
   <nav class="tabs" aria-label="Hauptnavigation">
     <button id="overviewTab" class="tab active" type="button" aria-current="page">
-      <span class="tab-icon" aria-hidden="true">◷</span>Übersicht
+      <span class="tab-icon" aria-hidden="true">◷</span>Heute
     </button>
     <button id="calendarTab" class="tab" type="button">
       <span class="tab-icon" aria-hidden="true">▦</span>Kalender
     </button>
     <button id="moreTab" class="tab" type="button">
-      <span class="tab-icon" aria-hidden="true">•••</span>Mehr
+      <span class="tab-icon" aria-hidden="true">▥</span>Auswertung
     </button>
   </nav>
 
@@ -698,7 +725,8 @@
         </div>
 
         <div id="vacationFields" class="hidden">
-          <label for="vacationDays">Urlaubstage</label>
+          <div id="vacationInterval"><label for="vacationEnd">Bis einschließlich (optional)</label><input id="vacationEnd" type="date" min="2000-01-01" max="2200-12-31"><p class="hint" id="vacationPreview" aria-live="polite"></p></div>
+          <label for="vacationDays">Urlaubstage pro Datum</label>
           <select id="vacationDays">
             <option value="1">Ganzer Tag</option>
             <option value="0.5">Halber Tag</option>
@@ -914,7 +942,13 @@
         }
         return result;
       });
-      return { settings, records };
+      settings.week ??= [0,8,8,8,8,8,0];
+      settings.targetMode ??= "fixed";
+      if (!["week","fixed"].includes(settings.targetMode) || !Array.isArray(settings.week) || settings.week.length !== 7 ||
+          !settings.week.every(h=>Number.isFinite(h) && h>=0 && h<=24)) throw new Error("Ungültiges Wochenmodell.");
+      const stamps=candidate.stamps ?? [];
+      if (!validStamps(stamps)) throw new Error("Ungültige Stempelzeiten.");
+      return { settings, records, stamps };
     }
 
     function absenceError(record) {
@@ -1040,7 +1074,7 @@
       }
 
       const credited = work + vacationHours + sickHours + holidayHours;
-      const target = Number(state.settings.monthlyTarget) || 0;
+      const target = state.settings.targetMode === "week" ? weekMonthGoal(ym) : Number(state.settings.monthlyTarget) || 0;
 
       return {
         records, work, vacationDays, vacationHours, sickDays, sickHours,
@@ -1354,8 +1388,12 @@
       });
     }
 
+    let activeTab = "overview";
     function setActiveTab(tab) {
-      $("overviewPanel").classList.toggle("hidden", tab !== "overview");
+      activeTab = tab;
+      $("todayPanel").classList.toggle("hidden", tab !== "overview");
+      $("monthBar").classList.toggle("hidden", tab === "overview");
+      $("overviewPanel").classList.toggle("hidden", tab !== "more");
       $("calendarPanel").classList.toggle("hidden", tab !== "calendar");
       $("morePanel").classList.toggle("hidden", tab !== "more");
 
@@ -1369,6 +1407,26 @@
       if (tab === "calendar") renderCalendar();
     }
 
+    function vacationDates(start,end) {
+      if (!validDate(start) || !validDate(end) || end < start) throw new Error("Bitte einen gültigen Urlaubszeitraum wählen.");
+      const dates = [];
+      const cursor=parseDate(start);
+      while(localDateString(cursor)<=end) {
+        const date=localDateString(cursor);
+        if(dayGoal(date)>0 && !(holidayCreditForDate(date)?.hours>0)) dates.push(date);
+        cursor.setDate(cursor.getDate()+1);
+      }
+      return dates;
+    }
+    function previewVacation() {
+      const end=$("vacationEnd").value;
+      if (!end || editingId || $("entryType").value!=="vacation") { $("vacationPreview").textContent=""; return; }
+      try {
+        const count=vacationDates($("entryDate").value,end).length;
+        $("vacationPreview").textContent = count+" geplante Arbeitstage · "+(count*Number($("vacationDays").value)).toLocaleString("de-DE")+" Urlaubstage";
+      } catch(error) { $("vacationPreview").textContent=error.message; }
+    }
+    for(const id of ["entryDate","vacationDays","vacationEnd"]) $(id).addEventListener("change",previewVacation);
     function setEntryTypeVisibility() {
       const type = $("entryType").value;
       $("workFields").classList.toggle("hidden", type !== "work");
@@ -1376,6 +1434,9 @@
       $("sickFields").classList.toggle("hidden", type !== "sick");
       setWorkModeVisibility();
       $("vacationDays").disabled = type !== "vacation";
+      $("vacationEnd").disabled = type !== "vacation" || Boolean(editingId);
+      $("vacationInterval").classList.toggle("hidden", Boolean(editingId));
+      previewVacation();
     }
 
     function setWorkModeVisibility() {
@@ -1424,7 +1485,7 @@
         $("startTime").value = record.start || "";
         $("endTime").value = record.end || "";
         $("durationHours").value = record.mode === "duration"
-          ? Number(record.hours || 0) + Number(record.breakMinutes || 0) / 60
+          ? Math.round((Number(record.hours || 0) + Number(record.breakMinutes || 0) / 60)*100)/100
           : "";
         $("breakMinutes").value = record.breakMinutes || 0;
         $("workNote").value = record.note || "";
@@ -1512,8 +1573,159 @@
       }
     });
 
+    const defaultWeek = [0, 8, 8, 8, 8, 8, 0];
+    const minuteMs = 60000;
+    const nowMinute = () => Math.floor(Date.now() / minuteMs) * minuteMs;
+    const timeLabel = time => new Date(time).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+    function durationLabel(minutes) {
+      const n = Math.round(Math.abs(minutes));
+      return (minutes < 0 ? "−" : "") + Math.floor(n / 60) + ":" + String(n % 60).padStart(2, "0");
+    }
+    function dayGoal(date) {
+      return (state.settings.week || defaultWeek)[parseDate(date).getDay()];
+    }
+    function weekMonthGoal(month) {
+      const [year, number] = month.split("-").map(Number);
+      const count = new Date(year, number, 0).getDate();
+      let sum = 0;
+      for (let d = 1; d <= count; d++) sum += dayGoal(month + "-" + String(d).padStart(2, "0"));
+      return sum;
+    }
+    function validStamps(stamps) {
+      return Array.isArray(stamps) && stamps.every((t,i) => Number.isSafeInteger(t) &&
+        t % minuteMs === 0 && validDate(localDateString(new Date(t))) && (!i || t >= stamps[i-1]));
+    }
+    // Even-indexed intervals are work, odd-indexed intervals are breaks.
+    function minutesInWindow(stamps, end, from, until) {
+      let work = 0, pause = 0;
+      stamps.forEach((start, index) => {
+        const stop = stamps[index+1] ?? end;
+        const minutes = Math.max(0, Math.min(stop, until) - Math.max(start, from)) / minuteMs;
+        if (index % 2) pause += minutes;
+        else work += minutes;
+      });
+      return {work, pause};
+    }
+    function midnight(time, offset = 0) {
+      const day = new Date(time);
+      day.setHours(0,0,0,0);
+      day.setDate(day.getDate()+offset);
+      return day.getTime();
+    }
+    function clockRecords(stamps, end) {
+      if (end < stamps.at(-1)) throw new Error("Der Feierabend liegt vor dem letzten Stempel.");
+      const records = [];
+      for (let day = midnight(stamps[0]); day <= end; day = midnight(day,1)) {
+        const next = midnight(day,1);
+        const {work,pause} = minutesInWindow(stamps,end,day,next);
+        if (!work) continue;
+        const start = timeLabel(Math.max(day,stamps[0]));
+        const stop = timeLabel(Math.min(next,end));
+        const range = timeToMinutes(stop)-timeToMinutes(start) === work+pause;
+        records.push({id:makeId(), date:localDateString(new Date(day)), type:"work",
+          mode:range ? "range" : "duration", ...(range ? {start,end:stop} : {}),
+          hours:work/60, breakMinutes:pause, note:""});
+      }
+      return records;
+    }
+    function renderClock() {
+      const now = nowMinute(), today = localDateString(new Date(now));
+      const stamps = state.stamps || [];
+      const running = stamps.length % 2 === 1;
+      const booked = dateRecords(today).filter(record => record.type === "work");
+      const live = minutesInWindow(stamps,now,midnight(now),midnight(now,1));
+      const work = live.work + booked.reduce((sum,r)=>sum+r.hours*60,0);
+      const pause = live.pause + booked.reduce((sum,r)=>sum+r.breakMinutes,0);
+      const target = dayGoal(today)*60;
+      $("todayDate").textContent = new Date(now).toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long"});
+      $("netTime").textContent = durationLabel(work);
+      $("clockState").textContent = running ? "Arbeit läuft" : stamps.length ? "In Pause" : booked.length ? "Tag abgeschlossen" : "Noch nicht gestartet";
+      $("clockState").className = "clock-state " + (running ? "working" : stamps.length ? "paused" : "");
+      $("punch").textContent = running ? "Pause starten" : stamps.length ? "Weiterarbeiten" : "Arbeit starten";
+      $("finish").classList.toggle("hidden", !stamps.length);
+      $("dayTarget").textContent = durationLabel(target) + " Std.";
+      $("dayBreak").textContent = Math.round(pause) + " Min.";
+      $("dayEnd").textContent = !running || !target ? "—" : work >= target ? "Ziel erreicht" : timeLabel(now+(target-work)*minuteMs);
+    }
+    function renderToday() {
+      renderClock();
+      const today = localDateString(), month = today.slice(0,7);
+      const records = dateRecords(today);
+      const stamps = state.stamps || [];
+      const rows = records.map(r=>'<div class="stamp"><span>'+recordTypeName(r)+(r.mode==='range'?' '+escapeHtml(r.start)+'–'+escapeHtml(r.end):'')+' · '+durationLabel(recordHours(r)*60)+' Std.</span><button class="quiet" data-today-edit="'+escapeHtml(r.id)+'">Bearbeiten</button></div>');
+      stamps.forEach((t,i)=>{
+        const value = localDateString(new Date(t))+"T"+timeLabel(t);
+        const label = i===0 ? "Arbeitsbeginn" : i%2 ? "Pausenbeginn" : "Weiterarbeit";
+        rows.push('<div class="stamp"><label for="stamp'+i+'">'+label+'</label><input type="datetime-local" id="stamp'+i+'" data-stamp="'+i+'" value="'+value+'"></div>');
+      });
+      if (stamps.length) rows.push('<button class="quiet" id="correctStamps">Zeiten übernehmen</button><button class="quiet" id="discardClock">Schicht verwerfen</button>');
+      $("timeline").innerHTML = rows.join("") || '<p class="hint">Heute sind noch keine Zeiten erfasst.</p>';
+      $("timeline").querySelectorAll("[data-today-edit]").forEach(b=>b.addEventListener("click",()=>openEditor(b.dataset.todayEdit)));
+      if (stamps.length) {
+        $("correctStamps")?.addEventListener("click", correctStamps);
+        $("discardClock")?.addEventListener("click", withWriteLock(async()=>{
+          if(confirm("Die laufende Schicht mit allen Stempeln verwerfen?")) await commitClock([]);
+        }));
+      }
+      const eligible = month >= state.settings.accountStartMonth;
+      let total = balanceBeforeMonth(month);
+      const weighted = weekMonthGoal(month);
+      for(let d=1; eligible && d<parseDate(today).getDate(); d++){
+        const date=month+"-"+String(d).padStart(2,"0");
+        const target = state.settings.targetMode==="week" ? dayGoal(date) :
+          weighted ? state.settings.monthlyTarget*dayGoal(date)/weighted : state.settings.monthlyTarget/new Date(parseDate(today).getFullYear(),parseDate(today).getMonth()+1,0).getDate();
+        total += dateRecords(date).reduce((sum,r)=>sum+recordHours(r),0)+(holidayCreditForDate(date)?.hours||0)-target;
+      }
+      if(eligible && stamps.length && stamps[0]<midnight(Date.now())) {
+        const start=parseDate(state.settings.accountStartMonth+"-01");
+        total+=minutesInWindow(stamps,nowMinute(),midnight(start.getTime()),midnight(Date.now())).work/60;
+      }
+      $("balanceLabel").textContent="Zeitkonto bis gestern";
+      $("todayBalance").textContent=eligible ? (total>0?"+":"")+durationLabel(total*60)+" Std." : "Nicht aktiv";
+    }
+    async function commitClock(stamps, records = []) {
+      const before = state;
+      state = {...state, stamps, records:[...state.records,...records]};
+      try { await persistState(); }
+      catch(error) { state=before; throw error; }
+      $("clockMessage").textContent="";
+      renderAll();
+    }
+    const correctStamps = withWriteLock(async () => {
+      const stamps = [...$("timeline").querySelectorAll("[data-stamp]")].map(input=>new Date(input.value).getTime());
+      if (!stamps.length || !validStamps(stamps) || stamps.at(-1)>nowMinute()) {
+        $("clockMessage").textContent="Bitte gültige Stempelzeiten in zeitlicher Reihenfolge bis jetzt eingeben."; return;
+      }
+      await commitClock(stamps);
+    });
+    $("punch").addEventListener("click",withWriteLock(async()=>{
+      const stamps=state.stamps || [], now=nowMinute();
+      if (now < (stamps.at(-1) || 0)) { $("clockMessage").textContent="Letzten Stempel prüfen."; return; }
+      await commitClock([...stamps,now]);
+    }));
+    $("finish").addEventListener("click",withWriteLock(async()=>{
+      if (!state.stamps?.length) return;
+      const records=clockRecords(state.stamps,nowMinute());
+      if(!records.length) { $("clockMessage").textContent="Es ist noch keine volle Arbeitsminute vergangen."; return; }
+      for(const record of records){
+        const conflict=absenceError(record);
+        if(conflict){ $("clockMessage").textContent=conflict; return; }
+        if(overlapsExistingRange(record) && !confirm("Der Zeitraum überschneidet sich mit einem Eintrag. Trotzdem abschließen?")) return;
+      }
+      await commitClock([],records);
+    }));
+    $("addToday").addEventListener("click",()=>openEntry(localDateString()));
+    $("preferences").addEventListener("click",()=>{
+      setActiveTab("more");
+      $("settingsContent").classList.remove("hidden"); $("settingsToggle").textContent="Ausblenden";
+      renderSettings(); $("settingsContent").scrollIntoView({block:"start"});
+    });
+
     function renderSettings() {
       const settings = state.settings;
+      $("targetMode").value = settings.targetMode || "fixed";
+      $("weekPlan").innerHTML = [1,2,3,4,5,6,0].map(day =>
+        '<label>'+WEEKDAYS[day]+'<input id="week'+day+'" type="number" min="0" max="24" step="0.01" required value="'+(settings.week || defaultWeek)[day]+'"></label>').join("");
       $("monthlyTarget").value = settings.monthlyTarget;
       $("openingBalance").value = settings.openingBalance;
       $("accountStartMonth").value = settings.accountStartMonth;
@@ -1532,6 +1744,7 @@
     }
 
     function renderAll() {
+      renderToday();
       $("monthPicker").value = selectedMonth;
       $("reportYear").value = Number(selectedMonth.slice(0, 4));
       renderOverview();
@@ -1548,7 +1761,7 @@
       element.className = `status${type ? ` ${type}` : ""}`;
     }
 
-    $("quickAddButton").addEventListener("click", () => openEntry(selectedCalendarDate || localDateString()));
+    $("quickAddButton").addEventListener("click", () => openEntry(activeTab === "overview" ? localDateString() : selectedCalendarDate));
     $("addDayEntryButton").addEventListener("click", () => openEntry(selectedCalendarDate));
     $("closeEntryButton").addEventListener("click", closeEntry);
     $("cancelEditButton").addEventListener("click", () => {
@@ -1670,8 +1883,17 @@
         record.days = Number($("vacationDays").value);
       }
 
-      const conflict = absenceError(record);
-      if (conflict) { showStatus(status, conflict, "error"); return; }
+      let additions=[record];
+      if(type==="vacation" && !editingId && $("vacationEnd").value) {
+        try {
+          additions=vacationDates(date,$("vacationEnd").value).map(day=>({...record,id:makeId(),date:day}));
+          if(!additions.length) throw new Error("Der Zeitraum enthält keine anrechenbaren Urlaubstage.");
+        } catch(error) { showStatus(status,error.message,"error"); return; }
+      }
+      for (const addition of additions) {
+        const conflict = absenceError(addition);
+        if (conflict) { showStatus(status, addition.date+" · "+conflict, "error"); return; }
+      }
       const previousRecords = [...state.records];
       if (editingId) {
         const index = state.records.findIndex((item) => item.id === editingId);
@@ -1681,7 +1903,7 @@
         }
         state.records[index] = record;
       } else {
-        state.records.push(record);
+        state.records.push(...additions);
       }
 
       try {
@@ -1738,6 +1960,8 @@
         return;
       }
 
+      next.targetMode = $("targetMode").value;
+      next.week = defaultWeek.map((_,day)=>Number($("week"+day).value));
       next.accountStartMonth = startMonth;
       next.holidayWeekdays = [...document.querySelectorAll('input[name="holidayWeekday"]:checked')]
         .map((input) => Number(input.value));
@@ -2285,6 +2509,13 @@
         $("reportYear").value = Number(selectedMonth.slice(0, 4));
         renderSettings();
         renderAll();
+        let lastDay = localDateString();
+        setInterval(() => {
+          if (document.visibilityState !== "visible" || writeBusy) return;
+          const day = localDateString();
+          if (day !== lastDay) { lastDay=day; renderAll(); }
+          else renderClock();
+        }, 1000);
       } catch (error) {
         document.body.innerHTML = `
           <main><section class="panel">
