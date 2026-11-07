@@ -843,6 +843,147 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
   .sheet { max-height: min(90dvh, 850px); }
   .manual-head { align-items: center; }
 }
+
+/* iPhone-Fix: Die nativen Safari-Uhrzeit-Picker benötigen mehr Platz als
+   die Hälfte einer schmalen Karte. Beginn und Ende stehen mobil untereinander. */
+@media (max-width: 600px) {
+  #manualForm .manual-fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 13px;
+  }
+  #manualForm .manual-fields > label {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  #manualForm .manual-fields input {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 52px;
+    margin-top: 6px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 16px;
+  }
+  #manualForm .manual-fields input[type="time"] {
+    -webkit-appearance: auto;
+    appearance: auto;
+    text-align: left;
+  }
+  #manualForm .manual-fields input[type="time"]::-webkit-date-and-time-value,
+  #manualForm .manual-fields input[type="time"]::-webkit-datetime-edit {
+    min-width: 0;
+    max-width: 100%;
+    text-align: left;
+  }
+}
+
+/* iPhone: Kalendereintrag — Beginn/Ende wie auf dem Heute-Bildschirm. */
+#rangeFields > .time-field { box-sizing: border-box; min-width: 0; max-width: 100%; }
+#rangeFields .time-field label { display: block; margin: 0 0 6px; }
+#rangeFields .time-field input[type="time"] {
+  display: block; width: 100%; min-width: 0; max-width: 100%;
+  box-sizing: border-box; font-size: 16px; font-variant-numeric: tabular-nums;
+  min-height: 52px; padding: 10px 14px; -webkit-appearance: auto; appearance: auto;
+}
+#rangeFields .time-field input[type="time"]::-webkit-date-and-time-value,
+#rangeFields .time-field input[type="time"]::-webkit-datetime-edit {
+  min-width: 0; max-width: 100%; text-align: left;
+}
+.calendar-sync-setup { margin-top: 15px; border-top: 1px solid var(--control-edge); padding-top: 14px; }
+.calendar-sync-setup summary { cursor: pointer; font-weight: 700; color: var(--ink); padding: 8px 0; }
+@media (max-width: 600px) {
+  #rangeFields { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  #rangeFields > .time-field { width: 100%; min-width: 0; }
+  #rangeFields .time-field input[type="time"] { min-height: 52px; padding-inline: 14px; }
+  #appleCalendarPanel .calendar-buttons { display: grid; grid-template-columns: minmax(0, 1fr); }
+  #appleCalendarPanel .calendar-buttons button { width: 100%; min-height: 46px; }
+}
+
+/* Supabase: iPhone-optimierte Kontoanmeldung, Status und Synchronisierung. */
+.cloud-banner { display:flex;align-items:center;justify-content:space-between;gap:10px; margin:0 0 13px;
+  width:100%;min-height:44px;padding:10px 14px;border-radius:16px;
+  background:var(--glass);border:1px solid var(--rim);color:var(--ink);text-align:left;
+  box-shadow:inset 0 1px 0 var(--rim),0 6px 18px #21504c0a;font-size:.86rem; }
+.cloud-banner small {color:var(--muted);font-weight:500;text-align:right;max-width:55%;overflow-wrap:anywhere;}
+.cloud-badge {display:inline-flex;align-items:center;gap:7px;font-weight:690;flex-shrink:0;}
+.cloud-dot {display:block;width:8px;height:8px;background:var(--muted);border-radius:50%;}
+.cloud-dot.synced {background:#138d75;} .cloud-dot.pending {background:#cf8b26;}
+.cloud-dot.error {background:#bf5151;}
+.cloud-form {display:grid;grid-template-columns:minmax(0,1fr);gap:9px;}
+.cloud-form label {margin:2px 0 0;} .cloud-form input {font-size:16px;min-height:50px;}
+.cloud-switch {display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 16px;}
+#cloudPanel .cloud-switch button {min-width:0;border-radius:15px;padding-inline:8px;}
+#cloudPanel .cloud-switch button[aria-pressed=false] {background:var(--field-glass);color:var(--ink);border:1px solid var(--control-edge);}
+.cloud-actions {display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.cloud-actions button {min-width:0;white-space:normal;}
+#cloudPanel .hint, #cloudPanel .status {overflow-wrap:anywhere;}
+#cloudPanel #cloudEmail {overflow-wrap:anywhere;font-weight:700;}
+#cloudPanel .cloud-link-input {font-size:13px;}
+#cloudPanel .cloud-group {padding:13px 0;border-top:1px solid var(--control-edge);}
+#cloudPanel .cloud-group:first-child {border-top:0;}
+@media(max-width:440px){
+ #cloudPanel .cloud-actions {display:grid;grid-template-columns:1fr;}
+ #cloudPanel .cloud-actions button {width:100%;min-height:46px;}
+ #cloudPanel .cloud-form>button {min-height:48px;}
+}
+
+/* Supabase account fields on small iPhone screens */
+#cloudPanel input { min-width:0; max-width:100%; font-size:16px; }
+#cloudPanel .cloud-form, #cloudPanel .cloud-group { min-width:0; }
+#cloudPanel .cloud-form > button, #cloudPanel .cloud-actions button { max-width:100%; overflow-wrap:anywhere; }
+#cloudPanel .cloud-link-input { width:100%; font-size:12px; }
+#cloudPanel .cloud-switch { grid-template-columns:repeat(2,minmax(0,1fr)); }
+#cloudPanel details { margin-bottom:14px; }
+#cloudPanel details summary { overflow-wrap:anywhere; }
+
+/* Konto und Kalender kompakt auf iPhone */
+.cloud-heading {display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.cloud-heading h3 {margin:0 0 4px;}
+.cloud-heading .hint {margin:0;}
+.cloud-hero-icon {display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border-radius:15px;background:var(--accent-light);font-size:1.4rem;}
+.cloud-health {display:flex;align-items:center;gap:11px;margin:12px 0 5px;padding:13px;background:var(--field-glass);border:1px solid var(--control-edge);border-radius:16px;}
+.cloud-health>div {min-width:0;flex:1;}
+.cloud-health strong {display:block;font-size:.97rem;}
+.cloud-health .hint {margin:4px 0 0;}
+.cloud-health-indicator {font-size:1.2rem;color:var(--muted);}
+.cloud-health-indicator.synced {color:#168a78;}
+.cloud-health-indicator.pending {color:#ba7e1f;}
+.cloud-health-indicator.error {color:#c45656;}
+#cloudLastSynced {margin:8px 0 14px;font-size:.78rem;}
+#cloudSyncNow {width:100%;min-height:48px;}
+.password-row {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;min-width:0;}
+.password-row input {width:100%;min-width:0;}
+.password-row button {min-height:50px;min-width:76px;padding-inline:10px;}
+.cloud-persist-hint {margin-top:2px;font-size:.8rem;}
+.calendar-help {padding:15px 13px;margin-top:14px;background:var(--field-glass);border:1px solid var(--control-edge);border-radius:17px;}
+.calendar-help .hint {line-height:1.5;}
+.calendar-help-title {display:flex;align-items:center;gap:9px;}
+.calendar-help-title span {font-size:1.2rem;color:var(--accent);}
+.calendar-setup-note {font-size:.82rem;line-height:1.5;color:var(--muted);}
+.calendar-setup-note code {font-size:.78rem;overflow-wrap:anywhere;}
+.calendar-advanced {margin-top:14px;padding:8px 0;border-top:1px solid var(--control-edge);}
+.calendar-advanced summary {cursor:pointer;font-weight:650;color:var(--ink);padding:8px 0;}
+.calendar-advanced input {width:100%;min-width:0;}
+.calendar-buttons button {white-space:normal;}
+#cloudCalendarControls .cloud-link-input {font-size:12px;}
+#cloudCalendarStatus:empty {display:none;}
+#cloudPanel .calendar-advanced {margin-top:12px;}
+#cloudPanel .cloud-group>.hint {line-height:1.55;}
+@media(max-width:440px) {
+ .cloud-banner {flex-wrap:wrap;gap:3px;padding:11px 13px;}
+ .cloud-banner small {max-width:100%;text-align:left;margin-left:15px;}
+ .cloud-heading {align-items:flex-start;}
+ .calendar-help {padding:13px 11px;}
+ .password-row button {min-width:68px;font-size:.85rem;}
+}
+
+#cloudPanel #cloudForgotPassword {background:transparent !important;border:0 !important;color:var(--accent) !important;min-height:38px;padding:5px 10px;box-shadow:none;width:max-content;justify-self:center;}
 </style>
 </head>
 
@@ -855,6 +996,7 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
   <main>
     <section id="todayPanel">
   <div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div><button id="preferences" class="glass-button" aria-label="Einstellungen öffnen">⚙</button></div>
+  <button type="button" id="cloudBanner" class="cloud-banner" aria-label="Cloud-Konto und Synchronisierung öffnen"><span class="cloud-badge"><i class="cloud-dot" id="cloudBannerDot"></i><span id="cloudBannerLabel">Nur auf diesem Gerät</span></span><small id="cloudBannerDetail">Konto einrichten ›</small></button>
   <form class="clock-card manual-card" id="manualForm">
     <div class="manual-head"><h2>Arbeitszeit eintragen</h2><label class="manual-date">Datum<input id="manualDate" type="date" min="2000-01-01" max="2200-12-31" required></label></div>
     <div class="manual-switch" role="group" aria-label="Eingabeart"><button id="byRange" type="button" aria-pressed="true">Von – bis</button><button id="byDuration" type="button" aria-pressed="false">Dauer</button></div>
@@ -917,6 +1059,98 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
 
     <section id="morePanel" class="view-stack hidden">
 
+      <section class="panel" id="cloudPanel">
+        <div class="cloud-heading"><span class="cloud-hero-icon" aria-hidden="true">☁</span><div><h3>Konto &amp; Cloud</h3><p class="hint">Deine Arbeitszeiten auf allen Geräten – automatisch gesichert.</p></div></div>
+        <div id="cloudLoggedOut">
+          <details id="cloudConnectionDetails" class="calendar-sync-setup">
+            <summary>Supabase-Projekt verbinden</summary>
+            <label for="cloudProjectUrl">Supabase-Projekt-URL</label>
+            <input id="cloudProjectUrl" type="url" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" placeholder="https://xxxxxxxx.supabase.co">
+            <label for="cloudProjectKey">Publishable Key (öffentlich)</label>
+            <input id="cloudProjectKey" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="sb_publishable_… oder anon key">
+            <p class="hint">Beide Werte findest du unter Supabase → Project Settings → API Keys. Niemals einen Secret Key oder service_role Key eingeben.</p>
+            <button id="cloudSaveConfig" type="button" class="secondary">Verbindung speichern</button>
+          </details>
+          <div class="cloud-switch" role="group" aria-label="Kontoaktion">
+            <button type="button" class="secondary" id="cloudLoginMode" aria-pressed="true">Anmelden</button>
+            <button type="button" class="secondary" id="cloudRegisterMode" aria-pressed="false">Registrieren</button>
+          </div>
+          <form id="cloudAuthForm" class="cloud-form" autocomplete="on">
+            <label for="cloudEmailInput">E-Mail-Adresse</label>
+            <input id="cloudEmailInput" type="email" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+            <label for="cloudPasswordInput">Passwort</label>
+            <div class="password-row"><input id="cloudPasswordInput" type="password" minlength="8" maxlength="128" autocomplete="current-password" required><button type="button" id="cloudPasswordToggle" class="secondary" aria-label="Passwort anzeigen" aria-pressed="false">Anzeigen</button></div>
+            <div id="cloudConfirmPasswordArea" class="hidden">
+              <label for="cloudConfirmPassword">Passwort wiederholen</label>
+              <input id="cloudConfirmPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password">
+            </div>
+            <button id="cloudAuthSubmit" type="submit">Anmelden</button>
+            <button id="cloudForgotPassword" class="quiet" type="button">Passwort vergessen?</button>
+            <p class="hint cloud-persist-hint">Du bleibst auf diesem Gerät angemeldet, bis du dich selbst abmeldest.</p>
+          </form>
+        </div>
+        <div id="cloudLoggedIn" class="hidden">
+          <div class="cloud-group">
+            <p>Angemeldet als <strong id="cloudEmail"></strong></p>
+            <div class="cloud-health"><span class="cloud-health-indicator" id="cloudHealthIcon" aria-hidden="true">●</span><div><strong id="cloudHealthTitle">Verbunden</strong><p id="cloudSyncText" class="hint">Prüfe Cloud-Verbindung …</p></div></div>
+            <p id="cloudLastSynced" class="hint"></p>
+            <button id="cloudSyncNow" type="button">Jetzt synchronisieren</button>
+            <details class="calendar-advanced cloud-advanced"><summary>Kontoverwaltung</summary>
+              <p class="hint">Den Cloudstand nur bei Problemen manuell laden. Dabei können noch nicht übertragene lokale Änderungen ersetzt werden.</p>
+              <div class="cloud-actions">
+                <button id="cloudReload" class="secondary" type="button">Cloudstand neu laden</button>
+                <button id="cloudLogout" class="secondary" type="button">Auf diesem Gerät abmelden</button>
+              </div>
+            </details>
+          </div>
+          <div id="cloudConflictActions" class="cloud-group hidden">
+            <p class="hint">Ein anderes Gerät hat die Cloud verändert. Deine lokalen Änderungen bleiben gespeichert. Entscheide bewusst, welche Version du behalten möchtest.</p>
+            <div class="cloud-actions"><button type="button" id="cloudOverwrite" class="danger">Cloudstand durch lokale Daten ersetzen</button></div>
+          </div>
+          <div class="cloud-group" id="cloudImportGroup">
+            <strong>Alte Arbeitszeiten übernehmen</strong>
+            <p class="hint">Die bisherigen lokalen Daten bleiben separat erhalten. Du kannst sie in ein leeres Supabase-Konto kopieren, ohne den alten Bestand zu löschen.</p>
+            <button type="button" id="cloudImportGuest" class="secondary">Lokale Daten ins Konto übernehmen</button>
+          </div>
+        </div>
+          <div class="cloud-group hidden" id="cloudRecoveryGroup">
+            <label for="cloudNewPassword">Neues Passwort nach dem Zurücksetzen</label>
+            <input id="cloudNewPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password">
+            <button id="cloudChangePassword" type="button">Neues Passwort speichern</button>
+          </div>
+        <div id="cloudStatus" class="status" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="panel settings-group" id="appleCalendarPanel">
+        <h3>Apple Kalender</h3>
+        <p class="hint">Arbeitszeiten und Abwesenheiten im Apple Kalender sehen – direkt über Supabase.</p>
+        <details class="calendar-advanced"><summary>Einmalige Kalenderdatei herunterladen (.ics)</summary>
+          <p class="hint">Für einen einmaligen Import ohne automatische Aktualisierung.</p>
+          <button id="exportIcsButton" type="button" class="secondary">Kalenderdatei exportieren</button>
+        </details>
+        <div id="calendarNeedsLogin" class="calendar-help">
+          <strong>Automatischer Apple-Kalender</strong>
+          <p class="hint">Melde dich bei deinem Supabase-Konto an. Anschließend kannst du den Kalender einmalig abonnieren. Deine Arbeitszeiten werden automatisch aus der Cloud geladen.</p>
+          <button id="calendarOpenAccount" class="secondary" type="button">Zum Konto</button>
+        </div>
+        <div id="cloudCalendarControls" class="hidden calendar-help">
+          <div class="calendar-help-title"><span aria-hidden="true">◉</span><strong>Kalender automatisch anzeigen</strong></div>
+          <p class="hint">Einmal abonnieren – danach aktualisiert Apple Kalender die Einträge aus deinem Supabase-Konto. Die Aktualisierung kann zeitverzögert erfolgen und funktioniert nur in Richtung Apple Kalender.</p>
+          <p class="calendar-setup-note">Einmalig erforderlich: die mitgelieferte Supabase-Funktion <code>arbeitszeit-kalender</code> veröffentlichen. Anschließend ist kein zusätzlicher Kalenderdienst nötig.</p>
+          <div class="cloud-actions calendar-buttons">
+            <button id="cloudCalendarSubscribe" type="button">In Apple Kalender abonnieren</button>
+            <button id="cloudCalendarCopy" type="button" class="secondary">Link kopieren</button>
+          </div>
+          <details class="calendar-advanced">
+            <summary>Kalenderlink verwalten</summary>
+            <label for="cloudCalendarUrl">Privater Abo-Link</label>
+            <input id="cloudCalendarUrl" class="cloud-link-input" readonly aria-label="Privater Kalender-Abonnement-Link">
+            <p class="hint">Jeder mit diesem Link kann die Arbeitszeiten lesen. Bei einem neuen Link musst du dein Kalender-Abonnement neu einrichten.</p>
+            <button id="cloudCalendarRotate" type="button" class="secondary">Privaten Link erneuern</button>
+          </details>
+          <p id="cloudCalendarStatus" class="status" role="status" aria-live="polite"></p>
+        </div>
+      </section>
 
       <div class="panel settings-group">
         <h3>PDF-Export</h3>
@@ -1029,11 +1263,11 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
           </select>
 
           <div id="rangeFields" class="row">
-            <div style="flex:1;min-width:130px">
+            <div class="time-field">
               <label for="startTime">Beginn</label>
               <input id="startTime" type="time">
             </div>
-            <div style="flex:1;min-width:130px">
+            <div class="time-field">
               <label for="endTime">Ende</label>
               <input id="endTime" type="time">
             </div>
@@ -1078,6 +1312,7 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
     <button id="undoDeleteButton" type="button">Rückgängig</button>
   </div>
 
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script type="module">
     const DB_NAME = "arbeitszeit-app";
     const DB_VERSION = 1;
@@ -1171,42 +1406,98 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
       });
     }
 
+    // Die bisherigen Gast-Daten bleiben unter "main" erhalten; Konten erhalten
+    // ihren eigenen lokalen Cache und getrennte Revisions-/Sync-Metadaten.
+    let activeStorageKey = STATE_KEY;
+    let cloudVersion = 0;
+    let cloudDirty = false;
+
+    function localRevisionKey() { return activeStorageKey === STATE_KEY ? "revision" : `${activeStorageKey}:revision`; }
+    function cloudVersionKey() { return `${activeStorageKey}:cloud-version`; }
+    function cloudDirtyKey() { return `${activeStorageKey}:cloud-dirty`; }
+
     function loadState() {
+      const key=activeStorageKey, revKey=localRevisionKey(), verKey=cloudVersionKey(), dirtyKey=cloudDirtyKey();
       return new Promise((resolve, reject) => {
-        const transaction = db.transaction(STORE_NAME, "readonly");
-        const store = transaction.objectStore(STORE_NAME);
-        const request = store.get(STATE_KEY);
-        const revisionRequest = store.get("revision");
-        transaction.oncomplete = () => {
-          revision = revisionRequest.result || 0;
-          resolve(request.result ?? null);
+        const tx = db.transaction(STORE_NAME, "readonly");
+        const store = tx.objectStore(STORE_NAME);
+        const snapshot = store.get(key);
+        const localRevision = store.get(revKey);
+        const remoteVersion = store.get(verKey);
+        const pending = store.get(dirtyKey);
+        tx.oncomplete = () => {
+          revision = localRevision.result || 0;
+          cloudVersion = remoteVersion.result || 0;
+          cloudDirty = pending.result === true;
+          resolve(snapshot.result ?? null);
         };
-        transaction.onerror = () => reject(transaction.error);
-        transaction.onabort = () => reject(transaction.error);
+        tx.onerror = () => reject(tx.error);
+        tx.onabort = () => reject(tx.error);
       });
     }
 
     function persistState() {
       const snapshot = structuredClone(state);
+      const key=activeStorageKey, revKey=localRevisionKey(), dirtyKey=cloudDirtyKey();
+      const startedRevision=revision;
       return new Promise((resolve, reject) => {
-        const transaction = db.transaction(STORE_NAME, "readwrite");
-        const store = transaction.objectStore(STORE_NAME);
+        const tx = db.transaction(STORE_NAME, "readwrite");
+        const store = tx.objectStore(STORE_NAME);
         let conflict = false;
-        const request = store.get("revision");
+        const request = store.get(revKey);
         request.onsuccess = () => {
-          if ((request.result || 0) !== revision) {
+          if ((request.result || 0) !== startedRevision) {
             conflict = true;
-            transaction.abort();
+            tx.abort();
             return;
           }
-          store.put(snapshot, STATE_KEY);
-          store.put(revision + 1, "revision");
+          store.put(snapshot, key);
+          store.put(startedRevision + 1, revKey);
+          if (key !== STATE_KEY) store.put(true, dirtyKey);
         };
-        transaction.oncomplete = () => { revision++; resolve(); };
-        transaction.onerror = () => reject(transaction.error);
-        transaction.onabort = () => reject(conflict
+        tx.oncomplete = () => {
+          if (activeStorageKey === key) {
+            revision = startedRevision + 1;
+            if (key !== STATE_KEY) { cloudDirty = true; queueCloudSync(); }
+          }
+          resolve();
+        };
+        tx.onerror = () => reject(tx.error);
+        tx.onabort = () => reject(conflict
           ? new Error("Die Daten wurden in einem anderen Fenster geändert. Bitte neu laden.")
-          : transaction.error || new Error("Speichertransaktion abgebrochen."));
+          : tx.error || new Error("Speichertransaktion abgebrochen."));
+      });
+    }
+
+    function setCloudMeta(version, dirty) {
+      const verKey=cloudVersionKey(), dirtyKey=cloudDirtyKey(), currentKey=activeStorageKey;
+      return new Promise((resolve,reject) => {
+        const tx=db.transaction(STORE_NAME,"readwrite");
+        const store=tx.objectStore(STORE_NAME);
+        store.put(version,verKey);store.put(dirty,dirtyKey);
+        tx.oncomplete=()=>{ if(activeStorageKey===currentKey){cloudVersion=version;cloudDirty=dirty;} resolve(); };
+        tx.onerror=()=>reject(tx.error); tx.onabort=()=>reject(tx.error);
+      });
+    }
+
+    function replaceLocalSnapshot(snapshot, version, dirty=false) {
+      const sanitized=validateState(snapshot);
+      const key=activeStorageKey, revKey=localRevisionKey(), verKey=cloudVersionKey(), dirtyKey=cloudDirtyKey();
+      const oldRevision=revision;
+      return new Promise((resolve,reject)=>{
+        const tx=db.transaction(STORE_NAME,"readwrite");
+        const store=tx.objectStore(STORE_NAME);
+        const check=store.get(revKey);
+        check.onsuccess=()=>{
+          if((check.result||0)!==oldRevision){tx.abort();return;}
+          store.put(sanitized,key);store.put(oldRevision+1,revKey);
+          store.put(version,verKey);store.put(dirty,dirtyKey);
+        };
+        tx.oncomplete=()=>{
+          state=sanitized;revision=oldRevision+1;cloudVersion=version;cloudDirty=dirty;
+          renderSettings();renderAll();updateCloudUI();resolve();
+        };
+        tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(new Error("Lokale Daten wurden zwischenzeitlich geändert. Bitte erneut versuchen."));
       });
     }
 
@@ -2844,6 +3135,750 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
       void exportYearlyPdf(year);
     });
 
+    /* Apple Kalender: lokaler .ics-Export, Abo-Feed über Supabase Edge Function.
+       Native EventKit-Rechte sind einer statischen Web-App nicht zugänglich. */
+
+    function calendarEscape(value) {
+      return String(value ?? "").replace(/\\/g, "\\\\")
+        .replace(/\r\n|\r|\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;");
+    }
+
+    function calendarUtcStamp() {
+      return new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    }
+
+    function compactCalendarDate(date) { return date.replaceAll("-", ""); }
+
+    function nextCalendarDate(date) {
+      const next = parseDate(date);
+      next.setDate(next.getDate() + 1);
+      return localDateString(next);
+    }
+
+    // Faltzeilen nach UTF-8-Byteanzahl: iCalendar verlangt maximal 75 Oktette.
+    function foldCalendarLine(line) {
+      const encoder = new TextEncoder();
+      let width = 0, parts = [""];
+      for (const char of line) {
+        const size = encoder.encode(char).length;
+        if (width + size > 75) { parts.push(" " + char); width = size + 1; }
+        else { parts[parts.length - 1] += char; width += size; }
+      }
+      return parts.join("\r\n");
+    }
+
+    function buildCalendarIcs() {
+      const now = calendarUtcStamp();
+      const lines = [
+        "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Arbeitszeit PWA//Apple Calendar//DE",
+        "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-CALNAME:Arbeitszeit",
+        "X-WR-CALDESC:Arbeitszeiten und Abwesenheiten aus der Arbeitszeit-App"
+      ];
+      for (const record of [...state.records].sort((a,b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id))) {
+        let summary, description;
+        lines.push("BEGIN:VEVENT", "UID:" + record.id.replace(/[^A-Za-z0-9-]/g, "") + "@arbeitszeit-pwa", "DTSTAMP:" + now);
+        if (record.type === "work") {
+          summary = "Arbeitszeit";
+          description = `Netto: ${durationLabel(record.hours * 60)} Std. | Pause: ${record.breakMinutes || 0} Min.`;
+          if (record.note) description += `\nNotiz: ${record.note}`;
+          if (record.mode === "range" && record.start && record.end) {
+            // Floating local times: Die in der App eingegebene Uhrzeit bleibt erhalten.
+            lines.push("DTSTART:" + compactCalendarDate(record.date) + "T" + record.start.replace(":", "") + "00");
+            const endDate = record.end <= record.start ? nextCalendarDate(record.date) : record.date;
+            lines.push("DTEND:" + compactCalendarDate(endDate) + "T" + record.end.replace(":", "") + "00");
+          } else {
+            summary += " · " + durationLabel(record.hours * 60) + " Std.";
+            lines.push("DTSTART;VALUE=DATE:" + compactCalendarDate(record.date));
+            lines.push("DTEND;VALUE=DATE:" + compactCalendarDate(nextCalendarDate(record.date)));
+          }
+        } else {
+          summary = record.type === "vacation" ? "Urlaub" : "Krankheit";
+          description = record.type === "vacation"
+            ? `Urlaubstag: ${record.days || 1}` : "Krankheitstag";
+          lines.push("DTSTART;VALUE=DATE:" + compactCalendarDate(record.date));
+          lines.push("DTEND;VALUE=DATE:" + compactCalendarDate(nextCalendarDate(record.date)));
+        }
+        lines.push("SUMMARY:" + calendarEscape(summary));
+        lines.push("DESCRIPTION:" + calendarEscape(description));
+        lines.push("END:VEVENT");
+      }
+      lines.push("END:VCALENDAR");
+      return lines.map(foldCalendarLine).join("\r\n") + "\r\n";
+    }
+
+    async function downloadCalendarIcs() {
+      const file = new File([buildCalendarIcs()], "arbeitszeit.ics", { type: "text/calendar" });
+      // iOS: über Teilen-Dialog in Dateien/Kalender weitergeben, sonst normaler Download.
+      if (navigator.canShare?.({ files: [file] }) && navigator.share) {
+        try { await navigator.share({ files: [file], title: "Arbeitszeit-Kalender" }); return; }
+        catch (error) { if (error.name === "AbortError") return; }
+      }
+      const url = URL.createObjectURL(file);
+      const a = document.createElement("a");
+      a.href = url; a.download = "arbeitszeit.ics";
+      document.body.append(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    }
+
+    $("exportIcsButton").addEventListener("click", () => void downloadCalendarIcs());
+
+
+    /* Supabase Auth + geschützter Snapshot-Abgleich.
+       Die eigentlichen Arbeitseinträge bleiben auch offline in IndexedDB.
+       Ein CAS-RPC verhindert lautloses Überschreiben bei mehreren Geräten. */
+    const SUPABASE_CONFIG_KEY = "arbeitszeit-supabase-config-v1";
+    const SUPABASE_LAST_USER_KEY = "arbeitszeit-supabase-last-user-v1";
+    const CALENDAR_TOKEN_PREFIX = "arbeitszeit-supabase-calendar-token:";
+    const LAST_SYNC_PREFIX = "arbeitszeit-last-sync:";
+    // Optional hier eintragen, damit die Verbindung auf allen Geräten schon vorausgefüllt ist.
+    const SUPABASE_DEFAULT_URL = "";
+    const SUPABASE_DEFAULT_PUBLISHABLE_KEY = "";
+    let cloudClient = null;
+    let cloudSession = null;
+    let cloudAuthMode = "login";
+    let cloudSyncBusy = false;
+    let cloudSyncQueued = false;
+    let cloudSyncTimer = null;
+    let cloudConflict = false;
+    let cloudConnecting = false;
+    let cloudLastFetch = 0;
+    let cloudCalendarLink = "";
+    let cloudConfiguredUrl = "";
+    let cloudConfiguredKey = "";
+    let cloudAccountIsOfflineCache = false;
+    let cloudGuestCount = 0;
+
+    function initialCloudState() {
+      return {settings:{...DEFAULT_SETTINGS},records:[],stamps:[]};
+    }
+
+    function normalizedProjectUrl(value) {
+      let url;
+      try {url=new URL(value.trim());}
+      catch (_) {throw new Error("Bitte eine gültige Supabase-Projekt-URL eingeben.");}
+      if(url.protocol!=="https:" || !url.hostname || url.username || url.password || url.search || url.hash ||
+          (url.pathname!=="/" && url.pathname!=="")) {
+        throw new Error("Die Projekt-URL muss eine HTTPS-Adresse ohne Pfad oder Parameter sein.");
+      }
+      return url.origin;
+    }
+
+    function validatePublicKey(value) {
+      const key=value.trim();
+      if (!key || key.startsWith("sb_secret_") || key.length>1500 ||
+          !(key.startsWith("sb_publishable_") || key.startsWith("eyJ"))) {
+        throw new Error("Nur den öffentlichen Publishable/anon Key eintragen – niemals einen Secret Key.");
+      }
+      return key;
+    }
+
+    function cloudConfigFromInputs() {
+      return {url:normalizedProjectUrl($("cloudProjectUrl").value), key:validatePublicKey($("cloudProjectKey").value)};
+    }
+
+    function showCloudStatus(message, kind = "") { showStatus($("cloudStatus"),message,kind); }
+
+    function setCloudStatusError(error, prefix="Cloud-Fehler") {
+      const code=error?.code || error?.status;
+      const message=error?.message || String(error);
+      showCloudStatus(`${prefix}: ${message}${code?` (${code})`:""}. Deine lokalen Daten bleiben erhalten.`,"error");
+    }
+
+    function lastSyncKey() { return LAST_SYNC_PREFIX + (cloudSession?.user.id || ""); }
+
+    function markCloudSynced() {
+      if (!cloudSession) return;
+      cloudLastFetch = Date.now();
+      localStorage.setItem(lastSyncKey(), String(cloudLastFetch));
+      updateCloudUI();
+    }
+
+    function friendlySyncTime() {
+      if (!cloudSession) return "";
+      const saved = Number(localStorage.getItem(lastSyncKey()) || 0);
+      if (!saved || !Number.isFinite(saved)) return "Noch kein erfolgreicher Abgleich";
+      const date = new Date(saved);
+      const sameDay = date.toDateString() === new Date().toDateString();
+      return `Letzter Abgleich: ${sameDay ? "heute, " : ""}${date.toLocaleString("de-DE", {
+        ...(sameDay ? {} : {day:"2-digit",month:"2-digit",year:"numeric"}),
+        hour:"2-digit",minute:"2-digit"
+      })} Uhr`;
+    }
+
+    function updateCloudUI() {
+      const connected = Boolean(cloudSession);
+      $("cloudLoggedOut").classList.toggle("hidden", connected);
+      $("cloudLoggedIn").classList.toggle("hidden", !connected);
+      $("cloudCalendarControls").classList.toggle("hidden", !connected);
+      $("calendarNeedsLogin").classList.toggle("hidden", connected);
+      $("cloudConflictActions").classList.toggle("hidden", !connected || !cloudConflict);
+      $("cloudImportGroup").classList.toggle("hidden", !connected || cloudGuestCount===0 || cloudVersion>0);
+      $("cloudBannerDot").className = "cloud-dot";
+      let label = "Nur lokal gespeichert", detail = "Konto einrichten ›", info = "Ohne Anmeldung bleibt alles nur auf diesem Gerät.", kind="local";
+      if (connected) {
+        $("cloudEmail").textContent = cloudSession.user.email || "Angemeldetes Konto";
+        if (cloudConflict) {
+          label = "Abgleich prüfen"; detail = "Konflikt lösen ›";
+          info = "Änderungen von zwei Geräten müssen manuell abgeglichen werden."; kind="error";
+        } else if (cloudDirty) {
+          label = "Lokal gespeichert"; detail = "Cloud-Abgleich offen ›";
+          info = navigator.onLine ? "Änderungen werden zur Cloud übertragen." : "Offline: Änderungen werden später übertragen.";
+          kind = "pending";
+        } else if (!navigator.onLine || cloudAccountIsOfflineCache) {
+          label = "Offline verfügbar"; detail = "Lokale Daten ›";
+          info = "Du kannst weiter erfassen. Die Cloud wird bei Verbindung geprüft."; kind="pending";
+        } else if (cloudConnecting || cloudSyncBusy || cloudLastFetch===0) {
+          label = "Cloud wird geprüft"; detail = "Bitte prüfen ›";
+          info = "Dein Konto wird abgeglichen."; kind="pending";
+        } else {
+          label = "Cloud aktuell"; detail = "Gespeichert ✓";
+          info = "Alle Änderungen dieses Geräts sind mit Supabase abgeglichen."; kind="synced";
+        }
+        $("cloudSyncText").textContent = info;
+        $("cloudHealthTitle").textContent = label;
+        $("cloudHealthIcon").className = `cloud-health-indicator ${kind}`;
+        $("cloudLastSynced").textContent = friendlySyncTime();
+        if (cloudGuestCount > 0) $("cloudImportGuest").textContent = `Alte Einträge übernehmen (${cloudGuestCount})`;
+      }
+      $("cloudBannerLabel").textContent = label;
+      $("cloudBannerDetail").textContent = detail;
+      $("cloudBannerDot").classList.add(kind);
+    }
+
+    function changeCloudAuthMode(mode) {
+      cloudAuthMode=mode;
+      $("cloudLoginMode").setAttribute("aria-pressed",String(mode==="login"));
+      $("cloudRegisterMode").setAttribute("aria-pressed",String(mode==="register"));
+      $("cloudConfirmPasswordArea").classList.toggle("hidden",mode!=="register");
+      $("cloudConfirmPassword").required=mode==="register";
+      $("cloudAuthSubmit").textContent=mode==="register"?"Konto erstellen":"Anmelden";
+      $("cloudForgotPassword").classList.toggle("hidden",mode==="register");
+      $("cloudPasswordInput").autocomplete=mode==="register"?"new-password":"current-password";
+      $("cloudPasswordInput").type="password";
+      $("cloudPasswordToggle").textContent="Anzeigen";
+      $("cloudPasswordToggle").setAttribute("aria-pressed","false");
+      $("cloudPasswordToggle").setAttribute("aria-label","Passwort anzeigen");
+      showCloudStatus("");
+    }
+
+    $("cloudBanner").addEventListener("click",()=>{
+      setActiveTab("more");
+      $("cloudPanel").scrollIntoView({behavior:"smooth",block:"start"});
+    });
+    $("cloudLoginMode").addEventListener("click",()=>changeCloudAuthMode("login"));
+    $("cloudRegisterMode").addEventListener("click",()=>changeCloudAuthMode("register"));
+    $("cloudPasswordToggle").addEventListener("click",()=>{
+      const field=$("cloudPasswordInput");
+      const showing=field.type!=="text";
+      field.type=showing?"text":"password";
+      $("cloudPasswordToggle").textContent=showing?"Verbergen":"Anzeigen";
+      $("cloudPasswordToggle").setAttribute("aria-label",showing?"Passwort verbergen":"Passwort anzeigen");
+      $("cloudPasswordToggle").setAttribute("aria-pressed",String(showing));
+    });
+    $("calendarOpenAccount").addEventListener("click",()=>{
+      $("cloudPanel").scrollIntoView({behavior:"smooth",block:"start"});
+    });
+
+    function configuredSupabase() {
+      if(!cloudClient) throw new Error("Supabase ist noch nicht verbunden. URL und öffentlichen Schlüssel speichern und bei Internetverbindung erneut versuchen.");
+      return cloudClient;
+    }
+
+    function setSupabaseConfig(config) {
+      if(typeof window.supabase?.createClient!=="function") {
+        throw new Error("Supabase-Bibliothek konnte nicht geladen werden. Prüfe deine Internetverbindung und lade die App neu.");
+      }
+      const url=normalizedProjectUrl(config.url), key=validatePublicKey(config.key);
+      if(cloudClient && cloudConfiguredUrl===url && cloudConfiguredKey===key) return cloudClient;
+      cloudConfiguredUrl=url;
+      cloudConfiguredKey=key;
+      cloudClient=window.supabase.createClient(url,key,{
+        auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,
+          storageKey:`arbeitszeit-supabase-auth-${new URL(url).hostname}`}
+      });
+      cloudClient.auth.onAuthStateChange((event,session)=>{
+        // Supabase empfiehlt, im Auth-Callback selbst keine weiteren API-Aufrufe zu awaiten.
+        if(event==="PASSWORD_RECOVERY") {
+          setTimeout(()=>{
+            setActiveTab("more");
+            $("cloudRecoveryGroup").classList.remove("hidden");
+            showCloudStatus("Neues Passwort vergeben und speichern.");
+          },0);
+        }
+        if(event==="SIGNED_IN" && session?.user && !cloudConnecting) {
+          setTimeout(()=>{
+            if(cloudConnecting)return;
+            if(cloudSession?.user.id===session.user.id) {
+              cloudAccountIsOfflineCache=false;
+              updateCloudUI();
+              if(navigator.onLine)void reconcileCloud();
+            } else if (!cloudSession) {
+              void activateCloudSession({user:session.user}).catch(e=>setCloudStatusError(e));
+            }
+          },0);
+        }
+        if(event==="SIGNED_OUT" && cloudSession && !cloudConnecting) {
+          setTimeout(()=>{ if(cloudSession && !cloudConnecting)void switchToGuest(); },0);
+        }
+      });
+      return cloudClient;
+    }
+
+    async function activateCloudSession(session,options={}) {
+      if(!session?.user?.id)throw new Error("Benutzerkonto ohne ID.");
+      cloudSession={user:{id:session.user.id,email:session.user.email||""}};
+      activeStorageKey=`account:${cloudSession.user.id}`;
+      localStorage.setItem(SUPABASE_LAST_USER_KEY,JSON.stringify(cloudSession.user));
+      cloudConflict=false;cloudSyncQueued=false;cloudCalendarLink="";
+      cloudLastFetch=0;
+      cloudAccountIsOfflineCache=Boolean(options.offlineCache);
+      clearTimeout(cloudSyncTimer);
+      const cached=await loadState();
+      state=cached?validateState(cached):initialCloudState();
+      const guest=await guestData();
+      cloudGuestCount=Array.isArray(guest?.records)?guest.records.length:0;
+      renderSettings();renderAll();updateCloudUI();
+      $("cloudCalendarUrl").value="";
+      showCloudStatus(cached?"Kontodaten vom Gerät geladen. Prüfe die Cloud …":"Konto geöffnet. Prüfe die Cloud …");
+      if(!options.skipNetwork && navigator.onLine) await reconcileCloud();
+    }
+
+    async function switchToGuest() {
+      clearTimeout(cloudSyncTimer);
+      cloudSession=null;cloudConflict=false;cloudSyncQueued=false;cloudCalendarLink="";
+      cloudLastFetch=0;cloudAccountIsOfflineCache=false;cloudGuestCount=0;
+      localStorage.removeItem(SUPABASE_LAST_USER_KEY);
+      activeStorageKey=STATE_KEY;
+      const saved=await loadState();
+      state=saved?validateState(saved):initialCloudState();
+      renderSettings();renderAll();updateCloudUI();
+    }
+
+    async function restoreStoredCloudSession() {
+      let config=null;
+      try { config=JSON.parse(localStorage.getItem(SUPABASE_CONFIG_KEY)||"null"); }
+      catch (_) { /* beschädigte gespeicherte Konfiguration ignorieren */ }
+      if(!config?.url && SUPABASE_DEFAULT_URL && SUPABASE_DEFAULT_PUBLISHABLE_KEY) {
+        config={url:SUPABASE_DEFAULT_URL,key:SUPABASE_DEFAULT_PUBLISHABLE_KEY};
+      }
+      $("cloudProjectUrl").value=config?.url||"";
+      $("cloudProjectKey").value=config?.key||"";
+      $("cloudConnectionDetails").open=!Boolean(config?.url&&config?.key);
+      if(config?.url && config?.key) {
+        try {
+          const client=setSupabaseConfig(config);
+          const {data,error}=await client.auth.getSession();
+          if(error)throw error;
+          if(data?.session?.user) {
+            await activateCloudSession({user:data.session.user},{skipNetwork:true});
+            return;
+          }
+        } catch(error) {
+          // Offline können bekannte Kontodaten lokal genutzt werden, ohne so zu tun,
+          // als wäre die Anmeldung bereits online validiert.
+          if(!navigator.onLine || typeof window.supabase?.createClient!=="function") {
+            let user=null;
+            try {user=JSON.parse(localStorage.getItem(SUPABASE_LAST_USER_KEY)||"null");}catch(_){}
+            if(user?.id) {
+              await activateCloudSession({user},{skipNetwork:true,offlineCache:true});
+              showCloudStatus("Offline: Deine Kontodaten sind lokal verfügbar. Bei Internetverbindung prüfen wir die Anmeldung.");
+              return;
+            }
+          }
+          setCloudStatusError(error,"Anmeldung konnte nicht wiederhergestellt werden");
+        }
+      }
+      updateCloudUI();
+    }
+
+    async function guestData() {
+      return new Promise((resolve,reject)=>{
+        const tx=db.transaction(STORE_NAME,"readonly");
+        const request=tx.objectStore(STORE_NAME).get(STATE_KEY);
+        tx.oncomplete=()=>resolve(request.result||null);
+        tx.onerror=()=>reject(tx.error);
+      });
+    }
+
+    async function getCloudSnapshot() {
+      const client=configuredSupabase();
+      const {data,error}=await client.from("user_snapshots")
+        .select("state,version").eq("user_id",cloudSession.user.id).maybeSingle();
+      if(error)throw error;
+      return {state:data?.state || null,version:Number(data?.version||0)};
+    }
+
+    async function putCloudSnapshot(snapshot,expected) {
+      const {data,error}=await configuredSupabase().rpc("save_snapshot",{
+        p_expected_version:expected,p_state:snapshot
+      });
+      if(error) {
+        if(error.message?.includes("SYNC_CONFLICT")) error.status=409;
+        throw error;
+      }
+      if(!Number.isSafeInteger(Number(data)) || Number(data)<1)throw new Error("Unerwartete Cloud-Version.");
+      return {version:Number(data)};
+    }
+
+    async function reconcileCloud() {
+      if(!cloudSession || cloudSyncBusy || cloudConnecting || !navigator.onLine || !cloudClient)return;
+      const accountId=cloudSession.user.id;
+      const startedRevision=revision;
+      cloudConnecting=true;
+      updateCloudUI();
+      try {
+        const remote=await getCloudSnapshot();
+        if(cloudSession?.user.id!==accountId)return;
+        cloudAccountIsOfflineCache=false;
+        if(revision!==startedRevision) {
+          // Benutzer hat während des Downloads etwas gespeichert: nichts überschreiben.
+          if(cloudDirty)cloudSyncQueued=true;
+          return;
+        }
+        cloudLastFetch=Date.now();
+        if(cloudDirty) {
+          if(remote.state && JSON.stringify(remote.state)===JSON.stringify(state)) {
+            await setCloudMeta(remote.version,false);
+            cloudConflict=false;
+            markCloudSynced();
+            showCloudStatus("Bereits hochgeladene Daten bestätigt.","success");
+          } else if(cloudVersion!==remote.version) {
+            cloudConflict=true;
+            showCloudStatus("Versionskonflikt: Ein anderes Gerät hat Änderungen hochgeladen. Deine lokalen Einträge bleiben erhalten.","error");
+          } else {
+            cloudSyncQueued=true;
+            showCloudStatus("Lokale Änderungen werden zur Cloud übertragen …");
+          }
+        } else if(remote.state) {
+          if(remote.version!==cloudVersion) await replaceLocalSnapshot(remote.state,remote.version,false);
+          markCloudSynced();
+          showCloudStatus("Daten aus Supabase synchronisiert.","success");
+        } else {
+          await setCloudMeta(remote.version,false);
+          markCloudSynced();
+          showCloudStatus("Das Konto ist noch leer. Alte lokale Einträge kannst du über die Schaltfläche übernehmen.","success");
+        }
+        updateCloudUI();
+        await refreshCloudCalendarLink();
+      } catch(error) {
+        if(cloudSession?.user.id===accountId)setCloudStatusError(error,"Cloud nicht erreichbar");
+      } finally {
+        cloudConnecting=false;
+        updateCloudUI();
+        if(cloudSyncQueued && !cloudConflict)queueCloudSync(true);
+      }
+    }
+
+    function queueCloudSync(immediate=false) {
+      if(!cloudSession || cloudConflict){updateCloudUI();return;}
+      cloudSyncQueued=true;
+      clearTimeout(cloudSyncTimer);
+      if(!navigator.onLine || !cloudClient){updateCloudUI();return;}
+      cloudSyncTimer=setTimeout(()=>void flushCloudSync(),immediate?15:850);
+      updateCloudUI();
+    }
+
+    async function flushCloudSync() {
+      if(!cloudSession || cloudConflict || cloudSyncBusy || cloudConnecting || !cloudDirty || !navigator.onLine || !cloudClient)return;
+      const accountId=cloudSession.user.id;
+      cloudSyncBusy=true;cloudSyncQueued=false;
+      const snapshot=structuredClone(state), localRevision=revision, expected=cloudVersion;
+      updateCloudUI();showCloudStatus("Übertrage Änderungen nach Supabase …");
+      try {
+        const result=await putCloudSnapshot(snapshot,expected);
+        if(cloudSession?.user.id!==accountId)return;
+        const modified=revision!==localRevision;
+        await setCloudMeta(result.version,modified);
+        cloudConflict=false;
+        if(modified)cloudSyncQueued=true;
+        else {markCloudSynced();showCloudStatus("Alle Änderungen in Supabase gespeichert.","success");}
+        updateCloudUI();
+      } catch(error) {
+        if(cloudSession?.user.id!==accountId)return;
+        cloudSyncQueued=false;
+        if(error.status===409){
+          cloudConflict=true;
+          showCloudStatus("Konflikt: Änderungen auf einem anderen Gerät. Lade den Cloudstand oder überschreibe ihn ausdrücklich.","error");
+        } else setCloudStatusError(error,"Cloud-Speicherung fehlgeschlagen");
+        updateCloudUI();
+      } finally {cloudSyncBusy=false;}
+      if(cloudSyncQueued && !cloudConflict)queueCloudSync(true);
+    }
+
+    $("cloudSaveConfig").addEventListener("click",()=>{
+      try {
+        if(cloudSession)throw new Error("Bitte zuerst abmelden, um das Projekt zu wechseln.");
+        const config=cloudConfigFromInputs();
+        localStorage.setItem(SUPABASE_CONFIG_KEY,JSON.stringify(config));
+        setSupabaseConfig(config);
+        $("cloudConnectionDetails").open=false;
+        showCloudStatus("Supabase-Projekt verbunden. Du kannst dich jetzt anmelden.","success");
+      }catch(error){setCloudStatusError(error,"Konfiguration");}
+    });
+
+    $("cloudAuthForm").addEventListener("submit",async(event)=>{
+      event.preventDefault();
+      if(cloudConnecting || cloudSyncBusy)return;
+      cloudConnecting=true;$("cloudAuthSubmit").disabled=true;
+      try {
+        const config=cloudConfigFromInputs();
+        localStorage.setItem(SUPABASE_CONFIG_KEY,JSON.stringify(config));
+        const client=setSupabaseConfig(config);
+        const email=$("cloudEmailInput").value.trim(),password=$("cloudPasswordInput").value;
+        if(cloudAuthMode==="register" && $("cloudConfirmPassword").value!==password)
+          throw new Error("Die beiden Passwörter stimmen nicht überein.");
+        const response=cloudAuthMode==="register"
+          ? await client.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}})
+          : await client.auth.signInWithPassword({email,password});
+        if(response.error)throw response.error;
+        $("cloudPasswordInput").value="";$("cloudConfirmPassword").value="";
+        if(!response.data?.session) {
+          changeCloudAuthMode("login");
+          showCloudStatus("Bitte bestätige deine E-Mail-Adresse über den Link im Posteingang und melde dich anschließend an.","success");
+        }else {
+          cloudConnecting=false;
+          await activateCloudSession({user:response.data.session.user});
+        }
+      }catch(error){setCloudStatusError(error,"Anmeldung fehlgeschlagen");}
+      finally{cloudConnecting=false;$("cloudAuthSubmit").disabled=false;}
+    });
+
+    $("cloudForgotPassword").addEventListener("click",async()=>{
+      try {
+        const config=cloudConfigFromInputs();
+        const email=$("cloudEmailInput").value.trim();
+        if(!email || !$("cloudEmailInput").checkValidity())throw new Error("Bitte zuerst eine gültige E-Mail-Adresse eingeben.");
+        const client=setSupabaseConfig(config);
+        const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+        if(error)throw error;
+        showCloudStatus("Falls das Konto existiert, erhältst du eine E-Mail zum Zurücksetzen.","success");
+      }catch(error){setCloudStatusError(error,"Passwort-Reset");}
+    });
+
+    $("cloudChangePassword").addEventListener("click",async()=>{
+      try {
+        const password=$("cloudNewPassword").value;
+        if(password.length<8)throw new Error("Passwort muss mindestens 8 Zeichen lang sein.");
+        const {error}=await configuredSupabase().auth.updateUser({password});
+        if(error)throw error;
+        $("cloudNewPassword").value="";$("cloudRecoveryGroup").classList.add("hidden");
+        showCloudStatus("Neues Passwort wurde gespeichert.","success");
+      }catch(error){setCloudStatusError(error,"Neues Passwort");}
+    });
+
+    $("cloudSyncNow").addEventListener("click",async()=>{
+      if(cloudDirty && !cloudConflict)queueCloudSync(true);
+      else await reconcileCloud();
+    });
+
+    $("cloudReload").addEventListener("click",async()=>{
+      if(!cloudSession || cloudConnecting || cloudSyncBusy)return;
+      if(cloudDirty && !confirm("Nicht synchronisierte Änderungen auf diesem Gerät werden durch den Cloudstand ersetzt. Fortfahren?"))return;
+      cloudConnecting=true;
+      try {
+        const remote=await getCloudSnapshot();
+        await replaceLocalSnapshot(remote.state || initialCloudState(),remote.version,false);
+        cloudConflict=false;cloudSyncQueued=false;markCloudSynced();
+        showCloudStatus("Cloudstand geladen. Lokale Kontodaten ersetzt.","success");
+      }catch(error){setCloudStatusError(error,"Cloudstand laden");}
+      finally{cloudConnecting=false;}
+    });
+
+    $("cloudOverwrite").addEventListener("click",async()=>{
+      if(!cloudSession || cloudConnecting || cloudSyncBusy)return;
+      if(!confirm("Achtung: Du überschreibst ALLE Einträge und Einstellungen im Cloudkonto mit dieser lokalen Version. Wirklich fortfahren?"))return;
+      cloudConnecting=true;
+      const snap=structuredClone(state), revisionSent=revision;
+      try {
+        const remote=await getCloudSnapshot();
+        const result=await putCloudSnapshot(snap,remote.version);
+        const modified=revision!==revisionSent;
+        await setCloudMeta(result.version,modified);
+        cloudConflict=false;cloudSyncQueued=modified;
+        markCloudSynced();showCloudStatus("Cloudstand durch lokale Daten ersetzt.","success");
+      }catch(error){setCloudStatusError(error,"Cloud nicht überschrieben");}
+      finally{cloudConnecting=false;}
+      if(cloudSyncQueued)queueCloudSync(true);
+    });
+
+    $("cloudImportGuest").addEventListener("click",async()=>{
+      if(!cloudSession || cloudConnecting || cloudSyncBusy)return;
+      cloudConnecting=true;
+      try {
+        const guest=await guestData();
+        if(!guest || !Array.isArray(guest.records))throw new Error("Es sind keine alten lokalen Daten vorhanden.");
+        const remote=await getCloudSnapshot();
+        if(remote.state && (remote.state.records?.length || remote.version>0))
+          throw new Error("Dein Cloudkonto enthält bereits Daten. Import hier gesperrt, damit nichts überschrieben wird.");
+        if(!confirm(`Deine ${guest.records.length} bisherigen Einträge und Einstellungen in dieses leere Konto kopieren? Lokale Daten bleiben erhalten.`))return;
+        await replaceLocalSnapshot(guest,remote.version,true);
+        updateCloudUI();
+        showCloudStatus("Alte Einträge wurden übernommen und werden hochgeladen …","success");
+      }catch(error){setCloudStatusError(error,"Übernahme");}
+      finally{cloudConnecting=false;}
+      if(cloudDirty && !cloudConflict)queueCloudSync(true);
+    });
+
+    $("cloudLogout").addEventListener("click",async()=>{
+      if(!cloudSession || cloudSyncBusy || cloudConnecting)return;
+      if(cloudDirty && !confirm("Einträge wurden noch nicht hochgeladen. Sie bleiben auf diesem Gerät im Konto gespeichert. Trotzdem abmelden?"))return;
+      cloudConnecting=true;
+      try {
+        const {error}=await configuredSupabase().auth.signOut({scope:"local"});
+        // Supabase löscht bei "local" die Sitzung dieses Geräts bereits vor
+        // einem etwaigen Netzwerkfehler beim Widerruf des Refresh Tokens.
+        await switchToGuest();
+        if(error) showCloudStatus("Auf diesem Gerät abgemeldet. Der serverseitige Widerruf konnte nicht bestätigt werden.","error");
+        else showCloudStatus("Auf diesem Gerät abgemeldet. Andere Geräte bleiben angemeldet.","success");
+      }catch(error){setCloudStatusError(error,"Abmelden");}
+      finally{cloudConnecting=false;}
+    });
+
+    function calendarTokenKey() {return `${CALENDAR_TOKEN_PREFIX}${cloudSession?.user.id||""}`;}
+
+    async function digestToken(token) {
+      const bytes=new TextEncoder().encode(token);
+      const hash=await crypto.subtle.digest("SHA-256",bytes);
+      return [...new Uint8Array(hash)].map(v=>v.toString(16).padStart(2,"0")).join("");
+    }
+
+    function cloudCalendarUrlFromToken(token) {
+      return `${cloudConfiguredUrl}/functions/v1/arbeitszeit-kalender?token=${encodeURIComponent(token)}`;
+    }
+
+    async function refreshCloudCalendarLink() {
+      if(!cloudSession || !cloudClient)return;
+      cloudCalendarLink="";$("cloudCalendarUrl").value="";
+      const token=localStorage.getItem(calendarTokenKey());
+      if(!token)return;
+      try {
+        const {data,error}=await cloudClient.from("calendar_links").select("token_hash")
+          .eq("user_id",cloudSession.user.id).maybeSingle();
+        if(error)throw error;
+        if(data?.token_hash===await digestToken(token)) {
+          cloudCalendarLink=cloudCalendarUrlFromToken(token);
+          $("cloudCalendarUrl").value=cloudCalendarLink;
+        }else localStorage.removeItem(calendarTokenKey());
+      }catch(error){showCloudCalendarStatus("Kalenderlink nicht geprüft: "+error.message,"error");}
+    }
+
+    async function createCloudCalendarLink({rotate=false}={}) {
+      if(!cloudSession)throw new Error("Bitte anmelden.");
+      if(rotate && !confirm("Ein bestehendes Apple-Kalender-Abo funktioniert danach nicht mehr. Neuen Link erzeugen?"))return null;
+      const bytes=new Uint8Array(32);
+      crypto.getRandomValues(bytes);
+      const token=[...bytes].map(v=>v.toString(16).padStart(2,"0")).join("");
+      const token_hash=await digestToken(token);
+      const {error}=await configuredSupabase().from("calendar_links").upsert({user_id:cloudSession.user.id,token_hash});
+      if(error)throw error;
+      localStorage.setItem(calendarTokenKey(),token);
+      cloudCalendarLink=cloudCalendarUrlFromToken(token);
+      $("cloudCalendarUrl").value=cloudCalendarLink;
+      return cloudCalendarLink;
+    }
+
+    async function ensureCloudCalendarLink() {
+      if(cloudCalendarLink)return cloudCalendarLink;
+      const {data,error}=await configuredSupabase().from("calendar_links").select("token_hash")
+        .eq("user_id",cloudSession.user.id).maybeSingle();
+      if(error)throw error;
+      if(data && !confirm("Für diesen Account gibt es bereits einen Kalenderlink, aber er ist auf diesem Gerät nicht gespeichert. Neuen erstellen? Der bisherige Link wird ungültig."))return null;
+      return createCloudCalendarLink();
+    }
+
+    function showCloudCalendarStatus(message,kind="") {showStatus($("cloudCalendarStatus"),message,kind);}
+
+    async function copyCalendarUrl(url) {
+      try {
+        if(!navigator.clipboard?.writeText)throw new Error("Zwischenablage nicht verfügbar");
+        await navigator.clipboard.writeText(url);
+      } catch (_) {
+        const field=$("cloudCalendarUrl");
+        field.value=url;field.focus();field.select();field.setSelectionRange(0,url.length);
+        throw new Error("Link ist im Feld markiert. Bitte lange drücken und „Kopieren“ auswählen.");
+      }
+    }
+
+    $("cloudCalendarCopy").addEventListener("click",async()=>{
+      try {
+        const url=await ensureCloudCalendarLink();
+        if(!url)return;
+        await copyCalendarUrl(url);
+        showCloudCalendarStatus("Link kopiert. In iPhone-Einstellungen → Apps → Kalender → Kalenderaccounts → Account hinzufügen → Andere → Kalenderabo hinzufügen einfügen.","success");
+      }catch(error){showCloudCalendarStatus(error.message,"error");}
+    });
+
+    $("cloudCalendarSubscribe").addEventListener("click",async()=>{
+      try {
+        // iOS muss webcal: möglichst direkt im Tap-Handler öffnen.
+        // Beim allerersten Tippen ggf. zunächst den privaten Link erzeugen.
+        if(cloudCalendarLink) {
+          location.href=cloudCalendarLink.replace(/^https:/,"webcal:");
+          return;
+        }
+        const url=await ensureCloudCalendarLink();
+        if(url)showCloudCalendarStatus("Kalenderlink bereit! Tippe nochmals auf „In Apple Kalender abonnieren“. Alternativ kannst du den Link kopieren.","success");
+      }catch(error){showCloudCalendarStatus(error.message,"error");}
+    });
+
+    $("cloudCalendarRotate").addEventListener("click",async()=>{
+      try {
+        const url=await createCloudCalendarLink({rotate:true});
+        if(url)showCloudCalendarStatus("Neuer Link erstellt. Ein bestehendes Apple-Kalenderabo mit altem Link muss neu eingerichtet werden.","success");
+      }catch(error){showCloudCalendarStatus(error.message,"error");}
+    });
+
+    let sdkReloadInProgress=null;
+    async function loadSupabaseSdkIfNeeded() {
+      if(typeof window.supabase?.createClient==="function")return;
+      if(sdkReloadInProgress)return sdkReloadInProgress;
+      sdkReloadInProgress=new Promise((resolve,reject)=>{
+        const script=document.createElement("script");
+        script.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+        script.onload=()=>resolve();
+        script.onerror=()=>reject(new Error("Supabase konnte nicht geladen werden. Bitte später erneut öffnen."));
+        document.head.append(script);
+      }).finally(()=>{sdkReloadInProgress=null;});
+      return sdkReloadInProgress;
+    }
+
+    async function resumeCloudConnection() {
+      if(!cloudSession || !navigator.onLine)return;
+      if(!cloudClient) {
+        try {
+          await loadSupabaseSdkIfNeeded();
+          let config=JSON.parse(localStorage.getItem(SUPABASE_CONFIG_KEY)||"null");
+          if(!config?.url && SUPABASE_DEFAULT_URL && SUPABASE_DEFAULT_PUBLISHABLE_KEY)
+            config={url:SUPABASE_DEFAULT_URL,key:SUPABASE_DEFAULT_PUBLISHABLE_KEY};
+          if(config?.url && config?.key)setSupabaseConfig(config);
+        } catch(error) {setCloudStatusError(error,"Verbindung wiederherstellen");return;}
+      }
+      if(!cloudClient)return;
+      if(cloudAccountIsOfflineCache) {
+        try {
+          const {data,error}=await cloudClient.auth.getSession();
+          if(error)throw error;
+          if(!data?.session?.user || data.session.user.id!==cloudSession.user.id) {
+            showCloudStatus("Deine Anmeldung muss erneuert werden. Deine lokalen Daten bleiben vorhanden.","error");
+            return;
+          }
+          cloudAccountIsOfflineCache=false;
+        }catch(error){setCloudStatusError(error,"Verbindung wiederherstellen");return;}
+      }
+      if(cloudDirty && !cloudConflict)queueCloudSync(true);
+      else void reconcileCloud();
+    }
+    window.addEventListener("online",()=>{void resumeCloudConnection();});
+
+    function clearDeprecatedCalendarSecrets() {
+      // Entfernt nur ungenutzte alte Worker-Schlüssel, keine App- oder Kontodaten.
+      const prefix="arbeitszeit-apple-calendar-sync-v1";
+      for(let i=localStorage.length-1;i>=0;i--) {
+        const key=localStorage.key(i);
+        if(key===prefix || key?.startsWith(prefix+":"))localStorage.removeItem(key);
+      }
+    }
+
     async function initialize() {
       document.body.inert = true;
       try {
@@ -2868,6 +3903,8 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
         $("reportYear").value = Number(selectedMonth.slice(0, 4));
         renderSettings();
         renderAll();
+        clearDeprecatedCalendarSecrets();
+        await restoreStoredCloudSession();
         let lastDay = localDateString();
         setInterval(() => {
           if (document.visibilityState !== "visible" || writeBusy) return;
@@ -2877,6 +3914,11 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
             lastDay=day; renderAll();
           }
         }, 60000);
+        setInterval(()=>{
+          if(document.visibilityState!=="visible" || writeBusy || !cloudSession ||
+             cloudConnecting || cloudSyncBusy || cloudDirty || cloudConflict || !navigator.onLine)return;
+          if(Date.now()-cloudLastFetch>90000)void reconcileCloud();
+        }, 90000);
       } catch (error) {
         document.body.innerHTML = `
           <main><section class="panel">
@@ -2889,6 +3931,7 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
         document.body.inert = false;
       }
 
+      if (cloudSession) void resumeCloudConnection();
       if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
@@ -2903,7 +3946,14 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     });
     document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible" && db && !writeBusy) renderAll();
+      if (document.visibilityState === "visible" && db && !writeBusy) {
+        renderAll();
+        if (cloudSession && navigator.onLine) {
+          if(cloudAccountIsOfflineCache)void resumeCloudConnection();
+          else if(cloudDirty && !cloudConflict)queueCloudSync(true);
+          else if(Date.now()-cloudLastFetch>30000)void reconcileCloud();
+        }
+      }
     });
 
     initialize();
