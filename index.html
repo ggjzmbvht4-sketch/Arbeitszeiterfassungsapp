@@ -1687,20 +1687,148 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 .assistant-mic{min-width:42px;padding:6px;border-radius:12px}.assistant-form-actions span:first-child{flex:1}
 @media(max-width:360px){.assistant-chart-row{grid-template-columns:62px 1fr 56px;gap:5px;font-size:.69rem}.assistant-top h2{font-size:1rem}}
 .vacation-expiry-hint{background:var(--accent-light);border:1px solid var(--control-edge);color:var(--ink);border-radius:13px;padding:12px;line-height:1.5;font-size:.85rem;margin-top:13px}
+
+/* ================= V12.1 – Mobile + Kalenderdarstellung ================= */
+/* Safari-Date-/Time-Controls haben eigene Mindestbreiten: Eltern erlauben Schrumpfen,
+   mobile Datumsfelder brauchen eine ganze Zeile statt 50%-Spalten. */
+:root {
+  --calendar-neutral-bg:#ffffff;
+  --calendar-work-bg:#e0f5f2;
+  --calendar-vacation-bg:#daf2e2;
+  --calendar-sick-bg:#ffe3ea;
+  --calendar-planned-bg:#eee6ff;
+  --calendar-border:#b6c9c6;
+  --calendar-ink:#1c312f;
+  --calendar-muted:#39534f;
+  --calendar-work-ink:#126d65;
+  --calendar-planned-ink:#533299;
+  --calendar-plan-border:#7852c6;
+  --calendar-vacation-ink:#146b42;
+  --calendar-sick-ink:#963c55;
+  --calendar-holiday-ink:#956217;
+  --calendar-selected-ring:#185f9e;
+}
+:root[data-effective-appearance="dark"] {
+  --calendar-neutral-bg:#202e36;
+  --calendar-work-bg:#17493e;
+  --calendar-vacation-bg:#234638;
+  --calendar-sick-bg:#532d3a;
+  --calendar-planned-bg:#393053;
+  --calendar-border:#71858b;
+  --calendar-ink:#f5fafc;
+  --calendar-muted:#e2eef0;
+  --calendar-work-ink:#b9fff0;
+  --calendar-planned-ink:#f0d9ff;
+  --calendar-plan-border:#d1aaff;
+  --calendar-vacation-ink:#c0f9cf;
+  --calendar-sick-ink:#ffcbd9;
+  --calendar-holiday-ink:#ffdda2;
+  --calendar-selected-ring:#ffe18d;
+}
+#calendarGrid .calendar-day {
+  background:var(--calendar-neutral-bg);border:1px solid var(--calendar-border);
+  color:var(--calendar-ink);min-width:0;position:relative;isolation:isolate;
+}
+#calendarGrid .calendar-day.workday {background:var(--calendar-work-bg)}
+#calendarGrid .calendar-day.vacation {background:var(--calendar-vacation-bg)}
+#calendarGrid .calendar-day.sick {background:repeating-linear-gradient(135deg,transparent 0 8px,#fbc0d311 8px 10px),var(--calendar-sick-bg)}
+#calendarGrid .calendar-day.planned-only {background:var(--calendar-planned-bg);border:2px solid var(--calendar-plan-border);padding:4px 3px}
+#calendarGrid .calendar-day.has-plan:not(.planned-only) {box-shadow:inset 3px 0 0 var(--calendar-plan-border)}
+#calendarGrid .calendar-day.selected {outline:3px solid var(--calendar-selected-ring);outline-offset:-3px;z-index:1}
+#calendarGrid .calendar-day.holiday {border-bottom:3px solid var(--calendar-holiday-ink)}
+#calendarGrid .calendar-day .day-number {color:var(--calendar-ink);font-weight:800}
+#calendarGrid .calendar-day .day-status {color:var(--calendar-muted);font-weight:700}
+#calendarGrid .calendar-day.workday .day-status,
+#calendarGrid .calendar-day.workday .day-hours {color:var(--calendar-work-ink)}
+#calendarGrid .calendar-day.vacation .day-status {color:var(--calendar-vacation-ink)}
+#calendarGrid .calendar-day.sick .day-status {color:var(--calendar-sick-ink)}
+#calendarGrid .calendar-day .day-plan-chip {
+  display:inline-block;max-width:100%;padding:2px 4px;border:1px solid var(--calendar-plan-border);
+  border-radius:5px;background:var(--calendar-planned-bg);color:var(--calendar-planned-ink);
+  font-size:.60rem;line-height:1.12;font-weight:850;white-space:nowrap;letter-spacing:.005em;
+}
+#calendarGrid .calendar-day .day-plan-time {color:var(--calendar-planned-ink);font-size:.63rem;font-weight:750;line-height:1.1}
+.legend {color:var(--text)}
+.legend i {flex:0 0 11px;width:11px;height:11px;border:1px solid var(--calendar-border)}
+.legend-work {background:var(--calendar-work-bg)!important;border:2px solid var(--calendar-work-ink)!important}
+.legend-free {background:var(--calendar-neutral-bg)!important;border-color:var(--calendar-border)!important}
+.legend-vacation {background:var(--calendar-vacation-bg)!important;border:2px solid var(--calendar-vacation-ink)!important}
+.legend-sick {background:var(--calendar-sick-bg)!important;border:2px solid var(--calendar-sick-ink)!important}
+.legend-planned {background:var(--calendar-planned-bg)!important;border:2px solid var(--calendar-plan-border)!important}
+.legend-holiday {background:transparent!important;border:2px solid var(--calendar-holiday-ink)!important}
+.calendar-planned-entry {background:var(--calendar-planned-bg);border:1px solid var(--calendar-plan-border);border-radius:13px;padding:12px;margin-bottom:12px}
+.calendar-planned-entry .entry-title,.calendar-planned-entry .entry-detail {color:var(--calendar-planned-ink)}
+.calendar-planned-entry .entry-detail {margin-top:7px;font-weight:700}
+.calendar-planned-entry .entry-plan-note {font-size:.79rem;color:var(--calendar-ink);margin-top:7px}
+.calendar-plan-label {font-weight:750;color:var(--calendar-planned-ink)}
+#selectedDayEntries .calendar-planned-entry .row button {width:auto;max-width:100%;color:var(--calendar-planned-ink);border-color:var(--calendar-plan-border);background:var(--calendar-planned-bg)}
+#calendarGrid .calendar-day:focus-visible {outline:3px solid var(--calendar-selected-ring);outline-offset:1px}
+/* Gleichmäßig große, tappbare Kalenderfelder; Plan-Zusatz auch bei 320px sichtbar. */
+@media(max-width:600px) {
+  #calendarGrid .calendar-day {min-height:79px;gap:3px;padding:5px 3px}
+  #calendarGrid .calendar-day.planned-only {padding:4px 2px}
+  #calendarGrid .calendar-day .day-plan-chip {font-size:.60rem;padding:2px 3px}
+  #calendarGrid .calendar-day .day-plan-time {font-size:.58rem}
+  #calendarGrid .calendar-day .day-status {font-size:.61rem}
+  .view-stack .two-col,.settings-group .two-col,.sheet .two-col,.ai-body .two-col {
+    display:grid;grid-template-columns:minmax(0,1fr);gap:8px;
+  }
+  .view-stack .two-col > *, .settings-group .two-col > *,
+  .sheet .two-col > *, .ai-body .two-col > * {min-width:0;width:100%;max-width:100%}
+  .view-stack input:not([type="checkbox"],[type="radio"],[type="file"]),
+  .sheet input:not([type="checkbox"],[type="radio"],[type="file"]),
+  .view-stack select,.sheet select,.view-stack textarea,.sheet textarea {
+    display:block;box-sizing:border-box;width:100%;max-width:100%;min-width:0;
+    font-size:16px;
+  }
+  .view-stack input[type="date"],.view-stack input[type="time"],
+  .sheet input[type="date"],.sheet input[type="time"],
+  #manualForm input[type="date"],#manualForm input[type="time"] {
+    padding-inline:9px;
+    -webkit-appearance:auto;appearance:auto;
+  }
+  /* Kein künstliches Mindestmaß für Date-/Time-Picker, das das Kartenlayout sprengt. */
+  .view-stack form,.view-stack label,.view-stack fieldset,.settings-group,
+  .sheet form,.sheet label,.sheet fieldset,.ai-body,
+  .plan-range,.entry-assist,.manual-head,.manual-fields {min-width:0;max-width:100%}
+  .view-stack .row,.view-stack .toolbar,.view-stack .actions,
+  .sheet .row,.sheet .toolbar,.sheet .actions {min-width:0;max-width:100%}
+}
+@media(max-width:360px) {
+  #calendarGrid .calendar-day {min-height:76px;padding:4px 2px}
+  #calendarGrid .calendar-day .day-plan-chip {font-size:.56rem;padding:2px 2px}
+  #calendarGrid .calendar-day .day-status {font-size:.58rem}
+  #calendarGrid .calendar-day .day-plan-time {font-size:.55rem}
+  .legend {row-gap:10px}
+}
+
 </style>
 
+<style>[hidden],.five-tabs .tab[hidden],#todayAskAssistant,.calendar-heading {display:none!important}
+#homeWidgets,.topic-list,#yearMonths{display:grid;gap:10px}
+#homeWidgets{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+button.widget,button.topic{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:18px;text-align:left;padding:16px 18px;box-shadow:none}
+button.widget{display:grid;gap:8px}button.widget strong{font-size:1.45rem}button.widget small,.topic small{display:block;color:var(--muted);font-weight:500}.topic small{margin-top:4px}
+button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.topic{justify-content:space-between}.widget-row{min-height:48px;border-bottom:1px solid var(--line)}.widget-row label{flex:1;display:flex;align-items:center;gap:8px;margin:0}.widget-row input,#homeEnabled{width:auto}.chat-tools{padding:6px 16px}
+#chatList{max-height:32dvh;overflow:auto;padding:8px 16px}#yearMonths{grid-template-columns:repeat(3,minmax(0,1fr))}#yearMonths button{display:grid;text-align:left;gap:3px}
+#analysisMode{margin:0 0 12px}#analysisMode button[aria-pressed=true]{background:var(--accent-light);color:var(--ink);font-weight:750}
+#closedHeroBalance:not(.hidden){margin:8px 0 16px;display:grid;gap:3px}#heroBalanceValue{font-size:clamp(2.3rem,8vw,3.6rem)}#monthHero .report-total{font-size:1.4rem}
+#overviewPanel details .panel{border:0;box-shadow:none;padding:8px 0}#smartReport .report-story p{margin:.45em 0}
+.batch-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:.6rem 0}.batch-row input{min-width:0;width:100%;box-sizing:border-box}
+</style>
 </head>
 
 <body>
   <header class="app-header">
     <h1>Arbeitszeit</h1>
-    <button id="headerAssistant" class="header-assistant" type="button" aria-label="KI-Assistent öffnen" title="KI-Assistent öffnen"><span aria-hidden="true">✦</span> <span>KI fragen</span></button>
+
     <button id="headerSettings" class="header-settings" type="button" aria-label="Einstellungen und Konto öffnen" title="Einstellungen und Konto öffnen">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l-1.88 1.88a1.65 1.65 0 0 0-1.82-.33l-.1.04A1.65 1.65 0 0 0 15 19.9V20h-6v-.1a1.65 1.65 0 0 0-.93-1.49l-.1-.04a1.65 1.65 0 0 0-1.82.33l-1.88-1.88A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.5-1H3v-4h.1a1.65 1.65 0 0 0 1.5-1 1.65 1.65 0 0 0-.33-1.82L6.15 5.3a1.65 1.65 0 0 0 1.82.33A1.65 1.65 0 0 0 9 4.1V4h6v.1a1.65 1.65 0 0 0 1.03 1.53 1.65 1.65 0 0 0 1.82-.33l1.88 1.88A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.5 1h.1v4h-.1a1.65 1.65 0 0 0-1.5 1Z"/></svg>
     </button>
   </header>
 
   <main>
+    <section id="homePanel" class="view-stack hidden"><div class="section-head"><h2>Home</h2><button id="homeEdit" type="button" class="secondary small">Widgets bearbeiten</button></div><div id="homeWidgets"></div></section>
     <section id="todayPanel">
   <div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div></div>
   <button type="button" id="cloudBanner" class="cloud-banner" aria-label="Cloud-Konto und Synchronisierung öffnen"><span class="cloud-badge"><i class="cloud-dot" id="cloudBannerDot"></i><span id="cloudBannerLabel">Nur auf diesem Gerät</span></span><small id="cloudBannerDetail">Konto einrichten ›</small></button>
@@ -1712,7 +1840,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     <div class="manual-switch" role="group" aria-label="Eingabeart"><button id="byRange" type="button" aria-pressed="true">Von – bis</button><button id="byDuration" type="button" aria-pressed="false">Dauer</button></div>
     <div class="manual-fields"><label id="startLabel">Beginn<input id="manualStart" type="time" required></label><label id="endLabel">Ende<input id="manualEnd" type="time" required></label><label class="hidden" id="durationLabel">Dauer vor Pause (Std.)<input id="manualDuration" type="number" min="0.01" max="24" step="0.01" placeholder="7,5" disabled></label><label>Pause (Min.)<input id="manualPause" type="number" min="0" max="1439" step="1" value="0"></label></div>
     <div id="manualPlannedHint" class="planned-hint hidden"><span id="manualPlannedText"></span><button id="manualUsePlan" type="button" class="secondary small">Geplante Zeit übernehmen</button></div>
-    <div id="manualPlanApplied" class="plan-applied-banner hidden" role="status"><strong>✓ Geplante Zeit übernommen</strong><span>Die Zeiten sind vorausgefüllt. Erst mit „Eintrag speichern“ wird die Arbeitszeit gebucht.</span></div>
+    <div id="manualPlanApplied" class="plan-applied-banner hidden" role="status"><strong>✓ Geplante Zeit übernommen</strong><span>Die Zeiten sind vorausgefüllt. Erst mit „Arbeitszeit speichern“ wird die Arbeitszeit gebucht.</span></div>
     <div class="quick-templates" id="quickTemplates" aria-label="Gespeicherte Arbeitszeitvorlagen"></div>
 <div id="smartTemplate" class="quick-templates"><button type="button" class="secondary" id="aiTemplate">Wochentagsvorlage übernehmen</button></div>
     <div class="manual-footer"><div><span class="clock-caption">Nettoarbeitszeit</span><output id="manualNet" aria-live="polite">—</output></div><button type="submit">Eintrag speichern</button></div>
@@ -1720,7 +1848,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
   </form>
   <section class="panel hidden" id="oldShift"><h2>Offene Schicht aus der Vorversion</h2><p class="hint" id="oldShiftStart"></p><label for="oldEnd">Tatsächliches Ende</label><input type="datetime-local" id="oldEnd"><div class="actions"><button type="button" id="recoverShift">Schicht übernehmen</button><button type="button" class="secondary" id="forgetShift">Verwerfen</button></div></section>
   <div class="day-metrics flex-metrics"><div><span>Heute gearbeitet</span><strong id="todayWorked"></strong></div><div><span id="bookedMonth"></span><strong id="monthWorked"></strong></div></div>
-  <section id="todayAssistance" class="panel hidden"><h3>Für deinen Tag</h3><div id="todayAssistanceContent"></div></section><section class="panel"><div class="section-head"><h2>Heutige Einträge</h2></div><div id="timeline"></div></section>
+  <section id="todayAssistance" class="panel hidden"><h3>Für deinen Tag</h3><div id="todayAssistanceContent"></div></section><section id="todayBookings" class="panel"><div class="section-head"><h2 id="todayBookingsTitle">Heutige Einträge</h2></div><div id="timeline"></div><button type="button" class="secondary small" id="moreToday" hidden>Weitere Arbeitszeit erfassen</button></section>
   <section class="panel account-line"><span id="balanceLabel">Zeitkonto</span><strong id="todayBalance"></strong></section>
 </section>
 
@@ -1738,7 +1866,8 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="Monatskalender"></div>
       <div class="legend" aria-label="Kalenderlegende">
         <span><i class="legend-work"></i>Gearbeitet</span>
-        <span><i class="legend-free"></i>Frei</span>
+        <span><i class="legend-planned"></i>Geplant (nicht gebucht)</span>
+
         <span><i class="legend-vacation"></i>Urlaub</span>
         <span><i class="legend-sick"></i>Krankheit</span>
         <span><i class="legend-holiday"></i>Feiertag</span>
@@ -1752,8 +1881,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       </div>
     </section>
 
+    <div id="analysisMode" class="manual-switch hidden" role="group" aria-label="Analysezeitraum"><button type="button" id="monthMode">Monat</button><button type="button" id="yearMode">Jahr</button></div>
     <section id="analyticsPanel" class="view-stack hidden" aria-labelledby="analyticsIntro">
-      <div class="panel analysis-scope"><div><h2>Analysen</h2><span class="hint">Ausgewähltes Jahr</span></div>        <div class="analysis-year-picker" role="group" aria-label="Analysejahr">
+      <div class="panel analysis-scope"><div><h2>Analysejahr</h2></div>        <div class="analysis-year-picker" role="group" aria-label="Analysejahr">
           <button id="analysisYearPrev" class="secondary" type="button" aria-label="Vorheriges Jahr">‹</button>
           <strong id="analysisYearText" aria-live="polite">–</strong><input id="analysisYear" type="hidden">
           <button id="analysisYearNext" class="secondary" type="button" aria-label="Nächstes Jahr">›</button>
@@ -1770,7 +1900,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         <div class="metric"><span>Ø Arbeitstag</span><strong id="statAverage">–</strong></div>
         <div class="metric"><span>Urlaub gebucht</span><strong id="statVacationUsed">–</strong></div>
       </div>
-<section id="smartReport" class="panel ai-card"><h2>Was sich bei dir verändert</h2><div class="ai-body"><div class="report-period-selector"><span class="hint">Berichtsmonat</span><div class="month-stepper" role="group" aria-label="Berichtsmonat wählen"><button type="button" id="aiMonthPrev" class="secondary" aria-label="Vorheriger Monat">‹</button><strong id="aiMonthLabel" aria-live="polite">–</strong><input id="aiMonth" type="hidden"><button type="button" id="aiMonthNext" class="secondary" aria-label="Nächster Monat">›</button></div></div><div id="aiInsightCards" class="insight-cards"></div><div class="report-card"><div class="report-card-heading"><strong>Vergleich zum Vormonat</strong><small>Ø Nettoarbeitszeit je erfasstem Arbeitstag</small></div><div id="aiReportChart" role="img" aria-label="Vergleich der durchschnittlichen Arbeitstage"></div></div><div id="aiMonthly" class="report-story" role="status"></div><details class="report-year-details"><summary>Jahresüberblick ansehen</summary><div id="aiYearly" class="report-story" role="status"></div></details><button type="button" class="secondary" id="aiNarrate">✦ Entwicklung von KI erklären lassen</button><div id="aiNarrative" class="report-story" role="status"></div><button type="button" id="aiSettingsJump" class="secondary small">KI-Einstellungen</button></div></section><button type="button" id="analyticsAskAssistant" class="assistant-invite assistant-invite-analysis"><span class="assistant-invite-icon" aria-hidden="true">✦</span><span><strong>Mehr über deine Zeiten erfahren</strong><small>Stelle dem Assistenten jede Frage zu deinen Buchungen.</small></span><span aria-hidden="true">›</span></button>      <section class="panel"><div class="section-head"><h2>Überstundenentwicklung</h2><span class="mini-label">Gewähltes Jahr</span></div>
+<section id="smartReport" class="panel ai-card"><h2>Arbeitsrhythmus im Monat</h2><div class="ai-body"><div class="report-period-selector"><span class="hint">Berichtsmonat</span><div class="month-stepper" role="group" aria-label="Berichtsmonat wählen"><button type="button" id="aiMonthPrev" class="secondary" aria-label="Vorheriger Monat">‹</button><strong id="aiMonthLabel" aria-live="polite">–</strong><input id="aiMonth" type="hidden"><button type="button" id="aiMonthNext" class="secondary" aria-label="Nächster Monat">›</button></div></div><div id="aiInsightCards" class="insight-cards"></div><div class="report-card"><div class="report-card-heading"><strong>Vergleich zum Vormonat</strong><small>Ø Nettoarbeitszeit je erfasstem Arbeitstag</small></div><div id="aiReportChart" role="img" aria-label="Vergleich der durchschnittlichen Arbeitstage"></div></div><p id="monthCompareStory" class="hint"></p><div id="aiMonthly" hidden class="report-story" role="status"></div><details class="report-year-details"><summary>Jahresüberblick ansehen</summary><div id="aiYearly" class="report-story" role="status"></div></details><button type="button" class="secondary" id="aiNarrate">✦ Entwicklung von KI erklären lassen</button><div id="aiNarrative" class="report-story" role="status"></div><button type="button" id="aiSettingsJump" class="secondary small">KI-Einstellungen</button></div></section><button type="button" id="analyticsAskAssistant" class="assistant-invite assistant-invite-analysis"><span class="assistant-invite-icon" aria-hidden="true">✦</span><span><strong>Mehr über deine Zeiten erfahren</strong><small>Stelle dem Assistenten jede Frage zu deinen Buchungen.</small></span><span aria-hidden="true">›</span></button>      <section class="panel"><div class="section-head"><h2>Überstundenentwicklung</h2><span class="mini-label">Gewähltes Jahr</span></div>
         <div id="balanceChart" class="insight-chart" role="img" aria-label="Entwicklung des Zeitkontos"></div>
         <p class="hint">Nur abgeschlossene Monate – keine Hochrechnung für den laufenden Monat.</p>
       </section>
@@ -1785,7 +1915,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         </div>
         <h3>Gearbeitete Stunden je Monat</h3>
         <div id="monthlyChart" class="insight-chart" role="img" aria-label="Gearbeitete Stunden pro Monat mit Stundenachse"></div>
-        <p class="hint">Skala links in Stunden. Der laufende Monat zeigt nur tatsächlich erfasste Arbeitszeit.</p>
+        <div class="month-links" id="yearMonths"></div><p class="hint">Skala links in Stunden. Der laufende Monat zeigt nur tatsächlich erfasste Arbeitszeit.</p>
       </section>
       <section class="panel"><h2>Arbeitsrhythmus</h2>
         <div class="grid two-dashboard">
@@ -1799,18 +1929,18 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       </section>
     </section>
     <section id="detailsPanel" class="view-stack hidden" aria-label="Monatsdetails und einzelne Einträge">
-      <p class="hint" style="margin:0 4px 12px">Wähle einen Monat, um alle Werte und Einträge einzusehen.</p>
+
       <div id="detailMonthBar" class="month-bar" aria-label="Monat für Details auswählen">
         <button id="detailsPreviousMonth" class="secondary" type="button" aria-label="Vorheriger Monat">‹</button>
         <div class="month-control"><span aria-hidden="true" id="detailsMonthText"></span><input id="detailsMonthPicker" type="month" min="2000-01" max="2200-12" aria-label="Monat für Details auswählen"></div>
         <button id="detailsNextMonth" class="secondary" type="button" aria-label="Nächster Monat">›</button>
       </div>
     <section id="overviewPanel" class="view-stack">
-      <div class="clock-card report-hero"><h2 id="overviewHeading">Monatsübersicht</h2>
-        <strong class="report-total" id="creditedMetric">–</strong><span class="clock-caption">Geleistete Arbeitszeit <small class="credited-note">inkl. angerechnetem Urlaub, Krankheit und Feiertagen</small></span>
+      <div id="monthHero" class="clock-card report-hero"><h2 id="overviewHeading">Monatsübersicht</h2>
+        <strong class="report-total" id="creditedMetric">–</strong><span class="clock-caption">Angerechnete Zeit <small class="credited-note">inkl. angerechnetem Urlaub, Krankheit und Feiertagen</small></span>
         <div id="closedHeroBalance" class="closed-hero-balance hidden" aria-live="polite">
-          <span>Überstunden am Monatsende</span><strong id="heroBalanceValue">–</strong>
-        </div></div>
+          <span id="heroBalanceDate">Überstunden am Monatsende</span><strong id="heroBalanceValue">–</strong>
+        </div><p class="hint" id="monthMovement"></p><p id="monthWorkStory" class="hint"></p></div>
       <div class="panel">
       <div class="grid">
         <div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
@@ -1823,7 +1953,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       <p id="vacationBalance" class="hint"></p>
 
       </div>
-      <section id="monthAssistance" class="panel hidden"><h3>Dein Monat im Blick</h3><div id="monthAssistanceContent"></div></section><div class="panel"><h3>Einträge des Monats</h3>
+      <div class="panel"><h3>Einträge des Monats</h3>
       <div id="entriesList"></div></div>
     </section>
 
@@ -1838,12 +1968,12 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 <details id="smartPlan" class="panel ai-card hidden" hidden aria-hidden="true"><summary>Intelligenter Arbeitszeitplaner</summary><div class="ai-body"><label>Dein Wunsch<input id="aiPlanRequest" maxlength="600" placeholder="Bis Ende Dezember 15 Überstunden aufbauen, freitags höchstens 6 Stunden"></label><button type="button" id="aiPlanInterpret" class="secondary">Wunsch übernehmen</button><div id="aiPlanRequestStatus" role="status"></div><label>Planungsziel<select id="aiPlanMode"><option value="delta">Zusätzliche Überstunden bis Monatsende</option><option value="balance">Gewünschter Gesamtstand bis Monatsende</option><option value="week">Typische Schichten für nächste Woche</option></select></label><p class="hint">Deine Arbeitstage, Schichtzeiten und Tagesgrenzen kommen aus den Assistenz-Einstellungen. Der Vorschlag berücksichtigt bestehende Schichten, Feiertage und Abwesenheiten.</p><div class="two-col"><label id="aiDeadlineLabel">Zielmonat<input id="aiDeadline" type="month"></label><label id="aiTargetLabel">Überstundenziel (Std.)<input id="aiTarget" type="number" value="15" step="0.25"></label></div><label>Freitags höchstens (Nettostunden)<input id="aiFriday" type="number" min="0" max="10" step="0.25" value="6"></label><button type="button" class="secondary" id="aiPlanGo">Vorschlag berechnen</button><div id="aiPlanSummary" class="ai-output"></div><div id="aiPlanResult" class="ai-output" role="status"></div><button type="button" class="secondary" id="aiPlanSave">Als Schichtplanung speichern</button></div></details><details id="smartLeave" class="panel ai-card"><summary>Urlaubsassistent</summary><div class="ai-body"><label>Dein Urlaubswunsch<input id="aiLeaveRequest" maxlength="600" placeholder="Im Frühjahr zehn Tage frei mit möglichst wenig Urlaub"></label><button type="button" id="aiLeaveInterpret" class="secondary">Zeiträume vorschlagen</button><div id="aiLeaveRequestStatus" role="status"></div><div class="two-col"><label>Frühester Beginn<input id="aiFrom" type="date"></label><label>Spätestes Ende<input id="aiUntil" type="date"></label></div><label>Zusammenhängende freie Tage<input id="aiLength" type="number" min="1" max="60" value="10"></label><button type="button" class="secondary" id="aiLeaveGo">Zeiträume vergleichen</button><div id="aiLeaves" class="ai-output" role="status"></div></div></details>
       <section class="panel" id="workPlanPanel">
         <div class="section-head"><h2>Arbeitszeiten planen</h2><span class="mini-label">Keine Buchung</span></div>
-        <p class="hint">Geplante Schichten bleiben getrennt: keine Anrechnung auf das Stundenkonto, keine Übertragung in den Kalender oder nach Apple Kalender. Erst wenn du sie bewusst übernimmst und speicherst, werden sie zu einer echten Buchung.</p>
+        <p class="hint">Geplante Schichten bleiben getrennt: keine Anrechnung auf das Stundenkonto, im App-Kalender als Plan markiert, ohne Übertragung nach Apple Kalender. Erst wenn du sie bewusst übernimmst und speicherst, werden sie zu einer echten Buchung.</p>
         <form id="workPlanForm">
           <div class="plan-range"><label>Datum<input id="workPlanDate" type="date" required></label><label>Wiederholen bis (optional)<input id="workPlanEndDate" type="date"></label></div>
           <p class="hint">Einzelnen Tag oder Zeitraum von maximal 90 Kalendertagen planen. Die Auswahl gilt nur für Planungen, niemals für deine gebuchten Arbeitszeiten.</p>
-          <label for="workPlanTemplate">Gespeicherte Vorauswahl nutzen (optional)</label>
-          <select id="workPlanTemplate"><option value="">Eigene Zeiten eingeben</option></select>
+          <div class="quick-templates" id="planTemplates" aria-label="Schichtvorlagen"></div>
+          <select hidden aria-label="Schichtvorlage" id="workPlanTemplate"><option value="">Eigene Zeiten eingeben</option></select>
           <div class="plan-day-actions" style="margin-top:5px"><span class="hint" style="flex:1">Vorlagen findest du in den Einstellungen (Zahnrad oben rechts).</span><button id="workPlanManageTemplates" type="button" class="secondary small">Vorlagen verwalten</button></div>
           <div id="workPlanRangeOptions" class="plan-weekday-block hidden">
             <fieldset class="plan-weekday-fieldset">
@@ -1863,7 +1993,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
           <p class="plan-preview" id="workPlanPreview" role="status" aria-live="polite">1 Tag wird geplant · noch keine Buchung.</p>
           <div class="plan-range"><label>Beginn<input id="workPlanStart" type="time" required></label><label>Ende<input id="workPlanEnd" type="time" required></label></div>
           <div class="plan-range"><label>Pause (Min.)<input id="workPlanBreak" type="number" min="0" max="1439" step="1" inputmode="numeric" value="30" required></label><label>Notiz (optional)<input id="workPlanNote" type="text" maxlength="100" placeholder="z. B. Frühschicht"></label></div>
-          <button type="submit">Nur Planung speichern</button>
+          <button type="submit">Schicht planen</button>
           <p id="workPlanStatus" class="status" role="status" aria-live="polite"></p>
         </form>
         <div class="section-head"><h3>Deine geplanten Schichten</h3></div>
@@ -1883,12 +2013,14 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         <label for="bridgeYear">Jahr</label><input id="bridgeYear" type="number" min="2000" max="2200" step="1" inputmode="numeric">
         <div id="bridgeIdeas"></div>
       </section>
-      <section class="panel"><h2>Dein Freizeitbudget</h2><div class="grid two-dashboard"><div class="metric"><span>Resturlaub im Jahr</span><strong id="planVacationBalance">–</strong></div><div class="metric"><span>Überstunden · letzter Monatsabschluss</span><strong id="planHoursBalance">–</strong></div></div><p id="vacationExpiryNotice" class="vacation-expiry-hint hidden" role="status"></p></section>
+      <section class="panel" id="leaveBudget"><h2>Dein Freizeitbudget</h2><button type="button" id="editCarryover" class="secondary small">Übertragsregel ändern</button><div class="grid two-dashboard"><div class="metric"><span>Resturlaub im Jahr</span><strong id="planVacationBalance">–</strong></div><div class="metric"><span>Überstunden · letzter Monatsabschluss</span><strong id="planHoursBalance">–</strong></div></div><p id="vacationExpiryNotice" class="vacation-expiry-hint hidden" role="status"></p></section>
     </section>
 
     <section id="morePanel" class="view-stack hidden">
 
-      <div class="feature-intro"><span class="eyebrow">PERSÖNLICH</span><h2>Deine App. Deine Regeln.</h2><p class="hint">Konto, Automatisierungen, Vorlagen und Einstellungen – an einem Ort.</p></div>
+      <div id="settingsTopics" class="topic-list"><button id="headerAssistant" class="secondary" type="button">Assistent öffnen</button></div>
+      <button type="button" id="settingsBack" class="secondary small" hidden>‹ Alle Einstellungen</button>
+      <section class="panel" id="homeSettings"><h2>Home</h2><label><input type="checkbox" id="homeEnabled"> Home als Startseite und Tab anzeigen</label><div id="widgetChoices"></div></section>
       <section id="appearancePanel" class="panel"><h2>Darstellung</h2>
             <fieldset class="theme-picker" aria-describedby="themeHelp">
               <legend>Farbschema der App</legend>
@@ -2135,10 +2267,11 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
   </main>
 
   <nav class="tabs five-tabs" aria-label="Hauptnavigation">
-    <button id="overviewTab" class="tab active" type="button" aria-current="page"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg><span>Heute</span></button>
+    <button class="tab" type="button" id="homeTab"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h14V9M10 21v-7h4v7"/></svg><span>Home</span></button>
+    <button id="overviewTab" class="tab active" type="button" aria-current="page"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></svg><span>Heute</span></button>
     <button id="calendarTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="M8 14h2m4 0h2M8 18h2"/></svg><span>Kalender</span></button>
-    <button id="analyticsTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V12M9 20V7M14 20v-4M19 20V4"/><path d="M2 20h20"/></svg><span>Analysen</span></button>
-    <button id="detailsTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Monate</span></button>
+    <button id="analyticsTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V12M9 20V7M14 20v-4M19 20V4"/><path d="M2 20h20"/></svg><span>Analyse</span></button>
+
     <button id="planningTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="m8 16 2 2 5-5"/></svg><span>Planung</span></button>
   </nav>
 
@@ -2224,7 +2357,8 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 <div id="assistantOverlay" class="assistant-overlay hidden" role="presentation">
   <section id="smartChat" class="assistant-dialog" role="dialog" aria-modal="true" aria-labelledby="assistantTitle" tabindex="-1">
     <div class="assistant-top"><div class="assistant-symbol" aria-hidden="true">✦</div><div><h2 id="assistantTitle">Dein Zeit-Assistent</h2><p>Frag mich alles rund um deine Arbeitszeiten.</p></div><button type="button" id="assistantClose" class="assistant-close secondary" aria-label="Assistent schließen">✕</button></div>
-    <div id="assistantChatBody" class="assistant-chat-body">
+    <div class="chat-tools"><button type="button" class="secondary small" id="chatListToggle" aria-expanded="false">Chats</button><button type="button" class="secondary small" id="chatNew">+ Neuer Chat</button></div>
+    <div id="chatList" class="topic-list" hidden></div><div id="assistantChatBody" class="assistant-chat-body">
       <div id="assistantWelcome" class="assistant-welcome"><strong>Was möchtest du wissen?</strong><p>Frag nach konkreten Zeiten, vergleiche Monate, lass dir Diagramme erstellen oder bereite Änderungen vor. Gespeichert wird nur nach Bestätigung.</p></div>
       <div id="assistantPageContext" class="assistant-context-chip" role="status">Kontext: Heute</div>
       <div id="aiPrompts" class="assistant-suggestions" aria-label="Beispielfragen"></div>
@@ -2749,13 +2883,13 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const actual=Math.min(day,new Date(year,month,0).getDate());
       return `${year}-${String(month).padStart(2,'0')}-${String(actual).padStart(2,'0')}`;
     }
-    function vacationBreakdown(year, ledger=state.records, quantity=effectiveVacationDays){
-      const firstYear=Number(state.settings.vacationStartYear),entitlement=Number(state.settings.vacationEntitlement)||0;
+    function vacationBreakdown(year, ledger=state.records, quantity=effectiveVacationDays, settings=state.settings){
+      const firstYear=Number(settings.vacationStartYear),entitlement=Number(settings.vacationEntitlement)||0;
       if(year<firstYear)return {active:false,firstYear,entitlement,carryover:0,taken:0,planned:0,remaining:null,expired:0,expiring:0,expiresOn:null};
-      const mode=state.settings.vacationCarryoverMode||'unlimited',today=localDateString();
+      const mode=settings.vacationCarryoverMode||'unlimited',today=localDateString();
       let carry=0,result=null;
       for(let y=firstYear;y<=year;y++){
-        const cutoff=carryoverDeadline(y),limited=mode==='custom'||mode==='march31';
+        const cutoff=carryoverDeadline(y,settings),limited=mode==='custom'||mode==='march31';
         const startCarry=mode==='none'?0:Math.max(0,carry);
         let old=startCarry,current=entitlement,taken=0,planned=0,expired=0,carryUsed=0;
         const rows=ledger.filter(r=>r.type==='vacation'&&r.date.startsWith(y+'-')).sort((a,b)=>a.date.localeCompare(b.date));
@@ -2874,8 +3008,11 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       // Nur abgeschlossene Monate besitzen einen endgültigen Saldo.
       // Der Monatsendstand steht dann gut sichtbar in der großen Monatskarte.
       const showClosing = closed && closing !== null;
-      $("closedHeroBalance").classList.toggle("hidden", !showClosing);
-      $("heroBalanceValue").textContent = showClosing ? signedHoursText(closing) : "–";
+      const lastClosed=addMonths(currentMonth(),-1);
+      const showPrior=!closed && lastClosed>=state.settings.accountStartMonth;
+      $("closedHeroBalance").classList.toggle("hidden", !showClosing&&!showPrior);
+      $('heroBalanceDate').textContent='Zeitkonto am '+displayDay(monthEnd(showPrior?lastClosed:selectedMonth));
+      $("heroBalanceValue").textContent = showClosing ? signedHoursText(closing) : showPrior?signedHoursText(closingBalanceForMonth(lastClosed)):"–";
       $("heroBalanceValue").className = showClosing ? (closing >= 0 ? "positive" : "negative") : "";
       // Vormonats-Übertrag nur im laufenden Monat – in abgeschlossenen Monaten redundant.
       $("carryMetricCard").classList.toggle("hidden", selectedMonth !== currentMonth() || !active);
@@ -2885,6 +3022,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $("closingMetric").textContent = "Noch offen";
       $("closingMetric").className = "";
 
+      const movement=$('monthMovement');
+      movement.hidden=!showClosing;
+      movement.textContent=showClosing?'Veränderung im '+monthTitle(selectedMonth)+': '+signedHoursText(stats.delta):'';
       $("accountExplanation").textContent = !active
         ? "Dieser Monat liegt vor dem Start des Zeitkontos und wird nicht in den Saldo übernommen."
         : closed
@@ -2969,6 +3109,8 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const firstDay = new Date(year, month - 1, 1, 12);
       const offset = (firstDay.getDay() + 6) % 7;
       const daysInMonth = new Date(year, month, 0).getDate();
+      // Geplante Schichten bleiben getrennt von den gebuchten Arbeitszeiten.
+      const plansByDate = new Map((state.plans || []).map(plan => [plan.date, plan]));
       const cells = [];
 
       for (let i = 0; i < offset; i++) {
@@ -2978,7 +3120,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       for (let day = 1; day <= daysInMonth; day++) {
         const dateKey = `${selectedMonth}-${String(day).padStart(2, "0")}`;
         const info = dayInfo(dateKey);
+        const plan = plansByDate.get(dateKey);
         const classes = ["calendar-day"];
+        if (plan) classes.push("has-plan");
+        if (plan && !info.workHours && !info.vacationDays && !info.sick && !info.holidayName) classes.push("planned-only");
         if (info.workHours > 0) classes.push("workday");
         else if (info.vacationDays > 0) classes.push("vacation");
         else if (info.sick) classes.push("sick");
@@ -2986,13 +3131,19 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         if (dateKey === selectedCalendarDate) classes.push("selected");
 
         const status = calendarStatus(info);
+        // Im 7-Spalten-Kalender bleiben die Wörter auch auf kleinen iPhones lesbar.
+        const shortStatus = info.workHours > 0 ? "Arbeit" :
+          status.startsWith("Feiertag") ? "Feier." : status === "Krankheit" ? "Krank" : status;
+        const planLabel = plan ? `, geplante Schicht ${plan.start} bis ${plan.end} Uhr, ${plan.breakMinutes} Minuten Pause, nicht gebucht` : "";
         cells.push(`
           <button class="${classes.join(" ")}" type="button" role="gridcell"
             data-calendar-date="${dateKey}"
-            aria-label="${escapeHtml(dateKey)}: ${escapeHtml(status)}${info.holidayName ? `, Feiertag ${escapeHtml(info.holidayName)}` : ""}">
+            aria-label="${escapeHtml(dateKey)}: ${escapeHtml(plan && status === "Frei" ? "Geplante Schicht, nicht gebucht" : status === "Frei" ? "Keine Buchung" : status)}${info.holidayName ? `, Feiertag ${escapeHtml(info.holidayName)}` : ""}${escapeHtml(planLabel)}">
             <span class="day-number">${day}</span>
-            <span class="day-status">${escapeHtml(info.workHours > 0 ? "Arbeit" : status)}</span>
+            ${status !== "Frei" ? `<span class="day-status">${escapeHtml(shortStatus)}</span>` : ""}
             ${info.workHours > 0 ? `<span class="day-hours">${escapeHtml(durationLabel(info.workHours * 60))} h</span>` : ""}
+            ${plan ? `<span class="day-plan-chip" aria-hidden="true">Plan</span>` : ""}
+            ${plan && info.workHours <= 0 ? `<span class="day-plan-time" aria-hidden="true">${escapeHtml(plan.start)}</span>` : ""}
           </button>`);
       }
 
@@ -3005,7 +3156,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $("calendarGrid").querySelectorAll("[data-calendar-date]").forEach((button) => {
         button.addEventListener("click", () => {
           selectedCalendarDate = button.dataset.calendarDate;
-          renderCalendar();
+          renderCalendar();$('selectedDayPanel').scrollIntoView({block:'nearest'});
         });
       });
 
@@ -3022,10 +3173,12 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }
 
       const info = dayInfo(selectedCalendarDate);
+      const plannedShift = planForDate(selectedCalendarDate);
       title.textContent = new Intl.DateTimeFormat("de-DE", {
         weekday: "long", day: "numeric", month: "long", year: "numeric"
       }).format(parseDate(selectedCalendarDate));
 
+      $("addDayEntryButton").textContent=plannedShift&&!info.records.length?"Plan übernehmen":info.records.length?"Weitere Buchung erfassen":"Arbeitszeit erfassen";
       const items = [];
 
       if (info.holidayName) {
@@ -3035,6 +3188,17 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
             ? `${hoursText(info.holidayCredit.hours)} werden angerechnet.`
             : "Wird nach den Feiertagseinstellungen nicht angerechnet."}</div>
         </div></div>`);
+      }
+
+      if (plannedShift) {
+        items.push(`<div class="entry calendar-planned-entry">
+          <div>
+            <div class="entry-title"><span class="calendar-plan-label">Geplante Schicht</span></div>
+            <div class="entry-detail">${escapeHtml(plannedShift.start)}–${escapeHtml(plannedShift.end)} Uhr · ${escapeHtml(String(plannedShift.breakMinutes))} Min. Pause${plannedShift.note ? ` · ${escapeHtml(plannedShift.note)}` : ""}</div>
+            <div class="entry-plan-note">Nur geplant – zählt nicht als Arbeitszeit.</div>
+          </div>
+          <div class="row"><button class="secondary small" type="button" data-calendar-plan-edit="${escapeHtml(plannedShift.date)}">Plan bearbeiten</button></div>
+        </div>`);
       }
 
       for (const record of info.records) {
@@ -3050,21 +3214,58 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         </div>`);
       }
 
-      if (!info.records.length && !info.holidayName) {
-        items.push(`<p class="hint">Keine Arbeitszeit erfasst – dieser Tag wird als frei angezeigt.</p>`);
+      if (!info.records.length && !info.holidayName && !plannedShift) {
+        items.push(`<p class="hint">Keine Buchung für diesen Tag.</p>`);
       }
 
+      const comparison=dayComparison(selectedCalendarDate);
+      if(comparison){
+        items.push(`<p class="hint">Geplant: ${fmtMin(comparison.netMinutes)} netto${info.workHours?' · Gebucht: '+fmtMin(comparison.bookedMinutes)+' · Abweichung: '+signedHoursText(comparison.differenceMinutes/60):' · Keine Arbeitszeit gebucht'}</p>`);
+      }
       container.innerHTML = items.join("");
       container.querySelectorAll("[data-day-edit]").forEach((button) => {
         button.addEventListener("click", () => openEditor(button.dataset.dayEdit));
       });
+      container.querySelectorAll("[data-calendar-plan-edit]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const date = button.dataset.calendarPlanEdit;
+          setActiveTab("planning");
+          renderWorkPlanMonthOptions(date.slice(0, 7));
+          renderWorkPlans();
+          const edit = $("workPlanList").querySelector(`[data-plan-edit="${date}"]`);
+          if (edit) edit.click();
+        });
+      });
     }
 
+    function readPreference(key,fallback){
+      try{return JSON.parse(localStorage.getItem('az13:'+key))??fallback;}catch{return fallback;}
+    }
+    function savePreference(key,value){try{localStorage.setItem('az13:'+key,JSON.stringify(value));return true;}catch{return false;}}
+    let analysisMode=readPreference('analysisMode','month');
+    const scrollPositions=new Map();
+    let analysisMonth=null;
     let activeTab = "overview";
     function setActiveTab(tab) {
+      if(tab==='home' && !homePrefs().enabled)tab='overview';
+      if(tab==='details')analysisMonth=selectedMonth;
+      if(tab==='details'||tab==='analytics'){
+        analysisMode=tab==='details'?'month':'year';
+        savePreference('analysisMode',analysisMode);
+      }
+      if(activeTab==='details')analysisMonth=selectedMonth;
+      if(tab==='calendar' && selectedCalendarDate)selectedMonth=selectedCalendarDate.slice(0,7);
+      if(activeTab!==tab)scrollPositions.set(activeTab,window.scrollY||0);
       activeTab = tab;
-      $("sectionTitle").classList.toggle("hidden", tab === "overview");
-      $("sectionTitle").textContent = ({calendar:"Kalender",analytics:"Analysen",details:"Monatsdetails",planning:"Planen",more:"Einstellungen"})[tab] || "";
+      const analyzing=tab==='analytics'||tab==='details';
+      $('analysisMode').classList.toggle('hidden',!analyzing);
+      $('monthMode').setAttribute('aria-pressed',String(tab==='details'));
+      $('yearMode').setAttribute('aria-pressed',String(tab==='analytics'));
+      $('homePanel').classList.toggle('hidden',tab!=='home');
+      if(tab==='home')renderHome();
+      if(tab==='more')showSettingsTopic(null);
+      $("sectionTitle").classList.toggle("hidden", tab === "overview" || tab === "home");
+      $("sectionTitle").textContent = ({calendar:"Kalender",analytics:"Analyse",details:"Analyse",planning:"Planen",more:"Einstellungen"})[tab] || "";
       $("todayPanel").classList.toggle("hidden", tab !== "overview");
       $("monthBar").classList.toggle("hidden", tab !== "calendar");
       $("detailsPanel").classList.toggle("hidden", tab !== "details");
@@ -3073,8 +3274,8 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $("planningPanel").classList.toggle("hidden", tab !== "planning");
       $("morePanel").classList.toggle("hidden", tab !== "more");
 
-      for (const id of ["overviewTab", "calendarTab", "analyticsTab", "detailsTab", "planningTab"]) {
-        const active = id === `${tab}Tab`;
+      for (const id of ["homeTab","overviewTab", "calendarTab", "analyticsTab", "planningTab"]) {
+        const active = id === `${tab==="details"?"analytics":tab}Tab`;
         $(id).classList.toggle("active", active);
         if (active) $(id).setAttribute("aria-current", "page");
         else $(id).removeAttribute("aria-current");
@@ -3082,12 +3283,14 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 
       $("headerSettings").classList.toggle("active", tab === "more");
       $("headerSettings").setAttribute("aria-label", tab === "more" ? "Einstellungen geöffnet" : "Einstellungen und Konto öffnen");
-      if (tab === "calendar") renderCalendar();
+      if (tab === "calendar"){
+        $('monthPicker').value=selectedMonth;$('monthPickerText').textContent=monthTitle(selectedMonth);renderCalendar();
+      }
       if (tab === "analytics") renderAnalytics();
-      if (tab === "details") {renderOverview();renderContextAssistance();}
+      if (tab === "details") renderAll();
       if (tab === "planning") renderPlanning();
       if (tab === "more" && cloudSession) void primePushKey();
-      window.scrollTo({top:0,behavior:"instant"});
+      window.scrollTo({top:tab==="more"?0:scrollPositions.get(tab)||0,behavior:"instant"});
     }
 
     function vacationDates(start,end) {
@@ -3392,6 +3595,15 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $("bookedMonth").textContent="Gearbeitet · "+monthTitle(month);
       $("monthWorked").textContent=durationLabel(monthStats(month).work*60)+" Std.";
       $("timeline").innerHTML=records.map(r=>'<div class="stamp"><span>'+recordTypeName(r)+(r.mode==='range'?' '+escapeHtml(r.start)+'–'+escapeHtml(r.end):'')+' · '+durationLabel(recordHours(r)*60)+' Std.'+(r.fromPlan?' <small class="entry-plan-tag">Aus Planung</small>':'')+'</span><button class="quiet" data-today-edit="'+escapeHtml(r.id)+'">Bearbeiten</button></div>').join("") || '<p class="hint">Heute sind noch keine Zeiten erfasst.</p>';
+      const work=records.filter(r=>r.type==='work');
+      const timeline=$('todayBookings'),form=$('manualForm');
+      if(work.length){
+        form.before(timeline);$('moreToday').hidden=false;
+        $('todayBookingsTitle').textContent='Heute gebucht · '+$('todayWorked').textContent;
+      }else{
+        $('todayAssistance').after(timeline);$('moreToday').hidden=true;
+        $('todayBookingsTitle').textContent='Heutige Einträge';
+      }
       $("timeline").querySelectorAll("[data-today-edit]").forEach(b=>b.addEventListener("click",()=>openEditor(b.dataset.todayEdit)));
       $("oldShift").classList.toggle("hidden",!state.stamps?.length);
       if(state.stamps?.length) $("oldShiftStart").textContent="Beginn: "+new Date(state.stamps[0]).toLocaleString("de-DE")+". Trage das Ende ein, um die bereits erfassten Zeiten zu übernehmen.";
@@ -3447,7 +3659,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       if(custom&&!valid){message('vacationCarryoverPreview','Diesen Tag gibt es im ausgewählten Monat nicht.');return;}
       const y=Number(localDateString().slice(0,4)),deadline=carryoverDeadline(y+1,{vacationCarryoverDate:selected});
       const wording=mode==='none'?'Resturlaub wird nicht ins Folgejahr übertragen.':mode==='unlimited'?'Resturlaub wird zeitlich unbegrenzt weitergeführt.':'Resturlaub aus '+y+' ist bis einschließlich '+displayDay(deadline)+' im Folgejahr verfügbar.';
-      message('vacationCarryoverPreview',wording+' Änderungen wirken sich auch auf bisherige Urlaubssalden aus.');
+      const before=vacationBreakdown(y),after=vacationBreakdown(y,state.records,effectiveVacationDays,{...state.settings,vacationCarryoverMode:mode,vacationCarryoverDate:selected});
+      const oldRule=state.settings.vacationCarryoverMode==='none'?'kein Übertrag':state.settings.vacationCarryoverMode==='unlimited'?'unbegrenzt':'bis '+displayDay(carryoverDeadline(y+1));
+      message('vacationCarryoverPreview','Bisher: '+oldRule+'. '+wording+(before.active?' Resturlaub '+y+': '+before.remaining.toLocaleString('de-DE')+' → '+after.remaining.toLocaleString('de-DE')+' Tage.':''));
     }
     for(const id of ['vacationCarryoverMode','vacationCarryoverDay','vacationCarryoverMonth'])$(id).addEventListener('change',updateCarryoverPreview);
     function renderVacationExpiryNotice(){
@@ -3510,6 +3724,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       renderExtrasSettings();
       updateEmptyTimes();
       renderContextAssistance();
+      renderHome();
       void maybeNotifyThreshold();
     }
 
@@ -3525,6 +3740,12 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       planSelect.innerHTML='<option value="">Eigene Zeiten eingeben</option>'+templates.map(t=>`<option value="${escapeHtml(t.id)}">${escapeHtml(t.name)} · ${escapeHtml(t.start)}–${escapeHtml(t.end)}</option>`).join('');
       planSelect.value=templates.some(t=>t.id===oldTemplate)?oldTemplate:'';
       quick.innerHTML=templates.map(t=>`<button type="button" class="template-pill" data-template="${escapeHtml(t.id)}">⚡ ${escapeHtml(t.name)}</button>`).join('');
+      $('planTemplates').innerHTML=quick.innerHTML;
+      $('planTemplates').querySelectorAll('[data-template]').forEach(button=>button.onclick=()=>{
+        planSelect.value=button.dataset.template;
+        planSelect.dispatchEvent(new Event('change'));
+        updateEmptyTimes();
+      });
       quick.querySelectorAll('[data-template]').forEach(btn=>btn.addEventListener('click',()=>{
         const t=storedTemplates().find(x=>x.id===btn.dataset.template);if(!t)return;
         setManualMode('range');$('manualStart').value=t.start;$('manualEnd').value=t.end;
@@ -3575,7 +3796,11 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     }
     function renderAnalytics() {
       if(!$('analysisYear').value)$('analysisYear').value=String(new Date().getFullYear());
+      if(activeTab==='details')$('analysisYear').value=selectedMonth.slice(0,4);
       syncReportYear();
+      if(activeTab==='details' && $('aiMonth').value!==selectedMonth){
+        onlineGeneration++;message('aiNarrative','');$('aiMonth').value=selectedMonth;
+      }
       const now=currentMonth(),last=addMonths(now,-1),year=Number($('analysisYear').value)||new Date().getFullYear();
       renderSmartReports(year);
       $('analysisYearText').textContent=String(year);
@@ -3586,6 +3811,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $('insightForecast').textContent='Laufender Monat und Planungen bleiben unberücksichtigt.';
       const months=Array.from({length:12},(_,m)=>`${year}-${String(m+1).padStart(2,'0')}`);
       const monthly=months.map(ym=>monthStats(ym).work),yearWork=monthly.reduce((a,b)=>a+b,0);
+      $('yearMonths').innerHTML=months.map((m,i)=>`<button type="button" class="secondary" data-month="${m}"><span>${parseDate(m+'-01').toLocaleDateString('de-DE',{month:'short'})}</span> <strong>${hoursText(monthly[i])}</strong></button>`).join('');
       $('statYearWork').textContent=displayTime(yearWork);
       const vacation=vacationBreakdown(year);
       $('statVacation').textContent=vacation.active?vacation.remaining.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage':'–';
@@ -3690,6 +3916,14 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     }
     // Separate Arbeitsplanung: ausschließlich state.plans, niemals state.records.
     function planForDate(date) {return (state.plans||[]).find(p=>p.date===date)||null;}
+    function dayComparison(date){
+      const plan=planForDate(date);
+      if(!plan)return null;
+      const netMinutes=timeToMinutes(plan.end)-timeToMinutes(plan.start)-Number(plan.breakMinutes||0);
+      const work=state.records.filter(r=>r.date===date && r.type==='work');
+      const bookedMinutes=Math.round(work.reduce((n,r)=>n+r.hours,0)*60);
+      return {date,start:plan.start,end:plan.end,breakMinutes:plan.breakMinutes,netMinutes,bookedMinutes,differenceMinutes:work.length?bookedMinutes-netMinutes:null};
+    }
     function refreshManualPlanHint() {
       const date=$('manualDate').value;
       const plan=planForDate(date),node=$('manualPlannedHint'),button=$('manualUsePlan');
@@ -3715,7 +3949,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       setManualMode('range');$('manualStart').value=plan.start;$('manualEnd').value=plan.end;
       $('manualPause').value=String(plan.breakMinutes);previewManual();
       manualAppliedPlanDate=plan.date;showManualPlanApplied();updateEmptyTimes();
-      $('manualStatus').textContent='Plan übernommen – erst nach „Eintrag speichern“ wird die Zeit gebucht.';
+      $('manualStatus').textContent='Plan übernommen – erst nach „Arbeitszeit speichern“ wird die Zeit gebucht.';
     }
     function applyPlanToEntry(plan) {
       $('entryType').value='work';$('workMode').value='range';setEntryTypeVisibility();
@@ -3767,7 +4001,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }catch(e){out.textContent=e.message;out.classList.add('invalid');}
     }
     $('workPlanManageTemplates').addEventListener('click',()=>{
-      setActiveTab('more');$('templatePanel').scrollIntoView({behavior:'smooth',block:'start'});
+      setActiveTab('more');showSettingsTopic('templates');$('templatePanel').scrollIntoView({behavior:'smooth',block:'start'});
     });
     $('workPlanTemplate').addEventListener('change',()=>{
       const t=storedTemplates().find(x=>x.id===$('workPlanTemplate').value);
@@ -3868,7 +4102,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     for(const id of ['planStart','planEnd'])$(id).addEventListener('change',renderPlanning);
     $('bridgeYear').addEventListener('change',renderPlanning);
     $('analysisExportJump').addEventListener('click',()=>{
-      setActiveTab('more');$('monthlyPdfButton').scrollIntoView({behavior:'smooth',block:'center'});
+      setActiveTab('more');showSettingsTopic('data');$('monthlyPdfButton').scrollIntoView({behavior:'smooth',block:'center'});
     });
     $('planBook').addEventListener('click',()=>{
       const start=$('planStart').value,end=$('planEnd').value;
@@ -4050,7 +4284,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     }
 
     $("headerSettings").addEventListener("click", () => setActiveTab("more"));
-    $("addDayEntryButton").addEventListener("click", () => openEntry(selectedCalendarDate));
+    $("addDayEntryButton").addEventListener("click", () => {
+      openEntry(selectedCalendarDate);
+      if(planForDate(selectedCalendarDate)&&!dateRecords(selectedCalendarDate).length)applyPlanToEntry(planForDate(selectedCalendarDate));
+    });
     $("closeEntryButton").addEventListener("click", closeEntry);
     $("cancelEditButton").addEventListener("click", () => {
       editingId = null;
@@ -4069,8 +4306,13 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     $("overviewTab").addEventListener("click", () => setActiveTab("overview"));
     $("calendarTab").addEventListener("click", () => setActiveTab("calendar"));
 
-    $("analyticsTab").addEventListener("click", () => setActiveTab("analytics"));
-    $("detailsTab").addEventListener("click", () => setActiveTab("details"));
+    $("analyticsTab").addEventListener("click", () => {
+      if(analysisMode==='month'&&analysisMonth)selectedMonth=analysisMonth;
+      setActiveTab(analysisMode==='year'?'analytics':'details');
+    });
+    $('monthMode').onclick=()=>{if(activeTab==='analytics')selectedMonth=$('analysisYear').value+(analysisMonth||selectedMonth).slice(4);setActiveTab('details');};
+    $('yearMode').onclick=()=>{$('analysisYear').value=selectedMonth.slice(0,4);setActiveTab('analytics');};
+    $('homeTab').onclick=()=>setActiveTab('home');
     $("planningTab").addEventListener("click", () => setActiveTab("planning"));
     $("entryType").addEventListener("change",()=>{setEntryTypeVisibility();refreshEntryPlanHint();});
     $("entryDate").addEventListener("change",refreshEntryPlanHint);
@@ -4101,15 +4343,15 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 
     $("detailsPreviousMonth").addEventListener("click",()=>{
       const value=addMonths(selectedMonth,-1);if(!validMonth(value))return;
-      selectedMonth=value;selectedCalendarDate=`${value}-01`;renderAll();
+      selectedMonth=value;analysisMonth=value;renderAll();
     });
     $("detailsNextMonth").addEventListener("click",()=>{
       const value=addMonths(selectedMonth,1);if(!validMonth(value))return;
-      selectedMonth=value;selectedCalendarDate=`${value}-01`;renderAll();
+      selectedMonth=value;analysisMonth=value;renderAll();
     });
     $("detailsMonthPicker").addEventListener("change",()=>{
       const value=$("detailsMonthPicker").value;if(!validMonth(value))return;
-      selectedMonth=value;selectedCalendarDate=`${value}-01`;renderAll();
+      selectedMonth=value;analysisMonth=value;renderAll();
     });
     $("monthPicker").addEventListener("change", () => {
       if (!validMonth($("monthPicker").value)) return;
@@ -5055,7 +5297,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 
     $("cloudBanner").addEventListener("click",()=>{
       setActiveTab("more");
-      $("cloudPanel").scrollIntoView({behavior:"smooth",block:"start"});
+      showSettingsTopic("data");$("cloudPanel").scrollIntoView({behavior:"smooth",block:"start"});
     });
     $("cloudLoginMode").addEventListener("click",()=>changeCloudAuthMode("login"));
     $("cloudRegisterMode").addEventListener("click",()=>changeCloudAuthMode("register"));
@@ -5068,7 +5310,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $("cloudPasswordToggle").setAttribute("aria-pressed",String(showing));
     });
     $("calendarOpenAccount").addEventListener("click",()=>{
-      $("cloudPanel").scrollIntoView({behavior:"smooth",block:"start"});
+      showSettingsTopic("data");$("cloudPanel").scrollIntoView({behavior:"smooth",block:"start"});
     });
 
     function configuredSupabase() {
@@ -5094,7 +5336,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         // Supabase empfiehlt, im Auth-Callback selbst keine weiteren API-Aufrufe zu awaiten.
         if(event==="PASSWORD_RECOVERY") {
           setTimeout(()=>{
-            setActiveTab("more");
+            setActiveTab("more");showSettingsTopic("data");
             $("cloudRecoveryGroup").classList.remove("hidden");
             showCloudStatus("Neues Passwort vergeben und speichern.");
           },0);
@@ -5422,6 +5664,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         store.oncomplete=resolve;store.onerror=()=>reject(store.error);
         store.onabort=()=>reject(store.error);
       });
+      localStorage.removeItem('az13:chats:account:'+id);
       localStorage.removeItem(CALENDAR_TOKEN_PREFIX+id);
       localStorage.removeItem(LAST_SYNC_PREFIX+id);
     }
@@ -5442,6 +5685,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         });
         if(error)throw error;
         await replaceLocalSnapshot(clean,Number(data),false);
+        localStorage.removeItem('az13:chats:'+activeStorageKey);chatBook=null;bookOwner=null;assistantChatHistory=[];
         localStorage.removeItem(calendarTokenKey());cloudCalendarLink='';$('cloudCalendarUrl').value='';
         $('cloudClearConfirm').value='';cloudConflict=false;cloudSyncQueued=false;
         markCloudSynced();showStatus(out,'Kontodaten erfolgreich gelöscht. Dein Login bleibt erhalten.','success');
@@ -5643,6 +5887,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     async function initialize() {
       document.body.inert = true;
       try {
+        setupWorkspaceViews();
         db = await openDatabase();
         db.onversionchange = () => { db.close(); alert("Die App wurde aktualisiert. Bitte neu laden."); };
         const saved = await loadState();
@@ -5666,6 +5911,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         renderAll();
         clearDeprecatedCalendarSecrets();
         await restoreStoredCloudSession();
+        if(activeTab!=="more")setActiveTab(homePrefs().enabled?"home":"overview");
 
         let lastDay = localDateString();
         setInterval(() => {
@@ -5770,7 +6016,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $('aiFriday').max=String(options.planMax);$('aiFriday').value=options.planFriday;
     }
     function openAssistSettings(){
-      setActiveTab('more');$('aiSettingsDetails').open=true;$('aiPreferences').scrollIntoView({block:'start',behavior:'smooth'});
+      setActiveTab('more');showSettingsTopic('assistant');$('aiSettingsDetails').open=true;$('aiPreferences').scrollIntoView({block:'start',behavior:'smooth'});
     }
     function infoCard(host,title,value,detail){
       const article=document.createElement('article');article.className='assist-insight';
@@ -5805,13 +6051,6 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         selectedCalendarDate=issue.date;selectedMonth=issue.date.slice(0,7);setActiveTab('calendar');renderAll();
       });
       if(issues.length>2)addAction('todayAssistanceContent','Alle '+issues.length+' Hinweise ansehen',()=>openHelper('Checks'));
-      const end=[monthEnd(selectedMonth),today].sort()[0],previous=addMonths(selectedMonth,-1);
-      const prevEnd=[monthEnd(previous),previous+end.slice(7)].sort()[0];
-      $('monthAssistance').classList.toggle('hidden',!enabled('Report')||selectedMonth>currentMonth());
-      if(enabled('Report')){
-        message('monthAssistanceContent',reportText(selectedMonth+'-01',end,previous+'-01',selectedMonth===currentMonth()?prevEnd:monthEnd(previous)));
-        addAction('monthAssistanceContent','Monatsauswertung öffnen',()=>{setActiveTab('analytics');$('analysisYear').value=selectedMonth.slice(0,4);renderAnalytics();$('aiMonth').value=selectedMonth;renderSmartReports(+selectedMonth.slice(0,4));$('smartReport').open=true;$('smartReport').scrollIntoView({block:'start'});});
-      }
     }
     function renderPlanDraft(){
       if(!planDraft)return;
@@ -5900,7 +6139,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       finally{onlinePending=false;}
     }
     async function maybeAutoReport(){
-      if(activeTab!=='analytics'||!enabled('Online')||!enabled('Report')||!assistOptions().autoReports||onlinePending||!cloudSession)return;
+      if(activeTab!=='details'||!enabled('Online')||!enabled('Report')||!assistOptions().autoReports||onlinePending||!cloudSession)return;
       const key=activeStorageKey+'|'+$('aiMonthly').textContent+'|'+$('aiYearly').textContent;
       if(narrativeCache.has(key)){message('aiNarrative',narrativeCache.get(key));return;}
       if(autoReportAttempts.has(key))return;
@@ -5988,9 +6227,11 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }
       if(m<=currentMonth()){
         if(creditedAbsence)story.push('Zusätzlich zum Arbeiten wurden '+displayTime(creditedAbsence)+' aus Urlaub, Krankheit und Feiertagen angerechnet.');
-        if(monthIsClosed(m))story.push('Monatsveränderung deines Zeitkontos: '+signedHoursText(stats.delta)+'.');
-        else story.push('Der Monat ist noch nicht abgeschlossen; eine endgültige Überstundenbilanz gibt es erst danach.');
+        if(monthIsClosed(m)&&m>=state.settings.accountStartMonth)story.push('Monatsveränderung deines Zeitkontos: '+signedHoursText(stats.delta)+'.');
+        else if(!monthIsClosed(m))story.push('Der Monat ist noch nicht abgeschlossen; eine endgültige Überstundenbilanz gibt es erst danach.');
       }
+      $('monthWorkStory').hidden=false;$('monthWorkStory').textContent=story[0];
+      $('monthCompareStory').textContent=total.n&&previous.n?story[1]:'';
       $('aiMonthly').innerHTML=story.map(t=>'<p>'+escapeHtml(t)+'</p>').join('');
       const compare=[{month:comparison,to:prevEnd},{month:m,to:periodEnd}].map(({month,to})=>{
         const data=describePeriod(month+'-01',to);
@@ -6191,7 +6432,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     }
     function openHelper(key) {
       if(!enabled(key))return 'Diese Funktion ist in deinen Einstellungen ausgeschaltet.';
-      setActiveTab(['Leave','Plan'].includes(key)?'planning':'analytics');
+      setActiveTab(['Leave','Plan'].includes(key)?'planning':key==='Report'?'details':'analytics');
       const el=$('smart'+key);el.open=true;el.scrollIntoView({block:'start'});
       return 'Bereich geöffnet.';
     }
@@ -6222,7 +6463,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const target=s.match(/(-?\d+(?:[.,]\d+)?)\s*(?:stunden\s+)?überstunden/);
       if(target&&/ziel|bis|müsste|möchte/.test(s))return {kind:'goal',month:named||(/jahresende/.test(s)?year+'-12':now),goal:Number(target[1].replace(',','.')),additional:/aufbauen|zusätzlich|weitere/.test(s),friday:friday?Number(friday[1].replace(',','.')):null};
       if(!named&&!count&&!/heute|gestern|woche|monat|jahr|20\d{2}|21\d{2}/.test(s)){
-        const selected=$('analysisYear').value||now.slice(0,4);from=selected+'-01-01';to=[selected+'-12-31',today].sort()[0];
+        const selected=$('analysisYear').value||now.slice(0,4);
+        if(activeTab==='details'){from=selectedMonth+'-01';to=[monthEnd(selectedMonth),today].sort()[0];}
+        else if(activeTab==='calendar'){from=to=selectedCalendarDate;}
+        else {from=selected+'-01-01';to=[selected+'-12-31',today].sort()[0];}
       }
       if(/urlaub|frei haben/.test(s)){
         const amount=s.match(/(\d+|zehn|sieben|vierzehn)\s+tage/);
@@ -6295,8 +6539,8 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         $('aiEvidence').classList.add('hidden');message('aiEvidenceText','');
         for(const id of ['aiLeaves','aiAnswer','aiAnswerActions','aiNarrative','aiEntryMsg'])message(id,'');
         if(contextStamp.split('|')[0]!==activeStorageKey){
-          if(typeof assistantChatHistory!=='undefined'){assistantChatHistory=[];assistantOwner=activeStorageKey;message('aiConversation','');$('assistantWelcome').classList.remove('hidden');}
-          $('aiEntry').value='';$('aiQuestion').value='';
+          if(typeof assistantChatHistory!=='undefined'){assistantChatHistory=[];assistantOwner=activeStorageKey;chatBook=null;bookOwner=null;message('aiConversation','');$('assistantWelcome').classList.remove('hidden');message('chatList','');$('assistantOverlay').classList.add('hidden');document.body.style.overflow='';}
+          $('aiBatchPreview').replaceChildren();$('aiEntry').value='';$('aiQuestion').value='';
           $('aiTarget').value=15;$('aiFriday').value=6;$('aiDeadline').value=currentMonth();
           $('aiPlanMode').value='delta';reportYearScope='';$('aiMonth').value=addMonths(currentMonth(),-1);
           $('aiPlanRequest').value='';$('aiLeaveRequest').value='';message('aiAnswerActions','');narrativeCache.clear();autoReportAttempts.clear();
@@ -6308,6 +6552,8 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         $('aiSwitch'+key).checked=enabled(key);
         if(key!=='Online')$('smart'+key).classList.toggle('hidden',!enabled(key));
       }
+      $('monthWorkStory').hidden=!enabled('Report');$('aiYearly').hidden=!enabled('Report');
+      for(const id of ['calendarAssistantBtn','monthAssistantBtn','planningAssistantBtn'])if($(id))$(id).hidden=!enabled('Chat');
       $('aiOnline').hidden=true; // Kein zweiter, missverständlicher Antwortmodus im Chat.
       $('headerAssistant').classList.toggle('hidden',!enabled('Chat'));$('todayAskAssistant').classList.toggle('hidden',!enabled('Chat'));$('analyticsAskAssistant').classList.toggle('hidden',!enabled('Chat'));
       $('aiAsk').disabled=!enabled('Chat');
@@ -6353,7 +6599,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
           const owner=activeStorageKey,generation=onlineGeneration;
           const result=await invokeAssistant('entries',input);
           if(owner!==activeStorageKey||generation!==onlineGeneration){message('aiEntryMsg','Daten wurden verändert. Bitte Eingabe erneut prüfen.');return;}
-          if(!Array.isArray(result.entries)||!result.entries.length||!result.entries.every(validAiShift))
+          if(!Array.isArray(result.entries)||!result.entries.length||result.entries.length>14||(result.entries.length===1&&!validAiShift(result.entries[0]))||result.entries.some(r=>!r||typeof r!=='object'))
             throw Error(result.question||'Bitte Datum, Beginn, Ende und Pause genauer angeben.');
           if(result.entries.length===1){const r=result.entries[0];fillManual(r.date,r);
             message('aiEntryMsg',displayDay(r.date)+' · '+r.start+'–'+r.end+' · '+r.breakMinutes+' Minuten Pause. Bitte Eintrag prüfen und speichern.');
@@ -6375,49 +6621,55 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       if(speech){speech.stop();return;}
       try{
         const r=new Recognition();speech=r;r.lang='de-DE';
-        r.onresult=e=>{if(speech===r&&enabled('Entry')){$('aiEntry').value=e.results[0][0].transcript;message('aiEntryMsg','Diktat erkannt. Arbeitszeit wird geprüft …');void fillFromNaturalLanguage();}};
+        r.onresult=e=>{if(speech===r&&enabled('Entry')){$('aiEntry').value=e.results[0][0].transcript;message('aiEntryMsg','Diktat erkannt. Prüfe den Text und tippe auf „Zeiten übernehmen“.');}};
         r.onerror=()=>message('aiEntryMsg','Diktat nicht verfügbar. Nutze die Tastatur oder deren Mikrofon.');
         r.onend=()=>{speech=null;message('aiMic','🎙 Diktieren');};
         r.start();message('aiMic','Diktat beenden');
       }catch{speech=null;message('aiEntryMsg','Bitte das Mikrofon der Tastatur verwenden.');}
     });
     $('aiMonthPrev').addEventListener('click',()=>moveReportMonth(-1));$('aiMonthNext').addEventListener('click',()=>moveReportMonth(1));
-    let assistantChatHistory=[], assistantOwner='', chatPending=false,assistantRestoreFocus=null;
+    let assistantChatHistory=[], assistantOwner='',assistantRestoreFocus=null;
     function openChat(){
       if(!enabled('Chat'))return;
       assistantRestoreFocus=document.activeElement;
       $('assistantOverlay').classList.remove('hidden');
       $('assistantStatus').textContent=enabled('Online')?(cloudSession?'Online-KI aktiv · Zeitdaten werden für diese Frage übertragen.':'Online-KI braucht eine Cloud-Anmeldung. Einstellungen öffnen.'):'Einfache Fragen lokal · für freie Fragen Online-KI aktivieren.';
       document.body.style.overflow='hidden';
-      updateAssistantPageContext();
+      showThreads(false);paintThread();
       $('aiQuestion').focus();
     }
     function updateAssistantPageContext(){
       const labels={overview:'Heute',calendar:'Kalender · '+displayDay(selectedCalendarDate),
         analytics:'Analysen · '+($('analysisYear').value||currentMonth().slice(0,4)),
-        details:'Monate · '+monthTitle(selectedMonth),
-        planning:'Schichten & Urlaub',more:'Einstellungen'};
+        details:'Analyse · '+monthTitle(selectedMonth),
+        home:'Home',planning:'Schichten & Urlaub',more:'Einstellungen'};
       message('assistantPageContext','Berücksichtige diese Ansicht: '+(labels[activeTab]||'Heute'));
     }
     function askFromCurrentPage(question){
       if(!enabled('Chat'))return;
-      openChat();$('aiQuestion').value=question;
-      $('aiQuestion').focus();
+      openChat();
+      if(currentThread().draft?.trim()||pendingThreads.has(currentThread().id)){
+        const thread=newThread();chatBook.threads.unshift(thread);selectThread(thread);
+      }
+      $('aiQuestion').value=question;currentThread().draft=question;saveChats();
+      if(enabled('Online')&&cloudSession){void askAssistantQuestion();$('assistantChatBody').tabIndex=-1;$('assistantChatBody').focus();}
+      else $('aiQuestion').focus();
     }
     function closeChat(){
-      $('assistantOverlay').classList.add('hidden');document.body.style.overflow='';assistantRestoreFocus?.focus?.();
+      currentThread().draft=$('aiQuestion').value;saveChats();$('assistantOverlay').classList.add('hidden');document.body.style.overflow='';assistantRestoreFocus?.focus?.();
     }
-    for(const id of ['headerAssistant','todayAskAssistant','analyticsAskAssistant'])$(id).addEventListener('click',openChat);
+    $('analyticsAskAssistant').onclick=()=>askFromCurrentPage('Erkläre mir die Jahreswerte für '+$('analysisYear').value+'.');
+    for(const id of ['headerAssistant','todayAskAssistant'])$(id).addEventListener('click',openChat);
     for(const [id,section,label,question] of [
-      ['calendarAssistantBtn','calendarPanel','✦ Ausgewählten Tag fragen',()=>`Was war an ${displayDay(selectedCalendarDate)}? Erkläre die Buchungen und mögliche Besonderheiten.`],
-      ['monthAssistantBtn','detailsPanel','✦ Diesen Monat verstehen',()=>`Analysiere ${monthTitle(selectedMonth)} und vergleiche mit dem Vormonat.`],
-      ['planningAssistantBtn','planningPanel','✦ Zu Urlaub und Schichten fragen',()=>`Wie viel Resturlaub steht mir zur Verfügung, welche geplanten Schichten habe ich und was läuft bald ab?`]
+      ['calendarAssistantBtn','calendarPanel','Tag erklären',()=>`Vergleiche Plan und gebuchte Nettozeit. Was war an ${displayDay(selectedCalendarDate)}? Erkläre die Buchungen und mögliche Besonderheiten.`],
+      ['monthAssistantBtn','detailsPanel','Mit Vormonat vergleichen',()=>`Analysiere ${monthTitle(selectedMonth)} und vergleiche mit dem Vormonat.`],
+      ['planningAssistantBtn','planningPanel','Urlaub und Schichten erklären',()=>`Wie viel Resturlaub steht mir zur Verfügung, welche geplanten Schichten habe ich und was läuft bald ab?`]
     ]){
       const target=$(section);
       if(!target)continue;
       const button=document.createElement('button');button.id=id;button.type='button';button.className='secondary context-ask-button';button.textContent=label;
       button.addEventListener('click',()=>askFromCurrentPage(question()));
-      if(target.firstElementChild)target.insertBefore(button,target.firstElementChild);else target.append(button);
+      (section==='calendarPanel'?$('selectedDayPanel'):section==='detailsPanel'?$('monthHero'):target).append(button);
     }
     $('assistantClose').addEventListener('click',closeChat);
     $('assistantOverlay').addEventListener('click',e=>{if(e.target===$('assistantOverlay'))closeChat();});
@@ -6483,7 +6735,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const perDay=[...new Set([...prioritizedDays,...allDays])].slice(0,1200)
         .map(([date,d])=>({date,netHours:r2(d.minutes/60),breakMinutes:d.pause,entries:d.rows.length}));
       const pageContext={page:activeTab,selectedMonth,selectedCalendarDate,
-        analysisYear:year,planningMonth:$('workPlanMonth')?.value||currentMonth(),
+        analysisYear:year,analysisMode:activeTab==='details'?'month':activeTab==='analytics'?'year':null,
+        reportMonth:activeTab==='details'?selectedMonth:null,comparisonMonth:activeTab==='details'?addMonths(selectedMonth,-1):null,
+        selectedDayPlan:dayComparison(selectedCalendarDate),planningMonth:$('workPlanMonth')?.value||currentMonth(),
         selectedDayBookings:state.records.filter(r=>r.date===selectedCalendarDate).map(r=>({type:r.type,date:r.date,...(r.type==='work'?{start:r.start||null,end:r.end||null,breakMinutes:r.breakMinutes||0,netHours:r2(r.hours)}:{days:r.days||0})}))};
       const y=Number(today.slice(0,4)),vacation=vacationBreakdown(y);
       const data={today,selectedAnalysisYear:year,pageContext,
@@ -6537,13 +6791,23 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         });
       }else if(proposal.kind==='edit_break'&&validDate(proposal.date)&&Number.isInteger(proposal.breakMinutes)&&proposal.breakMinutes>=0){
         const work=state.records.filter(r=>r.date===proposal.date&&r.type==='work');
+        if(work.length>1){
+          for(const item of work){
+            const duration=Math.round(item.hours*60)+item.breakMinutes;
+            if(proposal.breakMinutes>=duration)continue;
+            assistantSuggestionCard(reply,item.start?item.start+'–'+item.end+' Uhr':hoursText(item.hours)+' Arbeitszeit',
+              'Pause '+item.breakMinutes+' → '+proposal.breakMinutes+' Min. · Netto '+fmtMin(duration-proposal.breakMinutes),
+              'Diesen Abschnitt prüfen',()=>{closeChat();openEditor(item.id);$('breakMinutes').value=String(proposal.breakMinutes);});
+          }
+          return;
+        }
         if(work.length!==1){assistantSuggestionCard(reply,'Änderung noch unklar',
           'An diesem Datum gibt es '+work.length+' Arbeitsbuchungen. Bitte öffne den Tag im Kalender und wähle den richtigen Eintrag.','Im Kalender ansehen',()=>{
             closeChat();selectedCalendarDate=proposal.date;selectedMonth=proposal.date.slice(0,7);setActiveTab('calendar');renderAll();
           });return;}
         const item=work[0],duration=item.mode==='range'?timeToMinutes(item.end)-timeToMinutes(item.start):Math.round((item.hours+item.breakMinutes/60)*60);
         if(proposal.breakMinutes>=duration)return;
-        assistantSuggestionCard(reply,'Pause ändern',displayDay(item.date)+': '+item.breakMinutes+' auf '+proposal.breakMinutes+' Minuten.','Änderung im Formular prüfen',()=>{
+        assistantSuggestionCard(reply,'Pause ändern',displayDay(item.date)+': '+item.breakMinutes+' auf '+proposal.breakMinutes+' Minuten · Netto '+fmtMin(duration-proposal.breakMinutes),'Änderung im Formular prüfen',()=>{
           closeChat();openEditor(item.id);$('breakMinutes').value=String(proposal.breakMinutes);
           message('entryStatus','KI-Vorschlag eingesetzt. Prüfe die Angaben und tippe auf „Änderungen speichern“.');
         });
@@ -6553,19 +6817,19 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         const description=proposal.mode==='none'?'Resturlaub nicht übertragen':proposal.mode==='unlimited'?'Resturlaub unbegrenzt übertragen':
           'Resturlaub bis '+date.slice(3)+'.'+date.slice(0,2)+'. des Folgejahres übertragen';
         assistantSuggestionCard(reply,'Urlaubsregel anpassen',description,'Einstellungen prüfen',()=>{
-          closeChat();setActiveTab('more');$('settingsContent').classList.remove('hidden');$('settingsToggle').setAttribute('aria-expanded','true');
+          closeChat();setActiveTab('more');showSettingsTopic('work');$('settingsContent').classList.remove('hidden');$('settingsToggle').setAttribute('aria-expanded','true');
           $('settingsToggle').textContent='Schließen';$('vacationCarryoverMode').value=proposal.mode;
           if(proposal.mode==='custom'){$('vacationCarryoverMonth').value=date.slice(0,2);$('vacationCarryoverDay').value=date.slice(3);}
           updateCarryoverPreview();$('vacationCarryoverPreview').scrollIntoView({block:'center'});
           message('settingsStatus','KI-Vorschlag zur Prüfung geladen. Erst „Einstellungen speichern“ übernimmt ihn.');
         });
-      }else if(proposal.kind==='entry_batch'&&Array.isArray(proposal.entries)&&proposal.entries.length>=2&&proposal.entries.length<=14&&proposal.entries.every(validAiShift)){
+      }else if(proposal.kind==='entry_batch'&&Array.isArray(proposal.entries)&&proposal.entries.length>=2&&proposal.entries.length<=14&&proposal.entries.every(r=>r&&typeof r==='object')){
         const rows=proposal.entries.map(x=>({...x}));
-        assistantSuggestionCard(reply,rows.length+' Arbeitszeiten vorgeschlagen',rows.map(x=>displayDay(x.date)+': '+x.start+'–'+x.end+' ('+x.breakMinutes+' Min. Pause)').join(' · '),
+        assistantSuggestionCard(reply,rows.length+' Arbeitszeiten vorgeschlagen',rows.map(x=>displayDay(x.date)+': '+x.start+'–'+x.end+' ('+(x.breakMinutes===null?'Pause ergänzen':x.breakMinutes+' Min. Pause')+')').join(' · '),
           'Alle Einträge vor dem Speichern prüfen',()=>{closeChat();showAiBatchPreview(rows);setActiveTab('overview');$('smartEntry').open=true;$('smartEntry').scrollIntoView({block:'center'});});
       }
     }
-    function renderAssistantChart(reply,spec){
+    function chartPoints(spec){
       if(!spec||!['worked','credited','delta','balance'].includes(spec.metric)||!Number.isInteger(spec.months)||spec.months<2||spec.months>12)return;
       const end=validMonth(spec.endMonth)?spec.endMonth:(spec.metric==='balance'?addMonths(currentMonth(),-1):currentMonth());
       if(end>currentMonth())return;
@@ -6576,6 +6840,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
           spec.metric==='delta'?m.delta:(monthIsClosed(month)?closingBalanceForMonth(month):null);
         data.push({month,value});
       }
+      return data;
+    }
+    function renderAssistantChart(reply,spec,points){
+      const data=points||chartPoints(spec);if(!data?.length)return;
       const max=Math.max(1,...data.map(x=>Math.abs(x.value||0)));
       const node=document.createElement('section');node.className='assistant-chart';
       const heading=document.createElement('strong');heading.textContent=({worked:'Tatsächlich gearbeitet',credited:'Angerechnete Zeit',delta:'Monatliche Überstundenänderung',balance:'Zeitkonto am Monatsende'})[spec.metric]+' · Stunden';node.append(heading);
@@ -6593,13 +6861,24 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     function showAiBatchPreview(rows){
       const host=$('aiBatchPreview');host.replaceChildren();
       const title=document.createElement('strong');title.textContent=rows.length+' vorgeschlagene Arbeitszeiten';host.append(title);
-      const list=document.createElement('ul');for(const item of rows){const li=document.createElement('li');li.textContent=displayDay(item.date)+' · '+item.start+'–'+item.end+' · '+item.breakMinutes+' Min. Pause';list.append(li);}host.append(list);
+      const fields=rows.map((item,index)=>{
+        const group=document.createElement('fieldset');group.className='batch-row';
+        group.innerHTML=`<legend>Tag ${index+1}</legend><label><input type="checkbox" checked data-use> Übernehmen</label>
+          <label>Datum<input type="date" data-field="date"></label><label>Beginn<input type="time" data-field="start"></label>
+          <label>Ende<input type="time" data-field="end"></label><label>Pause (Min.)<input type="number" min="0" max="1439" step="1" data-field="breakMinutes"></label>`;
+        group.querySelectorAll('[data-field]').forEach(input=>input.value=item[input.dataset.field]??'');
+        host.append(group);return group;
+      });
       const note=document.createElement('p');note.className='hint';note.textContent='Die vorgeschlagenen Tage werden erst nach deinem Klick gespeichert. Bestehende und überschneidende Einträge werden nicht überschrieben.';host.append(note);
-      const action=document.createElement('button');action.type='button';action.textContent=rows.length+' Zeiten verbindlich speichern';host.append(action);
+      const action=document.createElement('button');action.type='button';action.textContent='Ausgewählte Zeiten speichern';host.append(action);
       const cancel=document.createElement('button');cancel.type='button';cancel.className='secondary';cancel.textContent='Verwerfen';host.append(cancel);cancel.addEventListener('click',()=>host.replaceChildren());
       const initialOwner=activeStorageKey,initialRevision=revision;
       action.addEventListener('click',withWriteLock(async()=>{
         if(initialOwner!==activeStorageKey||initialRevision!==revision)throw Error('Der Datenbestand hat sich geändert. Bitte erneut prüfen.');
+        const rows=fields.filter(g=>g.querySelector('[data-use]').checked).map(g=>{
+          const item={};g.querySelectorAll('[data-field]').forEach(f=>item[f.dataset.field]=f.type==='number'?f.valueAsNumber:f.value);return item;
+        });
+        if(!rows.length)throw Error('Wähle mindestens einen Tag aus.');
         if(!rows.every(validAiShift))throw Error('Die vorgeschlagenen Zeiten sind nicht eindeutig.');
         const ids=new Set(),records=rows.map(item=>({id:makeId(),date:item.date,type:'work',mode:'range',start:item.start,end:item.end,
           breakMinutes:item.breakMinutes,hours:(timeToMinutes(item.end)-timeToMinutes(item.start)-item.breakMinutes)/60}));
@@ -6616,40 +6895,94 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         catch(err){state.records=old;throw err;}
       }));
     }
-    async function askAssistantQuestion(){
-      const q=$('aiQuestion').value.trim();if(!q||chatPending)return;
-      if(assistantOwner!==activeStorageKey){assistantChatHistory=[];assistantOwner=activeStorageKey;message('aiConversation','');}
-      appendAssistantMessage('user',q);$('aiQuestion').value='';
-      const reply=appendAssistantMessage('bot','Wird ausgewertet …',true);
-      const owner=activeStorageKey,generation=onlineGeneration;
-      chatPending=true;$('aiAsk').disabled=true;$('aiOnline').disabled=true;
-      try{
-        let answer;
-        if(enabled('Online')){
-          if(!cloudSession)throw Error('Für KI-Fragen zuerst im Cloud-Konto anmelden. Du kannst die App ansonsten weiterhin lokal nutzen.');
-          const response=await invokeAssistant('chat',q,{context:assistantDataContext(q),history:assistantChatHistory.slice(-8)});
-          if(typeof response.text!=='string'||!response.text.trim())throw Error('Die KI konnte die Frage nicht beantworten.');
-          answer=response.text.trim();
-          reply.proposal=response.proposal;
-          reply.chart=response.chart;
-        }else{
-          answer=applyAssistantIntent(localIntent(q));
-          if(localIntent(q).kind==='unknown')answer='Ohne Online-KI kann ich nur einfache, vordefinierte Zeitfragen auswerten. Aktiviere die KI in Einstellungen → KI-Assistent & intelligente Hilfen, um auch frei formulierte Fragen zu stellen.';
-        }
-        if(owner!==activeStorageKey){reply.node.remove();return;}
-        if(generation!==onlineGeneration){
-          reply.body.textContent='Deine Zeitdaten haben sich während der Anfrage geändert. Bitte stelle die Frage erneut.';
-          reply.node.classList.remove('pending');return;
-        }
-        reply.body.textContent=answer;reply.node.classList.remove('pending');message('aiAnswer',answer);
-        applyAssistantProposal(reply,reply.proposal);renderAssistantChart(reply,reply.chart);
-        assistantChatHistory.push({role:'user',content:q},{role:'assistant',content:answer});
-        assistantChatHistory=assistantChatHistory.slice(-10);
-      }catch(e){
-        if(owner!==activeStorageKey)reply.node.remove();
-        else {reply.body.textContent=generation===onlineGeneration?e.message:'Die Daten haben sich geändert. Bitte erneut fragen.';reply.node.classList.remove('pending');if(generation===onlineGeneration)message('aiAnswer',e.message);}
+    let chatBook=null,bookOwner=null;
+    const pendingThreads=new Set();
+    function newThread(){
+      return {id:makeId(),updated:Date.now(),draft:'',messages:[]};
+    }
+    function ensureBook(){
+      if(chatBook && bookOwner===activeStorageKey)return;
+      bookOwner=activeStorageKey;
+      chatBook=readPreference('chats:'+bookOwner,null);
+      if(!chatBook||!Array.isArray(chatBook.threads)||!chatBook.threads.length){
+        const first=newThread();
+        if(assistantOwner===bookOwner)first.messages=assistantChatHistory.slice();
+        chatBook={active:first.id,threads:[first]};
       }
-      finally{chatPending=false;$('aiAsk').disabled=!enabled('Chat');$('aiOnline').disabled=false;$('assistantChatBody').scrollTop=$('assistantChatBody').scrollHeight;}
+      if(!chatBook.threads.some(t=>t.id===chatBook.active))chatBook.active=chatBook.threads[0].id;
+      assistantOwner=bookOwner;
+    }
+    function saveChats(){
+      if(bookOwner===activeStorageKey&&!savePreference('chats:'+bookOwner,chatBook))
+        message('assistantStatus','Gerätespeicher nicht verfügbar. Dieser Verlauf bleibt für diese Sitzung offen.');
+    }
+    function currentThread(){ensureBook();return chatBook.threads.find(t=>t.id===chatBook.active);}
+    function showThreads(show){
+      $('chatList').hidden=!show;$('chatListToggle').setAttribute('aria-expanded',String(show));
+      if(!show)return;
+      $('chatList').replaceChildren();
+      for(const thread of [...chatBook.threads].sort((a,b)=>b.updated-a.updated)){
+        const b=document.createElement('button');b.className='secondary';b.type='button';
+        const title=thread.messages.find(m=>m.role==='user')?.content||'Neuer Chat';
+        b.textContent=title.slice(0,55)+' · '+new Date(thread.updated).toLocaleDateString('de-DE');
+        b.setAttribute('aria-pressed',String(thread.id===chatBook.active));
+        b.onclick=()=>selectThread(thread);$('chatList').append(b);
+      }
+    }
+    function selectThread(thread){
+      speech?.abort();chatBook.active=thread.id;saveChats();showThreads(false);paintThread();
+    }
+    function paintThread(){
+      const thread=currentThread();assistantChatHistory=thread.messages.filter(m=>!m.error).map(({role,content})=>({role,content}));
+      $('aiConversation').replaceChildren();$('aiAnswerActions').replaceChildren();message('aiAnswer','');$('aiEvidence').classList.add('hidden');
+      $('assistantWelcome').classList.toggle('hidden',!!thread.messages.length);
+      for(const m of thread.messages){
+        const reply=appendAssistantMessage(m.role==='user'?'user':'bot',m.content);
+        if(m.context)reply.node.querySelector('.who').append(' · '+m.context);
+        if(m.proposal && m.stamp===runtimeStamp+':'+revision)applyAssistantProposal(reply,m.proposal);
+        if(m.chart)renderAssistantChart(reply,m.chart,m.points);
+      }
+      if(pendingThreads.has(thread.id))appendAssistantMessage('bot','Wird ausgewertet …',true);
+      $('aiAsk').disabled=pendingThreads.has(thread.id)||!enabled('Chat');
+      $('aiQuestion').value=thread.draft||'';
+      updateAssistantPageContext();
+    }
+    const runtimeStamp=Date.now().toString(36);
+    $('chatNew').onclick=()=>{
+      ensureBook();const thread=newThread();chatBook.threads.unshift(thread);selectThread(thread);$('aiQuestion').focus();
+    };
+    $('chatListToggle').onclick=()=>{ensureBook();showThreads($('chatList').hidden);};
+    $('aiQuestion').addEventListener('input',()=>{currentThread().draft=$('aiQuestion').value;saveChats();});
+    async function askAssistantQuestion(){
+      const q=$('aiQuestion').value.trim(),thread=currentThread();
+      if(!q||pendingThreads.has(thread.id)||!enabled('Chat'))return;
+      const owner=bookOwner,startRevision=revision;
+      const history=thread.messages.filter(m=>!m.error).slice(-8).map(({role,content,context})=>({role,content:(context?'['+context+'] '+content:content).slice(0,5000)}));
+      const context=assistantDataContext(q),label=$('assistantPageContext').textContent.replace('Berücksichtige diese Ansicht: ','');
+      thread.messages.push({role:'user',content:q,context:label});
+      thread.updated=Date.now();thread.draft='';pendingThreads.add(thread.id);paintThread();saveChats();
+      let result;
+      try{
+        if(enabled('Online')){
+          const response=await invokeAssistant('chat',q,{context,history});
+          if(typeof response.text!=='string'||!response.text.trim())throw Error('Die KI konnte die Frage nicht beantworten.');
+          result={role:'assistant',content:response.text.trim(),proposal:response.proposal,chart:response.chart,stamp:runtimeStamp+':'+startRevision};
+          if(result.chart)result.points=chartPoints(result.chart);
+        }else{
+          const intent=localIntent(q);
+          const compared=activeTab==='calendar'&&/plan|nettozeit|abweichung/i.test(q)?dayComparison(selectedCalendarDate):null;
+          const answer=compared?displayDay(compared.date)+': Geplant '+fmtMin(compared.netMinutes)+'. '+(compared.differenceMinutes===null?'Keine Arbeitszeit gebucht.':'Gebucht '+fmtMin(compared.bookedMinutes)+'. Abweichung '+signedHoursText(compared.differenceMinutes/60)+'.'):intent.kind==='unknown'?'Diese Frage braucht die Online-KI. Du kannst sie in den Assistenz-Einstellungen aktivieren.':applyAssistantIntent(intent);
+          result={role:'assistant',content:answer};
+        }
+        if(startRevision!==revision)throw Error('Die Zeitdaten haben sich geändert. Bitte frage erneut.');
+      }catch(error){result={role:'assistant',content:error.message,error:true};}
+      finally{pendingThreads.delete(thread.id);}
+      if(owner!==activeStorageKey||bookOwner!==owner||!chatBook?.threads.includes(thread))return;
+      thread.messages.push(result);thread.updated=Date.now();
+      if(result.error&&!thread.draft)thread.draft=q;
+      saveChats();
+      if(chatBook.active===thread.id)paintThread();
+      if(!$('chatList').hidden)showThreads(true);
     }
     for(const [label,q] of [['Überstunden','Wie hat sich mein Zeitkonto in den letzten sechs Monaten entwickelt?'],['Arbeitsrhythmus','An welchen Wochentagen arbeite ich normalerweise am längsten?'],['Urlaub','Wie viel Urlaub habe ich noch und was ist bereits gebucht?'],['Vergleichen','Wie unterscheiden sich meine letzten beiden abgeschlossenen Monate?'],['Diagramm','Zeig mir ein Diagramm meiner Arbeitsstunden der letzten sechs Monate.'],['Korrigieren','Ändere die Pause von gestern auf 30 Minuten.']])
       addAction('aiPrompts',label,()=>{$('aiQuestion').value=q;void askAssistantQuestion();});
@@ -6661,20 +6994,15 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       if(speech){speech.stop();return;}
       try{
         const r=new chatRecognition();speech=r;r.lang='de-DE';r.interimResults=false;
-        r.onresult=event=>{if(speech!==r)return;$('aiQuestion').value=event.results[0][0].transcript;$('assistantStatus').textContent='Diktat erkannt. Prüfe deine Frage und tippe auf Senden.';};
+        r.onresult=event=>{if(speech!==r)return;$('aiQuestion').value=event.results[0][0].transcript;$('assistantStatus').textContent='Diktat erkannt. Prüfe deine Frage und tippe auf Senden.';currentThread().draft=$('aiQuestion').value;saveChats();};
         r.onerror=()=>{$('assistantStatus').textContent='Diktat nicht möglich. Nutze das Mikrofon der Tastatur.';};
         r.onend=()=>{if(speech===r)speech=null;$('assistantMic').textContent='🎙';};
         r.start();$('assistantMic').textContent='■';
       }catch{speech=null;$('aiQuestion').focus();}
     });
-    $('aiOnline').addEventListener('click',()=>{
-      const q=$('aiQuestion').value.trim();if(!q)return;
-      try{const intent=localIntent(q);const answer=applyAssistantIntent(intent);appendAssistantMessage('user',q);appendAssistantMessage('bot',answer);message('aiAnswer',answer);$('aiQuestion').value='';}
-      catch(error){appendAssistantMessage('bot',error.message);}
-    });
     async function askOnline(action){
       if(!enabled('Online')||!enabled('Report')||onlinePending)return;
-      const input=[$('aiMonthly').textContent,$('aiYearly').textContent].join('\n');
+      const input=$('aiMonthly').textContent;
       const key=activeStorageKey+'|'+$('aiMonthly').textContent+'|'+$('aiYearly').textContent;
       const generation=++onlineGeneration,owner=activeStorageKey;
       onlinePending=true;message('aiNarrative','Deine Entwicklung wird eingeordnet …');
@@ -6752,6 +7080,115 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     $('aiLeaveInterpret').addEventListener('click',()=>requestIntent($('aiLeaveRequest').value,'aiLeaveRequestStatus','leave'));
     $('aiQuestion').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();void askAssistantQuestion();}});
     $('aiEntry').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('aiFill').click();}});
+
+    const widgetLabels={today:'Heutige Schicht',next:'Nächste geplante Schicht',balance:'Letzter Monatsabschluss',vacation:'Resturlaub',delta:'Monatsveränderung'};
+    function homePrefs(){
+      const prefs=readPreference('home',{});
+      const list=Array.isArray(prefs.widgets)?prefs.widgets:['today','next','balance'];
+      return {enabled:prefs.enabled!==false,widgets:[...new Set(list)].filter(k=>Object.hasOwn(widgetLabels,k))};
+    }
+    function openMonth(month){
+      selectedMonth=month;
+      analysisMonth=month;scrollPositions.delete('details');
+      setActiveTab('details');
+    }
+    function openCalendarDate(date){
+      selectedMonth=date.slice(0,7);selectedCalendarDate=date;
+      renderAll();setActiveTab('calendar');
+    }
+    function renderHome(){
+      const prefs=homePrefs(),today=localDateString(),closed=addMonths(currentMonth(),-1);
+      $('homeTab').hidden=!prefs.enabled;
+      $('homeEnabled').checked=prefs.enabled;
+      const nav=$('homeTab').parentElement;
+      nav.style.gridTemplateColumns='repeat('+(prefs.enabled?5:4)+',minmax(0,1fr))';
+      const next=(state.plans||[]).filter(p=>p.date>today).sort((a,b)=>a.date.localeCompare(b.date))[0];
+      const plan=planForDate(today),work=dateRecords(today).filter(r=>r.type==='work');
+      const balance=closingBalanceForMonth(closed),vacation=vacationBreakdown(Number(today.slice(0,4)));
+      const data={
+        today:[work.length?hoursText(work.reduce((n,r)=>n+r.hours,0))+' gebucht':plan?plan.start+'–'+plan.end+' Uhr':'Noch keine Buchung',displayDay(today),()=>setActiveTab('overview')],
+        next:[next?next.start+'–'+next.end+' Uhr':'Keine weitere Schicht geplant',next?displayDay(next.date):'Planung öffnen',()=>next?openCalendarDate(next.date):setActiveTab('planning')],
+        balance:[balance===null?'Kein Abschluss':signedHoursText(balance),displayDay(monthEnd(closed)),()=>openMonth(closed)],
+        delta:[balance===null?'Kein Abschluss':signedHoursText(monthStats(closed).delta),monthTitle(closed),()=>openMonth(closed)],
+        vacation:[vacation.active?vacation.remaining.toLocaleString('de-DE')+' Tage':'Kein Anspruch hinterlegt',today.slice(0,4),()=>setActiveTab('planning')]
+      };
+      $('homeWidgets').replaceChildren();
+      for(const key of prefs.widgets){
+        const [value,caption,open]=data[key],b=document.createElement('button');
+        b.type='button';b.className='widget';b.innerHTML='<span>'+widgetLabels[key]+'</span><strong>'+escapeHtml(value)+'</strong><small>'+escapeHtml(caption)+' ›</small>';b.onclick=open;$('homeWidgets').append(b);
+      }
+      $('homeEdit').textContent=prefs.widgets.length?'Widgets bearbeiten':'Widgets hinzufügen';
+      const order=[...prefs.widgets,...Object.keys(widgetLabels).filter(k=>!prefs.widgets.includes(k))];
+      $('widgetChoices').innerHTML=order.map((k,i)=>{
+        const on=prefs.widgets.includes(k);
+        return `<div class="widget-row"><label><input type="checkbox" data-widget="${k}" ${on?'checked':''}> ${widgetLabels[k]}</label>${on?`<button type="button" class="secondary small" data-move="-1" data-key="${k}" aria-label="${widgetLabels[k]} nach oben" ${i===0?'disabled':''}>↑</button><button type="button" class="secondary small" data-move="1" data-key="${k}" aria-label="${widgetLabels[k]} nach unten" ${i===prefs.widgets.length-1?'disabled':''}>↓</button>`:''}</div>`;
+      }).join('');
+    }
+    function showSettingsTopic(key){
+      for(const panel of $('morePanel').querySelectorAll('[data-topic]'))panel.hidden=panel.dataset.topic!==key;
+      $('settingsTopics').hidden=!!key;
+      $('settingsBack').hidden=!key;
+      $('sectionTitle').textContent=key?$('settingsTopics').querySelector('[data-open="'+key+'"] strong').textContent:'Einstellungen';
+    }
+    function setupWorkspaceViews(){
+      $('moreToday').onclick=()=>{$('manualDate').value=localDateString();refreshManualPlanHint();$('manualForm').scrollIntoView({block:'start'});};
+      $('editCarryover').onclick=()=>{setActiveTab('more');showSettingsTopic('work');if($('settingsContent').classList.contains('hidden'))$('settingsToggle').click();$('vacationCarryoverMode').focus();};
+      const topics=[
+        ['work','Arbeitszeit & Urlaub','Zeitkonto, Sollstunden und Urlaubsregeln',['settingsForm']],
+        ['templates','Erfassung & Vorlagen','Schichtvorlagen und Erinnerungen',['templatePanel','automationPanel']],
+        ['appearance','Darstellung','Home, Widgets und Farben',['homeSettings','appearancePanel']],
+        ['assistant','Assistent & Diktat','Chat, Eingabe und Auswertungen',['aiPreferences']],
+        ['data','Konto & Daten','Synchronisierung, Kalender, Export und Sicherung',['cloudPanel','appleCalendarPanel','securityPanel','historyPanel','monthlyPdfButton','exportBackupButton']]
+      ];
+      for(const [key,title,subtitle,ids] of topics){
+        const b=document.createElement('button');b.type='button';b.className='topic';b.dataset.open=key;
+        b.innerHTML='<span><strong>'+title+'</strong><small>'+subtitle+'</small></span><span aria-hidden="true">›</span>';
+        b.onclick=()=>showSettingsTopic(key);$('settingsTopics').append(b);
+        for(const id of ids){
+          let panel=$(id);while(panel.parentElement!==$('morePanel'))panel=panel.parentElement;
+          panel.dataset.topic=key;
+        }
+      }
+      $('settingsBack').onclick=()=>showSettingsTopic(null);
+      $('settingsTopics').append($('headerAssistant'));$('planningPanel').firstElementChild.after($('leaveBudget'));
+      $('todayAskAssistant').hidden=true;
+      $('cloudBanner').parentElement.append($('cloudBanner'));
+      $('manualForm').querySelector('.manual-head').after($('manualPlannedHint'));
+      $('manualForm').querySelector('button[type="submit"]').textContent='Arbeitszeit speichern';
+      $('manualUsePlan').textContent='Plan übernehmen';
+      const hero=$('closedHeroBalance').parentElement;
+      $('overviewHeading').after($('closedHeroBalance'));$('closedHeroBalance').after($('monthMovement'));
+      const calculation=$('accountExplanation').parentElement;
+      const details=document.createElement('details');details.className='panel';
+      const summary=document.createElement('summary');summary.textContent='Berechnung ansehen';details.append(summary);calculation.before(details);details.append(calculation);
+      const report=$('smartReport');
+      hero.after(report);report.querySelector('.report-period-selector').hidden=true;
+      const yearStory=$('aiYearly');
+      $('monthlyChart').before(yearStory);
+      report.querySelector('.report-year-details').hidden=true;
+      $('aiReportChart').after($('monthCompareStory'));
+
+      $('aiYearly').classList.add('report-story');
+      $('analyticsAskAssistant').className='secondary small';$('analyticsAskAssistant').textContent='Jahreswerte erklären';
+      $('monthlyChart').parentElement.append($('analyticsAskAssistant'));
+
+      $('yearMonths').onclick=e=>{const month=e.target.closest('[data-month]')?.dataset.month;if(validMonth(month))openMonth(month);};
+      $('homeEdit').onclick=()=>{setActiveTab('more');showSettingsTopic('appearance');$('homeSettings').scrollIntoView({block:'start'});};
+      $('homeEnabled').onchange=e=>{savePreference('home',{...homePrefs(),enabled:e.target.checked});renderHome();};
+      $('widgetChoices').onchange=e=>{
+        const prefs=homePrefs(),key=e.target.dataset.widget;if(!key)return;
+        prefs.widgets=e.target.checked?[...prefs.widgets,key]:prefs.widgets.filter(k=>k!==key);
+        savePreference('home',prefs);renderHome();
+      };
+      $('widgetChoices').onclick=e=>{
+        const b=e.target.closest('[data-move]');if(!b)return;
+        const prefs=homePrefs(),i=prefs.widgets.indexOf(b.dataset.key),j=i+Number(b.dataset.move);
+        if(i<0||j<0||j>=prefs.widgets.length)return;
+        [prefs.widgets[i],prefs.widgets[j]]=[prefs.widgets[j],prefs.widgets[i]];
+        savePreference('home',prefs);renderHome();
+        $('widgetChoices').querySelector('[data-widget="'+b.dataset.key+'"]').focus();
+      };
+    }
 
     initialize();
   </script>
