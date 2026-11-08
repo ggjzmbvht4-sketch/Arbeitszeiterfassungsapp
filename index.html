@@ -1,20 +1,20 @@
 <!-- index.html -->
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#eef8f6">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#102321">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Arbeitszeit">
-  <title>Arbeitszeit</title>
-  <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="./icon-192.png">
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#eef8f6" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#102321" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Arbeitszeit" name="apple-mobile-web-app-title"/>
+<title>Arbeitszeit</title>
+<link href="./manifest.webmanifest" rel="manifest"/>
+<link href="./icon.svg" rel="icon" type="image/svg+xml"/>
+<link href="./icon-192.png" rel="apple-touch-icon"/>
+<style>
     :root {
       color-scheme: light;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
@@ -1569,8 +1569,6 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 #aiPreferences {scroll-margin-top:85px}
 @media(max-width:360px){#aiOptionFields {grid-template-columns:1fr}.analysis-scope .analysis-year-picker {min-width:100%}}
 </style>
-
-
 <style>
 /* NEXT V11: kompaktes, durchgängiges UI für iPhone und Desktop */
 .header-assistant{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:8px 13px;border-radius:14px;background:var(--accent-light);border:1px solid var(--control-edge);color:var(--ink);font-weight:750;white-space:nowrap}
@@ -1803,558 +1801,529 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 }
 
 </style>
-
+<style>[hidden],.five-tabs .tab[hidden],#todayAskAssistant,.calendar-heading {display:none!important}
+#homeWidgets,.topic-list,#yearMonths{display:grid;gap:10px}
+#homeWidgets{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+button.widget,button.topic{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:18px;text-align:left;padding:16px 18px;box-shadow:none}
+button.widget{display:grid;gap:8px}button.widget strong{font-size:1.45rem}button.widget small,.topic small{display:block;color:var(--muted);font-weight:500}.topic small{margin-top:4px}
+button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.topic{justify-content:space-between}.widget-row{min-height:48px;border-bottom:1px solid var(--line)}.widget-row label{flex:1;display:flex;align-items:center;gap:8px;margin:0}.widget-row input,#homeEnabled{width:auto}.chat-tools{padding:6px 16px}
+#chatList{max-height:32dvh;overflow:auto;padding:8px 16px}#yearMonths{grid-template-columns:repeat(3,minmax(0,1fr))}#yearMonths button{display:grid;text-align:left;gap:3px}
+#analysisMode{margin:0 0 12px}#analysisMode button[aria-pressed=true]{background:var(--accent-light);color:var(--ink);font-weight:750}
+#closedHeroBalance:not(.hidden){margin:8px 0 16px;display:grid;gap:3px}#heroBalanceValue{font-size:clamp(2.3rem,8vw,3.6rem)}#monthHero .report-total{font-size:1.4rem}
+#overviewPanel details .panel{border:0;box-shadow:none;padding:8px 0}#smartReport .report-story p{margin:.45em 0}
+.batch-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:.6rem 0}.batch-row input{min-width:0;width:100%;box-sizing:border-box}
+</style>
 </head>
-
 <body>
-  <header class="app-header">
-    <h1>Arbeitszeit</h1>
-    <button id="headerAssistant" class="header-assistant" type="button" aria-label="KI-Assistent öffnen" title="KI-Assistent öffnen"><span aria-hidden="true">✦</span> <span>KI fragen</span></button>
-    <button id="headerSettings" class="header-settings" type="button" aria-label="Einstellungen und Konto öffnen" title="Einstellungen und Konto öffnen">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l-1.88 1.88a1.65 1.65 0 0 0-1.82-.33l-.1.04A1.65 1.65 0 0 0 15 19.9V20h-6v-.1a1.65 1.65 0 0 0-.93-1.49l-.1-.04a1.65 1.65 0 0 0-1.82.33l-1.88-1.88A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.5-1H3v-4h.1a1.65 1.65 0 0 0 1.5-1 1.65 1.65 0 0 0-.33-1.82L6.15 5.3a1.65 1.65 0 0 0 1.82.33A1.65 1.65 0 0 0 9 4.1V4h6v.1a1.65 1.65 0 0 0 1.03 1.53 1.65 1.65 0 0 0 1.82-.33l1.88 1.88A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.5 1h.1v4h-.1a1.65 1.65 0 0 0-1.5 1Z"/></svg>
-    </button>
-  </header>
+<header class="app-header">
+<h1>Arbeitszeit</h1>
+<button aria-label="KI-Assistent öffnen" class="header-assistant" id="headerAssistant" title="KI-Assistent öffnen" type="button"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="m12 2 1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9L12 2Z"></path><path d="m19 17 .8 2.2L22 20l-2.2.8L19 23l-.8-2.2L16 20l2.2-.8L19 17Z"></path></svg><span class="header-assistant-label">KI</span></button><button aria-label="Einstellungen und Konto öffnen" class="header-settings" id="headerSettings" title="Einstellungen und Konto öffnen" type="button">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" viewbox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8"></path><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l-1.88 1.88a1.65 1.65 0 0 0-1.82-.33l-.1.04A1.65 1.65 0 0 0 15 19.9V20h-6v-.1a1.65 1.65 0 0 0-.93-1.49l-.1-.04a1.65 1.65 0 0 0-1.82.33l-1.88-1.88A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.5-1H3v-4h.1a1.65 1.65 0 0 0 1.5-1 1.65 1.65 0 0 0-.33-1.82L6.15 5.3a1.65 1.65 0 0 0 1.82.33A1.65 1.65 0 0 0 9 4.1V4h6v.1a1.65 1.65 0 0 0 1.03 1.53 1.65 1.65 0 0 0 1.82-.33l1.88 1.88A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.5 1h.1v4h-.1a1.65 1.65 0 0 0-1.5 1Z"></path></svg>
+</button>
+</header>
+<main>
 
-  <main>
-    <section id="todayPanel">
-  <div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div></div>
-  <button type="button" id="cloudBanner" class="cloud-banner" aria-label="Cloud-Konto und Synchronisierung öffnen"><span class="cloud-badge"><i class="cloud-dot" id="cloudBannerDot"></i><span id="cloudBannerLabel">Nur auf diesem Gerät</span></span><small id="cloudBannerDetail">Konto einrichten ›</small></button>
+<section id="todayPanel">
+<div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div></div>
 
-  <button id="todayAskAssistant" type="button" class="assistant-invite"><span class="assistant-invite-icon" aria-hidden="true">✦</span><span><strong>Fragen zu deinen Zeiten?</strong><small>Stunden, Urlaub, Überstunden und mehr mit KI verstehen</small></span><span aria-hidden="true">›</span></button>
-  <form class="clock-card manual-card" id="manualForm">
-    <div class="manual-head"><h2>Arbeitszeit eintragen</h2><label class="manual-date">Datum<input id="manualDate" type="date" min="2000-01-01" max="2200-12-31" required></label></div>
-<details id="smartEntry" class="ai-card entry-assist"><summary><span aria-hidden="true">✦</span> Natürlich eingeben oder diktieren</summary><div class="ai-body"><p class="hint">Beschreibe deinen Tag so, wie du ihn jemandem erzählen würdest. Die KI füllt die Felder aus – gespeichert wird erst nach deiner Prüfung.</p><label for="aiEntry">Deine Arbeitszeit</label><textarea id="aiEntry" rows="2" maxlength="600" placeholder="Ich habe gestern um halb acht angefangen, war bis Viertel nach vier da und hatte eine Dreiviertelstunde Pause."></textarea><div class="entry-assist-actions"><button type="button" id="aiFill">Zeiten übernehmen</button><button type="button" class="secondary" id="aiMic">🎙 Diktieren</button></div><small class="hint" id="aiMicHint"></small><div id="aiEntryMsg" class="entry-feedback" role="status" aria-live="polite"></div><div id="aiBatchPreview" class="batch-preview" role="group" aria-label="Überprüfte Arbeitszeitvorschläge"></div></div></details>
-    <div class="manual-switch" role="group" aria-label="Eingabeart"><button id="byRange" type="button" aria-pressed="true">Von – bis</button><button id="byDuration" type="button" aria-pressed="false">Dauer</button></div>
-    <div class="manual-fields"><label id="startLabel">Beginn<input id="manualStart" type="time" required></label><label id="endLabel">Ende<input id="manualEnd" type="time" required></label><label class="hidden" id="durationLabel">Dauer vor Pause (Std.)<input id="manualDuration" type="number" min="0.01" max="24" step="0.01" placeholder="7,5" disabled></label><label>Pause (Min.)<input id="manualPause" type="number" min="0" max="1439" step="1" value="0"></label></div>
-    <div id="manualPlannedHint" class="planned-hint hidden"><span id="manualPlannedText"></span><button id="manualUsePlan" type="button" class="secondary small">Geplante Zeit übernehmen</button></div>
-    <div id="manualPlanApplied" class="plan-applied-banner hidden" role="status"><strong>✓ Geplante Zeit übernommen</strong><span>Die Zeiten sind vorausgefüllt. Erst mit „Eintrag speichern“ wird die Arbeitszeit gebucht.</span></div>
-    <div class="quick-templates" id="quickTemplates" aria-label="Gespeicherte Arbeitszeitvorlagen"></div>
-<div id="smartTemplate" class="quick-templates"><button type="button" class="secondary" id="aiTemplate">Wochentagsvorlage übernehmen</button></div>
-    <div class="manual-footer"><div><span class="clock-caption">Nettoarbeitszeit</span><output id="manualNet" aria-live="polite">—</output></div><button type="submit">Eintrag speichern</button></div>
-    <div id="manualStatus" role="status"></div>
-  </form>
-  <section class="panel hidden" id="oldShift"><h2>Offene Schicht aus der Vorversion</h2><p class="hint" id="oldShiftStart"></p><label for="oldEnd">Tatsächliches Ende</label><input type="datetime-local" id="oldEnd"><div class="actions"><button type="button" id="recoverShift">Schicht übernehmen</button><button type="button" class="secondary" id="forgetShift">Verwerfen</button></div></section>
-  <div class="day-metrics flex-metrics"><div><span>Heute gearbeitet</span><strong id="todayWorked"></strong></div><div><span id="bookedMonth"></span><strong id="monthWorked"></strong></div></div>
-  <section id="todayAssistance" class="panel hidden"><h3>Für deinen Tag</h3><div id="todayAssistanceContent"></div></section><section class="panel"><div class="section-head"><h2>Heutige Einträge</h2></div><div id="timeline"></div></section>
-  <section class="panel account-line"><span id="balanceLabel">Zeitkonto</span><strong id="todayBalance"></strong></section>
+<button class="assistant-invite" hidden="True" id="todayAskAssistant" type="button"><span aria-hidden="true" class="assistant-invite-icon">✦</span><span><strong>Fragen zu deinen Zeiten?</strong><small>Stunden, Urlaub, Überstunden und mehr mit KI verstehen</small></span><span aria-hidden="true">›</span></button>
+<div class="day-metrics flex-metrics"><div><span>Heute gearbeitet</span><strong id="todayWorked"></strong></div><div><span id="bookedMonth"></span><strong id="monthWorked"></strong></div></div><form aria-label="Arbeitszeit erfassen" class="clock-card manual-card" id="manualForm">
+<div class="manual-head"><h2>Arbeitszeit erfassen</h2><label class="manual-date">Datum<input id="manualDate" max="2200-12-31" min="2000-01-01" required="" type="date"/></label></div>
+<details class="ai-card entry-assist" id="smartEntry"><summary>Mit Text oder Sprache erfassen</summary><div class="ai-body"><p class="hint">Zum Beispiel: „Gestern von 7 bis 16 Uhr, 45 Minuten Pause.“ Erst der geprüfte Eintrag wird gespeichert.</p><label for="aiEntry">Deine Arbeitszeit</label><textarea id="aiEntry" maxlength="600" placeholder="Ich habe gestern um halb acht angefangen, war bis Viertel nach vier da und hatte eine Dreiviertelstunde Pause." rows="2"></textarea><div class="entry-assist-actions"><button id="aiFill" type="button">Text auswerten</button><button class="secondary" id="aiMic" type="button">Aufnehmen</button></div><small class="hint" id="aiMicHint">KI-Spracherkennung: Audio aufnehmen, Text prüfen und erst danach Zeiten übernehmen. Anmeldung und Online-KI erforderlich.</small><div aria-live="polite" class="entry-feedback" id="aiEntryMsg" role="status"></div><div aria-label="Überprüfte Arbeitszeitvorschläge" class="batch-preview" id="aiBatchPreview" role="group"></div></div></details>
+<div aria-label="Eingabeart" class="manual-switch" role="group"><button aria-pressed="true" id="byRange" type="button">Von – bis</button><button aria-pressed="false" id="byDuration" type="button">Dauer</button></div>
+<div class="manual-fields"><label id="startLabel">Beginn<input id="manualStart" required="" type="time"/></label><label id="endLabel">Ende<input id="manualEnd" required="" type="time"/></label><label class="hidden" id="durationLabel">Dauer vor Pause (Std.)<input disabled="" id="manualDuration" max="24" min="0.01" placeholder="7,5" step="0.01" type="number"/></label><label>Pause (Min.)<input id="manualPause" max="1439" min="0" step="1" type="number" value="0"/></label></div>
+<div class="planned-hint hidden" id="manualPlannedHint"><span id="manualPlannedText"></span><button class="secondary small" id="manualUsePlan" type="button">Geplante Zeit übernehmen</button></div>
+<div class="plan-applied-banner hidden" id="manualPlanApplied" role="status"><strong>✓ Geplante Zeit übernommen</strong><span>Die Zeiten sind vorausgefüllt. Erst mit „Arbeitszeit speichern“ wird die Arbeitszeit gebucht.</span></div>
+<div aria-label="Gespeicherte Arbeitszeitvorlagen" class="quick-templates" id="quickTemplates"></div>
+<div class="quick-templates" id="smartTemplate"><button class="secondary" id="aiTemplate" type="button">Wochentagsvorlage übernehmen</button></div>
+<div class="manual-footer"><div><span class="clock-caption">Nettoarbeitszeit</span><output aria-live="polite" id="manualNet">—</output></div><button type="submit">Eintrag speichern</button></div>
+<div id="manualStatus" role="status"></div>
+</form>
+<section class="panel hidden" id="oldShift"><h2>Offene Schicht aus der Vorversion</h2><p class="hint" id="oldShiftStart"></p><label for="oldEnd">Tatsächliches Ende</label><input id="oldEnd" type="datetime-local"/><div class="actions"><button id="recoverShift" type="button">Schicht übernehmen</button><button class="secondary" id="forgetShift" type="button">Verwerfen</button></div></section>
+
+<section class="panel hidden" id="todayAssistance"><h3>Für deinen Tag</h3><div id="todayAssistanceContent"></div></section><section class="panel" id="todayBookings"><div class="section-head"><h2 id="todayBookingsTitle">Heutige Einträge</h2></div><div id="timeline"></div><button class="secondary small" hidden="" id="moreToday" type="button">Weitere Arbeitszeit erfassen</button></section>
+<section class="panel account-line"><span id="balanceLabel">Zeitkonto</span><strong id="todayBalance"></strong></section>
+</section>
+<h2 class="page-title hidden" id="sectionTitle">Kalender</h2>
+<div aria-label="Monat auswählen" class="month-bar hidden" id="monthBar">
+<button aria-label="Vorheriger Monat" class="secondary" id="previousMonth" type="button">‹</button>
+<div class="month-control"><span aria-hidden="true" id="monthPickerText"></span><input aria-label="Monat auswählen" id="monthPicker" max="2200-12" min="2000-01" type="month"/></div>
+<button aria-label="Nächster Monat" class="secondary" id="nextMonth" type="button">›</button>
+</div>
+<section class="view-stack hidden" id="calendarPanel">
+<div class="clock-card calendar-heading"><h2 id="calendarSubtitle"></h2></div>
+<div class="panel calendar-card">
+<div class="calendar-weekdays" id="calendarWeekdays" role="row"></div>
+<div aria-label="Monatskalender" class="calendar-grid" id="calendarGrid" role="grid"></div>
+<div aria-label="Kalenderlegende" class="legend">
+<span><i class="legend-work"></i>Gearbeitet</span>
+<span><i class="legend-planned"></i>Geplant (nicht gebucht)</span>
+<span><i class="legend-vacation"></i>Urlaub</span>
+<span><i class="legend-sick"></i>Krankheit</span>
+<span><i class="legend-holiday"></i>Feiertag</span>
+</div>
+</div>
+<div class="panel" id="selectedDayPanel">
+<h3 id="selectedDayHeading">Tag auswählen</h3>
+<div id="selectedDayEntries"></div>
+<button id="addDayEntryButton" type="button">Eintrag für diesen Tag hinzufügen</button>
+</div>
 </section>
 
-<h2 id="sectionTitle" class="page-title hidden">Kalender</h2>
-    <div id="monthBar" class="month-bar hidden" aria-label="Monat auswählen">
-      <button id="previousMonth" class="secondary" type="button" aria-label="Vorheriger Monat">‹</button>
-      <div class="month-control"><span aria-hidden="true" id="monthPickerText"></span><input id="monthPicker" type="month" min="2000-01" max="2200-12" aria-label="Monat auswählen"></div>
-      <button id="nextMonth" class="secondary" type="button" aria-label="Nächster Monat">›</button>
-    </div>
-
-    <section id="calendarPanel" class="view-stack hidden">
-      <div class="clock-card calendar-heading"><h2 id="calendarSubtitle"></h2></div>
-      <div class="panel calendar-card">
-      <div id="calendarWeekdays" class="calendar-weekdays" role="row"></div>
-      <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="Monatskalender"></div>
-      <div class="legend" aria-label="Kalenderlegende">
-        <span><i class="legend-work"></i>Gearbeitet</span>
-        <span><i class="legend-planned"></i>Geplant (nicht gebucht)</span>
-        <span><i class="legend-free"></i>Frei</span>
-        <span><i class="legend-vacation"></i>Urlaub</span>
-        <span><i class="legend-sick"></i>Krankheit</span>
-        <span><i class="legend-holiday"></i>Feiertag</span>
-      </div>
-
-      </div>
-      <div class="panel" id="selectedDayPanel">
-        <h3 id="selectedDayHeading">Tag auswählen</h3>
-        <div id="selectedDayEntries"></div>
-        <button id="addDayEntryButton" type="button">Eintrag für diesen Tag hinzufügen</button>
-      </div>
-    </section>
-
-    <section id="analyticsPanel" class="view-stack hidden" aria-labelledby="analyticsIntro">
-      <div class="panel analysis-scope"><div><h2>Analysen</h2><span class="hint">Ausgewähltes Jahr</span></div>        <div class="analysis-year-picker" role="group" aria-label="Analysejahr">
-          <button id="analysisYearPrev" class="secondary" type="button" aria-label="Vorheriges Jahr">‹</button>
-          <strong id="analysisYearText" aria-live="polite">–</strong><input id="analysisYear" type="hidden">
-          <button id="analysisYearNext" class="secondary" type="button" aria-label="Nächstes Jahr">›</button>
-        </div></div>
-      <div class="clock-card insight-hero"><span class="eyebrow">DEIN ZEITKONTO</span>
-        <h2 id="analyticsIntro">Alles im Blick.</h2><p id="insightHeroCaption">Letzter abgeschlossener Monat</p>
-        <strong class="insight-number" id="insightBalance">–</strong>
-        <div class="insight-subline"><span id="insightForecast">Ohne laufenden Monat oder Prognose.</span></div>
-      </div>
-<details id="smartChecks" class="panel ai-card"><summary>Einträge prüfen</summary><div class="ai-body"><p class="hint">Auffällige Buchungen und mögliche Lücken. Zeitraum und Empfindlichkeit kannst du in den Assistenz-Einstellungen ändern.</p><div id="aiChecks" class="ai-output" role="status"></div></div></details>
-      <div class="grid two-dashboard" id="analyticsQuickStats">
-        <div class="metric"><span>Gearbeitet im gewählten Jahr</span><strong id="statYearWork">–</strong></div>
-        <div class="metric"><span>Resturlaub</span><strong id="statVacation">–</strong></div>
-        <div class="metric"><span>Ø Arbeitstag</span><strong id="statAverage">–</strong></div>
-        <div class="metric"><span>Urlaub gebucht</span><strong id="statVacationUsed">–</strong></div>
-      </div>
-<section id="smartReport" class="panel ai-card"><h2>Was sich bei dir verändert</h2><div class="ai-body"><div class="report-period-selector"><span class="hint">Berichtsmonat</span><div class="month-stepper" role="group" aria-label="Berichtsmonat wählen"><button type="button" id="aiMonthPrev" class="secondary" aria-label="Vorheriger Monat">‹</button><strong id="aiMonthLabel" aria-live="polite">–</strong><input id="aiMonth" type="hidden"><button type="button" id="aiMonthNext" class="secondary" aria-label="Nächster Monat">›</button></div></div><div id="aiInsightCards" class="insight-cards"></div><div class="report-card"><div class="report-card-heading"><strong>Vergleich zum Vormonat</strong><small>Ø Nettoarbeitszeit je erfasstem Arbeitstag</small></div><div id="aiReportChart" role="img" aria-label="Vergleich der durchschnittlichen Arbeitstage"></div></div><div id="aiMonthly" class="report-story" role="status"></div><details class="report-year-details"><summary>Jahresüberblick ansehen</summary><div id="aiYearly" class="report-story" role="status"></div></details><button type="button" class="secondary" id="aiNarrate">✦ Entwicklung von KI erklären lassen</button><div id="aiNarrative" class="report-story" role="status"></div><button type="button" id="aiSettingsJump" class="secondary small">KI-Einstellungen</button></div></section><button type="button" id="analyticsAskAssistant" class="assistant-invite assistant-invite-analysis"><span class="assistant-invite-icon" aria-hidden="true">✦</span><span><strong>Mehr über deine Zeiten erfahren</strong><small>Stelle dem Assistenten jede Frage zu deinen Buchungen.</small></span><span aria-hidden="true">›</span></button>      <section class="panel"><div class="section-head"><h2>Überstundenentwicklung</h2><span class="mini-label">Gewähltes Jahr</span></div>
-        <div id="balanceChart" class="insight-chart" role="img" aria-label="Entwicklung des Zeitkontos"></div>
-        <p class="hint">Nur abgeschlossene Monate – keine Hochrechnung für den laufenden Monat.</p>
-      </section>
-      <section class="panel">
-        <div class="section-head"><h2>Jahresanalyse</h2></div>
-
-        <div class="grid two-dashboard">
-          <div class="metric"><span>Arbeitstage erfasst</span><strong id="statDays">–</strong></div>
-          <div class="metric"><span>Längster Arbeitstag</span><strong id="statLongest">–</strong></div>
-          <div class="metric"><span>Pausen gesamt</span><strong id="statBreaks">–</strong></div>
-          <div class="metric"><span>Zum Vorjahr</span><strong id="statYoY">–</strong></div>
-        </div>
-        <h3>Gearbeitete Stunden je Monat</h3>
-        <div id="monthlyChart" class="insight-chart" role="img" aria-label="Gearbeitete Stunden pro Monat mit Stundenachse"></div>
-        <p class="hint">Skala links in Stunden. Der laufende Monat zeigt nur tatsächlich erfasste Arbeitszeit.</p>
-      </section>
-      <section class="panel"><h2>Arbeitsrhythmus</h2>
-        <div class="grid two-dashboard">
-          <div class="metric"><span>Ø Pause je Arbeitstag</span><strong id="statAvgBreak">–</strong></div>
-          <div class="metric"><span>Typischer Arbeitsbeginn</span><strong id="statTypicalStart">–</strong></div>
-          <div class="metric"><span>Stärkster Wochentag</span><strong id="statBusiestWeekday">–</strong></div>
-          <div class="metric"><span>Ø Stunden je Monat</span><strong id="statMonthlyAverage">–</strong></div>
-        </div>
-        <h3>Arbeitsstunden nach Wochentag</h3>
-        <div id="weekdayChart" class="insight-chart" role="img" aria-label="Arbeitsstunden je Wochentag mit Stundenachse"></div>
-      </section>
-    </section>
-    <section id="detailsPanel" class="view-stack hidden" aria-label="Monatsdetails und einzelne Einträge">
-      <p class="hint" style="margin:0 4px 12px">Wähle einen Monat, um alle Werte und Einträge einzusehen.</p>
-      <div id="detailMonthBar" class="month-bar" aria-label="Monat für Details auswählen">
-        <button id="detailsPreviousMonth" class="secondary" type="button" aria-label="Vorheriger Monat">‹</button>
-        <div class="month-control"><span aria-hidden="true" id="detailsMonthText"></span><input id="detailsMonthPicker" type="month" min="2000-01" max="2200-12" aria-label="Monat für Details auswählen"></div>
-        <button id="detailsNextMonth" class="secondary" type="button" aria-label="Nächster Monat">›</button>
-      </div>
-    <section id="overviewPanel" class="view-stack">
-      <div class="clock-card report-hero"><h2 id="overviewHeading">Monatsübersicht</h2>
-        <strong class="report-total" id="creditedMetric">–</strong><span class="clock-caption">Geleistete Arbeitszeit <small class="credited-note">inkl. angerechnetem Urlaub, Krankheit und Feiertagen</small></span>
-        <div id="closedHeroBalance" class="closed-hero-balance hidden" aria-live="polite">
-          <span>Überstunden am Monatsende</span><strong id="heroBalanceValue">–</strong>
-        </div></div>
-      <div class="panel">
-      <div class="grid">
-        <div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
-        <div class="metric"><span>Noch bis zum Soll</span><strong id="remainingMetric">–</strong></div>
-        <div class="metric" id="closedDelta"><span>Abgeschlossene Monatsdifferenz</span><strong id="deltaMetric">–</strong></div>
-        <div class="metric" id="carryMetricCard"><span>Überstunden am Ende des Vormonats</span><strong id="carryMetric">–</strong></div>
-        <div class="metric" id="closingMetricCard"><span id="closingLabel">Zeitkonto Monatsende</span><strong id="closingMetric">–</strong></div>
-      </div>
-      <p id="accountExplanation" class="hint"></p>
-      <p id="vacationBalance" class="hint"></p>
-
-      </div>
-      <section id="monthAssistance" class="panel hidden"><h3>Dein Monat im Blick</h3><div id="monthAssistanceContent"></div></section><div class="panel"><h3>Einträge des Monats</h3>
-      <div id="entriesList"></div></div>
-    </section>
-
-      <section class="panel"><h2>Berichte exportieren</h2><p class="hint">Deine bisherigen PDF-Berichte stehen weiterhin zur Verfügung.</p>
-        <button id="analysisExportJump" class="secondary" type="button">Zu den PDF-Berichten</button>
-
-      </section>
-    </section>
-
-    <section id="planningPanel" class="view-stack hidden" aria-labelledby="planningTitle">
-      <div class="clock-card planning-hero"><span class="eyebrow">SCHICHTEN &amp; URLAUB</span><h2 id="planningTitle">Deine Planung im Blick.</h2><p class="clock-caption">Erhaltene Schichten eintragen und Urlaub verwalten. Geplante Zeiten werden nicht als Arbeitszeit gebucht.</p></div>
-<details id="smartPlan" class="panel ai-card hidden" hidden aria-hidden="true"><summary>Intelligenter Arbeitszeitplaner</summary><div class="ai-body"><label>Dein Wunsch<input id="aiPlanRequest" maxlength="600" placeholder="Bis Ende Dezember 15 Überstunden aufbauen, freitags höchstens 6 Stunden"></label><button type="button" id="aiPlanInterpret" class="secondary">Wunsch übernehmen</button><div id="aiPlanRequestStatus" role="status"></div><label>Planungsziel<select id="aiPlanMode"><option value="delta">Zusätzliche Überstunden bis Monatsende</option><option value="balance">Gewünschter Gesamtstand bis Monatsende</option><option value="week">Typische Schichten für nächste Woche</option></select></label><p class="hint">Deine Arbeitstage, Schichtzeiten und Tagesgrenzen kommen aus den Assistenz-Einstellungen. Der Vorschlag berücksichtigt bestehende Schichten, Feiertage und Abwesenheiten.</p><div class="two-col"><label id="aiDeadlineLabel">Zielmonat<input id="aiDeadline" type="month"></label><label id="aiTargetLabel">Überstundenziel (Std.)<input id="aiTarget" type="number" value="15" step="0.25"></label></div><label>Freitags höchstens (Nettostunden)<input id="aiFriday" type="number" min="0" max="10" step="0.25" value="6"></label><button type="button" class="secondary" id="aiPlanGo">Vorschlag berechnen</button><div id="aiPlanSummary" class="ai-output"></div><div id="aiPlanResult" class="ai-output" role="status"></div><button type="button" class="secondary" id="aiPlanSave">Als Schichtplanung speichern</button></div></details><details id="smartLeave" class="panel ai-card"><summary>Urlaubsassistent</summary><div class="ai-body"><label>Dein Urlaubswunsch<input id="aiLeaveRequest" maxlength="600" placeholder="Im Frühjahr zehn Tage frei mit möglichst wenig Urlaub"></label><button type="button" id="aiLeaveInterpret" class="secondary">Zeiträume vorschlagen</button><div id="aiLeaveRequestStatus" role="status"></div><div class="two-col"><label>Frühester Beginn<input id="aiFrom" type="date"></label><label>Spätestes Ende<input id="aiUntil" type="date"></label></div><label>Zusammenhängende freie Tage<input id="aiLength" type="number" min="1" max="60" value="10"></label><button type="button" class="secondary" id="aiLeaveGo">Zeiträume vergleichen</button><div id="aiLeaves" class="ai-output" role="status"></div></div></details>
-      <section class="panel" id="workPlanPanel">
-        <div class="section-head"><h2>Arbeitszeiten planen</h2><span class="mini-label">Keine Buchung</span></div>
-        <p class="hint">Geplante Schichten bleiben getrennt: keine Anrechnung auf das Stundenkonto, keine Übertragung in den Kalender oder nach Apple Kalender. Erst wenn du sie bewusst übernimmst und speicherst, werden sie zu einer echten Buchung.</p>
-        <form id="workPlanForm">
-          <div class="plan-range"><label>Datum<input id="workPlanDate" type="date" required></label><label>Wiederholen bis (optional)<input id="workPlanEndDate" type="date"></label></div>
-          <p class="hint">Einzelnen Tag oder Zeitraum von maximal 90 Kalendertagen planen. Die Auswahl gilt nur für Planungen, niemals für deine gebuchten Arbeitszeiten.</p>
-          <label for="workPlanTemplate">Gespeicherte Vorauswahl nutzen (optional)</label>
-          <select id="workPlanTemplate"><option value="">Eigene Zeiten eingeben</option></select>
-          <div class="plan-day-actions" style="margin-top:5px"><span class="hint" style="flex:1">Vorlagen findest du in den Einstellungen (Zahnrad oben rechts).</span><button id="workPlanManageTemplates" type="button" class="secondary small">Vorlagen verwalten</button></div>
-          <div id="workPlanRangeOptions" class="plan-weekday-block hidden">
-            <fieldset class="plan-weekday-fieldset">
-              <legend>Für welche Tage im Zeitraum?</legend>
-              <div class="plan-weekday-grid" id="workPlanDays">
-                <label><input type="checkbox" name="workPlanWeekday" value="1" checked>Mo</label>
-                <label><input type="checkbox" name="workPlanWeekday" value="2" checked>Di</label>
-                <label><input type="checkbox" name="workPlanWeekday" value="3" checked>Mi</label>
-                <label><input type="checkbox" name="workPlanWeekday" value="4" checked>Do</label>
-                <label><input type="checkbox" name="workPlanWeekday" value="5" checked>Fr</label>
-                <label><input type="checkbox" name="workPlanWeekday" value="6">Sa</label>
-                <label><input type="checkbox" name="workPlanWeekday" value="0">So</label>
-              </div>
-            </fieldset>
-            <div class="plan-day-actions"><button type="button" id="planWeekdaysWeek" class="secondary small">Mo–Fr</button><button type="button" id="planWeekdaysAll" class="secondary small">Alle Tage</button><button type="button" id="planWeekdaysClear" class="secondary small">Keine</button></div>
-          </div>
-          <p class="plan-preview" id="workPlanPreview" role="status" aria-live="polite">1 Tag wird geplant · noch keine Buchung.</p>
-          <div class="plan-range"><label>Beginn<input id="workPlanStart" type="time" required></label><label>Ende<input id="workPlanEnd" type="time" required></label></div>
-          <div class="plan-range"><label>Pause (Min.)<input id="workPlanBreak" type="number" min="0" max="1439" step="1" inputmode="numeric" value="30" required></label><label>Notiz (optional)<input id="workPlanNote" type="text" maxlength="100" placeholder="z. B. Frühschicht"></label></div>
-          <button type="submit">Nur Planung speichern</button>
-          <p id="workPlanStatus" class="status" role="status" aria-live="polite"></p>
-        </form>
-        <div class="section-head"><h3>Deine geplanten Schichten</h3></div>
-        <div class="plan-month-picker" role="group" aria-label="Monat der geplanten Schichten auswählen">
-          <button id="workPlanPrevMonth" type="button" class="secondary" aria-label="Vorheriger Monat">‹</button>
-          <div class="plan-month-current"><span>Geplante Schichten im</span><strong id="workPlanMonthLabel" aria-live="polite">–</strong><input id="workPlanMonth" type="hidden"></div>
-          <button id="workPlanNextMonth" type="button" class="secondary" aria-label="Nächster Monat">›</button>
-        </div>
-        <div id="workPlanList"></div>
-      </section>
-      <section class="panel"><h2>Urlaub planen</h2><p class="hint">Wähle einen Zeitraum. Feiertage und deine festgelegten Urlaubstage werden berücksichtigt.</p>
-        <div class="plan-range"><label>Von<input id="planStart" type="date"></label><label>Bis einschließlich<input id="planEnd" type="date"></label></div>
-        <div class="simulation-result"><span>Benötigter Urlaub</span><strong id="planNeeded">–</strong><small id="planRemaining">–</small></div>
-        <button id="planBook" type="button">Urlaub im Kalender eintragen</button><p id="planStatus" class="status" role="status"></p>
-      </section>
-      <section class="panel"><h2>Brückentage entdecken</h2><p class="hint">Ideen für lange freie Zeiträume in Baden-Württemberg. Nur Vorschläge – bestehende Termine und deine Urlaubstage bleiben unverändert.</p>
-        <label for="bridgeYear">Jahr</label><input id="bridgeYear" type="number" min="2000" max="2200" step="1" inputmode="numeric">
-        <div id="bridgeIdeas"></div>
-      </section>
-      <section class="panel"><h2>Dein Freizeitbudget</h2><div class="grid two-dashboard"><div class="metric"><span>Resturlaub im Jahr</span><strong id="planVacationBalance">–</strong></div><div class="metric"><span>Überstunden · letzter Monatsabschluss</span><strong id="planHoursBalance">–</strong></div></div><p id="vacationExpiryNotice" class="vacation-expiry-hint hidden" role="status"></p></section>
-    </section>
-
-    <section id="morePanel" class="view-stack hidden">
-
-      <div class="feature-intro"><span class="eyebrow">PERSÖNLICH</span><h2>Deine App. Deine Regeln.</h2><p class="hint">Konto, Automatisierungen, Vorlagen und Einstellungen – an einem Ort.</p></div>
-      <section id="appearancePanel" class="panel"><h2>Darstellung</h2>
-            <fieldset class="theme-picker" aria-describedby="themeHelp">
-              <legend>Farbschema der App</legend>
-              <p id="themeHelp" class="hint">Wähle eine Farbe. Sie wird auf diesem Gerät gespeichert und bei Verbindung mit der Cloud synchronisiert.</p>
-              <div class="theme-options" id="themeOptions">
-                <label class="theme-option"><input type="radio" name="appTheme" value="turquoise"><span class="theme-dot theme-turquoise" aria-hidden="true"></span><span>Türkis</span></label>
-                <label class="theme-option"><input type="radio" name="appTheme" value="blue"><span class="theme-dot theme-blue" aria-hidden="true"></span><span>Blau</span></label>
-                <label class="theme-option"><input type="radio" name="appTheme" value="violet"><span class="theme-dot theme-violet" aria-hidden="true"></span><span>Violett</span></label>
-                <label class="theme-option"><input type="radio" name="appTheme" value="forest"><span class="theme-dot theme-forest" aria-hidden="true"></span><span>Grün</span></label>
-                <label class="theme-option"><input type="radio" name="appTheme" value="rose"><span class="theme-dot theme-rose" aria-hidden="true"></span><span>Rosé</span></label>
-                <label class="theme-option"><input type="radio" name="appTheme" value="petrol"><span class="theme-dot theme-petrol" aria-hidden="true"></span><span>Petrol</span></label>
-                <label class="theme-option"><input type="radio" name="appTheme" value="sage"><span class="theme-dot theme-sage" aria-hidden="true"></span><span>Salbei</span></label>
-                <label class="theme-option"><input type="radio" name="appTheme" value="coral"><span class="theme-dot theme-coral" aria-hidden="true"></span><span>Koralle</span></label>
-                <label class="theme-option"><input type="radio" name="appTheme" value="amber"><span class="theme-dot theme-amber" aria-hidden="true"></span><span>Bernstein</span></label>
-                <label class="theme-option"><input type="radio" name="appTheme" value="navy"><span class="theme-dot theme-navy" aria-hidden="true"></span><span>Nachtblau</span></label>
-                <label class="theme-option"><input type="radio" name="appTheme" value="graphite"><span class="theme-dot theme-graphite" aria-hidden="true"></span><span>Graphit</span></label>
-              </div>
-              <p id="themeStatus" class="status" role="status" aria-live="polite"></p>
-              <div class="appearance-mode" aria-label="Darstellung"><strong>Darstellungsmodus</strong><div class="appearance-switch" role="group" aria-label="Hell, Dunkel oder automatisch"><button type="button" class="secondary" data-appearance-choice="auto">Automatisch</button><button type="button" class="secondary" data-appearance-choice="light">Hell</button><button type="button" class="secondary" data-appearance-choice="dark">Dunkel</button></div><p class="hint">Automatisch übernimmt die Einstellung deines Geräts.</p></div>
-            </fieldset>
-      </section>
-
-      <section class="panel" id="cloudPanel">
-        <div class="cloud-heading"><span class="cloud-hero-icon" aria-hidden="true">☁</span><div><h3>Konto &amp; Cloud</h3><p class="hint">Deine Arbeitszeiten auf allen Geräten – automatisch gesichert.</p></div></div>
-        <div id="cloudLoggedOut">
-          <details id="cloudConnectionDetails" class="calendar-sync-setup">
-            <summary>Supabase-Projekt verbinden</summary>
-            <label for="cloudProjectUrl">Supabase-Projekt-URL</label>
-            <input id="cloudProjectUrl" type="url" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" placeholder="https://xxxxxxxx.supabase.co">
-            <label for="cloudProjectKey">Publishable Key (öffentlich)</label>
-            <input id="cloudProjectKey" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="sb_publishable_… oder anon key">
-            <p class="hint">Beide Werte findest du unter Supabase → Project Settings → API Keys. Niemals einen Secret Key oder service_role Key eingeben.</p>
-            <button id="cloudSaveConfig" type="button" class="secondary">Verbindung speichern</button>
-          </details>
-          <div class="cloud-switch" role="group" aria-label="Kontoaktion">
-            <button type="button" class="secondary" id="cloudLoginMode" aria-pressed="true">Anmelden</button>
-            <button type="button" class="secondary" id="cloudRegisterMode" aria-pressed="false">Registrieren</button>
-          </div>
-          <form id="cloudAuthForm" class="cloud-form" autocomplete="on">
-            <label for="cloudEmailInput">E-Mail-Adresse</label>
-            <input id="cloudEmailInput" type="email" autocomplete="username" autocapitalize="none" spellcheck="false" required>
-            <label for="cloudPasswordInput">Passwort</label>
-            <div class="password-row"><input id="cloudPasswordInput" type="password" minlength="8" maxlength="128" autocomplete="current-password" required><button type="button" id="cloudPasswordToggle" class="secondary" aria-label="Passwort anzeigen" aria-pressed="false">Anzeigen</button></div>
-            <div id="cloudConfirmPasswordArea" class="hidden">
-              <label for="cloudConfirmPassword">Passwort wiederholen</label>
-              <input id="cloudConfirmPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password">
-            </div>
-            <button id="cloudAuthSubmit" type="submit">Anmelden</button>
-            <button id="cloudForgotPassword" class="quiet" type="button">Passwort vergessen?</button>
-            <p class="hint cloud-persist-hint">Du bleibst auf diesem Gerät angemeldet, bis du dich selbst abmeldest.</p>
-            <button id="cloudPasskeyLogin" type="button" class="secondary">Mit Passkey / Face ID anmelden</button>
-          </form>
-        </div>
-        <div id="cloudLoggedIn" class="hidden">
-          <div class="cloud-group">
-            <p>Angemeldet als <strong id="cloudEmail"></strong></p>
-            <div class="cloud-health"><span class="cloud-health-indicator" id="cloudHealthIcon" aria-hidden="true">●</span><div><strong id="cloudHealthTitle">Verbunden</strong><p id="cloudSyncText" class="hint">Prüfe Cloud-Verbindung …</p></div></div>
-            <p id="cloudLastSynced" class="hint"></p>
-            <button id="cloudSyncNow" type="button">Jetzt synchronisieren</button>
-            <details class="calendar-advanced cloud-advanced"><summary>Kontoverwaltung</summary>
-              <p class="hint">Den Cloudstand nur bei Problemen manuell laden. Dabei können noch nicht übertragene lokale Änderungen ersetzt werden.</p>
-              <div class="cloud-actions">
-                <button id="cloudReload" class="secondary" type="button">Cloudstand neu laden</button>
-                <button id="cloudLogout" class="secondary" type="button">Auf diesem Gerät abmelden</button>
-              </div>
-            </details>
-          </div>
-          <div id="cloudConflictActions" class="cloud-group hidden">
-            <p class="hint">Ein anderes Gerät hat die Cloud verändert. Deine lokalen Änderungen bleiben gespeichert. Entscheide bewusst, welche Version du behalten möchtest.</p>
-            <div class="cloud-actions"><button type="button" id="cloudOverwrite" class="danger">Cloudstand durch lokale Daten ersetzen</button></div>
-          </div>
-          <div class="cloud-group account-danger-zone">
-            <details id="dangerZoneDetails"><summary>Datenschutz &amp; Daten löschen</summary>
-              <p class="danger-note">Diese Aktionen sind dauerhaft. Bitte vorher ein JSON-Backup exportieren. Bereits exportierte Dateien und lokal importierte Apple-Kalendereinträge sind davon unabhängig.</p>
-              <div class="danger-action"><strong>Kontodaten leeren – Account behalten</strong>
-                <p class="danger-note">Arbeitszeiten, Planungen, Urlaub, Einstellungen, Cloud-Sicherungen, Push-Abos und privater Kalenderlink werden gelöscht. Das Benutzerkonto bleibt bestehen.</p>
-                <label for="cloudClearConfirm">Zur Bestätigung <strong>DATEN LÖSCHEN</strong> eingeben</label>
-                <input id="cloudClearConfirm" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Bestätigung eintippen">
-                <button id="cloudClearAll" type="button" class="danger">Alle Kontodaten löschen</button>
-              </div>
-              <div class="danger-action"><strong>Benutzerkonto vollständig löschen</strong>
-                <p class="danger-note">Dein Supabase-Account und alle damit verknüpften Cloud-Daten werden gelöscht. Zur Sicherheit wird dein Passwort erneut geprüft.</p>
-                <label for="cloudDeletePassword">Aktuelles Passwort</label>
-                <input id="cloudDeletePassword" type="password" autocomplete="current-password" placeholder="Passwort">
-                <label for="cloudDeleteConfirm">Zur Bestätigung <strong>KONTO LÖSCHEN</strong> eingeben</label>
-                <input id="cloudDeleteConfirm" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Bestätigung eintippen">
-                <button id="cloudDeleteAccount" type="button" class="danger">Konto endgültig löschen</button>
-              </div>
-              <p id="dangerZoneStatus" class="status" role="status" aria-live="polite"></p>
-            </details>
-          </div>
-          <div class="cloud-group" id="cloudImportGroup">
-            <strong>Alte Arbeitszeiten übernehmen</strong>
-            <p class="hint">Die bisherigen lokalen Daten bleiben separat erhalten. Du kannst sie in ein leeres Supabase-Konto kopieren, ohne den alten Bestand zu löschen.</p>
-            <button type="button" id="cloudImportGuest" class="secondary">Lokale Daten ins Konto übernehmen</button>
-          </div>
-        </div>
-          <div class="cloud-group hidden" id="cloudRecoveryGroup">
-            <label for="cloudNewPassword">Neues Passwort nach dem Zurücksetzen</label>
-            <input id="cloudNewPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password">
-            <button id="cloudChangePassword" type="button">Neues Passwort speichern</button>
-          </div>
-        <div id="cloudStatus" class="status" role="status" aria-live="polite"></div>
-      </section>
-
-      <section class="panel settings-group" id="appleCalendarPanel">
-        <h3>Apple Kalender</h3>
-        <p class="hint">Arbeitszeiten und Abwesenheiten im Apple Kalender sehen – direkt über Supabase.</p>
-        <details class="calendar-advanced"><summary>Einmalige Kalenderdatei herunterladen (.ics)</summary>
-          <p class="hint">Für einen einmaligen Import ohne automatische Aktualisierung.</p>
-          <button id="exportIcsButton" type="button" class="secondary">Kalenderdatei exportieren</button>
-        </details>
-        <div id="calendarNeedsLogin" class="calendar-help">
-          <strong>Automatischer Apple-Kalender</strong>
-          <p class="hint">Melde dich bei deinem Supabase-Konto an. Anschließend kannst du den Kalender einmalig abonnieren. Deine Arbeitszeiten werden automatisch aus der Cloud geladen.</p>
-          <button id="calendarOpenAccount" class="secondary" type="button">Zum Konto</button>
-        </div>
-        <div id="cloudCalendarControls" class="hidden calendar-help">
-          <div class="calendar-help-title"><span aria-hidden="true">◉</span><strong>Kalender automatisch anzeigen</strong></div>
-          <p class="hint">Einmal abonnieren – danach aktualisiert Apple Kalender die Einträge aus deinem Supabase-Konto. Die Aktualisierung kann zeitverzögert erfolgen und funktioniert nur in Richtung Apple Kalender.</p>
-          <p class="calendar-setup-note">Einmalig erforderlich: die mitgelieferte Supabase-Funktion <code>arbeitszeit-kalender</code> veröffentlichen. Anschließend ist kein zusätzlicher Kalenderdienst nötig.</p>
-          <div class="cloud-actions calendar-buttons">
-            <button id="cloudCalendarSubscribe" type="button">In Apple Kalender abonnieren</button>
-            <button id="cloudCalendarCopy" type="button" class="secondary">Link kopieren</button>
-          </div>
-          <details class="calendar-advanced">
-            <summary>Kalenderlink verwalten</summary>
-            <label for="cloudCalendarUrl">Privater Abo-Link</label>
-            <input id="cloudCalendarUrl" class="cloud-link-input" readonly aria-label="Privater Kalender-Abonnement-Link">
-            <p class="hint">Jeder mit diesem Link kann die Arbeitszeiten lesen. Bei einem neuen Link musst du dein Kalender-Abonnement neu einrichten.</p>
-            <button id="cloudCalendarRotate" type="button" class="secondary">Privaten Link erneuern</button>
-          </details>
-          <p id="cloudCalendarStatus" class="status" role="status" aria-live="polite"></p>
-        </div>
-      </section>
-
-      <section class="panel settings-group" id="automationPanel">
-        <h2>Erinnerungen &amp; Automatisierung</h2>
-        <div class="settings-feature"><div><strong>Erinnerung an Arbeitszeit</strong><p class="hint">Benachrichtigung, wenn du an einem Arbeitstag noch nichts eingetragen hast.</p></div><label class="toggle-label"><input id="reminderEnabled" type="checkbox"><span>Aktiv</span></label></div>
-        <label for="reminderMode">Wann erinnern?</label><select id="reminderMode"><option value="weekdays">Ausgewählte Wochentage</option><option value="planned">Nur an Tagen mit geplanter Schicht</option></select>
-        <div class="reminder-weekdays" id="reminderWeekdays"><label><input type="checkbox" value="1">Mo</label><label><input type="checkbox" value="2">Di</label><label><input type="checkbox" value="3">Mi</label><label><input type="checkbox" value="4">Do</label><label><input type="checkbox" value="5">Fr</label><label><input type="checkbox" value="6">Sa</label><label><input type="checkbox" value="0">So</label></div>
-        <p class="hint">Getrennt von den Einstellungen für Urlaubstage.</p>
-        <label for="reminderTime">Uhrzeit der Erinnerung</label><input id="reminderTime" type="time" value="19:00">
-        <label for="notifyThreshold">Zeitkonto-Hinweis ab (Stunden, optional)</label><input id="notifyThreshold" type="number" min="0" max="10000" step="0.5" placeholder="z. B. 20" inputmode="decimal">
-        <div class="cloud-actions"><button id="saveAutomation" type="button">Erinnerungen speichern</button><button id="enablePush" type="button" class="secondary">iPhone-Mitteilungen aktivieren</button></div>
-        <p id="pushStatus" class="status" role="status"></p>
-        <p class="hint">Push funktioniert auf dem iPhone ab iOS 16.4 für Home-Bildschirm-Web-Apps. Dazu muss die beigefügte Supabase-Push-Funktion einmalig eingerichtet werden. Keine Mitteilungen ohne Zustimmung.</p>
-      </section>
-      <section class="panel settings-group" id="templatePanel"><h2>Arbeitszeit-Vorlagen</h2><p class="hint">Häufige Zeiten speichern und auf „Heute“ mit einem Tipp eintragen.</p>
-        <form id="templateForm"><label for="templateName">Name</label><input id="templateName" type="text" placeholder="z. B. Frühschicht" maxlength="36" required>
-          <div class="plan-range"><label>Beginn<input id="templateStart" type="time" required></label><label>Ende<input id="templateEnd" type="time" required></label></div>
-          <label for="templateBreak">Pause (Minuten)</label><input id="templateBreak" type="number" min="0" max="1439" step="1" value="30" inputmode="numeric" required>
-          <div class="template-save-row"><button type="submit">Vorlage speichern</button></div></form><div id="templateList"></div><p id="templateStatus" class="status" role="status"></p>
-      </section>
-      <section id="aiPreferences" class="panel settings-group ai-preferences"><details id="aiSettingsDetails"><summary><span class="ai-settings-summary-icon" aria-hidden="true">✦</span><span><strong>KI-Assistent &amp; intelligente Hilfen</strong><small>Fragen, Eingabe per Sprache und Analyse</small></span></summary><div class="ai-body"><p class="hint">KI-Antworten benötigen ein verbundenes Cloud-Konto und einen konfigurierten OpenRouter-Schlüssel. Normale Zeiterfassung und lokale Auswertungen funktionieren weiterhin ohne KI.</p><div id="aiSwitches"></div><details class="assist-options"><summary>Weitere Einstellungen für Hinweise und Vorlagen</summary><form id="aiOptionsForm"><div id="aiOptionFields"></div><button type="submit">Änderungen speichern</button><div id="aiOptionsStatus" role="status"></div></form></details><p class="hint">Bei Fragen werden die benötigten Zeitdaten zur Beantwortung an das eingestellte KI-Modell gesendet. Notizen und Kontodaten wie E-Mail-Adressen werden nicht übertragen. Die KI darf nichts ohne deine Bestätigung eintragen.</p></div></details></section>
-      <section class="panel settings-group" id="securityPanel"><h2>Sicherheit</h2>
-        <p class="hint">Optional mit Passkey anmelden, beispielsweise über Face ID. Supabase-Passkeys sind experimentell und müssen im Supabase-Dashboard freigeschaltet werden.</p>
-        <div class="cloud-actions"><button id="registerPasskey" type="button" class="secondary">Passkey einrichten</button><button id="passkeyLogin" type="button" class="secondary">Mit Passkey anmelden</button><button id="logoutOtherDevices" type="button" class="secondary">Andere Geräte abmelden</button><button id="logoutAllDevices" type="button" class="secondary">Alle Geräte abmelden</button></div>
-        <p id="passkeyStatus" class="status" role="status"></p>
-      </section>
-      <section class="panel settings-group" id="historyPanel"><h2>Wiederherstellung &amp; Cloud-Versionen</h2>
-        <p class="hint">Letzte 30 Änderungsstände und tägliche Sicherungen der letzten 30 Tage anzeigen. Für die tägliche Sicherung muss einmalig der Supabase-Zeitplan eingerichtet werden.</p>
-        <button id="loadHistory" class="secondary" type="button">Gesicherte Versionen anzeigen</button>
-        <div id="historyList"></div><p id="historyStatus" class="status" role="status"></p>
-      </section>
-      <div class="panel settings-group">
-        <h3>PDF-Export</h3>
-        <button id="monthlyPdfButton" type="button">Monats-PDF exportieren</button>
-        <p class="hint">Enthält die Kalenderansicht und die Tagesdetails.</p>
-
-        <label for="reportYear">Jahr für den Jahresbericht</label>
-        <div class="toolbar">
-          <input id="reportYear" type="number" min="2000" max="2200" step="1">
-          <button id="yearlyPdfButton" type="button">Jahres-PDF exportieren</button>
-        </div>
-        <p class="hint">Enthält eine Jahreskalenderübersicht, Monatswerte und tägliche Arbeitszeiten mit Pausen.</p>
-      </div>
-
-      <div class="panel settings-group">
-        <div class="toolbar" style="justify-content:space-between">
-          <div><h3>Arbeitszeit &amp; Zeitkonto</h3><p class="hint">Sollstunden, Startsaldo, Urlaub und Gutschriften</p></div>
-          <button id="settingsToggle" class="secondary small" type="button" aria-expanded="false" aria-controls="settingsContent">Bearbeiten</button>
-        </div>
-
-        <div id="settingsContent" class="hidden">
-
-          <form id="settingsForm">
-
-            <div class="two-col">
-              <div>
-                <label for="monthlyTarget">Monatliches Soll (Stunden)</label>
-                <input id="monthlyTarget" type="number" min="0" step="0.01" required>
-                <label for="openingBalance">Anfangssaldo Zeitkonto (Stunden)</label>
-                <input id="openingBalance" type="number" step="0.01" required>
-                <fieldset class="account-start">
-                  <legend>Zeitkonto beginnt ab</legend>
-                  <div><select id="accountStartMonth" aria-label="Startmonat" required></select>
-                  <select id="accountStartYear" aria-label="Startjahr" required></select></div>
-                </fieldset>
-              </div>
-              <div>
-                <label for="holidayHours">Stunden pro zählendem Feiertag</label>
-                <input id="holidayHours" type="number" min="0" step="0.01" required>
-                <label for="vacationEntitlement">Urlaubsanspruch pro Jahr (Tage)</label>
-                <input id="vacationEntitlement" type="number" min="0" step="0.5" required>
-                <label for="vacationHours">Angerechnete Stunden pro Urlaubstag</label>
-                <input id="vacationHours" type="number" min="0" step="0.01" required>
-                <label for="sickHours">Angerechnete Stunden pro Krankheitstag</label>
-                <input id="sickHours" type="number" min="0" step="0.01" required>
-              </div>
-            </div>
-
-            <h3>Urlaubszeiträume</h3><label>Wochentage bei mehrtägigem Urlaub berücksichtigen</label><div id="leaveDays" class="weekday-list"></div>
-            <h3>Feiertage in Baden-Württemberg zählen, wenn sie auf … fallen</h3>
-            <div id="weekdaySettings" class="weekday-list"></div>
-
-            <label for="vacationCarryoverMode">Übertrag von Urlaubstagen</label>
-            <select id="vacationCarryoverMode"><option value="unlimited">Unbegrenzt übertragen</option><option value="custom">Bis zu einem bestimmten Datum übertragen</option><option value="none">Kein Übertrag</option></select>
-            <div id="vacationCarryoverDateFields" class="carryover-fields hidden"><label>Verfall im Folgejahr (einschließlich)</label><div class="carryover-date-row"><select id="vacationCarryoverDay" aria-label="Verfallstag"></select><select id="vacationCarryoverMonth" aria-label="Verfallsmonat"></select></div><p class="hint">Beispiel: Resturlaub aus 2026 kann bis einschließlich des gewählten Datums 2027 verwendet werden. Am 29. Februar gilt in Nicht-Schaltjahren der 28. Februar.</p></div>
-            <div class="carryover-summary" id="vacationCarryoverPreview" role="status" aria-live="polite"></div>
-            <p class="hint">Deine individuelle Vertrags- und Rechtslage geht vor. Ein gesetzlicher Urlaubsverfall hängt unter Umständen von zusätzlichen Voraussetzungen ab.</p>
-            <label for="vacationStartYear">Urlaubsberechnung beginnt ab Jahr</label>
-            <input id="vacationStartYear" type="number" min="2000" max="2200" step="1" required>
-            <p class="hint">Der Urlaubsübertrag richtet sich nach der oben gewählten Regel. Bitte die tatsächlichen betrieblichen und gesetzlichen Regelungen berücksichtigen.</p>
-
-            <button type="submit">Einstellungen speichern</button>
-            <div id="settingsStatus" class="status" role="status" aria-live="polite"></div>
-          </form>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h3>Datensicherung</h3>
-        <p class="hint">Backups enthalten deine Einstellungen und Einträge. Sie werden nicht verschlüsselt.</p>
-        <div class="actions">
-          <button id="exportBackupButton" class="secondary" type="button">Backup exportieren</button>
-          <label class="file-label">Backup importieren
-            <input id="importFile" type="file" accept="application/json,.json">
-          </label>
-        </div>
-        <div id="backupStatus" class="status" role="status" aria-live="polite"></div>
-      </div>
-    </section>
-  </main>
-
-  <nav class="tabs five-tabs" aria-label="Hauptnavigation">
-    <button id="overviewTab" class="tab active" type="button" aria-current="page"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg><span>Heute</span></button>
-    <button id="calendarTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="M8 14h2m4 0h2M8 18h2"/></svg><span>Kalender</span></button>
-    <button id="analyticsTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V12M9 20V7M14 20v-4M19 20V4"/><path d="M2 20h20"/></svg><span>Analysen</span></button>
-    <button id="detailsTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Monate</span></button>
-    <button id="planningTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="m8 16 2 2 5-5"/></svg><span>Planung</span></button>
-  </nav>
-
-  <div id="entryOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="entryDialogTitle">
-    <div class="sheet">
-      <div class="sheet-header">
-        <h2 id="entryDialogTitle" tabindex="-1">Eintrag erfassen</h2>
-        <button id="closeEntryButton" class="secondary small" type="button" aria-label="Schließen">Schließen</button>
-      </div>
-
-      <form id="entryForm">
-        <label for="entryDate">Datum</label>
-        <input id="entryDate" type="date" min="2000-01-01" max="2200-12-31" required>
-
-        <label for="entryType">Art des Eintrags</label>
-        <select id="entryType">
-          <option value="work">Arbeitszeit</option>
-          <option value="vacation">Urlaub</option>
-          <option value="sick">Krankheit</option>
-        </select>
-
-        <div id="workFields">
-          <div id="entryPlannedHint" class="planned-hint hidden"><span id="entryPlannedText"></span><button id="entryUsePlan" type="button" class="secondary small">Geplante Zeit übernehmen</button></div>
-          <div id="entryPlanApplied" class="plan-applied-banner hidden" role="status"><strong>✓ Geplante Zeit übernommen</strong><span>Zeiten vorausgefüllt – bitte prüfen und anschließend ausdrücklich speichern.</span></div>
-          <label for="workMode">Arbeitszeit eingeben als</label>
-          <select id="workMode">
-            <option value="range">Beginn und Ende</option>
-            <option value="duration">Dauer</option>
-          </select>
-
-          <div id="rangeFields" class="row">
-            <div class="time-field">
-              <label for="startTime">Beginn</label>
-              <input id="startTime" type="time">
-            </div>
-            <div class="time-field">
-              <label for="endTime">Ende</label>
-              <input id="endTime" type="time">
-            </div>
-          </div>
-
-          <div id="durationFields" class="hidden">
-            <label for="durationHours">Dauer vor Pausen in Stunden</label>
-            <input id="durationHours" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="z. B. 7,5">
-          </div>
-
-          <label for="breakMinutes">Gesamtpause in Minuten</label>
-          <input id="breakMinutes" type="number" min="0" step="1" value="0" inputmode="numeric">
-
-          <label for="workNote">Arbeitsnotiz (optional)</label>
-          <input id="workNote" type="text" maxlength="200" autocomplete="off">
-        </div>
-
-        <div id="vacationFields" class="hidden">
-          <div id="vacationInterval"><label for="vacationEnd">Bis einschließlich (optional)</label><input id="vacationEnd" type="date" min="2000-01-01" max="2200-12-31"><p class="hint" id="vacationPreview" aria-live="polite"></p></div>
-          <label for="vacationDays">Urlaubstage pro Datum</label>
-          <select id="vacationDays">
-            <option value="1">Ganzer Tag</option>
-            <option value="0.5">Halber Tag</option>
-          </select>
-        </div>
-
-        <div id="sickFields" class="hidden">
-          <p class="hint">Die Anrechnungsstunden werden aus den Einstellungen übernommen.</p>
-        </div>
-
-        <div class="actions" style="margin-top:14px">
-          <button id="saveEntryButton" type="submit">Eintrag speichern</button>
-          <button id="cancelEditButton" class="secondary hidden" type="button">Abbrechen</button>
-        </div>
-        <div id="entryStatus" class="status" role="status" aria-live="polite"></div>
-      </form>
-    </div>
-  </div>
-
-  <div id="undoToast" class="toast hidden" role="status" aria-live="polite">
-    <span>Eintrag gelöscht.</span>
-    <button id="undoDeleteButton" type="button">Rückgängig</button>
-  </div>
-
-  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<div id="assistantOverlay" class="assistant-overlay hidden" role="presentation">
-  <section id="smartChat" class="assistant-dialog" role="dialog" aria-modal="true" aria-labelledby="assistantTitle" tabindex="-1">
-    <div class="assistant-top"><div class="assistant-symbol" aria-hidden="true">✦</div><div><h2 id="assistantTitle">Dein Zeit-Assistent</h2><p>Frag mich alles rund um deine Arbeitszeiten.</p></div><button type="button" id="assistantClose" class="assistant-close secondary" aria-label="Assistent schließen">✕</button></div>
-    <div id="assistantChatBody" class="assistant-chat-body">
-      <div id="assistantWelcome" class="assistant-welcome"><strong>Was möchtest du wissen?</strong><p>Frag nach konkreten Zeiten, vergleiche Monate, lass dir Diagramme erstellen oder bereite Änderungen vor. Gespeichert wird nur nach Bestätigung.</p></div>
-      <div id="assistantPageContext" class="assistant-context-chip" role="status">Kontext: Heute</div>
-      <div id="aiPrompts" class="assistant-suggestions" aria-label="Beispielfragen"></div>
-      <div id="aiConversation" class="assistant-conversation" role="log" aria-live="polite" aria-relevant="additions"></div>
-      <div id="aiAnswerActions" class="assistant-answer-actions"></div>
-      <div id="aiAnswer" class="assistant-last-answer" role="status"></div>
-      <details id="aiEvidence" class="hidden"><summary>Berechnungsgrundlage ansehen</summary><div id="aiEvidenceText" class="report-story"></div></details>
-    </div>
-    <form id="assistantForm" class="assistant-form"><label for="aiQuestion" class="sr-only">Deine Frage</label><textarea id="aiQuestion" rows="2" maxlength="1200" placeholder="Was möchtest du zu deinen Arbeitszeiten wissen?"></textarea><div class="assistant-form-actions"><span id="assistantStatus" role="status">Änderungen werden immer zuerst gezeigt.</span><button type="button" id="assistantMic" class="secondary assistant-mic" aria-label="Frage diktieren" title="Frage diktieren">🎙</button><button type="button" class="secondary small" id="aiOnline" hidden aria-hidden="true" tabindex="-1" title="Lokale Antworten">Lokal</button><button id="aiAsk" type="submit">Senden <span aria-hidden="true">↑</span></button></div></form>
-    <button type="button" id="assistantSettingsLink" class="assistant-bottom-link">KI-Einstellungen</button>
-  </section>
+<section aria-labelledby="analyticsIntro" class="view-stack hidden" id="analyticsPanel">
+<div class="panel analysis-scope"><div><h2>Analysejahr</h2></div> <div aria-label="Analysejahr" class="analysis-year-picker" role="group">
+<button aria-label="Vorheriges Jahr" class="secondary" id="analysisYearPrev" type="button">‹</button>
+<strong aria-live="polite" id="analysisYearText">–</strong><input id="analysisYear" type="hidden"/>
+<button aria-label="Nächstes Jahr" class="secondary" id="analysisYearNext" type="button">›</button>
+</div></div><p class="view-lead">Jahresentwicklung und Vergleiche. Ein Monat öffnet seine eigene Übersicht.</p>
+<div class="clock-card insight-hero"><span class="eyebrow">DEIN ZEITKONTO</span>
+<h2 id="analyticsIntro">Alles im Blick.</h2><p id="insightHeroCaption">Letzter abgeschlossener Monat</p>
+<strong class="insight-number" id="insightBalance">–</strong>
+<div class="insight-subline"><span id="insightForecast">Ohne laufenden Monat oder Prognose.</span></div>
 </div>
+<details class="panel ai-card" id="smartChecks"><summary>Einträge prüfen</summary><div class="ai-body"><p class="hint">Auffällige Buchungen und mögliche Lücken. Zeitraum und Empfindlichkeit kannst du in den Assistenz-Einstellungen ändern.</p><div class="ai-output" id="aiChecks" role="status"></div></div></details>
+<div class="grid two-dashboard" id="analyticsQuickStats">
+<div class="metric"><span>Gearbeitet im gewählten Jahr</span><strong id="statYearWork">–</strong></div>
+<div class="metric"><span>Resturlaub</span><strong id="statVacation">–</strong></div>
+<div class="metric"><span>Ø Arbeitstag</span><strong id="statAverage">–</strong></div>
+<div class="metric"><span>Urlaub gebucht</span><strong id="statVacationUsed">–</strong></div>
+</div>
+<section class="panel ai-card" id="smartReport"><h2>Arbeitsrhythmus im Monat</h2><div class="ai-body"><div class="report-period-selector"><span class="hint">Berichtsmonat</span><div aria-label="Berichtsmonat wählen" class="month-stepper" role="group"><button aria-label="Vorheriger Monat" class="secondary" id="aiMonthPrev" type="button">‹</button><strong aria-live="polite" id="aiMonthLabel">–</strong><input id="aiMonth" type="hidden"/><button aria-label="Nächster Monat" class="secondary" id="aiMonthNext" type="button">›</button></div></div><div class="insight-cards" id="aiInsightCards"></div><div class="report-card"><div class="report-card-heading"><strong>Vergleich zum Vormonat</strong><small>Ø Nettoarbeitszeit je erfasstem Arbeitstag</small></div><div aria-label="Vergleich der durchschnittlichen Arbeitstage" id="aiReportChart" role="img"></div></div><p class="hint" id="monthCompareStory"></p><div class="report-story" hidden="" id="aiMonthly" role="status"></div><details class="report-year-details"><summary>Jahresüberblick ansehen</summary><div class="report-story" id="aiYearly" role="status"></div></details><button class="secondary" id="aiNarrate" type="button">✦ Entwicklung von KI erklären lassen</button><div class="report-story" id="aiNarrative" role="status"></div><button class="secondary small" id="aiSettingsJump" type="button">KI-Einstellungen</button></div></section><button class="assistant-invite assistant-invite-analysis" id="analyticsAskAssistant" type="button"><span aria-hidden="true" class="assistant-invite-icon">✦</span><span><strong>Mehr über deine Zeiten erfahren</strong><small>Stelle dem Assistenten jede Frage zu deinen Buchungen.</small></span><span aria-hidden="true">›</span></button> <section class="panel"><div class="section-head"><h2>Überstundenentwicklung</h2><span class="mini-label">Gewähltes Jahr</span></div>
+<div aria-label="Entwicklung des Zeitkontos" class="insight-chart" id="balanceChart" role="img"></div>
+<p class="hint">Nur abgeschlossene Monate – keine Hochrechnung für den laufenden Monat.</p>
+</section>
+<section class="panel">
+<div class="section-head"><h2>Jahresanalyse</h2></div>
+<div class="grid two-dashboard">
+<div class="metric"><span>Arbeitstage erfasst</span><strong id="statDays">–</strong></div>
+<div class="metric"><span>Längster Arbeitstag</span><strong id="statLongest">–</strong></div>
+<div class="metric"><span>Pausen gesamt</span><strong id="statBreaks">–</strong></div>
+<div class="metric"><span>Zum Vorjahr</span><strong id="statYoY">–</strong></div>
+</div>
+<h3>Gearbeitete Stunden je Monat</h3>
+<div aria-label="Gearbeitete Stunden pro Monat mit Stundenachse" class="insight-chart" id="monthlyChart" role="img"></div>
+<div class="month-links" id="yearMonths"></div><p class="hint">Skala links in Stunden. Der laufende Monat zeigt nur tatsächlich erfasste Arbeitszeit.</p>
+</section>
+<section class="panel"><h2>Arbeitsrhythmus</h2>
+<div class="grid two-dashboard">
+<div class="metric"><span>Ø Pause je Arbeitstag</span><strong id="statAvgBreak">–</strong></div>
+<div class="metric"><span>Typischer Arbeitsbeginn</span><strong id="statTypicalStart">–</strong></div>
+<div class="metric"><span>Stärkster Wochentag</span><strong id="statBusiestWeekday">–</strong></div>
+<div class="metric"><span>Ø Stunden je Monat</span><strong id="statMonthlyAverage">–</strong></div>
+</div>
+<h3>Arbeitsstunden nach Wochentag</h3>
+<div aria-label="Arbeitsstunden je Wochentag mit Stundenachse" class="insight-chart" id="weekdayChart" role="img"></div>
+</section>
+</section>
+<section aria-label="Monatsübersicht und Buchungen" class="view-stack hidden" id="detailsPanel">
+<div aria-label="Monat für Details auswählen" class="month-bar" id="detailMonthBar">
+<button aria-label="Vorheriger Monat" class="secondary" id="detailsPreviousMonth" type="button">‹</button>
+<div class="month-control"><span aria-hidden="true" id="detailsMonthText"></span><input aria-label="Monat für Details auswählen" id="detailsMonthPicker" max="2200-12" min="2000-01" tabindex="-1" type="month"/></div>
+<button aria-label="Nächster Monat" class="secondary" id="detailsNextMonth" type="button">›</button>
+</div><p class="view-lead">Monatsabschluss, Sollstunden und alle Buchungen auf einen Blick.</p><div class="month-quick-actions"><button class="secondary small" id="monthOpenCalendar" type="button">Kalender öffnen</button><button class="secondary small" id="monthAddEntry" type="button">Zeit eintragen</button></div>
+<section class="view-stack" id="overviewPanel">
+<div class="clock-card report-hero" id="monthHero"><h2 id="overviewHeading">Monatsübersicht</h2>
+<strong class="report-total" id="creditedMetric">–</strong><span class="clock-caption">Angerechnete Zeit <small class="credited-note">inkl. angerechnetem Urlaub, Krankheit und Feiertagen</small></span>
+<div aria-live="polite" class="closed-hero-balance hidden" id="closedHeroBalance">
+<span id="heroBalanceDate">Überstunden am Monatsende</span><strong id="heroBalanceValue">–</strong>
+</div><p class="hint" id="monthMovement"></p><p class="hint" id="monthWorkStory"></p></div>
+<div class="panel">
+<div class="grid">
+<div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
+<div class="metric"><span>Noch bis zum Soll</span><strong id="remainingMetric">–</strong></div>
+<div class="metric" id="closedDelta"><span>Abgeschlossene Monatsdifferenz</span><strong id="deltaMetric">–</strong></div>
+<div class="metric" id="carryMetricCard"><span>Überstunden am Ende des Vormonats</span><strong id="carryMetric">–</strong></div>
+<div class="metric" id="closingMetricCard"><span id="closingLabel">Zeitkonto Monatsende</span><strong id="closingMetric">–</strong></div>
+</div>
+<p class="hint" id="accountExplanation"></p>
+<p class="hint" id="vacationBalance"></p>
+</div>
+<div class="panel"><h3>Einträge des Monats</h3>
+<div id="entriesList"></div></div>
+</section>
+<section class="panel"><h2>Berichte exportieren</h2><p class="hint">Deine bisherigen PDF-Berichte stehen weiterhin zur Verfügung.</p>
+<button class="secondary" id="analysisExportJump" type="button">Zu den PDF-Berichten</button>
+</section>
+</section>
+<section aria-labelledby="planningTitle" class="view-stack hidden" id="planningPanel">
+<div class="clock-card planning-hero"><span class="eyebrow">SCHICHTEN &amp; URLAUB</span><h2 id="planningTitle">Deine Planung im Blick.</h2><p class="clock-caption">Erhaltene Schichten eintragen und Urlaub verwalten. Geplante Zeiten werden nicht als Arbeitszeit gebucht.</p></div><section class="panel" id="workPlanPanel">
+<div class="section-head"><h2>Arbeitszeiten planen</h2><span class="mini-label">Keine Buchung</span></div>
+<p class="hint">Geplante Schichten bleiben getrennt: keine Anrechnung auf das Stundenkonto, im App-Kalender als Plan markiert, ohne Übertragung nach Apple Kalender. Erst wenn du sie bewusst übernimmst und speicherst, werden sie zu einer echten Buchung.</p>
+<form id="workPlanForm">
+<div class="plan-range"><label>Datum<input id="workPlanDate" required="" type="date"/></label><label>Wiederholen bis (optional)<input id="workPlanEndDate" type="date"/></label></div>
+<p class="hint">Einzelnen Tag oder Zeitraum von maximal 90 Kalendertagen planen. Die Auswahl gilt nur für Planungen, niemals für deine gebuchten Arbeitszeiten.</p>
+<div aria-label="Schichtvorlagen" class="quick-templates" id="planTemplates"></div>
+<select aria-label="Schichtvorlage" hidden="" id="workPlanTemplate"><option value="">Eigene Zeiten eingeben</option></select>
+<div class="plan-day-actions" style="margin-top:5px"><span class="hint" style="flex:1">Vorlagen findest du in den Einstellungen (Zahnrad oben rechts).</span><button class="secondary small" id="workPlanManageTemplates" type="button">Vorlagen verwalten</button></div>
+<div class="plan-weekday-block hidden" id="workPlanRangeOptions">
+<fieldset class="plan-weekday-fieldset">
+<legend>Für welche Tage im Zeitraum?</legend>
+<div class="plan-weekday-grid" id="workPlanDays">
+<label><input checked="" name="workPlanWeekday" type="checkbox" value="1"/>Mo</label>
+<label><input checked="" name="workPlanWeekday" type="checkbox" value="2"/>Di</label>
+<label><input checked="" name="workPlanWeekday" type="checkbox" value="3"/>Mi</label>
+<label><input checked="" name="workPlanWeekday" type="checkbox" value="4"/>Do</label>
+<label><input checked="" name="workPlanWeekday" type="checkbox" value="5"/>Fr</label>
+<label><input name="workPlanWeekday" type="checkbox" value="6"/>Sa</label>
+<label><input name="workPlanWeekday" type="checkbox" value="0"/>So</label>
+</div>
+</fieldset>
+<div class="plan-day-actions"><button class="secondary small" id="planWeekdaysWeek" type="button">Mo–Fr</button><button class="secondary small" id="planWeekdaysAll" type="button">Alle Tage</button><button class="secondary small" id="planWeekdaysClear" type="button">Keine</button></div>
+</div>
+<p aria-live="polite" class="plan-preview" id="workPlanPreview" role="status">1 Tag wird geplant · noch keine Buchung.</p>
+<div class="plan-range"><label>Beginn<input id="workPlanStart" required="" type="time"/></label><label>Ende<input id="workPlanEnd" required="" type="time"/></label></div>
+<div class="plan-range"><label>Pause (Min.)<input id="workPlanBreak" inputmode="numeric" max="1439" min="0" required="" step="1" type="number" value="30"/></label><label>Notiz (optional)<input id="workPlanNote" maxlength="100" placeholder="z. B. Frühschicht" type="text"/></label></div>
+<button type="submit">Schicht planen</button>
+<p aria-live="polite" class="status" id="workPlanStatus" role="status"></p>
+</form>
+<div class="section-head"><h3>Deine geplanten Schichten</h3></div>
+<div aria-label="Monat der geplanten Schichten auswählen" class="plan-month-picker" role="group">
+<button aria-label="Vorheriger Monat" class="secondary" id="workPlanPrevMonth" type="button">‹</button>
+<div class="plan-month-current"><span>Geplante Schichten im</span><strong aria-live="polite" id="workPlanMonthLabel">–</strong><input id="workPlanMonth" type="hidden"/></div>
+<button aria-label="Nächster Monat" class="secondary" id="workPlanNextMonth" type="button">›</button>
+</div>
+<div id="workPlanList"></div>
+</section>
+<details aria-hidden="true" class="panel ai-card hidden" hidden="" id="smartPlan"><summary>Intelligenter Arbeitszeitplaner</summary><div class="ai-body"><label>Dein Wunsch<input id="aiPlanRequest" maxlength="600" placeholder="Bis Ende Dezember 15 Überstunden aufbauen, freitags höchstens 6 Stunden"/></label><button class="secondary" id="aiPlanInterpret" type="button">Wunsch übernehmen</button><div id="aiPlanRequestStatus" role="status"></div><label>Planungsziel<select id="aiPlanMode"><option value="delta">Zusätzliche Überstunden bis Monatsende</option><option value="balance">Gewünschter Gesamtstand bis Monatsende</option><option value="week">Typische Schichten für nächste Woche</option></select></label><p class="hint">Deine Arbeitstage, Schichtzeiten und Tagesgrenzen kommen aus den Assistenz-Einstellungen. Der Vorschlag berücksichtigt bestehende Schichten, Feiertage und Abwesenheiten.</p><div class="two-col"><label id="aiDeadlineLabel">Zielmonat<input id="aiDeadline" type="month"/></label><label id="aiTargetLabel">Überstundenziel (Std.)<input id="aiTarget" step="0.25" type="number" value="15"/></label></div><label>Freitags höchstens (Nettostunden)<input id="aiFriday" max="10" min="0" step="0.25" type="number" value="6"/></label><button class="secondary" id="aiPlanGo" type="button">Vorschlag berechnen</button><div class="ai-output" id="aiPlanSummary"></div><div class="ai-output" id="aiPlanResult" role="status"></div><button class="secondary" id="aiPlanSave" type="button">Als Schichtplanung speichern</button></div></details><details class="panel ai-card" id="smartLeave"><summary>Urlaubsassistent</summary><div class="ai-body"><label>Dein Urlaubswunsch<input id="aiLeaveRequest" maxlength="600" placeholder="Im Frühjahr zehn Tage frei mit möglichst wenig Urlaub"/></label><button class="secondary" id="aiLeaveInterpret" type="button">Zeiträume vorschlagen</button><div id="aiLeaveRequestStatus" role="status"></div><div class="two-col"><label>Frühester Beginn<input id="aiFrom" type="date"/></label><label>Spätestes Ende<input id="aiUntil" type="date"/></label></div><label>Zusammenhängende freie Tage<input id="aiLength" max="60" min="1" type="number" value="10"/></label><button class="secondary" id="aiLeaveGo" type="button">Zeiträume vergleichen</button><div class="ai-output" id="aiLeaves" role="status"></div></div></details>
 
-  <script type="module">
+<section class="panel"><h2>Urlaub planen</h2><p class="hint">Wähle einen Zeitraum. Feiertage und deine festgelegten Urlaubstage werden berücksichtigt.</p>
+<div class="plan-range"><label>Von<input id="planStart" type="date"/></label><label>Bis einschließlich<input id="planEnd" type="date"/></label></div>
+<div class="simulation-result"><span>Benötigter Urlaub</span><strong id="planNeeded">–</strong><small id="planRemaining">–</small></div>
+<button id="planBook" type="button">Urlaub im Kalender eintragen</button><p class="status" id="planStatus" role="status"></p>
+</section>
+<section class="panel"><h2>Brückentage entdecken</h2><p class="hint">Ideen für lange freie Zeiträume in Baden-Württemberg. Nur Vorschläge – bestehende Termine und deine Urlaubstage bleiben unverändert.</p>
+<label for="bridgeYear">Jahr</label><input id="bridgeYear" inputmode="numeric" max="2200" min="2000" step="1" type="number"/>
+<div id="bridgeIdeas"></div>
+</section>
+<section class="panel" id="leaveBudget"><h2>Dein Freizeitbudget</h2><button class="secondary small" id="editCarryover" type="button">Übertragsregel ändern</button><div class="grid two-dashboard"><div class="metric"><span>Resturlaub im Jahr</span><strong id="planVacationBalance">–</strong></div><div class="metric"><span>Überstunden · letzter Monatsabschluss</span><strong id="planHoursBalance">–</strong></div></div><p class="vacation-expiry-hint hidden" id="vacationExpiryNotice" role="status"></p></section>
+</section>
+<section class="view-stack hidden" id="morePanel">
+<div class="settings-intro"><h2>Einstellungen</h2><p class="hint">Alles an einem Ort. Wähle den Bereich, den du ändern möchtest.</p></div><div class="topic-list" id="settingsTopics"></div><div class="settings-account-overview" id="settingsAccountOverview"><button aria-label="Cloud-Konto und Synchronisierung öffnen" class="cloud-banner" id="cloudBanner" type="button"><span class="cloud-badge"><i class="cloud-dot" id="cloudBannerDot"></i><span id="cloudBannerLabel">Nur auf diesem Gerät</span></span><small id="cloudBannerDetail">Konto einrichten ›</small></button></div>
+<button class="settings-back" hidden="" id="settingsBack" type="button">← Zurück zu Einstellungen</button>
+
+<section class="panel" id="appearancePanel"><h2>Darstellung</h2>
+<fieldset aria-describedby="themeHelp" class="theme-picker">
+<legend>Farbschema der App</legend>
+<p class="hint" id="themeHelp">Wähle eine Farbe. Sie wird auf diesem Gerät gespeichert und bei Verbindung mit der Cloud synchronisiert.</p>
+<div class="theme-options" id="themeOptions">
+<label class="theme-option"><input name="appTheme" type="radio" value="turquoise"/><span aria-hidden="true" class="theme-dot theme-turquoise"></span><span>Türkis</span></label>
+<label class="theme-option"><input name="appTheme" type="radio" value="blue"/><span aria-hidden="true" class="theme-dot theme-blue"></span><span>Blau</span></label>
+<label class="theme-option"><input name="appTheme" type="radio" value="violet"/><span aria-hidden="true" class="theme-dot theme-violet"></span><span>Violett</span></label>
+<label class="theme-option"><input name="appTheme" type="radio" value="forest"/><span aria-hidden="true" class="theme-dot theme-forest"></span><span>Grün</span></label>
+<label class="theme-option"><input name="appTheme" type="radio" value="rose"/><span aria-hidden="true" class="theme-dot theme-rose"></span><span>Rosé</span></label>
+<label class="theme-option"><input name="appTheme" type="radio" value="petrol"/><span aria-hidden="true" class="theme-dot theme-petrol"></span><span>Petrol</span></label>
+<label class="theme-option"><input name="appTheme" type="radio" value="sage"/><span aria-hidden="true" class="theme-dot theme-sage"></span><span>Salbei</span></label>
+<label class="theme-option"><input name="appTheme" type="radio" value="coral"/><span aria-hidden="true" class="theme-dot theme-coral"></span><span>Koralle</span></label>
+<label class="theme-option"><input name="appTheme" type="radio" value="amber"/><span aria-hidden="true" class="theme-dot theme-amber"></span><span>Bernstein</span></label>
+<label class="theme-option"><input name="appTheme" type="radio" value="navy"/><span aria-hidden="true" class="theme-dot theme-navy"></span><span>Nachtblau</span></label>
+<label class="theme-option"><input name="appTheme" type="radio" value="graphite"/><span aria-hidden="true" class="theme-dot theme-graphite"></span><span>Graphit</span></label>
+</div>
+<p aria-live="polite" class="status" id="themeStatus" role="status"></p>
+<div aria-label="Darstellung" class="appearance-mode"><strong>Darstellungsmodus</strong><div aria-label="Hell, Dunkel oder automatisch" class="appearance-switch" role="group"><button class="secondary" data-appearance-choice="auto" type="button">Automatisch</button><button class="secondary" data-appearance-choice="light" type="button">Hell</button><button class="secondary" data-appearance-choice="dark" type="button">Dunkel</button></div><p class="hint">Automatisch übernimmt die Einstellung deines Geräts.</p></div>
+</fieldset>
+</section>
+<section class="panel" id="cloudPanel">
+<div class="cloud-heading"><span aria-hidden="true" class="cloud-hero-icon">☁</span><div><h3>Konto &amp; Cloud</h3><p class="hint">Deine Arbeitszeiten auf allen Geräten – automatisch gesichert.</p></div></div>
+<div id="cloudLoggedOut">
+<details class="calendar-sync-setup" id="cloudConnectionDetails">
+<summary>Supabase-Projekt verbinden</summary>
+<label for="cloudProjectUrl">Supabase-Projekt-URL</label>
+<input autocapitalize="none" autocomplete="url" id="cloudProjectUrl" inputmode="url" placeholder="https://xxxxxxxx.supabase.co" spellcheck="false" type="url"/>
+<label for="cloudProjectKey">Publishable Key (öffentlich)</label>
+<input autocapitalize="none" autocomplete="off" id="cloudProjectKey" placeholder="sb_publishable_… oder anon key" spellcheck="false" type="text"/>
+<p class="hint">Beide Werte findest du unter Supabase → Project Settings → API Keys. Niemals einen Secret Key oder service_role Key eingeben.</p>
+<button class="secondary" id="cloudSaveConfig" type="button">Verbindung speichern</button>
+</details>
+<div aria-label="Kontoaktion" class="cloud-switch" role="group">
+<button aria-pressed="true" class="secondary" id="cloudLoginMode" type="button">Anmelden</button>
+<button aria-pressed="false" class="secondary" id="cloudRegisterMode" type="button">Registrieren</button>
+</div>
+<form autocomplete="on" class="cloud-form" id="cloudAuthForm">
+<label for="cloudEmailInput">E-Mail-Adresse</label>
+<input autocapitalize="none" autocomplete="username" id="cloudEmailInput" required="" spellcheck="false" type="email"/>
+<label for="cloudPasswordInput">Passwort</label>
+<div class="password-row"><input autocomplete="current-password" id="cloudPasswordInput" maxlength="128" minlength="8" required="" type="password"/><button aria-label="Passwort anzeigen" aria-pressed="false" class="secondary" id="cloudPasswordToggle" type="button">Anzeigen</button></div>
+<div class="hidden" id="cloudConfirmPasswordArea">
+<label for="cloudConfirmPassword">Passwort wiederholen</label>
+<input autocomplete="new-password" id="cloudConfirmPassword" maxlength="128" minlength="8" type="password"/>
+</div>
+<button id="cloudAuthSubmit" type="submit">Anmelden</button>
+<button class="quiet" id="cloudForgotPassword" type="button">Passwort vergessen?</button>
+<p class="hint cloud-persist-hint">Du bleibst auf diesem Gerät angemeldet, bis du dich selbst abmeldest.</p>
+<button class="secondary" id="cloudPasskeyLogin" type="button">Mit Passkey / Face ID anmelden</button>
+</form>
+</div>
+<div class="hidden" id="cloudLoggedIn">
+<div class="cloud-group">
+<p>Angemeldet als <strong id="cloudEmail"></strong></p>
+<div class="cloud-health"><span aria-hidden="true" class="cloud-health-indicator" id="cloudHealthIcon">●</span><div><strong id="cloudHealthTitle">Verbunden</strong><p class="hint" id="cloudSyncText">Prüfe Cloud-Verbindung …</p></div></div>
+<p class="hint" id="cloudLastSynced"></p>
+<button id="cloudSyncNow" type="button">Jetzt synchronisieren</button>
+<details class="calendar-advanced cloud-advanced"><summary>Kontoverwaltung</summary>
+<p class="hint">Den Cloudstand nur bei Problemen manuell laden. Dabei können noch nicht übertragene lokale Änderungen ersetzt werden.</p>
+<div class="cloud-actions">
+<button class="secondary" id="cloudReload" type="button">Cloudstand neu laden</button>
+<button class="secondary" id="cloudLogout" type="button">Auf diesem Gerät abmelden</button>
+</div>
+</details>
+</div>
+<div class="cloud-group hidden" id="cloudConflictActions">
+<p class="hint">Ein anderes Gerät hat die Cloud verändert. Deine lokalen Änderungen bleiben gespeichert. Entscheide bewusst, welche Version du behalten möchtest.</p>
+<div class="cloud-actions"><button class="danger" id="cloudOverwrite" type="button">Cloudstand durch lokale Daten ersetzen</button></div>
+</div>
+<div class="cloud-group account-danger-zone">
+<details id="dangerZoneDetails"><summary>Datenschutz &amp; Daten löschen</summary>
+<p class="danger-note">Diese Aktionen sind dauerhaft. Bitte vorher ein JSON-Backup exportieren. Bereits exportierte Dateien und lokal importierte Apple-Kalendereinträge sind davon unabhängig.</p>
+<div class="danger-action"><strong>Kontodaten leeren – Account behalten</strong>
+<p class="danger-note">Arbeitszeiten, Planungen, Urlaub, Einstellungen, Cloud-Sicherungen, Push-Abos und privater Kalenderlink werden gelöscht. Das Benutzerkonto bleibt bestehen.</p>
+<label for="cloudClearConfirm">Zur Bestätigung <strong>DATEN LÖSCHEN</strong> eingeben</label>
+<input autocapitalize="characters" autocomplete="off" id="cloudClearConfirm" placeholder="Bestätigung eintippen" spellcheck="false" type="text"/>
+<button class="danger" id="cloudClearAll" type="button">Alle Kontodaten löschen</button>
+</div>
+<div class="danger-action"><strong>Benutzerkonto vollständig löschen</strong>
+<p class="danger-note">Dein Supabase-Account und alle damit verknüpften Cloud-Daten werden gelöscht. Zur Sicherheit wird dein Passwort erneut geprüft.</p>
+<label for="cloudDeletePassword">Aktuelles Passwort</label>
+<input autocomplete="current-password" id="cloudDeletePassword" placeholder="Passwort" type="password"/>
+<label for="cloudDeleteConfirm">Zur Bestätigung <strong>KONTO LÖSCHEN</strong> eingeben</label>
+<input autocapitalize="characters" autocomplete="off" id="cloudDeleteConfirm" placeholder="Bestätigung eintippen" spellcheck="false" type="text"/>
+<button class="danger" id="cloudDeleteAccount" type="button">Konto endgültig löschen</button>
+</div>
+<p aria-live="polite" class="status" id="dangerZoneStatus" role="status"></p>
+</details>
+</div>
+<div class="cloud-group" id="cloudImportGroup">
+<strong>Alte Arbeitszeiten übernehmen</strong>
+<p class="hint">Die bisherigen lokalen Daten bleiben separat erhalten. Du kannst sie in ein leeres Supabase-Konto kopieren, ohne den alten Bestand zu löschen.</p>
+<button class="secondary" id="cloudImportGuest" type="button">Lokale Daten ins Konto übernehmen</button>
+</div>
+</div>
+<div class="cloud-group hidden" id="cloudRecoveryGroup">
+<label for="cloudNewPassword">Neues Passwort nach dem Zurücksetzen</label>
+<input autocomplete="new-password" id="cloudNewPassword" maxlength="128" minlength="8" type="password"/>
+<button id="cloudChangePassword" type="button">Neues Passwort speichern</button>
+</div>
+<div aria-live="polite" class="status" id="cloudStatus" role="status"></div>
+</section>
+<section class="panel settings-group" id="appleCalendarPanel">
+<h3>Apple Kalender</h3>
+<p class="hint">Arbeitszeiten und Abwesenheiten im Apple Kalender sehen – direkt über Supabase.</p>
+<details class="calendar-advanced"><summary>Einmalige Kalenderdatei herunterladen (.ics)</summary>
+<p class="hint">Für einen einmaligen Import ohne automatische Aktualisierung.</p>
+<button class="secondary" id="exportIcsButton" type="button">Kalenderdatei exportieren</button>
+</details>
+<div class="calendar-help" id="calendarNeedsLogin">
+<strong>Automatischer Apple-Kalender</strong>
+<p class="hint">Melde dich bei deinem Supabase-Konto an. Anschließend kannst du den Kalender einmalig abonnieren. Deine Arbeitszeiten werden automatisch aus der Cloud geladen.</p>
+<button class="secondary" id="calendarOpenAccount" type="button">Zum Konto</button>
+</div>
+<div class="hidden calendar-help" id="cloudCalendarControls">
+<div class="calendar-help-title"><span aria-hidden="true">◉</span><strong>Kalender automatisch anzeigen</strong></div>
+<p class="hint">Einmal abonnieren – danach aktualisiert Apple Kalender die Einträge aus deinem Supabase-Konto. Die Aktualisierung kann zeitverzögert erfolgen und funktioniert nur in Richtung Apple Kalender.</p>
+<p class="calendar-setup-note">Einmalig erforderlich: die mitgelieferte Supabase-Funktion <code>arbeitszeit-kalender</code> veröffentlichen. Anschließend ist kein zusätzlicher Kalenderdienst nötig.</p>
+<div class="cloud-actions calendar-buttons">
+<button id="cloudCalendarSubscribe" type="button">In Apple Kalender abonnieren</button>
+<button class="secondary" id="cloudCalendarCopy" type="button">Link kopieren</button>
+</div>
+<details class="calendar-advanced">
+<summary>Kalenderlink verwalten</summary>
+<label for="cloudCalendarUrl">Privater Abo-Link</label>
+<input aria-label="Privater Kalender-Abonnement-Link" class="cloud-link-input" id="cloudCalendarUrl" readonly=""/>
+<p class="hint">Jeder mit diesem Link kann die Arbeitszeiten lesen. Bei einem neuen Link musst du dein Kalender-Abonnement neu einrichten.</p>
+<button class="secondary" id="cloudCalendarRotate" type="button">Privaten Link erneuern</button>
+</details>
+<p aria-live="polite" class="status" id="cloudCalendarStatus" role="status"></p>
+</div>
+</section>
+<section class="panel settings-group" id="automationPanel">
+<h2>Erinnerungen &amp; Automatisierung</h2>
+<div class="settings-feature"><div><strong>Erinnerung an Arbeitszeit</strong><p class="hint">Benachrichtigung, wenn du an einem Arbeitstag noch nichts eingetragen hast.</p></div><label class="toggle-label"><input id="reminderEnabled" type="checkbox"/><span>Aktiv</span></label></div>
+<label for="reminderMode">Wann erinnern?</label><select id="reminderMode"><option value="weekdays">Ausgewählte Wochentage</option><option value="planned">Nur an Tagen mit geplanter Schicht</option></select>
+<div class="reminder-weekdays" id="reminderWeekdays"><label><input type="checkbox" value="1"/>Mo</label><label><input type="checkbox" value="2"/>Di</label><label><input type="checkbox" value="3"/>Mi</label><label><input type="checkbox" value="4"/>Do</label><label><input type="checkbox" value="5"/>Fr</label><label><input type="checkbox" value="6"/>Sa</label><label><input type="checkbox" value="0"/>So</label></div>
+<p class="hint">Getrennt von den Einstellungen für Urlaubstage.</p>
+<label for="reminderTime">Uhrzeit der Erinnerung</label><input id="reminderTime" type="time" value="19:00"/>
+<label for="notifyThreshold">Zeitkonto-Hinweis ab (Stunden, optional)</label><input id="notifyThreshold" inputmode="decimal" max="10000" min="0" placeholder="z. B. 20" step="0.5" type="number"/>
+<div class="cloud-actions"><button id="saveAutomation" type="button">Erinnerungen speichern</button><button class="secondary" id="enablePush" type="button">iPhone-Mitteilungen aktivieren</button></div>
+<p class="status" id="pushStatus" role="status"></p>
+<p class="hint">Push funktioniert auf dem iPhone ab iOS 16.4 für Home-Bildschirm-Web-Apps. Dazu muss die beigefügte Supabase-Push-Funktion einmalig eingerichtet werden. Keine Mitteilungen ohne Zustimmung.</p>
+</section>
+<section class="panel settings-group" id="templatePanel"><h2>Arbeitszeit-Vorlagen</h2><p class="hint">Häufige Zeiten speichern und auf „Heute“ mit einem Tipp eintragen.</p>
+<form id="templateForm"><label for="templateName">Name</label><input id="templateName" maxlength="36" placeholder="z. B. Frühschicht" required="" type="text"/>
+<div class="plan-range"><label>Beginn<input id="templateStart" required="" type="time"/></label><label>Ende<input id="templateEnd" required="" type="time"/></label></div>
+<label for="templateBreak">Pause (Minuten)</label><input id="templateBreak" inputmode="numeric" max="1439" min="0" required="" step="1" type="number" value="30"/>
+<div class="template-save-row"><button type="submit">Vorlage speichern</button></div></form><div id="templateList"></div><p class="status" id="templateStatus" role="status"></p>
+</section>
+<section class="panel settings-group ai-preferences" id="aiPreferences"><details id="aiSettingsDetails"><summary><span aria-hidden="true" class="ai-settings-summary-icon">✦</span><span><strong>KI-Assistent &amp; intelligente Hilfen</strong><small>Fragen, Eingabe per Sprache und Analyse</small></span></summary><div class="ai-body"><p class="hint">KI-Antworten benötigen ein verbundenes Cloud-Konto und einen konfigurierten OpenRouter-Schlüssel. Normale Zeiterfassung und lokale Auswertungen funktionieren weiterhin ohne KI.</p><div id="aiSwitches"></div><details class="assist-options"><summary>Weitere Einstellungen für Hinweise und Vorlagen</summary><form id="aiOptionsForm"><div id="aiOptionFields"></div><button type="submit">Änderungen speichern</button><div id="aiOptionsStatus" role="status"></div></form></details><p class="hint">Bei Fragen werden die benötigten Zeitdaten zur Beantwortung an das eingestellte KI-Modell gesendet. Notizen und Kontodaten wie E-Mail-Adressen werden nicht übertragen. Die KI darf nichts ohne deine Bestätigung eintragen.</p></div></details><div class="voice-settings-note"><strong>KI-Spracherkennung</strong><p class="hint">Die App nimmt auf deinem Gerät nur nach einem Tipp auf „Aufnehmen“ Audio auf. Über dein angemeldetes Supabase-Konto wird es an eine separate Transkriptionsfunktion gesendet. Du prüfst den erkannten Text, bevor etwas gespeichert oder an die Auswertung übergeben wird.</p><p class="hint">Die Sprache wird mit OpenRouter (Whisper Large V3) erkannt. Einmalig muss die Funktion arbeitszeit-transkribieren im Supabase-Dashboard eingerichtet werden. Sie nutzt denselben OPENROUTER_API_KEY wie der Chat – ohne CLI und ohne zusätzlichen OpenAI-Schlüssel.</p></div></section>
+<section class="panel settings-group" id="securityPanel"><h2>Sicherheit</h2>
+<p class="hint">Optional mit Passkey anmelden, beispielsweise über Face ID. Supabase-Passkeys sind experimentell und müssen im Supabase-Dashboard freigeschaltet werden.</p>
+<div class="cloud-actions"><button class="secondary" id="registerPasskey" type="button">Passkey einrichten</button><button class="secondary" id="passkeyLogin" type="button">Mit Passkey anmelden</button><button class="secondary" id="logoutOtherDevices" type="button">Andere Geräte abmelden</button><button class="secondary" id="logoutAllDevices" type="button">Alle Geräte abmelden</button></div>
+<p class="status" id="passkeyStatus" role="status"></p>
+</section>
+<section class="panel settings-group" id="historyPanel"><h2>Wiederherstellung &amp; Cloud-Versionen</h2>
+<p class="hint">Letzte 30 Änderungsstände und tägliche Sicherungen der letzten 30 Tage anzeigen. Für die tägliche Sicherung muss einmalig der Supabase-Zeitplan eingerichtet werden.</p>
+<button class="secondary" id="loadHistory" type="button">Gesicherte Versionen anzeigen</button>
+<div id="historyList"></div><p class="status" id="historyStatus" role="status"></p>
+</section>
+<div class="panel settings-group">
+<h3>PDF-Export</h3>
+<button id="monthlyPdfButton" type="button">Monats-PDF exportieren</button>
+<p class="hint">Enthält die Kalenderansicht und die Tagesdetails.</p>
+<label for="reportYear">Jahr für den Jahresbericht</label>
+<div class="toolbar">
+<input id="reportYear" max="2200" min="2000" step="1" type="number"/>
+<button id="yearlyPdfButton" type="button">Jahres-PDF exportieren</button>
+</div>
+<p class="hint">Enthält eine Jahreskalenderübersicht, Monatswerte und tägliche Arbeitszeiten mit Pausen.</p>
+</div>
+<div class="panel settings-group">
+<div class="toolbar" style="justify-content:space-between">
+<div><h3>Arbeitszeit &amp; Zeitkonto</h3><p class="hint">Sollstunden, Startsaldo, Urlaub und Gutschriften</p></div>
+<button aria-controls="settingsContent" aria-expanded="false" class="secondary small" id="settingsToggle" type="button">Bearbeiten</button>
+</div>
+<div class="hidden" id="settingsContent">
+<form id="settingsForm">
+<div class="two-col">
+<div>
+<label for="monthlyTarget">Monatliches Soll (Stunden)</label>
+<input id="monthlyTarget" min="0" required="" step="0.01" type="number"/>
+<label for="openingBalance">Anfangssaldo Zeitkonto (Stunden)</label>
+<input id="openingBalance" required="" step="0.01" type="number"/>
+<fieldset class="account-start">
+<legend>Zeitkonto beginnt ab</legend>
+<div><select aria-label="Startmonat" id="accountStartMonth" required=""></select>
+<select aria-label="Startjahr" id="accountStartYear" required=""></select></div>
+</fieldset>
+</div>
+<div>
+<label for="holidayHours">Stunden pro zählendem Feiertag</label>
+<input id="holidayHours" min="0" required="" step="0.01" type="number"/>
+<label for="vacationEntitlement">Urlaubsanspruch pro Jahr (Tage)</label>
+<input id="vacationEntitlement" min="0" required="" step="0.5" type="number"/>
+<label for="vacationHours">Angerechnete Stunden pro Urlaubstag</label>
+<input id="vacationHours" min="0" required="" step="0.01" type="number"/>
+<label for="sickHours">Angerechnete Stunden pro Krankheitstag</label>
+<input id="sickHours" min="0" required="" step="0.01" type="number"/>
+</div>
+</div>
+<h3>Urlaubszeiträume</h3><label>Wochentage bei mehrtägigem Urlaub berücksichtigen</label><div class="weekday-list" id="leaveDays"></div>
+<h3>Feiertage in Baden-Württemberg zählen, wenn sie auf … fallen</h3>
+<div class="weekday-list" id="weekdaySettings"></div>
+<label for="vacationCarryoverMode">Übertrag von Urlaubstagen</label>
+<select id="vacationCarryoverMode"><option value="unlimited">Unbegrenzt übertragen</option><option value="custom">Bis zu einem bestimmten Datum übertragen</option><option value="none">Kein Übertrag</option></select>
+<div class="carryover-fields hidden" id="vacationCarryoverDateFields"><label>Verfall im Folgejahr (einschließlich)</label><div class="carryover-date-row"><select aria-label="Verfallstag" id="vacationCarryoverDay"></select><select aria-label="Verfallsmonat" id="vacationCarryoverMonth"></select></div><p class="hint">Beispiel: Resturlaub aus 2026 kann bis einschließlich des gewählten Datums 2027 verwendet werden. Am 29. Februar gilt in Nicht-Schaltjahren der 28. Februar.</p></div>
+<div aria-live="polite" class="carryover-summary" id="vacationCarryoverPreview" role="status"></div>
+<p class="hint">Deine individuelle Vertrags- und Rechtslage geht vor. Ein gesetzlicher Urlaubsverfall hängt unter Umständen von zusätzlichen Voraussetzungen ab.</p>
+<label for="vacationStartYear">Urlaubsberechnung beginnt ab Jahr</label>
+<input id="vacationStartYear" max="2200" min="2000" required="" step="1" type="number"/>
+<p class="hint">Der Urlaubsübertrag richtet sich nach der oben gewählten Regel. Bitte die tatsächlichen betrieblichen und gesetzlichen Regelungen berücksichtigen.</p>
+<button type="submit">Einstellungen speichern</button>
+<div aria-live="polite" class="status" id="settingsStatus" role="status"></div>
+</form>
+</div>
+</div>
+<div class="panel">
+<h3>Datensicherung</h3>
+<p class="hint">Backups enthalten deine Einstellungen und Einträge. Sie werden nicht verschlüsselt.</p>
+<div class="actions">
+<button class="secondary" id="exportBackupButton" type="button">Backup exportieren</button>
+<label class="file-label">Backup importieren
+            <input accept="application/json,.json" id="importFile" type="file"/>
+</label>
+</div>
+<div aria-live="polite" class="status" id="backupStatus" role="status"></div>
+</div>
+</section>
+</main>
+<nav aria-label="Hauptnavigation" class="tabs five-tabs">
+
+<button aria-current="page" class="tab active" id="overviewTab" type="button"><svg aria-hidden="true" class="tab-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 6v6l4 2"></path></svg><span>Heute</span></button>
+<button class="tab" id="calendarTab" type="button"><svg aria-hidden="true" class="tab-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><rect height="16" rx="2" width="18" x="3" y="5"></rect><path d="M7 3v4M17 3v4M3 10h18"></path><path d="M8 14h2m4 0h2M8 18h2"></path></svg><span>Kalender</span></button>
+<button class="tab" id="detailsTab" type="button"><svg aria-hidden="true" class="tab-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><rect height="17" rx="2" width="18" x="3" y="4"></rect><path d="M7 2v4M17 2v4M3 9h18M7 13h10M7 17h6"></path></svg><span>Monate</span></button><button class="tab" id="analyticsTab" type="button"><svg aria-hidden="true" class="tab-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="M4 20V12M9 20V7M14 20v-4M19 20V4"></path><path d="M2 20h20"></path></svg><span>Analyse</span></button>
+<button class="tab" id="planningTab" type="button"><svg aria-hidden="true" class="tab-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><rect height="16" rx="2" width="18" x="3" y="5"></rect><path d="M7 3v4M17 3v4M3 10h18"></path><path d="m8 16 2 2 5-5"></path></svg><span>Planung</span></button>
+</nav>
+<div aria-labelledby="entryDialogTitle" aria-modal="true" class="overlay hidden" id="entryOverlay" role="dialog">
+<div class="sheet">
+<div class="sheet-header">
+<h2 id="entryDialogTitle" tabindex="-1">Eintrag erfassen</h2>
+<button aria-label="Schließen" class="secondary small" id="closeEntryButton" type="button">Schließen</button>
+</div>
+<form id="entryForm">
+<label for="entryDate">Datum</label>
+<input id="entryDate" max="2200-12-31" min="2000-01-01" required="" type="date"/>
+<label for="entryType">Art des Eintrags</label>
+<select id="entryType">
+<option value="work">Arbeitszeit</option>
+<option value="vacation">Urlaub</option>
+<option value="sick">Krankheit</option>
+</select>
+<div id="workFields">
+<div class="planned-hint hidden" id="entryPlannedHint"><span id="entryPlannedText"></span><button class="secondary small" id="entryUsePlan" type="button">Geplante Zeit übernehmen</button></div>
+<div class="plan-applied-banner hidden" id="entryPlanApplied" role="status"><strong>✓ Geplante Zeit übernommen</strong><span>Zeiten vorausgefüllt – bitte prüfen und anschließend ausdrücklich speichern.</span></div>
+<label for="workMode">Arbeitszeit eingeben als</label>
+<select id="workMode">
+<option value="range">Beginn und Ende</option>
+<option value="duration">Dauer</option>
+</select>
+<div class="row" id="rangeFields">
+<div class="time-field">
+<label for="startTime">Beginn</label>
+<input id="startTime" type="time"/>
+</div>
+<div class="time-field">
+<label for="endTime">Ende</label>
+<input id="endTime" type="time"/>
+</div>
+</div>
+<div class="hidden" id="durationFields">
+<label for="durationHours">Dauer vor Pausen in Stunden</label>
+<input id="durationHours" inputmode="decimal" min="0.01" placeholder="z. B. 7,5" step="0.01" type="number"/>
+</div>
+<label for="breakMinutes">Gesamtpause in Minuten</label>
+<input id="breakMinutes" inputmode="numeric" min="0" step="1" type="number" value="0"/>
+<label for="workNote">Arbeitsnotiz (optional)</label>
+<input autocomplete="off" id="workNote" maxlength="200" type="text"/>
+</div>
+<div class="hidden" id="vacationFields">
+<div id="vacationInterval"><label for="vacationEnd">Bis einschließlich (optional)</label><input id="vacationEnd" max="2200-12-31" min="2000-01-01" type="date"/><p aria-live="polite" class="hint" id="vacationPreview"></p></div>
+<label for="vacationDays">Urlaubstage pro Datum</label>
+<select id="vacationDays">
+<option value="1">Ganzer Tag</option>
+<option value="0.5">Halber Tag</option>
+</select>
+</div>
+<div class="hidden" id="sickFields">
+<p class="hint">Die Anrechnungsstunden werden aus den Einstellungen übernommen.</p>
+</div>
+<div class="actions" style="margin-top:14px">
+<button id="saveEntryButton" type="submit">Eintrag speichern</button>
+<button class="secondary hidden" id="cancelEditButton" type="button">Abbrechen</button>
+</div>
+<div aria-live="polite" class="status" id="entryStatus" role="status"></div>
+</form>
+</div>
+</div>
+<div aria-live="polite" class="toast hidden" id="undoToast" role="status">
+<span>Eintrag gelöscht.</span>
+<button id="undoDeleteButton" type="button">Rückgängig</button>
+</div>
+<script defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<div class="assistant-overlay hidden" id="assistantOverlay" role="presentation">
+<section aria-labelledby="assistantTitle" aria-modal="true" class="assistant-dialog" id="smartChat" role="dialog" tabindex="-1">
+<div class="assistant-top"><div aria-hidden="true" class="assistant-symbol">✦</div><div><h2 id="assistantTitle">Dein Zeit-Assistent</h2><p>Frag mich alles rund um deine Arbeitszeiten.</p></div><button aria-label="Assistent schließen" class="assistant-close secondary" id="assistantClose" type="button">✕</button></div>
+<div class="chat-tools"><button aria-expanded="false" class="secondary small" id="chatListToggle" type="button">Chats</button><button class="secondary small" id="chatNew" type="button">+ Neuer Chat</button></div>
+<div class="topic-list" hidden="" id="chatList"></div><div class="assistant-chat-body" id="assistantChatBody">
+<div class="assistant-welcome" id="assistantWelcome"><strong>Was möchtest du wissen?</strong><p>Frag nach konkreten Zeiten, vergleiche Monate, lass dir Diagramme erstellen oder bereite Änderungen vor. Gespeichert wird nur nach Bestätigung.</p></div>
+<div class="assistant-context-chip" id="assistantPageContext" role="status">Kontext: Heute</div>
+<div aria-label="Beispielfragen" class="assistant-suggestions" id="aiPrompts"></div>
+<div aria-live="polite" aria-relevant="additions" class="assistant-conversation" id="aiConversation" role="log"></div>
+<div class="assistant-answer-actions" id="aiAnswerActions"></div>
+<div class="assistant-last-answer" id="aiAnswer" role="status"></div>
+<details class="hidden" id="aiEvidence"><summary>Berechnungsgrundlage ansehen</summary><div class="report-story" id="aiEvidenceText"></div></details>
+</div>
+<form class="assistant-form" id="assistantForm"><label class="sr-only" for="aiQuestion">Deine Frage</label><textarea id="aiQuestion" maxlength="1200" placeholder="Was möchtest du zu deinen Arbeitszeiten wissen?" rows="2"></textarea><div class="assistant-form-actions"><span id="assistantStatus" role="status">Änderungen werden immer zuerst gezeigt.</span><button aria-label="Frage diktieren" class="secondary assistant-mic" id="assistantMic" title="Frage diktieren" type="button">🎙</button><button aria-hidden="true" class="secondary small" hidden="" id="aiOnline" tabindex="-1" title="Lokale Antworten" type="button">Lokal</button><button id="aiAsk" type="submit">Senden <span aria-hidden="true">↑</span></button></div></form>
+<button class="assistant-bottom-link" id="assistantSettingsLink" type="button">KI-Einstellungen</button>
+</section>
+</div>
+<script type="module">
     const DB_NAME = "arbeitszeit-app";
     const DB_VERSION = 1;
     const STORE_NAME = "state";
@@ -2865,13 +2834,13 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const actual=Math.min(day,new Date(year,month,0).getDate());
       return `${year}-${String(month).padStart(2,'0')}-${String(actual).padStart(2,'0')}`;
     }
-    function vacationBreakdown(year, ledger=state.records, quantity=effectiveVacationDays){
-      const firstYear=Number(state.settings.vacationStartYear),entitlement=Number(state.settings.vacationEntitlement)||0;
+    function vacationBreakdown(year, ledger=state.records, quantity=effectiveVacationDays, settings=state.settings){
+      const firstYear=Number(settings.vacationStartYear),entitlement=Number(settings.vacationEntitlement)||0;
       if(year<firstYear)return {active:false,firstYear,entitlement,carryover:0,taken:0,planned:0,remaining:null,expired:0,expiring:0,expiresOn:null};
-      const mode=state.settings.vacationCarryoverMode||'unlimited',today=localDateString();
+      const mode=settings.vacationCarryoverMode||'unlimited',today=localDateString();
       let carry=0,result=null;
       for(let y=firstYear;y<=year;y++){
-        const cutoff=carryoverDeadline(y),limited=mode==='custom'||mode==='march31';
+        const cutoff=carryoverDeadline(y,settings),limited=mode==='custom'||mode==='march31';
         const startCarry=mode==='none'?0:Math.max(0,carry);
         let old=startCarry,current=entitlement,taken=0,planned=0,expired=0,carryUsed=0;
         const rows=ledger.filter(r=>r.type==='vacation'&&r.date.startsWith(y+'-')).sort((a,b)=>a.date.localeCompare(b.date));
@@ -2990,17 +2959,25 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       // Nur abgeschlossene Monate besitzen einen endgültigen Saldo.
       // Der Monatsendstand steht dann gut sichtbar in der großen Monatskarte.
       const showClosing = closed && closing !== null;
-      $("closedHeroBalance").classList.toggle("hidden", !showClosing);
-      $("heroBalanceValue").textContent = showClosing ? signedHoursText(closing) : "–";
+      const lastClosed=addMonths(currentMonth(),-1);
+      const showPrior=!closed && lastClosed>=state.settings.accountStartMonth;
+      $("closedHeroBalance").classList.toggle("hidden", !showClosing&&!showPrior);
+      $('heroBalanceDate').textContent='Zeitkonto am '+displayDay(monthEnd(showPrior?lastClosed:selectedMonth));
+      $("heroBalanceValue").textContent = showClosing ? signedHoursText(closing) : showPrior?signedHoursText(closingBalanceForMonth(lastClosed)):"–";
       $("heroBalanceValue").className = showClosing ? (closing >= 0 ? "positive" : "negative") : "";
       // Vormonats-Übertrag nur im laufenden Monat – in abgeschlossenen Monaten redundant.
-      $("carryMetricCard").classList.toggle("hidden", selectedMonth !== currentMonth() || !active);
-      $("carryMetric").textContent = active ? signedHoursText(opening) : "Noch kein Abschluss";
-      $("closingMetricCard").classList.toggle("hidden", showClosing);
+      const hasPriorClose=selectedMonth===currentMonth() && active && addMonths(selectedMonth,-1)>=state.settings.accountStartMonth;
+      $("carryMetricCard").classList.toggle("hidden", !hasPriorClose);
+      $("carryMetric").textContent = hasPriorClose ? signedHoursText(opening) : "–";
+      // Der gesamte Saldo ist bereits im Monatskopf. Keine zweite, irreführende „Noch offen“-Karte.
+      $("closingMetricCard").classList.add("hidden");
       $("closingLabel").textContent = "Überstunden gesamt am Monatsende";
-      $("closingMetric").textContent = "Noch offen";
+      $("closingMetric").textContent = showClosing ? signedHoursText(closing) : "–";
       $("closingMetric").className = "";
 
+      const movement=$('monthMovement');
+      movement.hidden=!showClosing;
+      movement.textContent=showClosing?'Veränderung im '+monthTitle(selectedMonth)+': '+signedHoursText(stats.delta):'';
       $("accountExplanation").textContent = !active
         ? "Dieser Monat liegt vor dem Start des Zeitkontos und wird nicht in den Saldo übernommen."
         : closed
@@ -3114,9 +3091,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         cells.push(`
           <button class="${classes.join(" ")}" type="button" role="gridcell"
             data-calendar-date="${dateKey}"
-            aria-label="${escapeHtml(dateKey)}: ${escapeHtml(plan && status === "Frei" ? "Geplante Schicht, nicht gebucht" : status)}${info.holidayName ? `, Feiertag ${escapeHtml(info.holidayName)}` : ""}${escapeHtml(planLabel)}">
+            aria-label="${escapeHtml(dateKey)}: ${escapeHtml(plan && status === "Frei" ? "Geplante Schicht, nicht gebucht" : status === "Frei" ? "Keine Buchung" : status)}${info.holidayName ? `, Feiertag ${escapeHtml(info.holidayName)}` : ""}${escapeHtml(planLabel)}">
             <span class="day-number">${day}</span>
-            ${status !== "Frei" || !plan ? `<span class="day-status">${escapeHtml(shortStatus)}</span>` : ""}
+            ${status !== "Frei" ? `<span class="day-status">${escapeHtml(shortStatus)}</span>` : ""}
             ${info.workHours > 0 ? `<span class="day-hours">${escapeHtml(durationLabel(info.workHours * 60))} h</span>` : ""}
             ${plan ? `<span class="day-plan-chip" aria-hidden="true">Plan</span>` : ""}
             ${plan && info.workHours <= 0 ? `<span class="day-plan-time" aria-hidden="true">${escapeHtml(plan.start)}</span>` : ""}
@@ -3132,7 +3109,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $("calendarGrid").querySelectorAll("[data-calendar-date]").forEach((button) => {
         button.addEventListener("click", () => {
           selectedCalendarDate = button.dataset.calendarDate;
-          renderCalendar();
+          renderCalendar();$('selectedDayPanel').scrollIntoView({block:'nearest'});
         });
       });
 
@@ -3154,6 +3131,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         weekday: "long", day: "numeric", month: "long", year: "numeric"
       }).format(parseDate(selectedCalendarDate));
 
+      $("addDayEntryButton").textContent=plannedShift&&!info.records.length?"Plan übernehmen":info.records.length?"Weitere Buchung erfassen":"Arbeitszeit erfassen";
       const items = [];
 
       if (info.holidayName) {
@@ -3190,9 +3168,13 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }
 
       if (!info.records.length && !info.holidayName && !plannedShift) {
-        items.push(`<p class="hint">Keine Arbeitszeit erfasst – dieser Tag wird als frei angezeigt.</p>`);
+        items.push(`<p class="hint">Keine Buchung für diesen Tag.</p>`);
       }
 
+      const comparison=dayComparison(selectedCalendarDate);
+      if(comparison){
+        items.push(`<p class="hint">Geplant: ${fmtMin(comparison.netMinutes)} netto${info.workHours?' · Gebucht: '+fmtMin(comparison.bookedMinutes)+' · Abweichung: '+signedHoursText(comparison.differenceMinutes/60):' · Keine Arbeitszeit gebucht'}</p>`);
+      }
       container.innerHTML = items.join("");
       container.querySelectorAll("[data-day-edit]").forEach((button) => {
         button.addEventListener("click", () => openEditor(button.dataset.dayEdit));
@@ -3209,34 +3191,40 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       });
     }
 
+    function readPreference(key,fallback){
+      try{return JSON.parse(localStorage.getItem('az13:'+key))??fallback;}catch{return fallback;}
+    }
+    function savePreference(key,value){try{localStorage.setItem('az13:'+key,JSON.stringify(value));return true;}catch{return false;}}
+    const scrollPositions=new Map();
     let activeTab = "overview";
     function setActiveTab(tab) {
-      activeTab = tab;
-      $("sectionTitle").classList.toggle("hidden", tab === "overview");
-      $("sectionTitle").textContent = ({calendar:"Kalender",analytics:"Analysen",details:"Monatsdetails",planning:"Planen",more:"Einstellungen"})[tab] || "";
-      $("todayPanel").classList.toggle("hidden", tab !== "overview");
-      $("monthBar").classList.toggle("hidden", tab !== "calendar");
-      $("detailsPanel").classList.toggle("hidden", tab !== "details");
-      $("calendarPanel").classList.toggle("hidden", tab !== "calendar");
-      $("analyticsPanel").classList.toggle("hidden", tab !== "analytics");
-      $("planningPanel").classList.toggle("hidden", tab !== "planning");
-      $("morePanel").classList.toggle("hidden", tab !== "more");
-
-      for (const id of ["overviewTab", "calendarTab", "analyticsTab", "detailsTab", "planningTab"]) {
-        const active = id === `${tab}Tab`;
-        $(id).classList.toggle("active", active);
-        if (active) $(id).setAttribute("aria-current", "page");
-        else $(id).removeAttribute("aria-current");
+      if(activeTab!==tab)scrollPositions.set(activeTab,window.scrollY||0);
+      if(tab==='calendar'&&selectedCalendarDate)selectedMonth=selectedCalendarDate.slice(0,7);
+      activeTab=tab;
+      if(tab==='more')showSettingsTopic(null);
+      $('sectionTitle').classList.toggle('hidden',tab==='overview');
+      $('sectionTitle').textContent=({calendar:'Kalender',analytics:'Analyse',details:'Monate',planning:'Planung',more:'Einstellungen'})[tab]||'';
+      $('todayPanel').classList.toggle('hidden',tab!=='overview');
+      $('monthBar').classList.toggle('hidden',tab!=='calendar');
+      $('detailsPanel').classList.toggle('hidden',tab!=='details');
+      $('calendarPanel').classList.toggle('hidden',tab!=='calendar');
+      $('analyticsPanel').classList.toggle('hidden',tab!=='analytics');
+      $('planningPanel').classList.toggle('hidden',tab!=='planning');
+      $('morePanel').classList.toggle('hidden',tab!=='more');
+      const navId={overview:'overviewTab',calendar:'calendarTab',details:'detailsTab',analytics:'analyticsTab',planning:'planningTab'}[tab];
+      for(const id of ['overviewTab','calendarTab','detailsTab','analyticsTab','planningTab']){
+        const active=navId===id;
+        $(id).classList.toggle('active',active);
+        if(active)$(id).setAttribute('aria-current','page');else $(id).removeAttribute('aria-current');
       }
-
-      $("headerSettings").classList.toggle("active", tab === "more");
-      $("headerSettings").setAttribute("aria-label", tab === "more" ? "Einstellungen geöffnet" : "Einstellungen und Konto öffnen");
-      if (tab === "calendar") renderCalendar();
-      if (tab === "analytics") renderAnalytics();
-      if (tab === "details") {renderOverview();renderContextAssistance();}
-      if (tab === "planning") renderPlanning();
-      if (tab === "more" && cloudSession) void primePushKey();
-      window.scrollTo({top:0,behavior:"instant"});
+      $('headerSettings').classList.toggle('active',tab==='more');
+      $('headerSettings').setAttribute('aria-label',tab==='more'?'Einstellungen geöffnet':'Einstellungen öffnen');
+      if(tab==='calendar'){$('monthPicker').value=selectedMonth;$('monthPickerText').textContent=monthTitle(selectedMonth);renderCalendar();}
+      if(tab==='analytics')renderAnalytics();
+      if(tab==='details')renderAll();
+      if(tab==='planning')renderPlanning();
+      if(tab==='more'&&cloudSession)void primePushKey();
+      window.scrollTo({top:tab==='more'?0:scrollPositions.get(tab)||0,behavior:'instant'});
     }
 
     function vacationDates(start,end) {
@@ -3541,6 +3529,15 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $("bookedMonth").textContent="Gearbeitet · "+monthTitle(month);
       $("monthWorked").textContent=durationLabel(monthStats(month).work*60)+" Std.";
       $("timeline").innerHTML=records.map(r=>'<div class="stamp"><span>'+recordTypeName(r)+(r.mode==='range'?' '+escapeHtml(r.start)+'–'+escapeHtml(r.end):'')+' · '+durationLabel(recordHours(r)*60)+' Std.'+(r.fromPlan?' <small class="entry-plan-tag">Aus Planung</small>':'')+'</span><button class="quiet" data-today-edit="'+escapeHtml(r.id)+'">Bearbeiten</button></div>').join("") || '<p class="hint">Heute sind noch keine Zeiten erfasst.</p>';
+      const work=records.filter(r=>r.type==='work');
+      const timeline=$('todayBookings'),form=$('manualForm');
+      if(work.length){
+        form.before(timeline);$('moreToday').hidden=false;
+        $('todayBookingsTitle').textContent='Heute gebucht · '+$('todayWorked').textContent;
+      }else{
+        $('todayAssistance').after(timeline);$('moreToday').hidden=true;
+        $('todayBookingsTitle').textContent='Heutige Einträge';
+      }
       $("timeline").querySelectorAll("[data-today-edit]").forEach(b=>b.addEventListener("click",()=>openEditor(b.dataset.todayEdit)));
       $("oldShift").classList.toggle("hidden",!state.stamps?.length);
       if(state.stamps?.length) $("oldShiftStart").textContent="Beginn: "+new Date(state.stamps[0]).toLocaleString("de-DE")+". Trage das Ende ein, um die bereits erfassten Zeiten zu übernehmen.";
@@ -3596,7 +3593,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       if(custom&&!valid){message('vacationCarryoverPreview','Diesen Tag gibt es im ausgewählten Monat nicht.');return;}
       const y=Number(localDateString().slice(0,4)),deadline=carryoverDeadline(y+1,{vacationCarryoverDate:selected});
       const wording=mode==='none'?'Resturlaub wird nicht ins Folgejahr übertragen.':mode==='unlimited'?'Resturlaub wird zeitlich unbegrenzt weitergeführt.':'Resturlaub aus '+y+' ist bis einschließlich '+displayDay(deadline)+' im Folgejahr verfügbar.';
-      message('vacationCarryoverPreview',wording+' Änderungen wirken sich auch auf bisherige Urlaubssalden aus.');
+      const before=vacationBreakdown(y),after=vacationBreakdown(y,state.records,effectiveVacationDays,{...state.settings,vacationCarryoverMode:mode,vacationCarryoverDate:selected});
+      const oldRule=state.settings.vacationCarryoverMode==='none'?'kein Übertrag':state.settings.vacationCarryoverMode==='unlimited'?'unbegrenzt':'bis '+displayDay(carryoverDeadline(y+1));
+      message('vacationCarryoverPreview','Bisher: '+oldRule+'. '+wording+(before.active?' Resturlaub '+y+': '+before.remaining.toLocaleString('de-DE')+' → '+after.remaining.toLocaleString('de-DE')+' Tage.':''));
     }
     for(const id of ['vacationCarryoverMode','vacationCarryoverDay','vacationCarryoverMonth'])$(id).addEventListener('change',updateCarryoverPreview);
     function renderVacationExpiryNotice(){
@@ -3674,6 +3673,12 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       planSelect.innerHTML='<option value="">Eigene Zeiten eingeben</option>'+templates.map(t=>`<option value="${escapeHtml(t.id)}">${escapeHtml(t.name)} · ${escapeHtml(t.start)}–${escapeHtml(t.end)}</option>`).join('');
       planSelect.value=templates.some(t=>t.id===oldTemplate)?oldTemplate:'';
       quick.innerHTML=templates.map(t=>`<button type="button" class="template-pill" data-template="${escapeHtml(t.id)}">⚡ ${escapeHtml(t.name)}</button>`).join('');
+      $('planTemplates').innerHTML=quick.innerHTML;
+      $('planTemplates').querySelectorAll('[data-template]').forEach(button=>button.onclick=()=>{
+        planSelect.value=button.dataset.template;
+        planSelect.dispatchEvent(new Event('change'));
+        updateEmptyTimes();
+      });
       quick.querySelectorAll('[data-template]').forEach(btn=>btn.addEventListener('click',()=>{
         const t=storedTemplates().find(x=>x.id===btn.dataset.template);if(!t)return;
         setManualMode('range');$('manualStart').value=t.start;$('manualEnd').value=t.end;
@@ -3724,7 +3729,11 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     }
     function renderAnalytics() {
       if(!$('analysisYear').value)$('analysisYear').value=String(new Date().getFullYear());
+      if(activeTab==='details')$('analysisYear').value=selectedMonth.slice(0,4);
       syncReportYear();
+      if(activeTab==='details' && $('aiMonth').value!==selectedMonth){
+        onlineGeneration++;message('aiNarrative','');$('aiMonth').value=selectedMonth;
+      }
       const now=currentMonth(),last=addMonths(now,-1),year=Number($('analysisYear').value)||new Date().getFullYear();
       renderSmartReports(year);
       $('analysisYearText').textContent=String(year);
@@ -3735,6 +3744,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $('insightForecast').textContent='Laufender Monat und Planungen bleiben unberücksichtigt.';
       const months=Array.from({length:12},(_,m)=>`${year}-${String(m+1).padStart(2,'0')}`);
       const monthly=months.map(ym=>monthStats(ym).work),yearWork=monthly.reduce((a,b)=>a+b,0);
+      $('yearMonths').innerHTML=months.map((m,i)=>`<button type="button" class="secondary" data-month="${m}"><span>${parseDate(m+'-01').toLocaleDateString('de-DE',{month:'short'})}</span> <strong>${hoursText(monthly[i])}</strong></button>`).join('');
       $('statYearWork').textContent=displayTime(yearWork);
       const vacation=vacationBreakdown(year);
       $('statVacation').textContent=vacation.active?vacation.remaining.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage':'–';
@@ -3839,6 +3849,14 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     }
     // Separate Arbeitsplanung: ausschließlich state.plans, niemals state.records.
     function planForDate(date) {return (state.plans||[]).find(p=>p.date===date)||null;}
+    function dayComparison(date){
+      const plan=planForDate(date);
+      if(!plan)return null;
+      const netMinutes=timeToMinutes(plan.end)-timeToMinutes(plan.start)-Number(plan.breakMinutes||0);
+      const work=state.records.filter(r=>r.date===date && r.type==='work');
+      const bookedMinutes=Math.round(work.reduce((n,r)=>n+r.hours,0)*60);
+      return {date,start:plan.start,end:plan.end,breakMinutes:plan.breakMinutes,netMinutes,bookedMinutes,differenceMinutes:work.length?bookedMinutes-netMinutes:null};
+    }
     function refreshManualPlanHint() {
       const date=$('manualDate').value;
       const plan=planForDate(date),node=$('manualPlannedHint'),button=$('manualUsePlan');
@@ -3864,7 +3882,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       setManualMode('range');$('manualStart').value=plan.start;$('manualEnd').value=plan.end;
       $('manualPause').value=String(plan.breakMinutes);previewManual();
       manualAppliedPlanDate=plan.date;showManualPlanApplied();updateEmptyTimes();
-      $('manualStatus').textContent='Plan übernommen – erst nach „Eintrag speichern“ wird die Zeit gebucht.';
+      $('manualStatus').textContent='Plan übernommen – erst nach „Arbeitszeit speichern“ wird die Zeit gebucht.';
     }
     function applyPlanToEntry(plan) {
       $('entryType').value='work';$('workMode').value='range';setEntryTypeVisibility();
@@ -3916,7 +3934,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }catch(e){out.textContent=e.message;out.classList.add('invalid');}
     }
     $('workPlanManageTemplates').addEventListener('click',()=>{
-      setActiveTab('more');$('templatePanel').scrollIntoView({behavior:'smooth',block:'start'});
+      setActiveTab('more');showSettingsTopic('templates');$('templatePanel').scrollIntoView({behavior:'smooth',block:'start'});
     });
     $('workPlanTemplate').addEventListener('change',()=>{
       const t=storedTemplates().find(x=>x.id===$('workPlanTemplate').value);
@@ -4017,7 +4035,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     for(const id of ['planStart','planEnd'])$(id).addEventListener('change',renderPlanning);
     $('bridgeYear').addEventListener('change',renderPlanning);
     $('analysisExportJump').addEventListener('click',()=>{
-      setActiveTab('more');$('monthlyPdfButton').scrollIntoView({behavior:'smooth',block:'center'});
+      setActiveTab('more');showSettingsTopic('data');$('monthlyPdfButton').scrollIntoView({behavior:'smooth',block:'center'});
     });
     $('planBook').addEventListener('click',()=>{
       const start=$('planStart').value,end=$('planEnd').value;
@@ -4198,8 +4216,12 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       element.className = `status${type ? ` ${type}` : ""}`;
     }
 
-    $("headerSettings").addEventListener("click", () => setActiveTab("more"));
-    $("addDayEntryButton").addEventListener("click", () => openEntry(selectedCalendarDate));
+    let previousContentTab="overview";
+    $("headerSettings").addEventListener("click", () => {if(activeTab==="more")setActiveTab(previousContentTab);else{previousContentTab=activeTab;setActiveTab("more");}});
+    $("addDayEntryButton").addEventListener("click", () => {
+      openEntry(selectedCalendarDate);
+      if(planForDate(selectedCalendarDate)&&!dateRecords(selectedCalendarDate).length)applyPlanToEntry(planForDate(selectedCalendarDate));
+    });
     $("closeEntryButton").addEventListener("click", closeEntry);
     $("cancelEditButton").addEventListener("click", () => {
       editingId = null;
@@ -4218,8 +4240,8 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     $("overviewTab").addEventListener("click", () => setActiveTab("overview"));
     $("calendarTab").addEventListener("click", () => setActiveTab("calendar"));
 
-    $("analyticsTab").addEventListener("click", () => setActiveTab("analytics"));
-    $("detailsTab").addEventListener("click", () => setActiveTab("details"));
+    $('detailsTab').addEventListener('click',()=>setActiveTab('details'));
+    $('analyticsTab').addEventListener('click',()=>setActiveTab('analytics'));
     $("planningTab").addEventListener("click", () => setActiveTab("planning"));
     $("entryType").addEventListener("change",()=>{setEntryTypeVisibility();refreshEntryPlanHint();});
     $("entryDate").addEventListener("change",refreshEntryPlanHint);
@@ -4250,15 +4272,15 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 
     $("detailsPreviousMonth").addEventListener("click",()=>{
       const value=addMonths(selectedMonth,-1);if(!validMonth(value))return;
-      selectedMonth=value;selectedCalendarDate=`${value}-01`;renderAll();
+      selectedMonth=value;analysisMonth=value;renderAll();
     });
     $("detailsNextMonth").addEventListener("click",()=>{
       const value=addMonths(selectedMonth,1);if(!validMonth(value))return;
-      selectedMonth=value;selectedCalendarDate=`${value}-01`;renderAll();
+      selectedMonth=value;analysisMonth=value;renderAll();
     });
     $("detailsMonthPicker").addEventListener("change",()=>{
       const value=$("detailsMonthPicker").value;if(!validMonth(value))return;
-      selectedMonth=value;selectedCalendarDate=`${value}-01`;renderAll();
+      selectedMonth=value;analysisMonth=value;renderAll();
     });
     $("monthPicker").addEventListener("change", () => {
       if (!validMonth($("monthPicker").value)) return;
@@ -5204,7 +5226,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 
     $("cloudBanner").addEventListener("click",()=>{
       setActiveTab("more");
-      $("cloudPanel").scrollIntoView({behavior:"smooth",block:"start"});
+      showSettingsTopic("data");$("cloudPanel").scrollIntoView({behavior:"smooth",block:"start"});
     });
     $("cloudLoginMode").addEventListener("click",()=>changeCloudAuthMode("login"));
     $("cloudRegisterMode").addEventListener("click",()=>changeCloudAuthMode("register"));
@@ -5217,7 +5239,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $("cloudPasswordToggle").setAttribute("aria-pressed",String(showing));
     });
     $("calendarOpenAccount").addEventListener("click",()=>{
-      $("cloudPanel").scrollIntoView({behavior:"smooth",block:"start"});
+      showSettingsTopic("data");$("cloudPanel").scrollIntoView({behavior:"smooth",block:"start"});
     });
 
     function configuredSupabase() {
@@ -5243,7 +5265,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         // Supabase empfiehlt, im Auth-Callback selbst keine weiteren API-Aufrufe zu awaiten.
         if(event==="PASSWORD_RECOVERY") {
           setTimeout(()=>{
-            setActiveTab("more");
+            setActiveTab("more");showSettingsTopic("data");
             $("cloudRecoveryGroup").classList.remove("hidden");
             showCloudStatus("Neues Passwort vergeben und speichern.");
           },0);
@@ -5571,6 +5593,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         store.oncomplete=resolve;store.onerror=()=>reject(store.error);
         store.onabort=()=>reject(store.error);
       });
+      localStorage.removeItem('az13:chats:account:'+id);
       localStorage.removeItem(CALENDAR_TOKEN_PREFIX+id);
       localStorage.removeItem(LAST_SYNC_PREFIX+id);
     }
@@ -5591,6 +5614,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         });
         if(error)throw error;
         await replaceLocalSnapshot(clean,Number(data),false);
+        localStorage.removeItem('az13:chats:'+activeStorageKey);chatBook=null;bookOwner=null;assistantChatHistory=[];
         localStorage.removeItem(calendarTokenKey());cloudCalendarLink='';$('cloudCalendarUrl').value='';
         $('cloudClearConfirm').value='';cloudConflict=false;cloudSyncQueued=false;
         markCloudSynced();showStatus(out,'Kontodaten erfolgreich gelöscht. Dein Login bleibt erhalten.','success');
@@ -5792,6 +5816,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     async function initialize() {
       document.body.inert = true;
       try {
+        setupWorkspaceViews();
         db = await openDatabase();
         db.onversionchange = () => { db.close(); alert("Die App wurde aktualisiert. Bitte neu laden."); };
         const saved = await loadState();
@@ -5815,6 +5840,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         renderAll();
         clearDeprecatedCalendarSecrets();
         await restoreStoredCloudSession();
+        if(activeTab!=="more")setActiveTab('overview');
 
         let lastDay = localDateString();
         setInterval(() => {
@@ -5919,7 +5945,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $('aiFriday').max=String(options.planMax);$('aiFriday').value=options.planFriday;
     }
     function openAssistSettings(){
-      setActiveTab('more');$('aiSettingsDetails').open=true;$('aiPreferences').scrollIntoView({block:'start',behavior:'smooth'});
+      setActiveTab('more');showSettingsTopic('assistant');$('aiSettingsDetails').open=true;$('aiPreferences').scrollIntoView({block:'start',behavior:'smooth'});
     }
     function infoCard(host,title,value,detail){
       const article=document.createElement('article');article.className='assist-insight';
@@ -5954,13 +5980,6 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         selectedCalendarDate=issue.date;selectedMonth=issue.date.slice(0,7);setActiveTab('calendar');renderAll();
       });
       if(issues.length>2)addAction('todayAssistanceContent','Alle '+issues.length+' Hinweise ansehen',()=>openHelper('Checks'));
-      const end=[monthEnd(selectedMonth),today].sort()[0],previous=addMonths(selectedMonth,-1);
-      const prevEnd=[monthEnd(previous),previous+end.slice(7)].sort()[0];
-      $('monthAssistance').classList.toggle('hidden',!enabled('Report')||selectedMonth>currentMonth());
-      if(enabled('Report')){
-        message('monthAssistanceContent',reportText(selectedMonth+'-01',end,previous+'-01',selectedMonth===currentMonth()?prevEnd:monthEnd(previous)));
-        addAction('monthAssistanceContent','Monatsauswertung öffnen',()=>{setActiveTab('analytics');$('analysisYear').value=selectedMonth.slice(0,4);renderAnalytics();$('aiMonth').value=selectedMonth;renderSmartReports(+selectedMonth.slice(0,4));$('smartReport').open=true;$('smartReport').scrollIntoView({block:'start'});});
-      }
     }
     function renderPlanDraft(){
       if(!planDraft)return;
@@ -6049,7 +6068,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       finally{onlinePending=false;}
     }
     async function maybeAutoReport(){
-      if(activeTab!=='analytics'||!enabled('Online')||!enabled('Report')||!assistOptions().autoReports||onlinePending||!cloudSession)return;
+      if(activeTab!=='details'||!enabled('Online')||!enabled('Report')||!assistOptions().autoReports||onlinePending||!cloudSession)return;
       const key=activeStorageKey+'|'+$('aiMonthly').textContent+'|'+$('aiYearly').textContent;
       if(narrativeCache.has(key)){message('aiNarrative',narrativeCache.get(key));return;}
       if(autoReportAttempts.has(key))return;
@@ -6137,9 +6156,11 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }
       if(m<=currentMonth()){
         if(creditedAbsence)story.push('Zusätzlich zum Arbeiten wurden '+displayTime(creditedAbsence)+' aus Urlaub, Krankheit und Feiertagen angerechnet.');
-        if(monthIsClosed(m))story.push('Monatsveränderung deines Zeitkontos: '+signedHoursText(stats.delta)+'.');
-        else story.push('Der Monat ist noch nicht abgeschlossen; eine endgültige Überstundenbilanz gibt es erst danach.');
+        if(monthIsClosed(m)&&m>=state.settings.accountStartMonth)story.push('Monatsveränderung deines Zeitkontos: '+signedHoursText(stats.delta)+'.');
+        else if(!monthIsClosed(m))story.push('Der Monat ist noch nicht abgeschlossen; eine endgültige Überstundenbilanz gibt es erst danach.');
       }
+      $('monthWorkStory').hidden=false;$('monthWorkStory').textContent=story[0];
+      $('monthCompareStory').textContent=total.n&&previous.n?story[1]:'';
       $('aiMonthly').innerHTML=story.map(t=>'<p>'+escapeHtml(t)+'</p>').join('');
       const compare=[{month:comparison,to:prevEnd},{month:m,to:periodEnd}].map(({month,to})=>{
         const data=describePeriod(month+'-01',to);
@@ -6340,7 +6361,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     }
     function openHelper(key) {
       if(!enabled(key))return 'Diese Funktion ist in deinen Einstellungen ausgeschaltet.';
-      setActiveTab(['Leave','Plan'].includes(key)?'planning':'analytics');
+      setActiveTab(['Leave','Plan'].includes(key)?'planning':key==='Report'?'details':'analytics');
       const el=$('smart'+key);el.open=true;el.scrollIntoView({block:'start'});
       return 'Bereich geöffnet.';
     }
@@ -6371,7 +6392,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const target=s.match(/(-?\d+(?:[.,]\d+)?)\s*(?:stunden\s+)?überstunden/);
       if(target&&/ziel|bis|müsste|möchte/.test(s))return {kind:'goal',month:named||(/jahresende/.test(s)?year+'-12':now),goal:Number(target[1].replace(',','.')),additional:/aufbauen|zusätzlich|weitere/.test(s),friday:friday?Number(friday[1].replace(',','.')):null};
       if(!named&&!count&&!/heute|gestern|woche|monat|jahr|20\d{2}|21\d{2}/.test(s)){
-        const selected=$('analysisYear').value||now.slice(0,4);from=selected+'-01-01';to=[selected+'-12-31',today].sort()[0];
+        const selected=$('analysisYear').value||now.slice(0,4);
+        if(activeTab==='details'){from=selectedMonth+'-01';to=[monthEnd(selectedMonth),today].sort()[0];}
+        else if(activeTab==='calendar'){from=to=selectedCalendarDate;}
+        else {from=selected+'-01-01';to=[selected+'-12-31',today].sort()[0];}
       }
       if(/urlaub|frei haben/.test(s)){
         const amount=s.match(/(\d+|zehn|sieben|vierzehn)\s+tage/);
@@ -6444,8 +6468,8 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         $('aiEvidence').classList.add('hidden');message('aiEvidenceText','');
         for(const id of ['aiLeaves','aiAnswer','aiAnswerActions','aiNarrative','aiEntryMsg'])message(id,'');
         if(contextStamp.split('|')[0]!==activeStorageKey){
-          if(typeof assistantChatHistory!=='undefined'){assistantChatHistory=[];assistantOwner=activeStorageKey;message('aiConversation','');$('assistantWelcome').classList.remove('hidden');}
-          $('aiEntry').value='';$('aiQuestion').value='';
+          if(typeof assistantChatHistory!=='undefined'){assistantChatHistory=[];assistantOwner=activeStorageKey;chatBook=null;bookOwner=null;message('aiConversation','');$('assistantWelcome').classList.remove('hidden');message('chatList','');$('assistantOverlay').classList.add('hidden');document.body.style.overflow='';}
+          $('aiBatchPreview').replaceChildren();$('aiEntry').value='';$('aiQuestion').value='';
           $('aiTarget').value=15;$('aiFriday').value=6;$('aiDeadline').value=currentMonth();
           $('aiPlanMode').value='delta';reportYearScope='';$('aiMonth').value=addMonths(currentMonth(),-1);
           $('aiPlanRequest').value='';$('aiLeaveRequest').value='';message('aiAnswerActions','');narrativeCache.clear();autoReportAttempts.clear();
@@ -6457,8 +6481,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         $('aiSwitch'+key).checked=enabled(key);
         if(key!=='Online')$('smart'+key).classList.toggle('hidden',!enabled(key));
       }
+      $('monthWorkStory').hidden=!enabled('Report');$('aiYearly').hidden=!enabled('Report');
+      for(const id of ['calendarAssistantBtn','monthAssistantBtn','planningAssistantBtn'])if($(id))$(id).hidden=!enabled('Chat');
       $('aiOnline').hidden=true; // Kein zweiter, missverständlicher Antwortmodus im Chat.
-      $('headerAssistant').classList.toggle('hidden',!enabled('Chat'));$('todayAskAssistant').classList.toggle('hidden',!enabled('Chat'));$('analyticsAskAssistant').classList.toggle('hidden',!enabled('Chat'));
+      $('headerAssistant').classList.toggle('hidden',!enabled('Chat'));$('analyticsAskAssistant').classList.toggle('hidden',!enabled('Chat'));
       $('aiAsk').disabled=!enabled('Chat');
       $('aiNarrate').disabled=!enabled('Online');$('aiNarrate').hidden=!enabled('Online');
       if(!enabled('Entry'))speech?.abort();
@@ -6475,7 +6501,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const row=document.createElement('div');row.className='assist-setting';
       const text=document.createElement('div'),label=document.createElement('label'),hint=document.createElement('p'),box=document.createElement('input');
       box.type='checkbox';box.id='aiSwitch'+key;label.htmlFor=box.id;label.textContent=name;
-      hint.textContent=({Chat:'Fragen zu deiner Zeit und konkrete nächste Schritte.',Entry:'Sätze oder Diktat vor dem Speichern prüfen.',Checks:'Auffällige Buchungen direkt auf Heute und im Kalender finden.',Report:'Entwicklungen in Analysen und Monatsdetails erklären.',Template:'Deine üblichen Schichten aus Buchungen lernen.',Leave:'Freie Zeiträume mit deinem Resturlaub vergleichen.',Online:'Freie Fragen mit KI beantworten und Spracheingaben verstehen. Benötigt Cloud-Anmeldung und OpenRouter.'})[key];
+      hint.textContent=({Chat:'Fragen zu deiner Zeit und konkrete nächste Schritte.',Entry:'Sätze oder Diktat vor dem Speichern prüfen.',Checks:'Auffällige Buchungen direkt auf Heute und im Kalender finden.',Report:'Entwicklungen in Analysen und Monatsdetails erklären.',Template:'Deine üblichen Schichten aus Buchungen lernen.',Leave:'Freie Zeiträume mit deinem Resturlaub vergleichen.',Online:'Freie KI-Fragen und KI-Spracherkennung. Benötigt Cloud-Anmeldung und eingerichtete KI-Dienste.'})[key];
       text.append(label,hint);row.append(text,box);$('aiSwitches').append(row);
       box.addEventListener('change',withWriteLock(async()=>{
         const previous=state.settings.assistance;
@@ -6502,7 +6528,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
           const owner=activeStorageKey,generation=onlineGeneration;
           const result=await invokeAssistant('entries',input);
           if(owner!==activeStorageKey||generation!==onlineGeneration){message('aiEntryMsg','Daten wurden verändert. Bitte Eingabe erneut prüfen.');return;}
-          if(!Array.isArray(result.entries)||!result.entries.length||!result.entries.every(validAiShift))
+          if(!Array.isArray(result.entries)||!result.entries.length||result.entries.length>14||(result.entries.length===1&&!validAiShift(result.entries[0]))||result.entries.some(r=>!r||typeof r!=='object'))
             throw Error(result.question||'Bitte Datum, Beginn, Ende und Pause genauer angeben.');
           if(result.entries.length===1){const r=result.entries[0];fillManual(r.date,r);
             message('aiEntryMsg',displayDay(r.date)+' · '+r.start+'–'+r.end+' · '+r.breakMinutes+' Minuten Pause. Bitte Eintrag prüfen und speichern.');
@@ -6517,56 +6543,120 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }finally{entryInterpreting=false;action.disabled=false;action.textContent=oldLabel;}
     }
     $('aiFill').addEventListener('click',()=>void fillFromNaturalLanguage());
-    const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-    $('aiMic').hidden=!Recognition;
-    message('aiMicHint',Recognition?'Beim Diktieren kann der Sprachdienst deines Browsers Audio verarbeiten.':'Zum Diktieren das Mikrofon der Bildschirmtastatur verwenden.');
-    $('aiMic').addEventListener('click',()=>{
+    const MAX_DICTATION_MS=45000;
+    function transcriptionMessage(target,text){
+      if(target==='entry')message('aiEntryMsg',text);
+      else $('assistantStatus').textContent=text;
+    }
+    function recordingButton(target){return $(target==='entry'?'aiMic':'assistantMic');}
+    async function toggleAiRecording(target){
       if(speech){speech.stop();return;}
+      if(!enabled('Online')||!cloudSession){transcriptionMessage(target,'Für die KI-Spracherkennung bitte Online-KI aktivieren und im Cloud-Konto anmelden.');return;}
+      if(!navigator.onLine){transcriptionMessage(target,'Ohne Internetverbindung ist die KI-Spracherkennung nicht verfügbar.');return;}
+      if(!window.isSecureContext){transcriptionMessage(target,'Die Mikrofonaufnahme benötigt HTTPS. Öffne die installierte App oder die sichere Website.');return;}
+      if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){transcriptionMessage(target,'Dein Browser unterstützt die Aufnahme nicht. Nutze das Mikrofon der iPhone-Tastatur.');return;}
+      let stream;
+      const button=recordingButton(target);
+      try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});}
+      catch(error){transcriptionMessage(target,error?.name==='NotAllowedError'?'Bitte erlaube den Mikrofonzugriff in den Safari-Einstellungen.':'Mikrofon konnte nicht gestartet werden. '+(error?.message||''));return;}
+      const candidates=['audio/mp4','audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus'];
+      const mime=candidates.find(type=>MediaRecorder.isTypeSupported(type))||'';
+      let recorder;
+      try{recorder=new MediaRecorder(stream,mime?{mimeType:mime}:undefined);}
+      catch(error){stream.getTracks().forEach(track=>track.stop());transcriptionMessage(target,'Audioaufnahme konnte nicht gestartet werden. '+(error?.message||''));return;}
+      const fileType=recorder.mimeType||mime||'audio/mp4';
+      const ext=fileType.includes('webm')?'webm':fileType.includes('ogg')?'ogg':'m4a';
+      const chunks=[];let cancelled=false;
+      const previousButtonText=button.textContent;
+      let maxTimer;
+      const controller={
+        stop(){if(recorder.state==='recording')recorder.stop();},
+        abort(){cancelled=true;clearTimeout(maxTimer);if(recorder.state==='recording')recorder.stop();stream.getTracks().forEach(track=>track.stop());button.removeAttribute('data-recording');button.textContent=previousButtonText;}
+      };
+      speech=controller;
+      recorder.ondataavailable=event=>{if(event.data?.size)chunks.push(event.data);};
+      recorder.onerror=()=>{cancelled=true;transcriptionMessage(target,'Aufnahmefehler. Bitte erneut versuchen.');};
+      recorder.onstop=async()=>{
+        clearTimeout(maxTimer);stream.getTracks().forEach(track=>track.stop());
+        button.removeAttribute('data-recording');button.textContent=previousButtonText;
+        if(speech===controller)speech=null;
+        if(cancelled)return;
+        const audio=new Blob(chunks,{type:fileType});
+        if(audio.size<100){transcriptionMessage(target,'Keine Sprache aufgenommen. Bitte erneut versuchen.');return;}
+        if(audio.size>8*1024*1024){transcriptionMessage(target,'Aufnahme zu groß. Bitte kürzer diktieren.');return;}
+        const owner=activeStorageKey;
+        transcriptionMessage(target,'KI transkribiert deine Aufnahme …');button.disabled=true;
+        try{
+          const body=new FormData();body.append('file',new File([audio],'aufnahme.'+ext,{type:fileType}));
+          const {data,error}=await configuredSupabase().functions.invoke('arbeitszeit-transkribieren',{body});
+          if(error){let reason='';try{reason=(await error.context?.json())?.error||'';}catch{}throw Error(reason||'Spracherkennung nicht erreichbar. Prüfe im Supabase-Dashboard die Funktion arbeitszeit-transkribieren und OPENROUTER_API_KEY.');}
+          if(owner!==activeStorageKey)return;
+          const text=typeof data?.text==='string'?data.text.trim():'';
+          if(!text)throw Error('Keine verständliche Sprache erkannt.');
+          if(target==='entry'){
+            const field=$('aiEntry');field.value=[field.value.trim(),text].filter(Boolean).join(' ');
+            transcriptionMessage(target,'Text erkannt. Bitte prüfen und danach auf „Text auswerten“ tippen.');
+            $('smartEntry').open=true;field.focus();
+          }else{
+            const field=$('aiQuestion');field.value=[field.value.trim(),text].filter(Boolean).join(' ');
+            currentThread().draft=field.value;saveChats();
+            transcriptionMessage(target,'Frage erkannt. Bitte prüfen und anschließend senden.');field.focus();
+          }
+        }catch(error){if(owner===activeStorageKey)transcriptionMessage(target,error.message||'KI-Spracherkennung fehlgeschlagen.');}
+        finally{button.disabled=false;}
+      };
       try{
-        const r=new Recognition();speech=r;r.lang='de-DE';
-        r.onresult=e=>{if(speech===r&&enabled('Entry')){$('aiEntry').value=e.results[0][0].transcript;message('aiEntryMsg','Diktat erkannt. Arbeitszeit wird geprüft …');void fillFromNaturalLanguage();}};
-        r.onerror=()=>message('aiEntryMsg','Diktat nicht verfügbar. Nutze die Tastatur oder deren Mikrofon.');
-        r.onend=()=>{speech=null;message('aiMic','🎙 Diktieren');};
-        r.start();message('aiMic','Diktat beenden');
-      }catch{speech=null;message('aiEntryMsg','Bitte das Mikrofon der Tastatur verwenden.');}
-    });
+        recorder.start();button.dataset.recording='true';button.textContent='Aufnahme stoppen';
+        transcriptionMessage(target,'Aufnahme läuft · Tippe zum Beenden.');
+        maxTimer=setTimeout(()=>controller.stop(),MAX_DICTATION_MS);
+      }catch(error){controller.abort();speech=null;transcriptionMessage(target,'Aufnahme fehlgeschlagen. Bitte erneut versuchen.');}
+    }
+    $('aiMic').addEventListener('click',()=>void toggleAiRecording('entry'));
+    $('aiMic').title='Aufnehmen und mit KI transkribieren';
+    message('aiMicHint','Aufnahme → OpenRouter-Spracherkennung → Text prüfen. Kein automatisches Speichern.');
     $('aiMonthPrev').addEventListener('click',()=>moveReportMonth(-1));$('aiMonthNext').addEventListener('click',()=>moveReportMonth(1));
-    let assistantChatHistory=[], assistantOwner='', chatPending=false,assistantRestoreFocus=null;
+    let assistantChatHistory=[], assistantOwner='',assistantRestoreFocus=null;
     function openChat(){
       if(!enabled('Chat'))return;
       assistantRestoreFocus=document.activeElement;
       $('assistantOverlay').classList.remove('hidden');
       $('assistantStatus').textContent=enabled('Online')?(cloudSession?'Online-KI aktiv · Zeitdaten werden für diese Frage übertragen.':'Online-KI braucht eine Cloud-Anmeldung. Einstellungen öffnen.'):'Einfache Fragen lokal · für freie Fragen Online-KI aktivieren.';
       document.body.style.overflow='hidden';
-      updateAssistantPageContext();
+      showThreads(false);paintThread();
       $('aiQuestion').focus();
     }
     function updateAssistantPageContext(){
       const labels={overview:'Heute',calendar:'Kalender · '+displayDay(selectedCalendarDate),
         analytics:'Analysen · '+($('analysisYear').value||currentMonth().slice(0,4)),
-        details:'Monate · '+monthTitle(selectedMonth),
-        planning:'Schichten & Urlaub',more:'Einstellungen'};
+        details:'Monate · '+monthTitle(selectedMonth),planning:'Schichten & Urlaub',more:'Einstellungen'};
       message('assistantPageContext','Berücksichtige diese Ansicht: '+(labels[activeTab]||'Heute'));
     }
     function askFromCurrentPage(question){
       if(!enabled('Chat'))return;
-      openChat();$('aiQuestion').value=question;
-      $('aiQuestion').focus();
+      openChat();
+      if(currentThread().draft?.trim()||pendingThreads.has(currentThread().id)){
+        const thread=newThread();chatBook.threads.unshift(thread);selectThread(thread);
+      }
+      $('aiQuestion').value=question;currentThread().draft=question;saveChats();
+      if(enabled('Online')&&cloudSession){void askAssistantQuestion();$('assistantChatBody').tabIndex=-1;$('assistantChatBody').focus();}
+      else $('aiQuestion').focus();
     }
     function closeChat(){
-      $('assistantOverlay').classList.add('hidden');document.body.style.overflow='';assistantRestoreFocus?.focus?.();
+      speech?.abort();speech=null;
+      currentThread().draft=$('aiQuestion').value;saveChats();$('assistantOverlay').classList.add('hidden');document.body.style.overflow='';assistantRestoreFocus?.focus?.();
     }
-    for(const id of ['headerAssistant','todayAskAssistant','analyticsAskAssistant'])$(id).addEventListener('click',openChat);
+    $('analyticsAskAssistant').onclick=()=>askFromCurrentPage('Erkläre mir die Jahreswerte für '+$('analysisYear').value+'.');
+    for(const id of ['headerAssistant','todayAskAssistant'])$(id).addEventListener('click',openChat);
     for(const [id,section,label,question] of [
-      ['calendarAssistantBtn','calendarPanel','✦ Ausgewählten Tag fragen',()=>`Was war an ${displayDay(selectedCalendarDate)}? Erkläre die Buchungen und mögliche Besonderheiten.`],
-      ['monthAssistantBtn','detailsPanel','✦ Diesen Monat verstehen',()=>`Analysiere ${monthTitle(selectedMonth)} und vergleiche mit dem Vormonat.`],
-      ['planningAssistantBtn','planningPanel','✦ Zu Urlaub und Schichten fragen',()=>`Wie viel Resturlaub steht mir zur Verfügung, welche geplanten Schichten habe ich und was läuft bald ab?`]
+      ['calendarAssistantBtn','calendarPanel','Tag erklären',()=>`Vergleiche Plan und gebuchte Nettozeit. Was war an ${displayDay(selectedCalendarDate)}? Erkläre die Buchungen und mögliche Besonderheiten.`],
+      ['monthAssistantBtn','detailsPanel','Mit Vormonat vergleichen',()=>`Analysiere ${monthTitle(selectedMonth)} und vergleiche mit dem Vormonat.`],
+      ['planningAssistantBtn','planningPanel','Urlaub und Schichten erklären',()=>`Wie viel Resturlaub steht mir zur Verfügung, welche geplanten Schichten habe ich und was läuft bald ab?`]
     ]){
       const target=$(section);
       if(!target)continue;
       const button=document.createElement('button');button.id=id;button.type='button';button.className='secondary context-ask-button';button.textContent=label;
       button.addEventListener('click',()=>askFromCurrentPage(question()));
-      if(target.firstElementChild)target.insertBefore(button,target.firstElementChild);else target.append(button);
+      (section==='calendarPanel'?$('selectedDayPanel'):section==='detailsPanel'?$('monthHero'):target).append(button);
     }
     $('assistantClose').addEventListener('click',closeChat);
     $('assistantOverlay').addEventListener('click',e=>{if(e.target===$('assistantOverlay'))closeChat();});
@@ -6632,7 +6722,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const perDay=[...new Set([...prioritizedDays,...allDays])].slice(0,1200)
         .map(([date,d])=>({date,netHours:r2(d.minutes/60),breakMinutes:d.pause,entries:d.rows.length}));
       const pageContext={page:activeTab,selectedMonth,selectedCalendarDate,
-        analysisYear:year,planningMonth:$('workPlanMonth')?.value||currentMonth(),
+        analysisYear:year,analysisMode:activeTab==='details'?'month':activeTab==='analytics'?'year':null,
+        reportMonth:activeTab==='details'?selectedMonth:null,comparisonMonth:activeTab==='details'?addMonths(selectedMonth,-1):null,
+        selectedDayPlan:dayComparison(selectedCalendarDate),planningMonth:$('workPlanMonth')?.value||currentMonth(),
         selectedDayBookings:state.records.filter(r=>r.date===selectedCalendarDate).map(r=>({type:r.type,date:r.date,...(r.type==='work'?{start:r.start||null,end:r.end||null,breakMinutes:r.breakMinutes||0,netHours:r2(r.hours)}:{days:r.days||0})}))};
       const y=Number(today.slice(0,4)),vacation=vacationBreakdown(y);
       const data={today,selectedAnalysisYear:year,pageContext,
@@ -6686,13 +6778,23 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         });
       }else if(proposal.kind==='edit_break'&&validDate(proposal.date)&&Number.isInteger(proposal.breakMinutes)&&proposal.breakMinutes>=0){
         const work=state.records.filter(r=>r.date===proposal.date&&r.type==='work');
+        if(work.length>1){
+          for(const item of work){
+            const duration=Math.round(item.hours*60)+item.breakMinutes;
+            if(proposal.breakMinutes>=duration)continue;
+            assistantSuggestionCard(reply,item.start?item.start+'–'+item.end+' Uhr':hoursText(item.hours)+' Arbeitszeit',
+              'Pause '+item.breakMinutes+' → '+proposal.breakMinutes+' Min. · Netto '+fmtMin(duration-proposal.breakMinutes),
+              'Diesen Abschnitt prüfen',()=>{closeChat();openEditor(item.id);$('breakMinutes').value=String(proposal.breakMinutes);});
+          }
+          return;
+        }
         if(work.length!==1){assistantSuggestionCard(reply,'Änderung noch unklar',
           'An diesem Datum gibt es '+work.length+' Arbeitsbuchungen. Bitte öffne den Tag im Kalender und wähle den richtigen Eintrag.','Im Kalender ansehen',()=>{
             closeChat();selectedCalendarDate=proposal.date;selectedMonth=proposal.date.slice(0,7);setActiveTab('calendar');renderAll();
           });return;}
         const item=work[0],duration=item.mode==='range'?timeToMinutes(item.end)-timeToMinutes(item.start):Math.round((item.hours+item.breakMinutes/60)*60);
         if(proposal.breakMinutes>=duration)return;
-        assistantSuggestionCard(reply,'Pause ändern',displayDay(item.date)+': '+item.breakMinutes+' auf '+proposal.breakMinutes+' Minuten.','Änderung im Formular prüfen',()=>{
+        assistantSuggestionCard(reply,'Pause ändern',displayDay(item.date)+': '+item.breakMinutes+' auf '+proposal.breakMinutes+' Minuten · Netto '+fmtMin(duration-proposal.breakMinutes),'Änderung im Formular prüfen',()=>{
           closeChat();openEditor(item.id);$('breakMinutes').value=String(proposal.breakMinutes);
           message('entryStatus','KI-Vorschlag eingesetzt. Prüfe die Angaben und tippe auf „Änderungen speichern“.');
         });
@@ -6702,19 +6804,19 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         const description=proposal.mode==='none'?'Resturlaub nicht übertragen':proposal.mode==='unlimited'?'Resturlaub unbegrenzt übertragen':
           'Resturlaub bis '+date.slice(3)+'.'+date.slice(0,2)+'. des Folgejahres übertragen';
         assistantSuggestionCard(reply,'Urlaubsregel anpassen',description,'Einstellungen prüfen',()=>{
-          closeChat();setActiveTab('more');$('settingsContent').classList.remove('hidden');$('settingsToggle').setAttribute('aria-expanded','true');
+          closeChat();setActiveTab('more');showSettingsTopic('work');$('settingsContent').classList.remove('hidden');$('settingsToggle').setAttribute('aria-expanded','true');
           $('settingsToggle').textContent='Schließen';$('vacationCarryoverMode').value=proposal.mode;
           if(proposal.mode==='custom'){$('vacationCarryoverMonth').value=date.slice(0,2);$('vacationCarryoverDay').value=date.slice(3);}
           updateCarryoverPreview();$('vacationCarryoverPreview').scrollIntoView({block:'center'});
           message('settingsStatus','KI-Vorschlag zur Prüfung geladen. Erst „Einstellungen speichern“ übernimmt ihn.');
         });
-      }else if(proposal.kind==='entry_batch'&&Array.isArray(proposal.entries)&&proposal.entries.length>=2&&proposal.entries.length<=14&&proposal.entries.every(validAiShift)){
+      }else if(proposal.kind==='entry_batch'&&Array.isArray(proposal.entries)&&proposal.entries.length>=2&&proposal.entries.length<=14&&proposal.entries.every(r=>r&&typeof r==='object')){
         const rows=proposal.entries.map(x=>({...x}));
-        assistantSuggestionCard(reply,rows.length+' Arbeitszeiten vorgeschlagen',rows.map(x=>displayDay(x.date)+': '+x.start+'–'+x.end+' ('+x.breakMinutes+' Min. Pause)').join(' · '),
+        assistantSuggestionCard(reply,rows.length+' Arbeitszeiten vorgeschlagen',rows.map(x=>displayDay(x.date)+': '+x.start+'–'+x.end+' ('+(x.breakMinutes===null?'Pause ergänzen':x.breakMinutes+' Min. Pause')+')').join(' · '),
           'Alle Einträge vor dem Speichern prüfen',()=>{closeChat();showAiBatchPreview(rows);setActiveTab('overview');$('smartEntry').open=true;$('smartEntry').scrollIntoView({block:'center'});});
       }
     }
-    function renderAssistantChart(reply,spec){
+    function chartPoints(spec){
       if(!spec||!['worked','credited','delta','balance'].includes(spec.metric)||!Number.isInteger(spec.months)||spec.months<2||spec.months>12)return;
       const end=validMonth(spec.endMonth)?spec.endMonth:(spec.metric==='balance'?addMonths(currentMonth(),-1):currentMonth());
       if(end>currentMonth())return;
@@ -6725,6 +6827,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
           spec.metric==='delta'?m.delta:(monthIsClosed(month)?closingBalanceForMonth(month):null);
         data.push({month,value});
       }
+      return data;
+    }
+    function renderAssistantChart(reply,spec,points){
+      const data=points||chartPoints(spec);if(!data?.length)return;
       const max=Math.max(1,...data.map(x=>Math.abs(x.value||0)));
       const node=document.createElement('section');node.className='assistant-chart';
       const heading=document.createElement('strong');heading.textContent=({worked:'Tatsächlich gearbeitet',credited:'Angerechnete Zeit',delta:'Monatliche Überstundenänderung',balance:'Zeitkonto am Monatsende'})[spec.metric]+' · Stunden';node.append(heading);
@@ -6742,13 +6848,24 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     function showAiBatchPreview(rows){
       const host=$('aiBatchPreview');host.replaceChildren();
       const title=document.createElement('strong');title.textContent=rows.length+' vorgeschlagene Arbeitszeiten';host.append(title);
-      const list=document.createElement('ul');for(const item of rows){const li=document.createElement('li');li.textContent=displayDay(item.date)+' · '+item.start+'–'+item.end+' · '+item.breakMinutes+' Min. Pause';list.append(li);}host.append(list);
+      const fields=rows.map((item,index)=>{
+        const group=document.createElement('fieldset');group.className='batch-row';
+        group.innerHTML=`<legend>Tag ${index+1}</legend><label><input type="checkbox" checked data-use> Übernehmen</label>
+          <label>Datum<input type="date" data-field="date"></label><label>Beginn<input type="time" data-field="start"></label>
+          <label>Ende<input type="time" data-field="end"></label><label>Pause (Min.)<input type="number" min="0" max="1439" step="1" data-field="breakMinutes"></label>`;
+        group.querySelectorAll('[data-field]').forEach(input=>input.value=item[input.dataset.field]??'');
+        host.append(group);return group;
+      });
       const note=document.createElement('p');note.className='hint';note.textContent='Die vorgeschlagenen Tage werden erst nach deinem Klick gespeichert. Bestehende und überschneidende Einträge werden nicht überschrieben.';host.append(note);
-      const action=document.createElement('button');action.type='button';action.textContent=rows.length+' Zeiten verbindlich speichern';host.append(action);
+      const action=document.createElement('button');action.type='button';action.textContent='Ausgewählte Zeiten speichern';host.append(action);
       const cancel=document.createElement('button');cancel.type='button';cancel.className='secondary';cancel.textContent='Verwerfen';host.append(cancel);cancel.addEventListener('click',()=>host.replaceChildren());
       const initialOwner=activeStorageKey,initialRevision=revision;
       action.addEventListener('click',withWriteLock(async()=>{
         if(initialOwner!==activeStorageKey||initialRevision!==revision)throw Error('Der Datenbestand hat sich geändert. Bitte erneut prüfen.');
+        const rows=fields.filter(g=>g.querySelector('[data-use]').checked).map(g=>{
+          const item={};g.querySelectorAll('[data-field]').forEach(f=>item[f.dataset.field]=f.type==='number'?f.valueAsNumber:f.value);return item;
+        });
+        if(!rows.length)throw Error('Wähle mindestens einen Tag aus.');
         if(!rows.every(validAiShift))throw Error('Die vorgeschlagenen Zeiten sind nicht eindeutig.');
         const ids=new Set(),records=rows.map(item=>({id:makeId(),date:item.date,type:'work',mode:'range',start:item.start,end:item.end,
           breakMinutes:item.breakMinutes,hours:(timeToMinutes(item.end)-timeToMinutes(item.start)-item.breakMinutes)/60}));
@@ -6765,65 +6882,104 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         catch(err){state.records=old;throw err;}
       }));
     }
-    async function askAssistantQuestion(){
-      const q=$('aiQuestion').value.trim();if(!q||chatPending)return;
-      if(assistantOwner!==activeStorageKey){assistantChatHistory=[];assistantOwner=activeStorageKey;message('aiConversation','');}
-      appendAssistantMessage('user',q);$('aiQuestion').value='';
-      const reply=appendAssistantMessage('bot','Wird ausgewertet …',true);
-      const owner=activeStorageKey,generation=onlineGeneration;
-      chatPending=true;$('aiAsk').disabled=true;$('aiOnline').disabled=true;
-      try{
-        let answer;
-        if(enabled('Online')){
-          if(!cloudSession)throw Error('Für KI-Fragen zuerst im Cloud-Konto anmelden. Du kannst die App ansonsten weiterhin lokal nutzen.');
-          const response=await invokeAssistant('chat',q,{context:assistantDataContext(q),history:assistantChatHistory.slice(-8)});
-          if(typeof response.text!=='string'||!response.text.trim())throw Error('Die KI konnte die Frage nicht beantworten.');
-          answer=response.text.trim();
-          reply.proposal=response.proposal;
-          reply.chart=response.chart;
-        }else{
-          answer=applyAssistantIntent(localIntent(q));
-          if(localIntent(q).kind==='unknown')answer='Ohne Online-KI kann ich nur einfache, vordefinierte Zeitfragen auswerten. Aktiviere die KI in Einstellungen → KI-Assistent & intelligente Hilfen, um auch frei formulierte Fragen zu stellen.';
-        }
-        if(owner!==activeStorageKey){reply.node.remove();return;}
-        if(generation!==onlineGeneration){
-          reply.body.textContent='Deine Zeitdaten haben sich während der Anfrage geändert. Bitte stelle die Frage erneut.';
-          reply.node.classList.remove('pending');return;
-        }
-        reply.body.textContent=answer;reply.node.classList.remove('pending');message('aiAnswer',answer);
-        applyAssistantProposal(reply,reply.proposal);renderAssistantChart(reply,reply.chart);
-        assistantChatHistory.push({role:'user',content:q},{role:'assistant',content:answer});
-        assistantChatHistory=assistantChatHistory.slice(-10);
-      }catch(e){
-        if(owner!==activeStorageKey)reply.node.remove();
-        else {reply.body.textContent=generation===onlineGeneration?e.message:'Die Daten haben sich geändert. Bitte erneut fragen.';reply.node.classList.remove('pending');if(generation===onlineGeneration)message('aiAnswer',e.message);}
+    let chatBook=null,bookOwner=null;
+    const pendingThreads=new Set();
+    function newThread(){
+      return {id:makeId(),updated:Date.now(),draft:'',messages:[]};
+    }
+    function ensureBook(){
+      if(chatBook && bookOwner===activeStorageKey)return;
+      bookOwner=activeStorageKey;
+      chatBook=readPreference('chats:'+bookOwner,null);
+      if(!chatBook||!Array.isArray(chatBook.threads)||!chatBook.threads.length){
+        const first=newThread();
+        if(assistantOwner===bookOwner)first.messages=assistantChatHistory.slice();
+        chatBook={active:first.id,threads:[first]};
       }
-      finally{chatPending=false;$('aiAsk').disabled=!enabled('Chat');$('aiOnline').disabled=false;$('assistantChatBody').scrollTop=$('assistantChatBody').scrollHeight;}
+      if(!chatBook.threads.some(t=>t.id===chatBook.active))chatBook.active=chatBook.threads[0].id;
+      assistantOwner=bookOwner;
+    }
+    function saveChats(){
+      if(bookOwner===activeStorageKey&&!savePreference('chats:'+bookOwner,chatBook))
+        message('assistantStatus','Gerätespeicher nicht verfügbar. Dieser Verlauf bleibt für diese Sitzung offen.');
+    }
+    function currentThread(){ensureBook();return chatBook.threads.find(t=>t.id===chatBook.active);}
+    function showThreads(show){
+      $('chatList').hidden=!show;$('chatListToggle').setAttribute('aria-expanded',String(show));
+      if(!show)return;
+      $('chatList').replaceChildren();
+      for(const thread of [...chatBook.threads].sort((a,b)=>b.updated-a.updated)){
+        const b=document.createElement('button');b.className='secondary';b.type='button';
+        const title=thread.messages.find(m=>m.role==='user')?.content||'Neuer Chat';
+        b.textContent=title.slice(0,55)+' · '+new Date(thread.updated).toLocaleDateString('de-DE');
+        b.setAttribute('aria-pressed',String(thread.id===chatBook.active));
+        b.onclick=()=>selectThread(thread);$('chatList').append(b);
+      }
+    }
+    function selectThread(thread){
+      speech?.abort();chatBook.active=thread.id;saveChats();showThreads(false);paintThread();
+    }
+    function paintThread(){
+      const thread=currentThread();assistantChatHistory=thread.messages.filter(m=>!m.error).map(({role,content})=>({role,content}));
+      $('aiConversation').replaceChildren();$('aiAnswerActions').replaceChildren();message('aiAnswer','');$('aiEvidence').classList.add('hidden');
+      $('assistantWelcome').classList.toggle('hidden',!!thread.messages.length);
+      for(const m of thread.messages){
+        const reply=appendAssistantMessage(m.role==='user'?'user':'bot',m.content);
+        if(m.context)reply.node.querySelector('.who').append(' · '+m.context);
+        if(m.proposal && m.stamp===runtimeStamp+':'+revision)applyAssistantProposal(reply,m.proposal);
+        if(m.chart)renderAssistantChart(reply,m.chart,m.points);
+      }
+      if(pendingThreads.has(thread.id))appendAssistantMessage('bot','Wird ausgewertet …',true);
+      $('aiAsk').disabled=pendingThreads.has(thread.id)||!enabled('Chat');
+      $('aiQuestion').value=thread.draft||'';
+      updateAssistantPageContext();
+    }
+    const runtimeStamp=Date.now().toString(36);
+    $('chatNew').onclick=()=>{
+      ensureBook();const thread=newThread();chatBook.threads.unshift(thread);selectThread(thread);$('aiQuestion').focus();
+    };
+    $('chatListToggle').onclick=()=>{ensureBook();showThreads($('chatList').hidden);};
+    $('aiQuestion').addEventListener('input',()=>{currentThread().draft=$('aiQuestion').value;saveChats();});
+    async function askAssistantQuestion(){
+      const q=$('aiQuestion').value.trim(),thread=currentThread();
+      if(!q||pendingThreads.has(thread.id)||!enabled('Chat'))return;
+      const owner=bookOwner,startRevision=revision;
+      const history=thread.messages.filter(m=>!m.error).slice(-8).map(({role,content,context})=>({role,content:(context?'['+context+'] '+content:content).slice(0,5000)}));
+      const context=assistantDataContext(q),label=$('assistantPageContext').textContent.replace('Berücksichtige diese Ansicht: ','');
+      thread.messages.push({role:'user',content:q,context:label});
+      thread.updated=Date.now();thread.draft='';pendingThreads.add(thread.id);paintThread();saveChats();
+      let result;
+      try{
+        if(enabled('Online')){
+          const response=await invokeAssistant('chat',q,{context,history});
+          if(typeof response.text!=='string'||!response.text.trim())throw Error('Die KI konnte die Frage nicht beantworten.');
+          result={role:'assistant',content:response.text.trim(),proposal:response.proposal,chart:response.chart,stamp:runtimeStamp+':'+startRevision};
+          if(result.chart)result.points=chartPoints(result.chart);
+        }else{
+          const intent=localIntent(q);
+          const compared=activeTab==='calendar'&&/plan|nettozeit|abweichung/i.test(q)?dayComparison(selectedCalendarDate):null;
+          const answer=compared?displayDay(compared.date)+': Geplant '+fmtMin(compared.netMinutes)+'. '+(compared.differenceMinutes===null?'Keine Arbeitszeit gebucht.':'Gebucht '+fmtMin(compared.bookedMinutes)+'. Abweichung '+signedHoursText(compared.differenceMinutes/60)+'.'):intent.kind==='unknown'?'Diese Frage braucht die Online-KI. Du kannst sie in den Assistenz-Einstellungen aktivieren.':applyAssistantIntent(intent);
+          result={role:'assistant',content:answer};
+        }
+        if(startRevision!==revision)throw Error('Die Zeitdaten haben sich geändert. Bitte frage erneut.');
+      }catch(error){result={role:'assistant',content:error.message,error:true};}
+      finally{pendingThreads.delete(thread.id);}
+      if(owner!==activeStorageKey||bookOwner!==owner||!chatBook?.threads.includes(thread))return;
+      thread.messages.push(result);thread.updated=Date.now();
+      if(result.error&&!thread.draft)thread.draft=q;
+      saveChats();
+      if(chatBook.active===thread.id)paintThread();
+      if(!$('chatList').hidden)showThreads(true);
     }
     for(const [label,q] of [['Überstunden','Wie hat sich mein Zeitkonto in den letzten sechs Monaten entwickelt?'],['Arbeitsrhythmus','An welchen Wochentagen arbeite ich normalerweise am längsten?'],['Urlaub','Wie viel Urlaub habe ich noch und was ist bereits gebucht?'],['Vergleichen','Wie unterscheiden sich meine letzten beiden abgeschlossenen Monate?'],['Diagramm','Zeig mir ein Diagramm meiner Arbeitsstunden der letzten sechs Monate.'],['Korrigieren','Ändere die Pause von gestern auf 30 Minuten.']])
       addAction('aiPrompts',label,()=>{$('aiQuestion').value=q;void askAssistantQuestion();});
     $('assistantForm').addEventListener('submit',e=>{e.preventDefault();void askAssistantQuestion();});
-    const chatRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-    $('assistantMic').title=chatRecognition?'Frage diktieren':'Mikrofon der iPhone-Tastatur verwenden';
-    $('assistantMic').addEventListener('click',()=>{
-      if(!chatRecognition){$('aiQuestion').focus();$('assistantStatus').textContent='Nutze das Mikrofon deiner Bildschirmtastatur.';return;}
-      if(speech){speech.stop();return;}
-      try{
-        const r=new chatRecognition();speech=r;r.lang='de-DE';r.interimResults=false;
-        r.onresult=event=>{if(speech!==r)return;$('aiQuestion').value=event.results[0][0].transcript;$('assistantStatus').textContent='Diktat erkannt. Prüfe deine Frage und tippe auf Senden.';};
-        r.onerror=()=>{$('assistantStatus').textContent='Diktat nicht möglich. Nutze das Mikrofon der Tastatur.';};
-        r.onend=()=>{if(speech===r)speech=null;$('assistantMic').textContent='🎙';};
-        r.start();$('assistantMic').textContent='■';
-      }catch{speech=null;$('aiQuestion').focus();}
-    });
-    $('aiOnline').addEventListener('click',()=>{
-      const q=$('aiQuestion').value.trim();if(!q)return;
-      try{const intent=localIntent(q);const answer=applyAssistantIntent(intent);appendAssistantMessage('user',q);appendAssistantMessage('bot',answer);message('aiAnswer',answer);$('aiQuestion').value='';}
-      catch(error){appendAssistantMessage('bot',error.message);}
-    });
+    $('assistantMic').textContent='🎙';
+    $('assistantMic').title='Frage aufnehmen und mit KI transkribieren';
+    $('assistantMic').addEventListener('click',()=>void toggleAiRecording('chat'));
     async function askOnline(action){
       if(!enabled('Online')||!enabled('Report')||onlinePending)return;
-      const input=[$('aiMonthly').textContent,$('aiYearly').textContent].join('\n');
+      const input=$('aiMonthly').textContent;
       const key=activeStorageKey+'|'+$('aiMonthly').textContent+'|'+$('aiYearly').textContent;
       const generation=++onlineGeneration,owner=activeStorageKey;
       onlinePending=true;message('aiNarrative','Deine Entwicklung wird eingeordnet …');
@@ -6902,7 +7058,188 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     $('aiQuestion').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();void askAssistantQuestion();}});
     $('aiEntry').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('aiFill').click();}});
 
+    function openMonth(month){
+      selectedMonth=month;scrollPositions.delete('details');
+      setActiveTab('details');
+    }
+    function openCalendarDate(date){
+      selectedMonth=date.slice(0,7);selectedCalendarDate=date;
+      renderAll();setActiveTab('calendar');
+    }
+    function showSettingsTopic(key){
+      const inDetail=Boolean(key);
+      for(const panel of $('morePanel').querySelectorAll('[data-topic]'))panel.hidden=panel.dataset.topic!==key;
+      $('settingsTopics').hidden=inDetail;
+      $('settingsBack').hidden=!inDetail;
+      $('settingsAccountOverview').hidden=inDetail;
+      $('morePanel').querySelector('.settings-intro').hidden=inDetail;
+      $('sectionTitle').textContent=inDetail?$('settingsTopics').querySelector('[data-open="'+key+'"] strong').textContent:'Einstellungen';
+      window.scrollTo({top:0,behavior:'instant'});
+    }
+    function wrapSettingsDetail(id,title){
+      const target=$(id);if(!target)return;
+      const parent=target.parentElement;
+      const wrapper=document.createElement('details');wrapper.className='settings-detail';
+      wrapper.id='detailWrap_'+id;wrapper.dataset.topic=target.dataset.topic||'data';
+      const summary=document.createElement('summary');summary.textContent=title;
+      wrapper.append(summary);parent.insertBefore(wrapper,target);wrapper.append(target);
+      wrapper.open=false;
+    }
+    function setupWorkspaceViews(){
+      $('moreToday').onclick=()=>{$('manualDate').value=localDateString();refreshManualPlanHint();$('manualForm').scrollIntoView({block:'start'});};
+      $('editCarryover').onclick=()=>{setActiveTab('more');showSettingsTopic('work');$('vacationCarryoverMode').focus();};
+      const topics=[
+        ['work','Arbeitszeit & Urlaub','Sollstunden, Zeitkonto, Urlaub und Übertrag','◷',['settingsForm']],
+        ['templates','Vorlagen & Erinnerungen','Zeiten speichern und an Einträge erinnern','▤',['templatePanel','automationPanel']],
+        ['appearance','Darstellung','Farben und Hell-/Dunkelmodus','◐',['appearancePanel']],
+        ['assistant','KI & Sprache','Assistent, KI-Funktionen und Diktat','✦',['aiPreferences']],
+        ['data','Konto & Daten','Synchronisation, Kalender, Sicherheit, Backups','☁',['cloudPanel','appleCalendarPanel','securityPanel','historyPanel','monthlyPdfButton','exportBackupButton']]
+      ];
+      for(const [key,title,subtitle,icon,ids] of topics){
+        const b=document.createElement('button');b.type='button';b.className='topic';b.dataset.open=key;b.dataset.icon=icon;
+        b.innerHTML='<span><strong>'+title+'</strong><small>'+subtitle+'</small></span><span aria-hidden="true">›</span>';
+        b.onclick=()=>showSettingsTopic(key);$('settingsTopics').append(b);
+        for(const id of ids){let panel=$(id);while(panel.parentElement!==$('morePanel'))panel=panel.parentElement;panel.dataset.topic=key;}
+      }
+      $('settingsBack').onclick=()=>showSettingsTopic(null);
+      $('cloudBanner').addEventListener('click',()=>{showSettingsTopic('data');$('detailWrap_cloudPanel').open=true;});
+      $('planningPanel').firstElementChild.after($('leaveBudget'));
+      $('manualForm').querySelector('.manual-head').after($('manualPlannedHint'));
+      $('manualForm').querySelector('button[type="submit"]').textContent='Arbeitszeit speichern';
+      $('manualUsePlan').textContent='Plan übernehmen';
+      $('overviewHeading').after($('closedHeroBalance'));
+      $('closedHeroBalance').after($('monthMovement'));
+      const calculation=$('accountExplanation');
+      const details=document.createElement('details');details.className='account-calculation';
+      const summary=document.createElement('summary');summary.textContent='Hinweise zur Berechnung';
+      details.append(summary);calculation.before(details);details.append(calculation);
+      // The original V12 month cards are the top-level month view again.
+      const report=$('smartReport');
+      const monthlyExtras=document.createElement('details');monthlyExtras.id='monthExtras';monthlyExtras.className='panel';
+      const monthlySummary=document.createElement('summary');monthlySummary.textContent='Monatsvergleich und KI-Auswertung';monthlyExtras.append(monthlySummary);
+      $('overviewPanel').after(monthlyExtras);monthlyExtras.append(report);
+      // In this report, period follows the selected month; no competing selector.
+      report.querySelector('.report-period-selector').hidden=true;
+      report.querySelector('.report-year-details').hidden=true;
+      const yearStory=$('aiYearly');$('monthlyChart').before(yearStory);
+      $('aiYearly').classList.add('report-story');
+      $('analyticsAskAssistant').className='secondary small';$('analyticsAskAssistant').textContent='Jahreswerte erklären';
+      $('monthlyChart').parentElement.append($('analyticsAskAssistant'));
+      $('yearMonths').onclick=e=>{const month=e.target.closest('[data-month]')?.dataset.month;if(validMonth(month))openMonth(month);};
+      $('monthOpenCalendar').onclick=()=>openCalendarDate(selectedMonth+'-01');
+      $('monthAddEntry').onclick=()=>openEntry(selectedMonth===currentMonth()?localDateString():selectedMonth+'-01');
+      // Work settings open immediately; no nested button just to get to the fields.
+      $('settingsContent').classList.remove('hidden');$('settingsToggle').setAttribute('aria-expanded','true');$('settingsToggle').hidden=true;
+      // Destructive and advanced cloud actions are available, but not mixed into the main settings list.
+      wrapSettingsDetail('cloudPanel','Cloud-Konto und Synchronisierung');
+      wrapSettingsDetail('appleCalendarPanel','Apple Kalender');
+      wrapSettingsDetail('securityPanel','Passkeys und Sicherheit');
+      wrapSettingsDetail('historyPanel','Wiederherstellung und Versionen');
+    }
+
     initialize();
   </script>
-</body>
+<style id="v14-design">
+/* V14 — all tabs purposeful, simplified iPhone layout */
+:root{--ux-radius:17px;--ux-soft:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+#homeTab,#homePanel,#homeSettings,#analysisMode,#todayAskAssistant{display:none!important}
+.app-header{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.app-header h1{margin-right:auto;letter-spacing:-.035em}
+.header-assistant,.header-settings{flex:0 0 43px;width:43px;height:43px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);padding:0;box-shadow:none}
+.header-assistant{gap:2px;color:var(--ink);border-color:var(--control-edge)}
+.header-assistant svg{width:21px;height:21px;stroke:var(--accent)}.header-assistant-label{font-weight:800;font-size:11px;letter-spacing:.02em}
+.header-assistant:focus-visible,.header-settings:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.tabs.five-tabs{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:2px}
+.tabs .tab{min-width:0;padding-inline:2px}.tabs .tab span{font-size:clamp(.60rem,2.6vw,.76rem)}
+#todayPanel{display:grid;gap:12px}#todayPanel>.today-title{margin-bottom:0}#todayPanel>.day-metrics{margin:0;order:0}#todayPanel>#manualForm{order:1}#todayPanel>#oldShift{order:2}#todayPanel>#todayAssistance{order:3}#todayPanel>#todayBookings{order:4}#todayPanel>.account-line{order:5}
+#todayPanel .manual-card{margin-top:0}#todayPanel .day-metrics>div{padding:9px 14px}
+#todayPanel .day-metrics strong{font-size:1.1rem}#todayPanel .day-metrics span{font-size:.75rem}
+#todayPanel #smartEntry summary{font-weight:730}
+#todayPanel .manual-head{gap:8px}#todayPanel .manual-footer{gap:12px}
+#todayPanel .manual-footer button{min-height:48px}
+#todayPanel #smartEntry{background:var(--surface-muted);border:1px solid var(--line);border-radius:14px}
+#todayPanel #smartEntry .entry-assist-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:8px}
+#aiMic[data-recording="true"],#assistantMic[data-recording="true"]{background:#b8304e!important;color:white!important;border-color:#b8304e!important}
+#aiMic:disabled,#assistantMic:disabled{opacity:.65}
+.view-lead{font-size:.88rem;color:var(--muted);margin:0 0 12px;line-height:1.5}
+#detailsPanel .month-bar{margin-bottom:6px}
+#detailsMonthPicker{display:none!important}
+#detailMonthBar .month-control{display:flex;align-items:center;justify-content:center}
+#detailMonthBar #detailsMonthText{font-weight:800;white-space:nowrap;font-size:1.03rem}
+.month-quick-actions{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+.month-quick-actions button{flex:1;min-width:0;min-height:43px}
+#overviewPanel>.clock-card{border-radius:20px}
+#overviewPanel .report-total{font-size:clamp(1.4rem,5vw,2rem)!important}
+#overviewPanel #closedHeroBalance{padding-top:14px;border-top:1px solid var(--line);margin-top:12px}
+#overviewPanel #monthMovement{font-weight:700;margin-top:6px}
+#overviewPanel #monthWorkStory{margin-top:8px}
+#monthExtras{margin:6px 0 15px}#monthExtras>summary{font-weight:750;padding:2px 0}
+#monthExtras #smartReport{padding:9px 0 0;margin-top:12px;border:0;box-shadow:none}
+#monthExtras #smartReport h2{font-size:1rem}
+#analyticsPanel .analysis-scope{margin-bottom:3px}
+#analyticsPanel .insight-hero{margin-top:7px}
+#analyticsPanel #yearMonths button{min-height:54px}
+#morePanel .settings-intro h2{font-size:1.45rem;letter-spacing:-.03em;margin-bottom:4px}
+#morePanel .settings-intro p{margin:0 0 12px}
+#morePanel #settingsTopics{gap:8px}
+#morePanel button.topic{position:relative;display:grid;grid-template-columns:43px minmax(0,1fr) 16px;gap:12px;align-items:center;width:100%;min-height:80px;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:none;padding:12px 14px}
+#morePanel button.topic::before{content:attr(data-icon);display:grid;place-items:center;width:43px;height:43px;border-radius:13px;color:var(--accent);background:var(--accent-light);font-size:1.14rem;font-weight:700}
+#morePanel button.topic>span:first-child{min-width:0}#morePanel button.topic strong{font-size:.95rem;line-height:1.2}#morePanel button.topic small{line-height:1.4;font-size:.78rem;margin-top:5px}
+#morePanel button.topic>span:last-child{font-size:1.4rem;color:var(--muted)}
+#settingsBack{display:block;margin:0 0 14px;padding:9px 0;border:0;background:none;color:var(--accent);font-weight:780;text-align:left}
+#settingsBack[hidden],#settingsTopics[hidden],.settings-intro[hidden],#settingsAccountOverview[hidden]{display:none!important}
+.settings-account-overview{margin-top:14px}.settings-account-overview .cloud-banner{width:100%;margin:0}
+#morePanel>[data-topic]{margin-block:8px 12px}
+#morePanel .panel h2{font-size:1.08rem}#morePanel .panel h3{font-size:1rem}
+#morePanel .settings-group,#morePanel .panel{max-width:100%;min-width:0}
+#morePanel .settings-detail{margin:0 0 12px;padding:0 12px;border-radius:16px;border:1px solid var(--line);background:var(--surface)}
+#morePanel .settings-detail>summary{padding:16px 2px;cursor:pointer;font-size:.95rem;font-weight:750}
+#morePanel .settings-detail>.panel{border:0;box-shadow:none;padding:0 2px 14px;background:transparent}
+#morePanel #settingsContent{padding-top:8px}#morePanel #settingsToggle{display:none!important}
+#morePanel input:not([type="checkbox"],[type="radio"],[type="file"]),#morePanel select{box-sizing:border-box;min-width:0;max-width:100%}
+#morePanel .appearance-mode{margin-top:13px}
+.voice-settings-note{margin:12px 0;padding:14px;background:var(--surface-muted);border:1px solid var(--line);border-radius:14px}
+.voice-settings-note p{margin:5px 0 0}
+.assistant-top{padding-right:env(safe-area-inset-right,0px)}
+@media(max-width:420px){
+  #todayPanel .manual-head{display:grid;grid-template-columns:minmax(0,1fr)}
+  #todayPanel .manual-head .manual-date{max-width:100%}
+  #todayPanel .manual-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  #todayPanel .manual-fields label{min-width:0;width:100%}
+  #todayPanel .manual-fields label input{min-width:0;width:100%;max-width:100%;box-sizing:border-box}
+  #todayPanel .manual-footer{display:flex;flex-wrap:wrap}
+  #todayPanel .manual-footer>div{flex:1;min-width:100px}
+  #todayPanel .manual-footer>button{flex:1;min-width:160px}
+  #calendarGrid .calendar-day{min-height:65px}
+  #morePanel .toolbar{flex-wrap:wrap}
+  .month-quick-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:345px){.tabs .tab span{font-size:.56rem}.header-assistant{width:40px;flex-basis:40px}.month-quick-actions{grid-template-columns:minmax(0,1fr)}}
+#morePanel button.topic strong{display:block;color:var(--ink)!important;font-weight:800}
+#morePanel .settings-intro h2{display:none}
+#morePanel #settingsAccountOverview .cloud-banner{background:var(--surface-muted);border:1px solid var(--line);color:var(--ink)}
+#morePanel #settingsAccountOverview .cloud-banner small{color:var(--muted)}
+#todayPanel .manual-card{background:var(--surface);border:1px solid var(--line);box-shadow:none}
+#todayPanel .manual-card h2{color:var(--ink)}
+#todayPanel .manual-card::before,#todayPanel .manual-card::after{display:none!important}
+#todayPanel .manual-card .manual-head{margin-bottom:4px}
+
+#morePanel button.topic strong{display:block;color:var(--ink)!important;font-weight:800}
+#morePanel .settings-intro h2{display:none}
+#morePanel #settingsAccountOverview .cloud-banner{background:var(--surface-muted);border:1px solid var(--line);color:var(--ink)}
+#morePanel #settingsAccountOverview .cloud-banner small{color:var(--muted)}
+#todayPanel .manual-card{background:var(--surface);border:1px solid var(--line);box-shadow:none}
+#todayPanel .manual-card h2{color:var(--ink)}
+#todayPanel .manual-card::before,#todayPanel .manual-card::after{display:none!important}
+#todayPanel .manual-card .manual-head{margin-bottom:4px}
+#overviewPanel .account-calculation{border:0;padding:7px 0 0;margin:8px 0}
+#overviewPanel .account-calculation summary{font-weight:720;font-size:.82rem;cursor:pointer;color:var(--accent)}
+#overviewPanel .account-calculation p{margin:10px 0 3px;line-height:1.5}
+#monthHero .context-ask-button{width:auto;min-height:35px;padding:5px 3px;margin-top:10px;border:0;background:transparent;box-shadow:none;color:var(--ink);font-size:.84rem}
+#monthHero .context-ask-button:hover{background:var(--accent-light)}
+#monthHero.report-hero{background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:none}
+#monthHero.report-hero::before,#monthHero.report-hero::after{display:none!important}
+#monthHero.report-hero #creditedMetric{color:var(--ink)}
+
+</style></body>
 </html>
