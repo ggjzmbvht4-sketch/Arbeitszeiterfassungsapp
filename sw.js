@@ -1,15 +1,14 @@
 /* Arbeitszeit PWA – versionsgeprüfter Offline-Start.
  * Cache nur die eigene HTML-Oberfläche, niemals Supabase-API-Antworten
  * oder private Apple-Kalender-Links. IndexedDB bleibt unberührt. */
-const SHELL_CACHE = 'arbeitszeit-shell-next-v4';
+const SHELL_CACHE = 'arbeitszeit-shell-next-v9';
 const SHELL_URL = new URL('./index.html', self.registration.scope).href;
 
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
-    try {
-      const cache = await caches.open(SHELL_CACHE);
-      await cache.add(new Request(SHELL_URL, {cache: 'reload'}));
-    } catch (_) { /* Ohne Netz wird beim nächsten Online-Start nachgeladen. */ }
+    // Activate only when the replacement shell is ready for offline use.
+    const cache = await caches.open(SHELL_CACHE);
+    await cache.add(new Request(SHELL_URL, {cache: 'reload'}));
     await self.skipWaiting();
   })());
 });

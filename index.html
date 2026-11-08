@@ -523,7 +523,7 @@ html{background:var(--frost)}body{background:radial-gradient(ellipse at 3% 20%,#
 .clock-card{position:relative;isolation:isolate;overflow:hidden;padding:clamp(23px,5vw,40px);border-radius:30px;color:#144a46;background:radial-gradient(ellipse at 4% 15%,#effdfc 0,transparent 58%),linear-gradient(118deg,#bce2df,#c3eeea 72%,#dcf7f5);border:1px solid var(--rim);box-shadow:inset 0 1px 2px white,0 12px 32px #20615c16}.clock-card:before{content:"";position:absolute;z-index:-1;right:-100px;top:-124px;width:270px;height:310px;transform:rotate(37deg);border-radius:45%;border:2px solid #ffffff80;box-shadow:inset 4px 1px 22px #ffffff88, -8px 5px 28px #71c2bb37;background:linear-gradient(130deg,#ffffff66,#ffffff00 57%,#ffffff77)}
 .clock-state{display:inline-flex;align-items:center;gap:8px;border-radius:24px;background:#ffffffa6;padding:7px 13px;font-size:.84rem;font-weight:650}.clock-state:before{content:"";width:8px;height:8px;border-radius:100%;background:#658986}.clock-state.working:before{background:#187971}.clock-state.paused:before{background:#189f94}.clock-value{font-size:clamp(4.5rem,13vw,7.5rem);line-height:1.08;margin-top:15px;font-weight:600;letter-spacing:-.08em;font-variant-numeric:tabular-nums}.clock-caption{color:#41706c}.clock-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}.clock-actions button{border-radius:25px}.clock-actions button:first-child{background:#1b5651;border-color:#1b5651}.clock-actions .secondary{color:#195752;background:#ffffffb8;border-color:#ffffffbd}#clockMessage:not(:empty){margin-top:12px}
 .day-metrics{display:grid;grid-template-columns:repeat(3,1fr);margin:14px 0;padding:16px 4px}.day-metrics div{padding:0 10px}.day-metrics div+div{border-left:1px solid var(--line)}.day-metrics strong{display:block;font-size:clamp(.95rem,3vw,1.25rem);margin-top:5px}.section-head h2{margin:0}.quiet{background:transparent;color:var(--accent);border:0;font-size:.87rem}.stamp{border-top:1px solid var(--line);padding:11px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}.stamp input{width:auto;max-width:65%}.stamp label{margin:0}.account-line strong{font-variant-numeric:tabular-nums}
-@media(prefers-color-scheme:dark){:root{--ink:#e7fbfa;--glass:rgba(32,61,59,.87);--rim:rgba(184,240,235,.18);--frost:#112927;--text:#effdfc;--muted:#b2d6d3;--accent:#9df0e9}body{background:radial-gradient(ellipse at top right,#264e4b,transparent 65%),var(--frost)}button:not(.secondary,.quiet,.tab,.outline,.danger,.glass-button){background:#28aca1;border-color:#28aca1}.clock-card{background:radial-gradient(ellipse at left top,#205b56,transparent 65%),linear-gradient(125deg,#18413e,#34615d);color:#f5fdfd}.clock-caption{color:#ceeae8}.clock-state{background:#143936;color:#e5fbf9}}
+@media(prefers-color-scheme:dark){:root{--ink:#e7fbfa;--glass:rgba(32,61,59,.87);--rim:rgba(184,240,235,.18);--frost:#112927;--text:#effdfc;--muted:#b2d6d3;--accent:#9df0e9}body{background:radial-gradient(ellipse at top right,#264e4b,transparent 65%),var(--frost)}button:not(.secondary,.quiet,.tab,.outline,.danger,.glass-button,.header-settings,.cloud-banner){background:var(--primary-ink);border-color:var(--primary-ink)}.clock-card{background:radial-gradient(ellipse at left top,#205b56,transparent 65%),linear-gradient(125deg,#18413e,#34615d);color:#f5fdfd}.clock-caption{color:#ceeae8}.clock-state{background:#143936;color:#e5fbf9}}
 @media(prefers-reduced-transparency:reduce){.tabs,.panel,.sheet,.app-header,.day-metrics,.glass-button{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none}.clock-card:before{display:none}}
 /* Glass surfaces and controls for secondary screens */
 :root {
@@ -1206,6 +1206,342 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
  .plan-month-select-label select {background:var(--surface-muted);}
 }
 
+
+/* V5: einheitliche Farben, echte leere Zeitfelder und kompakte iPhone-Schalter */
+:root{--chart-accent:#087d71;--chart-bar:#59aba1;--danger-ink:#a63e49;--danger-bg:#fff1f2;--danger-border:#edb9c1;--empty-bg:#f3f8f7;--placeholder-tone:#687f7b}
+:root[data-theme="blue"]{--chart-accent:#285fb5;--chart-bar:#77a6df;--empty-bg:#f4f8fe;--placeholder-tone:#6f8097}
+:root[data-theme="violet"]{--chart-accent:#6f4d9e;--chart-bar:#a18bca;--empty-bg:#f7f4fd;--placeholder-tone:#81718e}
+:root[data-theme="forest"]{--chart-accent:#277653;--chart-bar:#78b38e;--empty-bg:#f4faf6;--placeholder-tone:#687d72}
+:root[data-theme="rose"]{--chart-accent:#a04368;--chart-bar:#d18fa8;--empty-bg:#fff6f8;--placeholder-tone:#8a6c7b}
+#balanceChart svg,#monthlyChart svg,#weekdayChart svg{color:var(--text);width:100%;height:auto;display:block;overflow:visible}
+.quick-templates .template-pill{background:var(--accent-light)!important;color:var(--ink)!important;border:1px solid var(--accent)!important}
+.plan-applied-banner,.planned-hint.plan-done{border-color:var(--accent)!important;box-shadow:inset 4px 0 var(--accent);background:var(--accent-light)!important;color:var(--ink)!important}
+.plan-applied-banner span,.entry-plan-tag,.plan-list-item strong{color:var(--ink)}
+.entry-plan-tag{border:1px solid var(--accent)}
+.header-settings{border-color:var(--accent);color:var(--ink);background:var(--field-glass)}
+.header-settings.active{background:var(--accent-light);box-shadow:0 0 0 1px var(--accent) inset}
+button.danger,.view-stack button.danger,.sheet button.danger{color:var(--danger-ink)!important;background:var(--danger-bg)!important;border:1px solid var(--danger-border)!important}
+input::placeholder,textarea::placeholder{color:var(--placeholder-tone)!important;opacity:1!important;font-style:italic;font-weight:400}
+input[type=time].empty-time{border:2px dashed var(--control-edge)!important;background:var(--empty-bg)!important;color:var(--muted)!important}
+label:has(input[type=time].empty-time):after{content:'Noch keine Uhrzeit gewählt';display:block;margin:3px 0 0;font-size:.72rem;font-weight:400;color:var(--muted)}
+.credited-note{display:block;font-size:.77rem;line-height:1.4;opacity:.85;margin-top:2px}
+.analysis-year-picker{display:grid;grid-template-columns:48px minmax(0,1fr) 48px;align-items:center;gap:9px;max-width:360px;padding:7px;margin:12px 0 17px;border:1px solid var(--control-edge);border-radius:18px;background:var(--field-glass)}
+.analysis-year-picker button{width:46px;height:48px;font-size:1.5rem;padding:4px}
+.analysis-year-picker strong{text-align:center;font-size:1.4rem;color:var(--ink);font-variant-numeric:tabular-nums}
+.plan-month-current{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;min-width:0;padding:3px;text-align:center}
+.plan-month-current span{font-size:.73rem;color:var(--muted)}
+.plan-month-current strong{font-size:1.06rem;color:var(--ink);overflow-wrap:anywhere}
+.plan-month-picker{align-items:center}
+.reminder-weekdays{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;margin:10px 0}
+.reminder-weekdays label{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;min-width:0;margin:0;padding:8px 0;background:var(--field-glass);border:1px solid var(--control-edge);border-radius:10px;font-size:.75rem}
+.reminder-weekdays input{width:19px;height:19px;min-height:19px;accent-color:var(--accent)}
+.account-danger-zone{border:1px solid var(--danger-border);border-radius:16px;padding:14px;margin:15px 0}
+.account-danger-zone summary{font-weight:700;cursor:pointer}
+.account-danger-zone .danger-note{color:var(--muted);font-size:.85rem;line-height:1.4}
+.danger-action{margin:14px 0;padding:13px;border:1px solid var(--control-edge);border-radius:13px;background:var(--surface-muted);display:grid;gap:8px}
+.danger-action label{margin:0}
+.danger-action input{width:100%;min-width:0;font-size:16px}
+.danger-action button{width:100%;min-height:48px}
+@media(prefers-color-scheme:dark){:root{--chart-accent:#8de0d9;--chart-bar:#489c95;--danger-ink:#ffb7bb;--danger-bg:#4c252d;--danger-border:#89525c;--empty-bg:#243733;--placeholder-tone:#b3c5c1}
+:root[data-theme="blue"]{--chart-accent:#9bcaff;--chart-bar:#568fca;--empty-bg:#233647}
+:root[data-theme="violet"]{--chart-accent:#d5bdff;--chart-bar:#9476c2;--empty-bg:#372d46}
+:root[data-theme="forest"]{--chart-accent:#9be4bd;--chart-bar:#529e73;--empty-bg:#293e34}
+:root[data-theme="rose"]{--chart-accent:#ffbcd2;--chart-bar:#bc7392;--empty-bg:#46303b}}
+@media(max-width:390px){.analysis-year-picker{max-width:100%}.plan-month-picker{grid-template-columns:43px minmax(0,1fr) 43px}}
+
+/* V5: Statusfarben bewusst unterscheidbar, sonst konsequent Theme-Farben. */
+.legend-work{background:var(--chart-accent)!important}
+.legend-vacation{background:var(--chart-bar)!important}
+.legend-holiday{background:transparent!important;border:2px solid var(--accent)!important}
+.legend-sick{background:repeating-linear-gradient(135deg,var(--line) 0 2px,var(--surface-muted) 2px 4px)!important}
+.closed-hero-balance strong.positive{color:var(--accent)!important}
+.closed-hero-balance strong.negative{color:var(--danger-ink)!important}
+.toast{background:var(--primary-ink)!important}
+.clock-caption{color:var(--ink)}
+.view-stack .outline,.sheet .outline{color:var(--accent)!important;border-color:var(--accent)!important;background:var(--field-glass)!important}
+
+/* ==============================================================
+   NEXT V6 · ein konsistentes Designsystem für ALLE Seiten
+   Alle interaktiven Bauteile verwenden dieselben Themen-Tokens.
+   Sicherheits-/Fehlerfarben bleiben semantisch rot/orange.
+   ============================================================== */
+:root, :root[data-theme="turquoise"] {
+  --accent:#0b756c; --accent-light:#d8f0ec; --primary-ink:#0a625a;
+  --ink:#153f3a; --text:#193a36; --muted:#597874;
+  --frost:#f0f8f6; --bg:#f0f8f6; --surface:#ffffff; --surface-muted:#edf6f4;
+  --glass:rgba(255,255,255,.89); --field-glass:#ffffff;
+  --line:#d5e8e4; --rim:rgba(255,255,255,.96); --control-edge:#bedbd5;
+  --work-fill:#d8eee9; --leave-fill:#edf5eb; --sick-fill:#e9eeef;
+  --holiday-mark:#237c72; --chart-accent:#0b756c; --chart-bar:#65b6a8;
+  --theme-halo:#d9f0ec; --theme-halo-secondary:#e4f6f1;
+  --theme-card-a:#d6eee8; --theme-card-b:#c0e7df; --theme-card-c:#e5f8f3;
+  --empty-bg:#f6faf9; --placeholder-tone:#6a817b;
+  --ui-on-primary:#fff; --ui-good:#147e69; --ui-warning:#9a650c;
+  --ui-border-focus:#0b756c; --ui-surface-shadow:0 5px 22px rgba(18,74,67,.065);
+}
+:root[data-theme="blue"] {
+  --accent:#286dbf; --accent-light:#e1eeff; --primary-ink:#1d5baf;
+  --ink:#1d4476; --text:#203853; --muted:#617890;
+  --frost:#f0f6ff; --bg:#f0f6ff; --surface:#fff; --surface-muted:#ecf3fc;
+  --glass:rgba(255,255,255,.9); --field-glass:#fff;
+  --line:#d9e5f5; --rim:rgba(255,255,255,.96); --control-edge:#bed2ea;
+  --work-fill:#dceafb; --leave-fill:#ebf2fc; --sick-fill:#e8edf5;
+  --holiday-mark:#3574bc; --chart-accent:#286dbf; --chart-bar:#86addb;
+  --theme-halo:#dbeafa; --theme-halo-secondary:#e6f2ff;
+  --theme-card-a:#e1efff; --theme-card-b:#c6ddfa; --theme-card-c:#edf5ff;
+  --empty-bg:#f6f9ff; --placeholder-tone:#728399;
+  --ui-on-primary:#fff; --ui-good:#157c69; --ui-warning:#98620c;
+  --ui-border-focus:#286dbf; --ui-surface-shadow:0 5px 22px rgba(36,74,121,.075);
+}
+:root[data-theme="violet"] {
+  --accent:#7853b4; --accent-light:#eee5fa; --primary-ink:#6947a2;
+  --ink:#513778; --text:#38294f; --muted:#766588;
+  --frost:#f7f3fd; --bg:#f7f3fd; --surface:#fff; --surface-muted:#f3edfb;
+  --glass:rgba(255,255,255,.9); --field-glass:#fff;
+  --line:#e6daf1; --rim:rgba(255,255,255,.97); --control-edge:#d7c4e9;
+  --work-fill:#e8dcf5; --leave-fill:#f1ebf8; --sick-fill:#f0edf3;
+  --holiday-mark:#7958ac; --chart-accent:#7853b4; --chart-bar:#ad95d2;
+  --theme-halo:#e8dff5; --theme-halo-secondary:#f1eafa;
+  --theme-card-a:#ede3f8; --theme-card-b:#dcc9f0; --theme-card-c:#f5edfd;
+  --empty-bg:#fbf8fd; --placeholder-tone:#8b7a9a;
+  --ui-on-primary:#fff; --ui-good:#147c68; --ui-warning:#98620c;
+  --ui-border-focus:#7853b4; --ui-surface-shadow:0 5px 22px rgba(82,53,121,.07);
+}
+:root[data-theme="forest"] {
+  --accent:#28784f; --accent-light:#dff3e6; --primary-ink:#22663f;
+  --ink:#224d36; --text:#253e2d; --muted:#63806c;
+  --frost:#f2faf4; --bg:#f2faf4; --surface:#fff; --surface-muted:#edf6ef;
+  --glass:rgba(255,255,255,.9); --field-glass:#fff;
+  --line:#dcebdd; --rim:rgba(255,255,255,.97); --control-edge:#c1dfc8;
+  --work-fill:#d9f0df; --leave-fill:#edf7e9; --sick-fill:#eaf0e8;
+  --holiday-mark:#337e56; --chart-accent:#28784f; --chart-bar:#7fbd97;
+  --theme-halo:#d9efe0; --theme-halo-secondary:#e9f6ec;
+  --theme-card-a:#e1f3e6; --theme-card-b:#c5e7cf; --theme-card-c:#ecf8ef;
+  --empty-bg:#f8fbf8; --placeholder-tone:#728877;
+  --ui-on-primary:#fff; --ui-good:#28784f; --ui-warning:#94630f;
+  --ui-border-focus:#28784f; --ui-surface-shadow:0 5px 22px rgba(39,96,59,.065);
+}
+:root[data-theme="rose"] {
+  --accent:#ad4e73; --accent-light:#fbe6ee; --primary-ink:#97405f;
+  --ink:#6d314a; --text:#502e3f; --muted:#896878;
+  --frost:#fff3f7; --bg:#fff3f7; --surface:#fff; --surface-muted:#fdf0f5;
+  --glass:rgba(255,255,255,.9); --field-glass:#fff;
+  --line:#f1dce5; --rim:rgba(255,255,255,.98); --control-edge:#ecc8d6;
+  --work-fill:#f7dfe8; --leave-fill:#fceff1; --sick-fill:#f4eaed;
+  --holiday-mark:#b45d7b; --chart-accent:#ad4e73; --chart-bar:#d596ad;
+  --theme-halo:#f9e3eb; --theme-halo-secondary:#fcecf1;
+  --theme-card-a:#fbe8ee; --theme-card-b:#f4cfdc; --theme-card-c:#fff1f6;
+  --empty-bg:#fff9fb; --placeholder-tone:#91717f;
+  --ui-on-primary:#fff; --ui-good:#197c65; --ui-warning:#98620c;
+  --ui-border-focus:#ad4e73; --ui-surface-shadow:0 5px 22px rgba(120,55,78,.075);
+}
+/* Dunkle Varianten überschreiben alle Oberflächen, nicht nur Akzentfarben. */
+@media (prefers-color-scheme:dark) {
+  :root, :root[data-theme="turquoise"] {
+    color-scheme:dark; --accent:#8be7da; --accent-light:#214c47; --primary-ink:#196d63;
+    --ink:#e4f9f4; --text:#f0f9f6; --muted:#b3d1ca;
+    --frost:#122521; --bg:#122521; --surface:#223e38; --surface-muted:#2c4742;
+    --glass:rgba(31,58,51,.93); --field-glass:#294841;
+    --line:#46635b; --rim:rgba(194,239,225,.12); --control-edge:#54786c;
+    --work-fill:#22574d; --leave-fill:#2c493e; --sick-fill:#394b47;
+    --holiday-mark:#a0e0d3; --chart-accent:#8be7da; --chart-bar:#5db6a3;
+    --theme-halo:#214a41; --theme-halo-secondary:#193b34;
+    --theme-card-a:#1a4840; --theme-card-b:#2b6156; --theme-card-c:#224941;
+    --empty-bg:#28423e; --placeholder-tone:#b3ccc4;
+    --ui-on-primary:#fff; --ui-good:#8be7da; --ui-warning:#f1cb86;
+    --ui-border-focus:#8be7da; --ui-surface-shadow:0 6px 22px rgba(0,0,0,.2);
+  }
+  :root[data-theme="blue"] {
+    --accent:#9dcaff; --accent-light:#234365; --primary-ink:#285c99;
+    --ink:#e4f1ff; --text:#f1f7ff; --muted:#b7cde5;
+    --frost:#111f31; --bg:#111f31; --surface:#213851; --surface-muted:#2a4360;
+    --glass:rgba(29,50,75,.93); --field-glass:#2c4765;
+    --line:#405c7e; --rim:rgba(186,222,255,.13); --control-edge:#537499;
+    --work-fill:#24517b; --leave-fill:#2b405e; --sick-fill:#334454;
+    --holiday-mark:#a6ceff; --chart-accent:#9dcaff; --chart-bar:#649bd4;
+    --theme-halo:#203e63; --theme-halo-secondary:#192f4a;
+    --theme-card-a:#1a385b; --theme-card-b:#2b567c; --theme-card-c:#203b5d;
+    --empty-bg:#2b4560; --placeholder-tone:#b0c6df;
+    --ui-good:#7ed8bd; --ui-border-focus:#9dcaff;
+  }
+  :root[data-theme="violet"] {
+    --accent:#d0b6ff; --accent-light:#443265; --primary-ink:#6951a2;
+    --ink:#f0e8ff; --text:#f7f1ff; --muted:#cdbbdf;
+    --frost:#211930; --bg:#211930; --surface:#322649; --surface-muted:#41325a;
+    --glass:rgba(43,32,65,.94); --field-glass:#46345e;
+    --line:#624f7c; --rim:rgba(224,204,255,.14); --control-edge:#786194;
+    --work-fill:#453364; --leave-fill:#392e4e; --sick-fill:#484056;
+    --holiday-mark:#d4bdff; --chart-accent:#d0b6ff; --chart-bar:#9e80d0;
+    --theme-halo:#34244d; --theme-halo-secondary:#2a2041;
+    --theme-card-a:#332453; --theme-card-b:#4e3d71; --theme-card-c:#392b58;
+    --empty-bg:#3b3052; --placeholder-tone:#d0bfe0;
+    --ui-good:#8bdfc0; --ui-border-focus:#d0b6ff;
+  }
+  :root[data-theme="forest"] {
+    --accent:#9be7b8; --accent-light:#27513c; --primary-ink:#28734e;
+    --ink:#e4f8e9; --text:#f1fbf3; --muted:#b9d8c4;
+    --frost:#13271c; --bg:#13271c; --surface:#244532; --surface-muted:#2d523e;
+    --glass:rgba(28,57,39,.94); --field-glass:#30563e;
+    --line:#456f53; --rim:rgba(194,238,200,.13); --control-edge:#5e8866;
+    --work-fill:#285b3d; --leave-fill:#304d39; --sick-fill:#3c4e3e;
+    --holiday-mark:#a8e8bb; --chart-accent:#9be7b8; --chart-bar:#6ab489;
+    --theme-halo:#254a31; --theme-halo-secondary:#1d3928;
+    --theme-card-a:#1d4b34; --theme-card-b:#31684a; --theme-card-c:#234935;
+    --empty-bg:#2c4836; --placeholder-tone:#b8d5c1;
+    --ui-good:#9be7b8; --ui-border-focus:#9be7b8;
+  }
+  :root[data-theme="rose"] {
+    --accent:#ffb7ce; --accent-light:#65334a; --primary-ink:#9d4e70;
+    --ink:#ffebf3; --text:#fff2f7; --muted:#e5c2d1;
+    --frost:#301b26; --bg:#301b26; --surface:#4a2b3c; --surface-muted:#5c374b;
+    --glass:rgba(58,32,47,.94); --field-glass:#573448;
+    --line:#825068; --rim:rgba(255,204,228,.13); --control-edge:#9b6781;
+    --work-fill:#69384f; --leave-fill:#553145; --sick-fill:#5c4550;
+    --holiday-mark:#ffc1d7; --chart-accent:#ffb7ce; --chart-bar:#d787a7;
+    --theme-halo:#49283a; --theme-halo-secondary:#3c2331;
+    --theme-card-a:#5b3047; --theme-card-b:#79475f; --theme-card-c:#543046;
+    --empty-bg:#513344; --placeholder-tone:#e7c4d3;
+    --ui-good:#a0e1c7; --ui-border-focus:#ffb7ce;
+  }
+}
+/* Gemeinsame Flächen, Ränder und Abstände. Keine alten türkisen Festfarben. */
+html {background:var(--frost)}
+body {color:var(--text);background:radial-gradient(ellipse at 5% 12%,var(--theme-halo),transparent 48%),radial-gradient(ellipse at 100% 4%,var(--theme-halo-secondary),transparent 51%),var(--frost);background-attachment:fixed}
+.app-header {background:var(--glass);border-color:var(--line);color:var(--ink)}
+.tabs {background:var(--glass);border-color:var(--control-edge);box-shadow:var(--ui-surface-shadow)}
+.panel,.view-stack .panel,.sheet,.day-metrics,.glass-button {background:var(--glass);border:1px solid var(--rim);box-shadow:var(--ui-surface-shadow);color:var(--text)}
+.panel,.view-stack .panel,.sheet {border-radius:22px}
+.metric,.two-dashboard .metric {background:var(--surface-muted);border:1px solid var(--control-edge);border-radius:16px;padding:14px;box-shadow:none}
+.clock-card {color:var(--ink);border:1px solid var(--rim);background:linear-gradient(120deg,var(--theme-card-a),var(--theme-card-b) 72%,var(--theme-card-c));box-shadow:var(--ui-surface-shadow)}
+.clock-card:before {opacity:.4}
+.clock-card .clock-caption,.clock-card .eyebrow {color:var(--ink)}
+.day-metrics {border-radius:19px}
+/* Gleiche Feldkategorie = gleiche Form, Höhe, Umrandung und Theme. */
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+select, textarea,
+.view-stack input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+.sheet input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+.manual-card input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]) {
+  background:var(--field-glass);color:var(--text);border:1px solid var(--control-edge);
+  border-radius:13px;min-height:48px;font-size:16px;box-shadow:none;padding:10px 12px;
+}
+input[readonly]:not([type="hidden"]){background:var(--surface-muted);color:var(--muted)}
+input:not([type="checkbox"]):focus, select:focus, textarea:focus {border-color:var(--ui-border-focus);box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-border-focus) 16%,transparent)}
+input[type="checkbox"], input[type="radio"] {accent-color:var(--accent)}
+label {color:var(--text)}
+/* Einheitliches System für alle Standardaktionen. Keine Sonder-Teal-Buttons im Dark Mode. */
+button {border-radius:13px;transition:background-color .12s,border-color .12s;}
+button:not(.secondary,.outline,.danger,.quiet,.tab,.calendar-day,.header-settings,.glass-button,.template-pill,.cloud-banner,.theme-option):not([aria-pressed="false"]),
+.view-stack button:not(.secondary,.outline,.danger,.quiet,.calendar-day,.template-pill):not([aria-pressed="false"]),
+.sheet button[type=submit], #manualForm button[type=submit] {
+  background:var(--primary-ink);border:1px solid var(--primary-ink);color:var(--ui-on-primary);
+}
+button.secondary,.view-stack button.secondary,.sheet button.secondary,
+.view-stack .file-label,.file-label,
+.view-stack .outline,.sheet .outline,button.outline {
+  background:var(--field-glass);color:var(--ink);border:1px solid var(--control-edge);
+  box-shadow:none;
+}
+button.secondary:active,.view-stack button.secondary:active {background:var(--accent-light)}
+button.quiet,.view-stack button.quiet,.sheet button.quiet {background:transparent!important;color:var(--accent)!important;border:1px solid transparent!important;box-shadow:none!important}
+button.danger,.view-stack button.danger,.sheet button.danger {background:var(--danger-bg)!important;color:var(--danger-ink)!important;border:1px solid var(--danger-border)!important}
+button:disabled {opacity:.55;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.theme-option:focus-within {outline:3px solid color-mix(in srgb,var(--accent) 36%,transparent);outline-offset:2px}
+/* Header, Tabs und Auswahl-Schalter haben ein einheitliches Aktiv-Signal. */
+.header-settings {color:var(--ink);background:var(--field-glass);border:1px solid var(--control-edge);box-shadow:var(--ui-surface-shadow)}
+.header-settings.active,.tab.active,.five-tabs .tab.active {background:var(--accent-light);color:var(--ink);border-color:transparent}
+.tab,.five-tabs .tab {color:var(--muted);background:transparent;border-color:transparent}
+.month-bar,.plan-month-picker,.analysis-year-picker {border:1px solid var(--control-edge);background:var(--glass);border-radius:19px;box-shadow:var(--ui-surface-shadow)}
+.month-bar button,.plan-month-picker button,.analysis-year-picker button {min-height:44px;border-radius:12px;background:var(--field-glass);border:1px solid var(--control-edge);color:var(--ink)}
+.month-bar button {box-shadow:none}
+#manualForm .manual-switch {background:var(--surface-muted);border:1px solid var(--control-edge);border-radius:17px}
+#manualForm .manual-switch button {border:1px solid transparent;background:transparent;color:var(--muted);border-radius:12px}
+#manualForm .manual-switch button[aria-pressed="true"] {background:var(--primary-ink);color:var(--ui-on-primary);border-color:var(--primary-ink)}
+#cloudPanel .cloud-switch button[aria-pressed="true"] {background:var(--primary-ink);border-color:var(--primary-ink);color:var(--ui-on-primary)}
+#cloudPanel .cloud-switch button[aria-pressed="false"]{background:var(--field-glass);border-color:var(--control-edge);color:var(--ink)}
+/* Wiederverwendete Eingabe-/Info-Karten. */
+.planned-hint,.plan-applied-banner,.plan-preview,.simulation-result,.calendar-help,.cloud-health,.bridge-idea,.plan-list-item,.plan-weekday-block,.account-danger-zone,.danger-action {border-radius:16px;padding:14px;border:1px solid var(--control-edge);box-shadow:none}
+.plan-preview,.simulation-result,.planned-hint {background:var(--surface-muted);color:var(--text)}
+.plan-applied-banner,.planned-hint.plan-done {background:var(--accent-light)!important;color:var(--ink);border-color:var(--accent)!important;box-shadow:inset 4px 0 0 var(--accent)}
+.plan-applied-banner span,.planned-hint.plan-done span {color:var(--ink)}
+.entry-plan-tag {border:1px solid var(--control-edge);background:var(--accent-light);color:var(--ink)}
+.quick-templates .template-pill {background:var(--accent-light)!important;color:var(--ink)!important;border:1px solid var(--control-edge)!important;border-radius:13px;min-height:39px;padding:7px 12px}
+.weekday,.plan-weekday-grid label,.reminder-weekdays label,.theme-option {background:var(--field-glass);color:var(--text);border:1px solid var(--control-edge);border-radius:13px}
+.weekday:has(input:checked),.plan-weekday-grid label:has(input:checked),.reminder-weekdays label:has(input:checked),.theme-option:has(input:checked) {background:var(--accent-light);border:2px solid var(--accent);color:var(--ink)}
+.plan-list-item,.bridge-idea,.calendar-help,.cloud-health,.danger-action {background:var(--surface-muted)}
+.cloud-hero-icon,.entry-hours {background:var(--accent-light);color:var(--ink)}
+.theme-option:has(input:checked) {padding:9px 3px}
+/* Gleiche Bedeutung = gleiche Farbe überall. */
+.positive,.status.success,.cloud-health-indicator.synced {color:var(--ui-good)}
+.negative,.status.error,.cloud-health-indicator.error {color:var(--danger-ink)}
+.cloud-health-indicator.pending {color:var(--ui-warning)}
+#calendarGrid .calendar-day {background:var(--field-glass);border:1px solid var(--control-edge);color:var(--text)}
+#calendarGrid .calendar-day.workday {background:var(--work-fill)}
+#calendarGrid .calendar-day.vacation {background:var(--leave-fill)}
+#calendarGrid .calendar-day.sick {background:repeating-linear-gradient(135deg,transparent 0 6px,color-mix(in srgb,var(--text) 7%,transparent) 6px 8px),var(--sick-fill)}
+#calendarGrid .calendar-day.selected {outline:2px solid var(--accent);outline-offset:-2px}
+#calendarGrid .calendar-day.holiday {border-bottom-color:var(--holiday-mark)}
+#calendarGrid .day-hours {color:var(--chart-accent)}
+.legend-work {background:var(--chart-accent)!important}
+.legend-vacation {background:var(--chart-bar)!important}
+.legend-free {background:var(--line)}
+.legend-sick {background:repeating-linear-gradient(135deg,var(--muted) 0 2px,var(--surface-muted) 2px 4px)!important}
+.legend-holiday {border:2px solid var(--holiday-mark)!important}
+#balanceChart svg,#monthlyChart svg,#weekdayChart svg {color:var(--muted)}
+#balanceChart svg path {stroke:var(--chart-accent)}
+.toast {background:var(--primary-ink)!important;color:#fff}
+.toast button {background:var(--field-glass);border-color:var(--control-edge);color:var(--ink)}
+.clock-caption,.muted,.hint {color:var(--muted)}
+input::placeholder, textarea::placeholder {color:var(--placeholder-tone)!important;opacity:1;font-style:italic}
+input[type="time"].empty-time {border:2px dashed var(--control-edge)!important;background:var(--empty-bg)!important;color:var(--muted)!important}
+/* Normale Listen und Einstellungsblöcke werden wie Karten behandelt, nicht wie Fremdelemente. */
+.settings-group {border-bottom-color:var(--line)}
+.entry,.template-list-row,.history-row {border-color:var(--line)}
+@media(max-width:600px) {
+  .panel,.view-stack>.panel {padding:16px 14px}
+  .metric,.two-dashboard .metric {padding:13px}
+  .plan-list-item .actions {display:flex;flex-wrap:wrap}
+  .plan-list-item .actions button {min-height:44px}
+  .quick-templates .template-pill {min-height:42px}
+}
+@media (prefers-color-scheme:dark) {
+  .app-header,.tabs {background:var(--glass)}
+  .panel,.view-stack .panel,.sheet,.day-metrics,.glass-button{background:var(--glass)}
+  .clock-card{color:var(--ink);background:linear-gradient(125deg,var(--theme-card-a),var(--theme-card-b),var(--theme-card-c))}
+  .clock-caption,.clock-card .clock-caption {color:var(--ink)}
+  button:not(.secondary,.outline,.danger,.quiet,.tab,.calendar-day,.header-settings,.glass-button,.template-pill,.cloud-banner,.theme-option):not([aria-pressed="false"]),
+  .view-stack button:not(.secondary,.outline,.danger,.quiet,.calendar-day,.template-pill):not([aria-pressed="false"]),
+  .sheet button[type=submit],#manualForm button[type=submit] {background:var(--primary-ink);border-color:var(--primary-ink);color:var(--ui-on-primary)}
+}
+/* Einheitliche Geometrie auch für ältere Funktionsmodule. */
+.view-stack button:not(.calendar-day), .sheet button,
+#manualForm button[type="submit"],.actions button,.cloud-actions button,
+#templateForm button,.view-stack .file-label, .toast button,
+#manualForm .manual-switch button {border-radius:13px}
+/* iPhone-Uhrzeitfelder: gleich hoch und gleiche Abrundung in Heute,
+   Kalenderdialog, Vorlagen und Schichtplanung. */
+input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"],
+.sheet input[type="time"],.plan-range input[type="time"] {min-height:52px!important;border-radius:13px}
+/* Die beiden besonders häufigen Aktionen haben dieselben Eingabehöhen. */
+#manualUsePlan,#entryUsePlan,.quick-templates .template-pill {min-height:42px}
+@media(prefers-reduced-transparency:reduce){.panel,.view-stack .panel,.sheet,.day-metrics,.app-header,.tabs{background:var(--surface)}}
+
+</style>
+<style>
+.ai-card {min-width:0;margin-block:10px;color:var(--ink)}
+.ai-card summary {font-weight:700;cursor:pointer;padding-block:5px}
+.ai-body {display:grid;gap:12px;margin-top:14px}
+.ai-body label {display:grid;gap:5px;min-width:0}
+.ai-body input,.ai-body select {min-width:0;width:100%;box-sizing:border-box}
+.ai-output {white-space:pre-line;overflow-wrap:anywhere;line-height:1.5}
+#aiReportChart svg {width:100%;display:block;height:auto}
+.ai-output:empty,.ai-body [hidden] {display:none!important}
+#aiPlanResult {max-height:20rem;overflow:auto}
+.ai-body .two-col>* {min-width:0}
+.ai-output button {display:block;margin:6px 0 12px}
+#aiSwitches label {display:flex;align-items:center;gap:12px;padding-block:7px}
+#aiSwitches input {width:20px;height:20px}
+.ai-body .actions {flex-wrap:wrap}
 </style>
 </head>
 
@@ -1221,6 +1557,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
     <section id="todayPanel">
   <div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div></div>
   <button type="button" id="cloudBanner" class="cloud-banner" aria-label="Cloud-Konto und Synchronisierung öffnen"><span class="cloud-badge"><i class="cloud-dot" id="cloudBannerDot"></i><span id="cloudBannerLabel">Nur auf diesem Gerät</span></span><small id="cloudBannerDetail">Konto einrichten ›</small></button>
+<details id="smartEntry" class="panel ai-card"><summary>Zeit per Text oder Sprache eintragen</summary><div class="ai-body"><label>Arbeitszeit beschreiben<input id="aiEntry" maxlength="240" placeholder="Gestern von 7:15 bis 16:30, 45 Minuten Pause"></label><div class="actions"><button type="button" class="secondary" id="aiFill">Formular ausfüllen</button><button type="button" class="secondary" id="aiMic">Diktieren</button></div><small class="hint" id="aiMicHint"></small><div id="aiEntryMsg" class="ai-output" role="status"></div></div></details>
   <form class="clock-card manual-card" id="manualForm">
     <div class="manual-head"><h2>Arbeitszeit eintragen</h2><label class="manual-date">Datum<input id="manualDate" type="date" min="2000-01-01" max="2200-12-31" required></label></div>
     <div class="manual-switch" role="group" aria-label="Eingabeart"><button id="byRange" type="button" aria-pressed="true">Von – bis</button><button id="byDuration" type="button" aria-pressed="false">Dauer</button></div>
@@ -1228,6 +1565,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
     <div id="manualPlannedHint" class="planned-hint hidden"><span id="manualPlannedText"></span><button id="manualUsePlan" type="button" class="secondary small">Geplante Zeit übernehmen</button></div>
     <div id="manualPlanApplied" class="plan-applied-banner hidden" role="status"><strong>✓ Geplante Zeit übernommen</strong><span>Die Zeiten sind vorausgefüllt. Erst mit „Eintrag speichern“ wird die Arbeitszeit gebucht.</span></div>
     <div class="quick-templates" id="quickTemplates" aria-label="Gespeicherte Arbeitszeitvorlagen"></div>
+<div id="smartTemplate" class="quick-templates"><button type="button" class="secondary" id="aiTemplate">Wochentagsvorlage übernehmen</button></div>
     <div class="manual-footer"><div><span class="clock-caption">Nettoarbeitszeit</span><output id="manualNet" aria-live="polite">—</output></div><button type="submit">Eintrag speichern</button></div>
     <div id="manualStatus" role="status"></div>
   </form>
@@ -1271,6 +1609,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
         <strong class="insight-number" id="insightBalance">–</strong>
         <div class="insight-subline"><span id="insightForecast">Ohne laufenden Monat oder Prognose.</span></div>
       </div>
+<details id="smartChat" class="panel ai-card" open><summary>KI-Assistent</summary><div class="ai-body"><label>Frage zu deinen Arbeitszeiten<input id="aiQuestion" maxlength="320" placeholder="Wann arbeite ich im Schnitt am längsten?"></label><div class="actions"><button type="button" class="secondary" id="aiAsk">Antwort anzeigen</button><button type="button" class="secondary" id="aiOnline">Mit OpenRouter fragen</button></div><div class="actions" id="aiPrompts"></div><div id="aiAnswer" class="ai-output" role="status"></div></div></details><details id="smartReport" class="panel ai-card"><summary>Monats- und Jahresbericht</summary><div class="ai-body"><label>Berichtsmonat<input type="month" id="aiMonth"></label><div id="aiMonthly" class="ai-output" role="status"></div><div id="aiReportChart"></div><div id="aiYearly" class="ai-output" role="status"></div><button type="button" class="secondary" id="aiNarrate">Bericht mit OpenRouter formulieren</button><div id="aiNarrative" class="ai-output" role="status"></div></div></details><details id="smartChecks" class="panel ai-card"><summary>Einträge prüfen</summary><div class="ai-body"><p class="hint">Hinweise aus den letzten 90 Tagen. Mehrere Buchungen pro Tag werden zusammen betrachtet.</p><div id="aiChecks" class="ai-output" role="status"></div></div></details>
       <div class="grid two-dashboard" id="analyticsQuickStats">
         <div class="metric"><span>Gearbeitet dieses Jahr</span><strong id="statYearWork">–</strong></div>
         <div class="metric"><span>Resturlaub</span><strong id="statVacation">–</strong></div>
@@ -1282,7 +1621,12 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
         <p class="hint">Nur abgeschlossene Monate – keine Hochrechnung für den laufenden Monat.</p>
       </section>
       <section class="panel">
-        <div class="section-head"><h2>Jahresanalyse</h2><label class="compact-label">Jahr <input id="analysisYear" type="number" min="2000" max="2200" step="1" inputmode="numeric"></label></div>
+        <div class="section-head"><h2>Jahresanalyse</h2></div>
+        <div class="analysis-year-picker" role="group" aria-label="Analysejahr">
+          <button id="analysisYearPrev" class="secondary" type="button" aria-label="Vorheriges Jahr">‹</button>
+          <strong id="analysisYearText" aria-live="polite">–</strong><input id="analysisYear" type="hidden">
+          <button id="analysisYearNext" class="secondary" type="button" aria-label="Nächstes Jahr">›</button>
+        </div>
         <div class="grid two-dashboard">
           <div class="metric"><span>Arbeitstage erfasst</span><strong id="statDays">–</strong></div>
           <div class="metric"><span>Längster Arbeitstag</span><strong id="statLongest">–</strong></div>
@@ -1313,7 +1657,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
       </div>
     <section id="overviewPanel" class="view-stack">
       <div class="clock-card report-hero"><h2 id="overviewHeading">Monatsübersicht</h2>
-        <strong class="report-total" id="creditedMetric">–</strong><span class="clock-caption">Geleistete Arbeitszeit</span>
+        <strong class="report-total" id="creditedMetric">–</strong><span class="clock-caption">Geleistete Arbeitszeit <small class="credited-note">inkl. angerechnetem Urlaub, Krankheit und Feiertagen</small></span>
         <div id="closedHeroBalance" class="closed-hero-balance hidden" aria-live="polite">
           <span>Überstunden am Monatsende</span><strong id="heroBalanceValue">–</strong>
         </div></div>
@@ -1341,6 +1685,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
 
     <section id="planningPanel" class="view-stack hidden" aria-labelledby="planningTitle">
       <div class="clock-card planning-hero"><span class="eyebrow">VORAUSDENKEN</span><h2 id="planningTitle">Zeit clever planen.</h2><p class="clock-caption">Arbeitszeiten vorausplanen – strikt getrennt von tatsächlichen Buchungen und Überstunden.</p></div>
+<details id="smartPlan" class="panel ai-card"><summary>Intelligenter Arbeitszeitplaner</summary><div class="ai-body"><label>Planungsziel<select id="aiPlanMode"><option value="delta">Zusätzliche Überstunden bis Monatsende</option><option value="balance">Gewünschter Gesamtstand bis Monatsende</option><option value="week">Typische Schichten für nächste Woche</option></select></label><p class="hint">Neue Schichten verteilen sich auf deine in den Urlaubseinstellungen gewählten Wochentage. Gebuchte Tage, Feiertage und vorhandene Schichten bleiben frei von neuen Vorschlägen.</p><div class="two-col"><label>Zielmonat<input id="aiDeadline" type="month"></label><label>Überstundenziel (Std.)<input id="aiTarget" type="number" value="15" step="0.25"></label></div><label>Freitags höchstens (Nettostunden)<input id="aiFriday" type="number" min="0" max="10" step="0.25" value="6"></label><button type="button" class="secondary" id="aiPlanGo">Vorschlag berechnen</button><div id="aiPlanResult" class="ai-output" role="status"></div><button type="button" class="secondary" id="aiPlanSave">Als Schichtplanung speichern</button></div></details><details id="smartLeave" class="panel ai-card"><summary>Urlaubsassistent</summary><div class="ai-body"><div class="two-col"><label>Frühester Beginn<input id="aiFrom" type="date"></label><label>Spätestes Ende<input id="aiUntil" type="date"></label></div><label>Zusammenhängende freie Tage<input id="aiLength" type="number" min="1" max="60" value="10"></label><button type="button" class="secondary" id="aiLeaveGo">Zeiträume vergleichen</button><div id="aiLeaves" class="ai-output" role="status"></div></div></details>
       <section class="panel" id="workPlanPanel">
         <div class="section-head"><h2>Arbeitszeiten planen</h2><span class="mini-label">Keine Buchung</span></div>
         <p class="hint">Geplante Schichten bleiben getrennt: keine Anrechnung auf das Stundenkonto, keine Übertragung in den Kalender oder nach Apple Kalender. Erst wenn du sie bewusst übernimmst und speicherst, werden sie zu einer echten Buchung.</p>
@@ -1374,7 +1719,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
         <div class="section-head"><h3>Deine geplanten Schichten</h3></div>
         <div class="plan-month-picker" role="group" aria-label="Monat der geplanten Schichten auswählen">
           <button id="workPlanPrevMonth" type="button" class="secondary" aria-label="Vorheriger Monat">‹</button>
-          <label class="plan-month-select-label"><span>Monat auswählen</span><select id="workPlanMonth" aria-label="Monat für geplante Schichten"><option value="">Monat wählen</option></select></label>
+          <div class="plan-month-current"><span>Geplante Schichten im</span><strong id="workPlanMonthLabel" aria-live="polite">–</strong><input id="workPlanMonth" type="hidden"></div>
           <button id="workPlanNextMonth" type="button" class="secondary" aria-label="Nächster Monat">›</button>
         </div>
         <div id="workPlanList"></div>
@@ -1457,6 +1802,26 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
             <p class="hint">Ein anderes Gerät hat die Cloud verändert. Deine lokalen Änderungen bleiben gespeichert. Entscheide bewusst, welche Version du behalten möchtest.</p>
             <div class="cloud-actions"><button type="button" id="cloudOverwrite" class="danger">Cloudstand durch lokale Daten ersetzen</button></div>
           </div>
+          <div class="cloud-group account-danger-zone">
+            <details id="dangerZoneDetails"><summary>Datenschutz &amp; Daten löschen</summary>
+              <p class="danger-note">Diese Aktionen sind dauerhaft. Bitte vorher ein JSON-Backup exportieren. Bereits exportierte Dateien und lokal importierte Apple-Kalendereinträge sind davon unabhängig.</p>
+              <div class="danger-action"><strong>Kontodaten leeren – Account behalten</strong>
+                <p class="danger-note">Arbeitszeiten, Planungen, Urlaub, Einstellungen, Cloud-Sicherungen, Push-Abos und privater Kalenderlink werden gelöscht. Das Benutzerkonto bleibt bestehen.</p>
+                <label for="cloudClearConfirm">Zur Bestätigung <strong>DATEN LÖSCHEN</strong> eingeben</label>
+                <input id="cloudClearConfirm" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Bestätigung eintippen">
+                <button id="cloudClearAll" type="button" class="danger">Alle Kontodaten löschen</button>
+              </div>
+              <div class="danger-action"><strong>Benutzerkonto vollständig löschen</strong>
+                <p class="danger-note">Dein Supabase-Account und alle damit verknüpften Cloud-Daten werden gelöscht. Zur Sicherheit wird dein Passwort erneut geprüft.</p>
+                <label for="cloudDeletePassword">Aktuelles Passwort</label>
+                <input id="cloudDeletePassword" type="password" autocomplete="current-password" placeholder="Passwort">
+                <label for="cloudDeleteConfirm">Zur Bestätigung <strong>KONTO LÖSCHEN</strong> eingeben</label>
+                <input id="cloudDeleteConfirm" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Bestätigung eintippen">
+                <button id="cloudDeleteAccount" type="button" class="danger">Konto endgültig löschen</button>
+              </div>
+              <p id="dangerZoneStatus" class="status" role="status" aria-live="polite"></p>
+            </details>
+          </div>
           <div class="cloud-group" id="cloudImportGroup">
             <strong>Alte Arbeitszeiten übernehmen</strong>
             <p class="hint">Die bisherigen lokalen Daten bleiben separat erhalten. Du kannst sie in ein leeres Supabase-Konto kopieren, ohne den alten Bestand zu löschen.</p>
@@ -1505,6 +1870,9 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
       <section class="panel settings-group" id="automationPanel">
         <h2>Erinnerungen &amp; Automatisierung</h2>
         <div class="settings-feature"><div><strong>Erinnerung an Arbeitszeit</strong><p class="hint">Benachrichtigung, wenn du an einem Arbeitstag noch nichts eingetragen hast.</p></div><label class="toggle-label"><input id="reminderEnabled" type="checkbox"><span>Aktiv</span></label></div>
+        <label for="reminderMode">Wann erinnern?</label><select id="reminderMode"><option value="weekdays">Ausgewählte Wochentage</option><option value="planned">Nur an Tagen mit geplanter Schicht</option></select>
+        <div class="reminder-weekdays" id="reminderWeekdays"><label><input type="checkbox" value="1">Mo</label><label><input type="checkbox" value="2">Di</label><label><input type="checkbox" value="3">Mi</label><label><input type="checkbox" value="4">Do</label><label><input type="checkbox" value="5">Fr</label><label><input type="checkbox" value="6">Sa</label><label><input type="checkbox" value="0">So</label></div>
+        <p class="hint">Getrennt von den Einstellungen für Urlaubstage.</p>
         <label for="reminderTime">Uhrzeit der Erinnerung</label><input id="reminderTime" type="time" value="19:00">
         <label for="notifyThreshold">Zeitkonto-Hinweis ab (Stunden, optional)</label><input id="notifyThreshold" type="number" min="0" max="10000" step="0.5" placeholder="z. B. 20" inputmode="decimal">
         <div class="cloud-actions"><button id="saveAutomation" type="button">Erinnerungen speichern</button><button id="enablePush" type="button" class="secondary">iPhone-Mitteilungen aktivieren</button></div>
@@ -1519,11 +1887,11 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
       </section>
       <section class="panel settings-group" id="securityPanel"><h2>Sicherheit</h2>
         <p class="hint">Optional mit Passkey anmelden, beispielsweise über Face ID. Supabase-Passkeys sind experimentell und müssen im Supabase-Dashboard freigeschaltet werden.</p>
-        <div class="cloud-actions"><button id="registerPasskey" type="button" class="secondary">Passkey einrichten</button><button id="passkeyLogin" type="button" class="secondary">Mit Passkey anmelden</button><button id="logoutAllDevices" type="button" class="secondary">Alle Geräte abmelden</button></div>
+        <div class="cloud-actions"><button id="registerPasskey" type="button" class="secondary">Passkey einrichten</button><button id="passkeyLogin" type="button" class="secondary">Mit Passkey anmelden</button><button id="logoutOtherDevices" type="button" class="secondary">Andere Geräte abmelden</button><button id="logoutAllDevices" type="button" class="secondary">Alle Geräte abmelden</button></div>
         <p id="passkeyStatus" class="status" role="status"></p>
       </section>
       <section class="panel settings-group" id="historyPanel"><h2>Wiederherstellung &amp; Cloud-Versionen</h2>
-        <p class="hint">Gesicherte Versionen deines Datenbestands anzeigen und bei Bedarf bewusst wiederherstellen. Dafür muss die neue SQL-Erweiterung einmalig ausgeführt werden.</p>
+        <p class="hint">Letzte 30 Änderungsstände und tägliche Sicherungen der letzten 30 Tage anzeigen. Für die tägliche Sicherung muss einmalig der Supabase-Zeitplan eingerichtet werden.</p>
         <button id="loadHistory" class="secondary" type="button">Gesicherte Versionen anzeigen</button>
         <div id="historyList"></div><p id="historyStatus" class="status" role="status"></p>
       </section>
@@ -1547,6 +1915,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
         </div>
 
         <div id="settingsContent" class="hidden">
+<details id="aiPreferences" class="panel ai-card"><summary>Assistenzfunktionen</summary><div class="ai-body"><div id="aiSwitches"></div><p class="hint">OpenRouter ist optional. Nur auf Knopfdruck wird der Fragetext oder der angezeigte Monatsbericht gesendet.</p></div></details>
           <form id="settingsForm">
 
             <div class="two-col">
@@ -1577,9 +1946,12 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
             <h3>Feiertage in Baden-Württemberg zählen, wenn sie auf … fallen</h3>
             <div id="weekdaySettings" class="weekday-list"></div>
 
+            <label for="vacationCarryoverMode">Übertrag von Urlaubstagen</label>
+            <select id="vacationCarryoverMode"><option value="unlimited">Unbegrenzt (bisherige Berechnung)</option><option value="march31">Verfall nach dem 31. März</option><option value="none">Kein Übertrag</option></select>
+            <p class="hint">Vertragsregelung prüfen. Gesetzlicher Urlaubsverfall kann weitere Voraussetzungen haben.</p>
             <label for="vacationStartYear">Urlaubsberechnung beginnt ab Jahr</label>
             <input id="vacationStartYear" type="number" min="2000" max="2200" step="1" required>
-            <p class="hint">Nicht genommene Urlaubstage werden automatisch in Folgejahre übertragen.</p>
+            <p class="hint">Der Urlaubsübertrag richtet sich nach der oben gewählten Regel. Bitte die tatsächlichen betrieblichen und gesetzlichen Regelungen berücksichtigen.</p>
 
             <button type="submit">Einstellungen speichern</button>
             <div id="settingsStatus" class="status" role="status" aria-live="polite"></div>
@@ -1720,8 +2092,11 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
       overtimeBonus: 0,
       reminderEnabled: false,
       reminderTime: '19:00',
+      reminderMode:'weekdays',
+      reminderWeekdays:[1,2,3,4,5],
       notifyThreshold: null,
-      appTheme: 'turquoise'
+      appTheme: 'turquoise',
+      vacationCarryoverMode: 'unlimited'
     };
 
     let state = { settings: { ...DEFAULT_SETTINGS }, records: [], plans: [] };
@@ -1916,6 +2291,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
         throw new Error("Ungültige Kalender- oder Feiertagseinstellungen.");
       }
       settings.holidayWeekdays = [...new Set(settings.holidayWeekdays)];
+      if(!['unlimited','march31','none'].includes(settings.vacationCarryoverMode))settings.vacationCarryoverMode='unlimited';
       if(!['turquoise','blue','violet','forest','rose'].includes(settings.appTheme))
         throw new Error('Ungültiges Farbschema.');
       const ids = new Set();
@@ -1980,6 +2356,9 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
         if(typeof settings[key]!=='number'||!Number.isFinite(settings[key])||settings[key]<0||settings[key]>max)
           throw new Error('Ungültiger Wert in '+key+'.');
       }
+      if(!['weekdays','planned'].includes(settings.reminderMode))settings.reminderMode='weekdays';
+      if(!Array.isArray(settings.reminderWeekdays)||settings.reminderWeekdays.some(d=>!Number.isInteger(d)||d<0||d>6))settings.reminderWeekdays=[1,2,3,4,5];
+      settings.reminderWeekdays=[...new Set(settings.reminderWeekdays)];
       if(typeof settings.reminderEnabled!=='boolean'||
          !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(settings.reminderTime)||
          (settings.notifyThreshold!==null&&
@@ -2168,25 +2547,34 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
       return ym >= currentMonth() ? "noch offen" : signedHoursText(balance);
     }
 
-    function vacationBreakdown(year){
+    function vacationBreakdown(year, ledger=state.records, quantity=effectiveVacationDays){
       const firstYear=Number(state.settings.vacationStartYear),entitlement=Number(state.settings.vacationEntitlement)||0;
-      if(year<firstYear)return {active:false,firstYear,entitlement,carryover:0,taken:0,planned:0,remaining:null};
-      const first=`${firstYear}-01-01`,last=`${year}-12-31`,today=localDateString();
-      let taken=0,planned=0;
-      for(const r of state.records){
-        if(r.type!=='vacation'||r.date<first||r.date>last)continue;
-        const days=effectiveVacationDays(r);
-        if(r.date>today)planned+=days;else taken+=days;
+      if(year<firstYear)return {active:false,firstYear,entitlement,carryover:0,taken:0,planned:0,remaining:null,expired:0};
+      const mode=state.settings.vacationCarryoverMode||'unlimited',today=localDateString();
+      let carry=0,result=null;
+      for(let y=firstYear;y<=year;y++){
+        const startCarry=mode==='none'?0:Math.max(0,carry);
+        let old=startCarry,current=entitlement,taken=0,planned=0,expired=0;
+        const records=ledger.filter(r=>r.type==='vacation'&&r.date.startsWith(y+'-')).sort((a,b)=>a.date.localeCompare(b.date));
+        let cutoffPassed=false;
+        for(const r of records){
+          if(mode==='march31'&&!cutoffPassed&&r.date>`${y}-03-31`){expired+=old;old=0;cutoffPassed=true;}
+          const qty=quantity(r),oldUsed=Math.min(old,qty);
+          old-=oldUsed;current-=qty-oldUsed;
+          if(r.date>today)planned+=qty;else taken+=qty;
+        }
+        if(mode==='march31'&&!cutoffPassed){expired+=old;old=0;}
+        carry=old+current;
+        result={active:true,firstYear,entitlement,carryover:startCarry,taken,planned,remaining:carry,expired};
       }
-      const carryover=(year-firstYear)*entitlement;
-      return {active:true,firstYear,entitlement,carryover,taken,planned,remaining:entitlement+carryover-taken-planned};
+      return result;
     }
     function vacationBalanceAt(year){return vacationBreakdown(year).remaining;}
     function vacationSummary(year){
       const b=vacationBreakdown(year);
       if(!b.active)return `Urlaubsberechnung ${year} noch nicht aktiv – eingestellt ab ${b.firstYear}. Urlaubsstartjahr bitte prüfen.`;
       const fmt=v=>v.toLocaleString('de-DE',{maximumFractionDigits:2});
-      return `Urlaub ${year}: ${fmt(b.entitlement)} Tage Anspruch + ${fmt(b.carryover)} rechnerischer Übertrag – ${fmt(b.taken)} genommen – ${fmt(b.planned)} zukünftig gebucht = ${fmt(b.remaining)} Tage. Feiertage und nicht ausgewählte Urlaubstage werden nicht abgezogen.`;
+      return `Urlaub ${year}: ${fmt(b.entitlement)} Tage Anspruch + ${fmt(b.carryover)} Übertrag – ${fmt(b.taken)} genommen – ${fmt(b.planned)} zukünftig gebucht${b.expired?' – '+fmt(b.expired)+' rechnerisch verfallen':''} = ${fmt(b.remaining)} Tage. Feiertage und nicht ausgewählte Urlaubstage werden nicht abgezogen.`;
     }
 
     function escapeHtml(value) {
@@ -2853,6 +3241,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
       $("vacationHours").value = settings.vacationHours;
       $("sickHours").value = settings.sickHours;
       $("vacationStartYear").value = settings.vacationStartYear;
+      $('vacationCarryoverMode').value=settings.vacationCarryoverMode||'unlimited';
 
       $("weekdaySettings").innerHTML = WEEKDAYS.map((name, day) => `
         <label class="weekday">
@@ -2862,8 +3251,12 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
         </label>`).join("");
     }
 
+    function updateEmptyTimes(){document.querySelectorAll('input[type="time"]').forEach(i=>i.classList.toggle('empty-time',!i.value));}
+    document.addEventListener('input',e=>{if(e.target?.matches?.('input[type="time"]'))updateEmptyTimes();});
+    document.addEventListener('change',e=>{if(e.target?.matches?.('input[type="time"]'))updateEmptyTimes();});
     function renderAll() {
       renderToday();
+      renderIntelligence();
       $("monthPicker").value = selectedMonth;
       $("monthPickerText").textContent=monthTitle(selectedMonth);
       $("detailsMonthPicker").value=selectedMonth;
@@ -2876,6 +3269,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
       renderAnalytics();
       renderPlanning();
       renderExtrasSettings();
+      updateEmptyTimes();
       void maybeNotifyThreshold();
     }
 
@@ -2896,7 +3290,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
         setManualMode('range');$('manualStart').value=t.start;$('manualEnd').value=t.end;
         $('manualPause').value=String(t.breakMinutes);previewManual();
         manualAppliedPlanDate=null;showManualPlanApplied();
-        $('manualStatus').textContent=`${t.name} eingesetzt – bitte noch speichern.`;
+        $('manualStatus').textContent=`${t.name} eingesetzt – bitte noch speichern.`;updateEmptyTimes();
       }));
       $('templateList').innerHTML=templates.map(t=>`<div class="template-list-row"><div><strong>${escapeHtml(t.name)}</strong><small>${escapeHtml(t.start)}–${escapeHtml(t.end)} · ${t.breakMinutes} Min. Pause</small></div><button type="button" class="secondary" data-remove-template="${escapeHtml(t.id)}">Entfernen</button></div>`).join('') || '<p class="hint">Noch keine Vorlagen gespeichert.</p>';
       $('templateList').querySelectorAll('[data-remove-template]').forEach(btn=>btn.addEventListener('click',withWriteLock(async()=>{
@@ -2908,19 +3302,21 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
     function lastMonths(count=12) {
       return Array.from({length:count},(_,i)=>addMonths(currentMonth(),i-count));
     }
-    function lineChart(data,labeler) {
-      if(!data.length)return '<p class="hint">Noch keine Daten vorhanden.</p>';
-      const w=600,h=196, left=25,right=16,top=18,bottom=39;
-      const vals=data.map(x=>x.v), max=Math.max(1,...vals), min=Math.min(0,...vals);
-      const range=Math.max(1,max-min);
-      const x=i=>left+(w-left-right)*(data.length===1?0.5:i/(data.length-1));
-      const y=v=>top+(h-top-bottom)*(max-v)/range;
-      const path=data.map((d,i)=>`${i===0?'M':'L'} ${x(i).toFixed(1)} ${y(d.v).toFixed(1)}`).join(' ');
-      const zero=y(0);
-      const labels=data.map((d,i)=>`<text x="${x(i)}" y="${h-15}" font-size="12" text-anchor="middle" fill="currentColor" opacity=".7">${escapeHtml(labeler(d))}</text>`).join('');
-      const dots=data.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d.v)}" r="3.2" fill="#118c81"><title>${escapeHtml(d.title||'')} ${hoursText(d.v)}</title></circle>`).join('');
-      const grid=[0,.5,1].map(t=>{const v=min+range*t;return `<line x1="${left}" x2="${w-right}" y1="${y(v)}" y2="${y(v)}" stroke="currentColor" opacity=".1" stroke-dasharray="3 5"/>`;}).join('');
-      return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">${grid}<line x1="${left}" y1="${zero}" x2="${w-right}" y2="${zero}" stroke="#118c81" opacity=".4"/><path d="${path}" fill="none" stroke="#128f84" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"/>${dots}${labels}</svg>`;
+    function lineChart(data,labeler){
+      if(!data.length)return '<p class="hint">Noch keine abgeschlossenen Monate vorhanden.</p>';
+      const w=640,h=240,left=60,right=16,top=20,bottom=42;
+      const values=data.map(d=>Number(d.v)),max=Math.max(0,...values),min=Math.min(0,...values);
+      const pad=Math.max(1,(max-min)*.07),lo=Math.floor((min-pad)/5)*5,hi=Math.max(lo+5,Math.ceil((max+pad)/5)*5);
+      const x=i=>left+(w-left-right)*(data.length===1?.5:i/(data.length-1));
+      const y=v=>top+(h-top-bottom)*(hi-v)/(hi-lo);
+      const grid=Array.from({length:5},(_,i)=>{
+        const val=lo+(hi-lo)*i/4;
+        return `<line x1="${left}" x2="${w-right}" y1="${y(val)}" y2="${y(val)}" stroke="currentColor" stroke-dasharray="3 5" opacity=".15"/><text x="${left-7}" y="${y(val)+4}" text-anchor="end" font-size="12" fill="currentColor">${Number(val.toFixed(1)).toLocaleString('de-DE')}</text>`;
+      }).join('');
+      const path=data.map((d,i)=>`${i?'L':'M'} ${x(i).toFixed(1)} ${y(d.v).toFixed(1)}`).join(' ');
+      const dots=data.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d.v)}" r="4" fill="var(--chart-accent)"><title>${escapeHtml(d.title||'')}: ${signedHoursText(d.v)}</title></circle>`).join('');
+      const labels=data.map((d,i)=>`<text x="${x(i)}" y="${h-13}" text-anchor="middle" font-size="12" fill="currentColor">${escapeHtml(labeler(d))}</text>`).join('');
+      return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><text x="8" y="14" font-size="12" fill="currentColor">Std.</text>${grid}<path d="${path}" fill="none" stroke="var(--chart-accent)" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"/>${dots}${labels}</svg>`;
     }
     function barChart(data){
       if(!data.length)return '<p class="hint">Noch keine Daten.</p>';
@@ -2933,13 +3329,16 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
       }).join('');
       const bars=data.map((d,i)=>{
         const x=left+per*i+(per-bar)/2,height=Math.max(0,(h-bottom-top)*d.v/limit),y=h-bottom-height;
-        return `<rect x="${x}" y="${y}" width="${bar}" height="${height}" rx="4" fill="#65bdb2"><title>${escapeHtml(d.title)}: ${Number(d.v).toLocaleString('de-DE',{maximumFractionDigits:1})} Std.</title></rect><text x="${x+bar/2}" y="${h-12}" text-anchor="middle" font-size="12" fill="currentColor" opacity=".8">${escapeHtml(d.label)}</text>`;
+        return `<rect x="${x}" y="${y}" width="${bar}" height="${height}" rx="4" fill="var(--chart-bar)"><title>${escapeHtml(d.title)}: ${Number(d.v).toLocaleString('de-DE',{maximumFractionDigits:1})} Std.</title></rect><text x="${x+bar/2}" y="${h-12}" text-anchor="middle" font-size="12" fill="currentColor" opacity=".8">${escapeHtml(d.label)}</text>`;
       }).join('');
       return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">${grid}<text x="3" y="12" font-size="11" fill="currentColor">Std.</text>${bars}</svg>`;
     }
     function renderAnalytics() {
       if(!$('analysisYear').value)$('analysisYear').value=String(new Date().getFullYear());
       const now=currentMonth(),last=addMonths(now,-1),year=Number($('analysisYear').value)||new Date().getFullYear();
+      renderSmartReports(year);
+      $('analysisYearText').textContent=String(year);
+      $('analysisYearPrev').disabled=year<=2000;$('analysisYearNext').disabled=year>=2200;
       const start=state.settings.accountStartMonth,balance=balanceBeforeMonth(now);
       $('insightBalance').textContent=start>last?'Noch kein Abschluss':signedHoursText(balance);
       $('insightHeroCaption').textContent='Überstunden · Stand '+monthTitle(last);
@@ -2963,8 +3362,12 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
       $('statDays').textContent=String(days);
       $('statLongest').textContent=days?displayTime(Math.max(...byDay.values())):'–';
       $('statBreaks').textContent=displayTime(breaks/60);
-      const prev=Array.from({length:12},(_,m)=>monthStats(`${year-1}-${String(m+1).padStart(2,'0')}`).work).reduce((a,b)=>a+b,0);
-      $('statYoY').textContent=prev?((total-prev>=0?'+':'')+displayTime(total-prev)):'–';
+      const until=year===new Date().getFullYear()?localDateString():`${year}-12-31`;
+      const lastYearEnd=`${year-1}${until.slice(4)}`;
+      const prev=state.records.filter(r=>r.type==='work'&&r.date.startsWith((year-1)+'-')&&r.date<=lastYearEnd).reduce((sum,r)=>sum+Number(r.hours||0),0);
+      const currentComparable=state.records.filter(r=>r.type==='work'&&r.date.startsWith(year+'-')&&r.date<=until).reduce((sum,r)=>sum+Number(r.hours||0),0);
+      $('statYoY').textContent=prev?((currentComparable-prev>=0?'+':'')+displayTime(currentComparable-prev)):'–';
+      $('statYoY').parentElement.title=year===new Date().getFullYear()?'Gleiche Kalendertage bis heute im Vorjahr':'Vergleich vollständiger Jahre';
       $('statAvgBreak').textContent=days?Math.round(breaks/days)+' Min.':'–';
       if(starts.length){starts.sort((a,b)=>a-b);const n=starts[Math.floor(starts.length/2)];$('statTypicalStart').textContent=String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');}
       else $('statTypicalStart').textContent='–';
@@ -2972,7 +3375,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
       $('statBusiestWeekday').textContent=maximum?dayName[byWeekday.indexOf(maximum)]+' · '+displayTime(maximum):'–';
       const count=year===new Date().getFullYear()?new Date().getMonth()+1:12;
       $('statMonthlyAverage').textContent=displayTime(yearWork/Math.max(1,count));
-      $('balanceChart').innerHTML=lineChart(lastMonths().filter(ym=>ym>=start).map(ym=>({v:closingBalanceForMonth(ym),title:monthTitle(ym),ym})).filter(d=>d.v!==null),d=>d.ym.slice(5));
+      $('balanceChart').innerHTML=lineChart(lastMonths().filter(ym=>ym>=start).map(ym=>({v:closingBalanceForMonth(ym),title:monthTitle(ym),ym})).filter(d=>d.v!==null),d=>new Intl.DateTimeFormat('de-DE',{month:'short'}).format(parseDate(d.ym+'-01')).replace('.',''));
       $('monthlyChart').innerHTML=barChart(months.map((ym,m)=>({label:new Date(year,m,1).toLocaleString('de-DE',{month:'short'}).replace('.',''),v:monthly[m],title:monthTitle(ym)})));
       $('weekdayChart').innerHTML=barChart([1,2,3,4,5,6,0].map(d=>({label:dayName[d],v:byWeekday[d],title:['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'][d]})));
     }
@@ -3021,10 +3424,16 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
         const dates=vacationDates(start,end);
         const already=dates.reduce((n,date)=>n+dateRecords(date).filter(r=>r.type==='vacation').reduce((x,r)=>x+effectiveVacationDays(r),0),0);
         const unavailable=dates.filter(date=>dateRecords(date).some(r=>r.type==='sick'||r.type==='work'));
-        const needed=dates.length-already,b=vacationBreakdown(Number(start.slice(0,4)));
+        const needed=Math.max(0,dates.length-already);
+        const byYear=new Map();
+        for(const day of dates){const yr=Number(day.slice(0,4));
+          const booked=dateRecords(day).filter(r=>r.type==='vacation').reduce((sum,r)=>sum+effectiveVacationDays(r),0);
+          byYear.set(yr,(byYear.get(yr)||0)+Math.max(0,1-booked));}
+        const years=[...byYear].map(([yr,qty])=>({yr,qty,b:vacationBreakdown(yr)}));
+        const b=vacationBreakdown(Number(start.slice(0,4)));
         $('planNeeded').textContent=needed.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage';
-        $('planRemaining').textContent=!b.active?'Für dieses Jahr ist der Urlaubsanspruch noch nicht aktiv. Einstellungen prüfen.':
-          'Bereits gebucht: '+already.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage · Rest nach zusätzlicher Buchung: '+(b.remaining-needed).toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage'+(unavailable.length?' · Einige Tage sind bereits anderweitig belegt.':'');
+        $('planRemaining').textContent=years.some(x=>!x.b.active)?'Urlaubsanspruch für einen Teil des Zeitraums nicht aktiv. Bitte Einstellungen prüfen.':
+          'Bereits gebucht: '+already.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage · '+years.map(x=>x.yr+': '+(x.b.remaining-x.qty).toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage Rest').join(' · ')+(unavailable.length?' · Einige Tage sind anderweitig belegt.':'');
         $('planBook').disabled=needed<=0||unavailable.length>0;
       }catch(err){$('planNeeded').textContent='–';$('planRemaining').textContent=err.message;$('planBook').disabled=true;}
       const year=Number($('bridgeYear').value);
@@ -3063,14 +3472,14 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
     function applyPlanToManual(plan) {
       setManualMode('range');$('manualStart').value=plan.start;$('manualEnd').value=plan.end;
       $('manualPause').value=String(plan.breakMinutes);previewManual();
-      manualAppliedPlanDate=plan.date;showManualPlanApplied();
+      manualAppliedPlanDate=plan.date;showManualPlanApplied();updateEmptyTimes();
       $('manualStatus').textContent='Plan übernommen – erst nach „Eintrag speichern“ wird die Zeit gebucht.';
     }
     function applyPlanToEntry(plan) {
       $('entryType').value='work';$('workMode').value='range';setEntryTypeVisibility();
       $('startTime').value=plan.start;$('endTime').value=plan.end;
       $('breakMinutes').value=String(plan.breakMinutes);$('workNote').value=plan.note||'';
-      entryAppliedPlanDate=plan.date;showEntryPlanApplied();
+      entryAppliedPlanDate=plan.date;showEntryPlanApplied();updateEmptyTimes();
       showStatus($('entryStatus'),'Plan vorausgewählt. Bitte tatsächliche Zeiten prüfen und erst dann speichern.','success');
     }
     $('entryDate').addEventListener('change',()=>{
@@ -3135,11 +3544,8 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
     function renderWorkPlanMonthOptions(preferredMonth=null) {
       const selector=$('workPlanMonth');
       const selected=validMonth(preferredMonth)?preferredMonth:(validMonth(selector.value)?selector.value:currentMonth());
-      const months=new Set([selected, ...((state.plans||[]).map(plan=>plan.date.slice(0,7)))]);
-      for(let offset=-12;offset<=12;offset++)months.add(addMonths(selected,offset));
-      const options=[...months].filter(validMonth).sort();
-      selector.innerHTML=options.map(month=>`<option value="${month}">${escapeHtml(monthTitle(month))}</option>`).join('');
       selector.value=selected;
+      $('workPlanMonthLabel').textContent=monthTitle(selected);
     }
     function renderWorkPlans() {
       renderWorkPlanMonthOptions();
@@ -3151,7 +3557,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
         $('workPlanDate').value=plan.date;$('workPlanEndDate').value='';
         $('workPlanStart').value=plan.start;$('workPlanEnd').value=plan.end;
         $('workPlanBreak').value=String(plan.breakMinutes);$('workPlanNote').value=plan.note;
-        $('workPlanTemplate').value='';updateWorkPlanPreview();
+        $('workPlanTemplate').value='';updateWorkPlanPreview();updateEmptyTimes();
         $('workPlanForm').scrollIntoView({behavior:'smooth',block:'center'});
         showStatus($('workPlanStatus'),'Du bearbeitest die Planung für '+displayDay(plan.date)+'.','');
       }));
@@ -3166,12 +3572,11 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
       refreshManualPlanHint();
       updateWorkPlanPreview();
     }
-    $('workPlanMonth').addEventListener('change',renderWorkPlans);
     for(const [id,step] of [['workPlanPrevMonth',-1],['workPlanNextMonth',1]]) {
       $(id).addEventListener('click',()=>{
         const value=addMonths($('workPlanMonth').value||currentMonth(),step);
         if(!validMonth(value))return;
-        // Monat wird über echte Auswahlelemente (und Pfeile) gewechselt.
+        // Geplante Schichten ausschließlich mit den Pfeilen durchblättern.
         renderWorkPlanMonthOptions(value);
         renderWorkPlans();
       });
@@ -3204,10 +3609,20 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
     function renderExtrasSettings(){
       $('reminderEnabled').checked=Boolean(state.settings.reminderEnabled);
       $('reminderTime').value=state.settings.reminderTime||'19:00';
+      $('reminderMode').value=state.settings.reminderMode||'weekdays';
+      document.querySelectorAll('#reminderWeekdays input').forEach(i=>i.checked=(state.settings.reminderWeekdays||[1,2,3,4,5]).includes(Number(i.value)));
+      $('reminderWeekdays').classList.toggle('hidden',$('reminderMode').value==='planned');
       $('notifyThreshold').value=state.settings.notifyThreshold??'';
 
     }
-    $('analysisYear').addEventListener('change',renderAnalytics);
+    $('reminderMode').addEventListener('change',()=>{$('reminderWeekdays').classList.toggle('hidden',$('reminderMode').value==='planned');});
+    for(const [id,step] of [['analysisYearPrev',-1],['analysisYearNext',1]]) {
+      $(id).addEventListener('click',()=>{
+        const year=Number($('analysisYear').value)||new Date().getFullYear();
+        if(year+step<2000||year+step>2200)return;
+        $('analysisYear').value=String(year+step);renderAnalytics();
+      });
+    }
     for(const id of ['planStart','planEnd'])$(id).addEventListener('change',renderPlanning);
     $('bridgeYear').addEventListener('change',renderPlanning);
     $('analysisExportJump').addEventListener('click',()=>{
@@ -3241,14 +3656,19 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
         showStatus($('pushStatus'),'Bitte gültige Erinnerungszeiten und Grenzwerte eingeben.','error');return;
       }
       const previous=structuredClone(state.settings);
-      Object.assign(state.settings,{reminderEnabled:$('reminderEnabled').checked,reminderTime:hour,notifyThreshold:threshold===''?null:Number(threshold)});
+      Object.assign(state.settings,{reminderEnabled:$('reminderEnabled').checked,reminderTime:hour,
+        reminderMode:$('reminderMode').value,
+        reminderWeekdays:[...document.querySelectorAll('#reminderWeekdays input:checked')].map(x=>Number(x.value)),
+        notifyThreshold:threshold===''?null:Number(threshold)});
       try{await persistState();showStatus($('pushStatus'),'Einstellungen gespeichert. Für Benachrichtigungen zusätzlich „Aktivieren“ wählen.','success');}
       catch(error){state.settings=previous;throw error;}
     }));
     async function restoreHistoryVersion(id){
       if(!cloudSession)throw new Error('Bitte zuerst anmelden.');
       if(cloudDirty||cloudConflict)throw new Error('Erst alle lokalen Änderungen synchronisieren bzw. einen Konflikt lösen.');
-      const {data,error}=await configuredSupabase().from('snapshot_history').select('state,version,created_at').eq('id',id).single();
+      const table=id.startsWith('daily:')?'daily_snapshots':'snapshot_history';
+      const actualId=id.startsWith('daily:')?id.slice(6):id;
+      const {data,error}=await configuredSupabase().from(table).select('state,version,created_at').eq('id',actualId).single();
       if(error)throw error;
       const recovered=validateState(data.state);
       if(!confirm('Diese Version vom '+new Date(data.created_at).toLocaleString('de-DE')+' wiederherstellen? Dein aktueller Cloudstand wird dabei durch diese Version ersetzt. Eine Kopie des aktuellen Stands bleibt im Versionsverlauf.'))return;
@@ -3261,16 +3681,21 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
     }
     $('loadHistory').addEventListener('click',async()=>{
       try{
-        if(!cloudSession)throw new Error('Bitte zuerst im Bereich „Konto & Cloud“ anmelden.');
-        const {data,error}=await configuredSupabase().from('snapshot_history').select('id,version,created_at').order('created_at',{ascending:false}).limit(30);
-        if(error)throw error;
-        $('historyList').innerHTML=data.length?data.map(row=>`<div class="history-row"><div><strong>${new Date(row.created_at).toLocaleString('de-DE')}</strong><small>Cloudversion ${Number(row.version)}</small></div><button type="button" class="secondary" data-restore-id="${row.id}">Wiederherstellen</button></div>`).join(''):'<p class="hint">Noch keine früheren Versionen vorhanden.</p>';
+        if(!cloudSession)throw new Error('Bitte zuerst anmelden.');
+        const client=configuredSupabase();
+        const [history,daily]=await Promise.all([
+          client.from('snapshot_history').select('id,version,created_at').order('created_at',{ascending:false}).limit(30),
+          client.from('daily_snapshots').select('id,version,created_at,backup_day').order('backup_day',{ascending:false}).limit(30)
+        ]);
+        if(history.error)throw history.error;if(daily.error)throw daily.error;
+        const rows=[...(daily.data||[]).map(r=>({...r,key:'daily:'+r.id,group:'Tagesbackup '+r.backup_day})),
+          ...(history.data||[]).map(r=>({...r,key:r.id,group:'Version '+r.version}))];
+        $('historyList').innerHTML=rows.length?rows.map(r=>`<div class="history-row"><div><strong>${escapeHtml(r.group)}</strong><small>${new Date(r.created_at).toLocaleString('de-DE')}</small></div><button type="button" class="secondary" data-restore-id="${r.key}">Wiederherstellen</button></div>`).join(''):'<p class="hint">Noch keine Wiederherstellungspunkte vorhanden.</p>';
         $('historyList').querySelectorAll('[data-restore-id]').forEach(b=>b.addEventListener('click',async()=>{
-          b.disabled=true;
-          try{await restoreHistoryVersion(b.dataset.restoreId);}catch(e){showStatus($('historyStatus'),e.message,'error');}finally{b.disabled=false;}
+          b.disabled=true;try{await restoreHistoryVersion(b.dataset.restoreId);}catch(e){showStatus($('historyStatus'),e.message,'error');}finally{b.disabled=false;}
         }));
-        showStatus($('historyStatus'),data.length+' gesicherte Version(en) gefunden.','success');
-      }catch(e){showStatus($('historyStatus'),'Versionsverlauf nicht verfügbar: '+e.message,'error');}
+        showStatus($('historyStatus'),(daily.data||[]).length+' Tagesbackups und '+(history.data||[]).length+' Versionsstände gefunden.','success');
+      }catch(e){showStatus($('historyStatus'),'Versionsverlauf: '+e.message+' (SQL-Erweiterung prüfen).','error');}
     });
     async function passkeyAction(action,statusId='passkeyStatus'){
       const status=$(statusId);
@@ -3336,6 +3761,16 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
         await sub.unsubscribe();
       }catch(e){ console.warn('Push-Gerät konnte nicht vollständig abgemeldet werden:',e); }
     }
+    $('logoutOtherDevices').addEventListener('click',async()=>{
+      try{
+        if(!cloudSession)throw new Error('Bitte zuerst anmelden.');
+        if(cloudDirty||cloudConflict)throw new Error('Zuerst offene Änderungen synchronisieren bzw. Konflikte lösen.');
+        if(!confirm('Anmeldesitzungen auf anderen Geräten abmelden? Dieses Gerät bleibt angemeldet.'))return;
+        const {error}=await configuredSupabase().auth.signOut({scope:'others'});
+        if(error)throw error;
+        showStatus($('passkeyStatus'),'Andere Geräte wurden abgemeldet. Dieses Gerät bleibt angemeldet.','success');
+      }catch(error){showStatus($('passkeyStatus'),'Abmelden anderer Geräte: '+error.message,'error');}
+    });
     $('logoutAllDevices').addEventListener('click',async()=>{
       try{
         if(!cloudSession)throw new Error('Bitte zuerst anmelden.');
@@ -3607,6 +4042,7 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
 
       next.targetMode = "fixed";
       next.appTheme=document.querySelector('input[name="appTheme"]:checked')?.value||state.settings.appTheme;
+      next.vacationCarryoverMode=$('vacationCarryoverMode').value;
       next.leaveDays=[...document.querySelectorAll('input[name="leaveDay"]:checked')].map(input=>Number(input.value));
       next.accountStartMonth = startMonth;
       next.holidayWeekdays = [...document.querySelectorAll('input[name="holidayWeekday"]:checked')]
@@ -4720,6 +5156,71 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
       if(cloudDirty && !cloudConflict)queueCloudSync(true);
     });
 
+    async function removeAccountLocalCache(id){
+      await new Promise((resolve,reject)=>{
+        const store=db.transaction(STORE_NAME,'readwrite');
+        for(const key of [`account:${id}`,`account:${id}:revision`,
+          `account:${id}:cloud-version`,`account:${id}:cloud-dirty`])store.objectStore(STORE_NAME).delete(key);
+        store.oncomplete=resolve;store.onerror=()=>reject(store.error);
+        store.onabort=()=>reject(store.error);
+      });
+      localStorage.removeItem(CALENDAR_TOKEN_PREFIX+id);
+      localStorage.removeItem(LAST_SYNC_PREFIX+id);
+    }
+    $('cloudClearAll').addEventListener('click',async()=>{
+      const out=$('dangerZoneStatus'),button=$('cloudClearAll');
+      if($('cloudClearConfirm').value.trim()!=='DATEN LÖSCHEN'){showStatus(out,'Bitte DATEN LÖSCHEN eingeben.','error');return;}
+      if(!cloudSession||!navigator.onLine||cloudConnecting||cloudSyncBusy||writeBusy||cloudDirty||cloudConflict){
+        showStatus(out,'Zunächst online anmelden und alle offenen Synchronisierungen oder Konflikte lösen.','error');return;
+      }
+      if(!confirm('Alle Kontodaten einschließlich Backups und Kalenderlink dauerhaft löschen? Dein Benutzerkonto bleibt bestehen.'))return;
+      cloudConnecting=true;button.disabled=true;clearTimeout(cloudSyncTimer);
+      try{
+        const remote=await getCloudSnapshot();
+        if(remote.version!==cloudVersion)throw new Error('Andere Geräte haben neuere Daten. Bitte neu synchronisieren.');
+        const clean=validateState(initialCloudState());
+        const {data,error}=await configuredSupabase().rpc('erase_my_data',{
+          p_expected_version:remote.version,p_clean_state:clean
+        });
+        if(error)throw error;
+        await replaceLocalSnapshot(clean,Number(data),false);
+        localStorage.removeItem(calendarTokenKey());cloudCalendarLink='';$('cloudCalendarUrl').value='';
+        $('cloudClearConfirm').value='';cloudConflict=false;cloudSyncQueued=false;
+        markCloudSynced();showStatus(out,'Kontodaten erfolgreich gelöscht. Dein Login bleibt erhalten.','success');
+      }catch(error){showStatus(out,'Löschung fehlgeschlagen: '+error.message+'. Bitte Cloud-Status prüfen.','error');}
+      finally{cloudConnecting=false;button.disabled=false;updateCloudUI();}
+    });
+    $('cloudDeleteAccount').addEventListener('click',async()=>{
+      const out=$('dangerZoneStatus'),button=$('cloudDeleteAccount');
+      if($('cloudDeleteConfirm').value.trim()!=='KONTO LÖSCHEN'){showStatus(out,'Bitte KONTO LÖSCHEN eingeben.','error');return;}
+      const password=$('cloudDeletePassword').value;
+      if(!password){showStatus(out,'Bitte aktuelles Passwort eingeben.','error');return;}
+      if(!cloudSession||!navigator.onLine||cloudConnecting||cloudSyncBusy||writeBusy||cloudDirty||cloudConflict){
+        showStatus(out,'Bitte zuerst online synchronisieren und Konflikte lösen.','error');return;
+      }
+      if(!confirm('Benutzerkonto und alle Cloud-Daten endgültig löschen? Das kann nicht rückgängig gemacht werden.'))return;
+      cloudConnecting=true;button.disabled=true;clearTimeout(cloudSyncTimer);
+      const userId=cloudSession.user.id;
+      try{
+        const client=configuredSupabase();
+        const {data:sessionData,error:sessionError}=await client.auth.getSession();
+        if(sessionError||!sessionData?.session?.access_token)throw sessionError||new Error('Bitte erneut anmelden.');
+        const response=await fetch(`${cloudConfiguredUrl}/functions/v1/arbeitszeit-konto-loeschen`,{
+          method:'POST',cache:'no-store',headers:{'Content-Type':'application/json','apikey':cloudConfiguredKey,
+            'Authorization':`Bearer ${sessionData.session.access_token}`},
+          body:JSON.stringify({password,confirmation:'KONTO LÖSCHEN'})
+        });
+        const result=await response.json().catch(()=>({}));
+        if(!response.ok||result.deleted!==true)throw new Error(result.error||`Fehler ${response.status}: Funktion prüfen`);
+        $('cloudDeletePassword').value='';$('cloudDeleteConfirm').value='';
+        try{await client.auth.signOut({scope:'local'});}catch(_){}
+        await removeAccountLocalCache(userId);
+        await switchToGuest();
+        showCloudStatus('Konto und Cloud-Daten wurden gelöscht.','success');
+      }catch(error){showStatus(out,'Kontolöschung fehlgeschlagen: '+error.message,'error');}
+      finally{$('cloudDeletePassword').value='';cloudConnecting=false;button.disabled=false;updateCloudUI();}
+    });
+
     $("cloudLogout").addEventListener("click",async()=>{
       if(!cloudSession || cloudSyncBusy || cloudConnecting)return;
       if(cloudDirty && !confirm("Einträge wurden noch nicht hochgeladen. Sie bleiben auf diesem Gerät im Konto gespeichert. Trotzdem abmelden?"))return;
@@ -4957,6 +5458,448 @@ body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transpar
           else if(Date.now()-cloudLastFetch>30000)void reconcileCloud();
         }
       }
+    });
+
+    // Assistance uses the same local ledger as V6. Only explicit UI actions persist data.
+    const features = {
+      Chat:'Persönlicher Assistent', Entry:'Text- und Spracheingabe', Checks:'Fehlerhinweise',
+      Report:'Monats- und Jahresberichte', Plan:'Arbeitszeitplaner', Template:'Lernende Vorlagen',
+      Leave:'Urlaubsassistent', Online:'OpenRouter für Fragen und Berichte'
+    };
+    const enabled = key => typeof state.settings.assistance?.[key] === 'boolean'
+      ? state.settings.assistance[key] : key !== 'Online';
+    const message = (id, value) => { $(id).textContent=value; };
+    const shiftDate = (date, days) => {
+      const d=parseDate(date); d.setDate(d.getDate()+days); return localDateString(d);
+    };
+    const monthEnd = month => shiftDate(addMonths(month,1)+'-01',-1);
+    const fmtMin = min => durationLabel(Math.round(Math.abs(min)))+' Std.';
+    const dow = date => parseDate(date).getDay();
+    const clock = min => [Math.floor(min/60),min%60].map(n=>String(n).padStart(2,'0')).join(':');
+    const workdays = () => state.settings.leaveDays ?? [1,2,3,4,5];
+    function dailyWork(start,end) {
+      const days=new Map();
+      for(const r of state.records) {
+        if(r.type!=='work'||r.date<start||r.date>end) continue;
+        if(!days.has(r.date))days.set(r.date,{minutes:0,pause:0,rows:[]});
+        const day=days.get(r.date);
+        day.minutes+=r.hours*60;day.pause+=r.breakMinutes||0;day.rows.push(r);
+      }
+      return days;
+    }
+    function describePeriod(start,end) {
+      const days=dailyWork(start,end), bins=Array.from({length:7},()=>({sum:0,n:0}));
+      let minutes=0;
+      for(const [date,day] of days){
+        minutes+=day.minutes;const b=bins[dow(date)];b.sum+=day.minutes;b.n++;
+      }
+      const sorted=bins.map((b,i)=>({i,avg:b.n?b.sum/b.n:0,n:b.n})).filter(b=>b.n).sort((a,b)=>b.avg-a.avg);
+      return {n:days.size,minutes,avg:days.size?minutes/days.size:0,sorted};
+    }
+    function reportText(from,to,previousFrom,previousTo) {
+      const p=describePeriod(from,to), prior=describePeriod(previousFrom,previousTo);
+      const period=displayDay(from)+' – '+displayDay(to);
+      if(from>to||!p.n)return period+' · Keine gebuchten Arbeitstage im Zeitraum.';
+      const top=p.sorted[0],change=Math.round(p.avg-prior.avg);
+      const trend=prior.n?' Gegenüber '+displayDay(previousFrom)+' – '+displayDay(previousTo)+
+        (change?' sind das '+Math.abs(change)+' Min. '+(change>0?'mehr':'weniger')+' pro Arbeitstag.':' ist der Tagesdurchschnitt gleich geblieben.'):' Für den Vergleichszeitraum fehlen Buchungen.';
+      return period+' · '+fmtMin(p.minutes)+' tatsächlich gearbeitet an '+p.n+' Tagen, im Schnitt '+fmtMin(p.avg)+'.'+trend+
+        ' Höchster Wochentagsschnitt: '+WEEKDAYS[top.i]+' ('+fmtMin(top.avg)+', '+top.n+' erfasste Tage).';
+    }
+    function renderSmartReports(year) {
+      if(!enabled('Report'))return;
+      const today=localDateString(),m=$('aiMonth').value||addMonths(currentMonth(),-1);
+      $('aiMonth').value=m;
+      const comparison=addMonths(m,-1);
+      const periodEnd=monthEnd(m)<today?monthEnd(m):today;
+      const prevEnd=m===currentMonth()?[monthEnd(comparison),comparison+today.slice(7)].sort()[0]:monthEnd(comparison);
+      message('aiMonthly',m>currentMonth()?'Der Berichtsmonat liegt in der Zukunft.':reportText(m+'-01',periodEnd,comparison+'-01',prevEnd));
+      const compare=[{month:comparison,to:prevEnd},{month:m,to:periodEnd}].map(({month,to})=>{
+        const data=describePeriod(month+'-01',to);
+        return {n:data.n,v:data.avg/60,title:monthTitle(month),label:parseDate(month+'-01').toLocaleDateString('de-DE',{month:'short'})};
+      });
+      $('aiReportChart').innerHTML=compare.every(x=>x.n)?'<small>Durchschnitt je gebuchtem Arbeitstag</small>'+barChart(compare):'';
+      const end=[year+'-12-31',today].sort()[0],priorMonth=(year-1)+end.slice(4,7);
+      message('aiYearly',year>Number(today.slice(0,4))?'Das Berichtsjahr liegt in der Zukunft.':'Jahr '+year+' · '+reportText(year+'-01-01',end,(year-1)+'-01-01',[monthEnd(priorMonth),(year-1)+end.slice(4)].sort()[0]));
+    }
+    function typicalShift(date) {
+      const cutoff=[date,localDateString()].sort()[0];
+      const days=[...dailyWork(shiftDate(cutoff,-112),shiftDate(cutoff,-1))].filter(([d])=>dow(d)===dow(date))
+        .sort(([a],[b])=>b.localeCompare(a)).slice(0,8);
+      const counts=new Map();
+      for(const [,day] of days){
+        if(day.rows.length!==1||!day.rows[0].start)continue;
+        const r=day.rows[0],key=[r.start,r.end,r.breakMinutes].join('/');
+        counts.set(key,(counts.get(key)||0)+1);
+      }
+      const best=[...counts].sort((a,b)=>b[1]-a[1])[0];
+      if(!best||best[1]<3||best[1]<=days.length/2)return null;
+      const [start,end,pause]=best[0].split('/');
+      return {start,end,breakMinutes:Number(pause),count:best[1],sample:days.length};
+    }
+    function renderLearned() {
+      const date=$('manualDate').value;
+      const t=enabled('Template')&&validDate(date)&&typicalShift(date);
+      $('smartTemplate').classList.toggle('hidden',!t);
+      if(t)message('aiTemplate',WEEKDAYS[dow(date)]+': '+t.start+'–'+t.end+' · '+t.breakMinutes+' Min. Pause übernehmen ('+t.count+'/'+t.sample+' Tage)');
+    }
+    function fillManual(date,shift) {
+      $('manualDate').value=date;manualAppliedPlanDate=null;setManualMode('range');
+      $('manualStart').value=shift.start;$('manualEnd').value=shift.end;$('manualPause').value=shift.breakMinutes;
+      showManualPlanApplied();refreshManualPlanHint();previewManual();updateEmptyTimes();renderLearned();
+      message('manualStatus','Vorschau geladen. Bitte prüfen und mit „Eintrag speichern“ bestätigen.');
+    }
+    function parseQuickEntry(text) {
+      const s=text.toLowerCase().trim().replace(/[–—]/g,'-');
+      const dateToken=s.match(/\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}\.\d{1,2}\.\d{4})\b/)?.[0];
+      const match=(dateToken?s.replace(dateToken,' '):s).match(/(?:von\s+)?\b(\d{1,2})(?:[:.](\d{2})|\s+uhr(?:\s+(\d{1,2}))?)?\s*(?:uhr\s*)?(?:bis|-)\s*(\d{1,2})(?:[:.](\d{2})|\s+uhr(?:\s+(\d{1,2}))?)?(?![\d:.])/);
+      if(!match)throw Error('Bitte einen Zeitraum wie „von 7:15 bis 16:30“ angeben.');
+      // Remove the matched time range before looking for a date or break.
+      const rest=s.replace(match[0],' ');
+      const explicit=rest.match(/\b(\d{1,2})\.(\d{1,2})\.(\d{4})\b/);
+      const iso=rest.match(/\b\d{4}-\d{2}-\d{2}\b/);
+      let date=$('manualDate').value||localDateString();
+      if(explicit)date=[explicit[3],explicit[2].padStart(2,'0'),explicit[1].padStart(2,'0')].join('-');
+      else if(iso)date=iso[0];
+      else if(/\bvorgestern\b/.test(rest))date=shiftDate(localDateString(),-2);
+      else if(/\bgestern\b/.test(rest))date=shiftDate(localDateString(),-1);
+      else if(/\bheute\b/.test(rest))date=localDateString();
+      const relative=rest.match(/\b(?:heute|gestern|vorgestern)\b/g)||[];
+      if(relative.length+(explicit||iso?1:0)>1)throw Error('Bitte nur ein Datum angeben.');
+      const pause=rest.match(/\b(\d+)\s*(?:minuten|min\.?)\s*pause|pause\s*:?\s*(\d+)\s*(?:minuten|min\.?)/);
+      const noBreak=/\b(?:ohne|keine) pause\b/.test(rest);
+      const extra=rest.replace(explicit?.[0]||iso?.[0]||'','').replace(pause?.[0]||'','')
+        .replace(/\b(vorgestern|gestern|heute|am|ich|habe|hab|war|gearbeitet|arbeit|uhr|mit|und|ohne pause|keine pause)\b/g,'').replace(/[\s,.!]/g,'');
+      if(extra||Boolean(pause)===noBreak)throw Error('Bitte Datum, Zeitraum und Pause eindeutig angeben, z. B. „gestern 7:15 bis 16:30, 45 Minuten Pause“ oder „ohne Pause“.');
+      const start=Number(match[1])*60+Number(match[2]||match[3]||0),end=Number(match[4])*60+Number(match[5]||match[6]||0);
+      const breakMinutes=Number(pause?.[1]||pause?.[2]||0);
+      if(!validDate(date)||Number(match[2]||match[3]||0)>59||Number(match[5]||match[6]||0)>59||end>=1440||end-start<=breakMinutes)
+        throw Error('Bitte Datum, Uhrzeiten und Pause prüfen. Beginn und Ende müssen am selben Tag liegen.');
+      return {date,start:clock(start),end:clock(end),breakMinutes};
+    }
+    function checkEntries() {
+      const today=localDateString(),begin=shiftDate(today,-89),days=dailyWork(shiftDate(begin,-84),today),issues=[];
+      for(const [date,day] of days){
+        if(date<begin)continue;
+        const labels=new Set(),seen=new Set(),ranges=[];
+        for(const r of day.rows){
+          const key=[r.start||'',r.end||'',Math.round(r.hours*60),r.breakMinutes].join('/');
+          if(seen.has(key))labels.add('mögliche Doppelbuchung');
+          seen.add(key);
+          if(r.start)ranges.push(r);
+        }
+        ranges.sort((a,b)=>a.start.localeCompare(b.start));
+        if(ranges.some((r,i)=>i>0&&r.start<ranges[i-1].end))labels.add('überschneidende Zeiträume');
+        if(day.minutes>360&&!day.pause)labels.add('keine Pause bei mehr als 6 Std. erfasst');
+        const sample=[...days].filter(([d])=>d<date&&d>=shiftDate(date,-84)&&dow(d)===dow(date)).map(([,d])=>d.minutes).sort((a,b)=>a-b);
+        const typical=sample[Math.floor(sample.length/2)];
+        if(sample.length>=3&&Math.abs(day.minutes-typical)>=120)labels.add(fmtMin(day.minutes)+' erfasst, für '+WEEKDAYS[dow(date)]+' typisch '+fmtMin(typical));
+        else if(day.minutes>600)labels.add('langer Tag mit '+fmtMin(day.minutes));
+        if(labels.size)issues.push({date,note:[...labels].join(' · ')});
+      }
+      const occupied=new Set(state.records.map(r=>r.date));
+      for(const plan of state.plans||[])if(plan.date>=begin&&plan.date<today&&!occupied.has(plan.date)&&!holidayNameForDate(plan.date))
+        issues.push({date:plan.date,note:'Geplante Schicht ohne Buchung'});
+      // Suggest a missing day only when the preceding six matching weekdays were consistently booked.
+      const planned=new Set((state.plans||[]).map(p=>p.date));
+      for(let date=shiftDate(today,-14);date<today;date=shiftDate(date,1)){
+        if(occupied.has(date)||planned.has(date)||holidayNameForDate(date))continue;
+        let samples=0;
+        for(let weeks=1;weeks<=6;weeks++)if(days.has(shiftDate(date,-7*weeks)))samples++;
+        if(samples>=5)issues.push({date,note:'Keine Buchung. An '+samples+' der letzten 6 '+WEEKDAYS[dow(date)]+'-Termine hast du gearbeitet. War dieser Tag frei?'});
+      }
+      return issues.sort((a,b)=>b.date.localeCompare(a.date));
+    }
+    function monthProjection(deadline) {
+      const today=localDateString(),now=currentMonth(),first=[now,state.settings.accountStartMonth].sort().at(-1);
+      if(!validMonth(deadline)||deadline<first||deadline>addMonths(now,23))throw Error('Bitte einen aktiven Zielmonat innerhalb der nächsten 24 Monate wählen.');
+      let target=0,credited=0,planned=0;
+      for(let m=first;m<=deadline;m=addMonths(m,1)){
+        const stats=monthStats(m); target+=stats.target; credited+=stats.credited;
+      }
+      const occupied=new Set(state.records.map(r=>r.date));
+      for(const p of state.plans||[])if(p.date>=today&&p.date.slice(0,7)>=first&&p.date.slice(0,7)<=deadline&&!occupied.has(p.date)&&!holidayNameForDate(p.date))
+        planned+=timeToMinutes(p.end)-timeToMinutes(p.start)-p.breakMinutes;
+      return {first,target,credited,planned,opening:balanceBeforeMonth(first)};
+    }
+    function computePlan() {
+      const mode=$('aiPlanMode').value,weekly=mode==='week',today=localDateString();
+      const deadline=$('aiDeadline').value,goal=$('aiTarget').valueAsNumber,friday=$('aiFriday').valueAsNumber;
+      if(!Number.isFinite(friday)||friday<0||friday>10||(!weekly&&!Number.isFinite(goal)))throw Error('Bitte Ziel und Freitagsgrenze prüfen.');
+      const projection=weekly?null:monthProjection(deadline);
+      const first=weekly?shiftDate(today,8-(dow(today)||7)):[today,projection.first+'-01'].sort().at(-1);
+      const end=weekly?shiftDate(first,6):monthEnd(deadline);
+      const occupied=new Set([...state.records,...(state.plans||[])].map(r=>r.date)),slots=[],typicalByWeekday=new Map();
+      for(let date=first;date<=end;date=shiftDate(date,1)){
+        if(!workdays().includes(dow(date))||occupied.has(date)||holidayNameForDate(date))continue;
+        const weekday=dow(date);
+        if(!typicalByWeekday.has(weekday))typicalByWeekday.set(weekday,enabled('Template')?typicalShift(date):null);
+        const t=typicalByWeekday.get(weekday),start=t?timeToMinutes(t.start):420,pause=t?.breakMinutes??30;
+        const cap=Math.min(dow(date)===5?Math.round(friday*60):600,1439-start-pause);
+        if(cap>0)slots.push({date,start,pause,cap,minutes:weekly?Math.min(cap,t?timeToMinutes(t.end)-start-pause:480):0});
+      }
+      let summary='Nächste Woche · bekannte Wochentagsvorlagen oder 07:00 Uhr, 8 Std. netto und 30 Min. Pause.';
+      if(!weekly){
+        const delta=mode==='balance'?goal-projection.opening:goal;
+        const required=Math.max(0,Math.round((projection.target+delta-projection.credited)*60)-projection.planned);
+        let left=required,free=slots;
+        while(left>0&&free.length){
+          const share=Math.ceil(left/free.length);
+          for(const s of free){const add=Math.min(left,share,s.cap-s.minutes);s.minutes+=add;left-=add;}
+          free=free.filter(s=>s.minutes<s.cap);
+        }
+        summary='Bis '+monthTitle(deadline)+' · Soll '+displayTime(projection.target)+', bereits angerechnet '+displayTime(projection.credited)+', vorhandene freie Planschichten '+fmtMin(projection.planned)+'. Zusätzlich zu planen: '+fmtMin(required)+'.';
+        if(left)summary+=' Mit diesen Grenzen bleiben '+fmtMin(left)+' ungedeckt.';
+      }
+      const rows=slots.filter(s=>s.minutes>0).map(s=>({date:s.date,start:clock(s.start),end:clock(s.start+s.minutes+s.pause),breakMinutes:s.pause,note:'Assistenzplanung'}));
+      return {summary,rows};
+    }
+    function vacationIdeas() {
+      const from=$('aiFrom').value,to=$('aiUntil').value,length=$('aiLength').valueAsNumber;
+      if(!validDate(from)||!validDate(to)||from<localDateString()||to<from||to>shiftDate(from,365)||!Number.isInteger(length)||length<1||length>60)
+        throw Error('Bitte einen zukünftigen Suchzeitraum von maximal einem Jahr und 1–60 freie Tage wählen.');
+      const ledger=new Map(),blocked=new Set((state.plans||[]).map(p=>p.date));
+      for(const r of state.records){
+        if(r.type==='vacation')ledger.set(r.date,(ledger.get(r.date)||0)+effectiveVacationDays(r));
+        else blocked.add(r.date);
+      }
+      const ideas=[],baseline=new Map();
+      const lastReservedYear=[...ledger.keys()].reduce((year,date)=>Math.max(year,+date.slice(0,4)),0);
+      const reserved=[...ledger].map(([date,days])=>({date,days,type:"vacation"}));
+      for(let start=from,end=shiftDate(from,length-1);end<=to;start=shiftDate(start,1),end=shiftDate(end,1)){
+        const extra=[];
+        let conflict=false;
+        for(let d=start;d<=end;d=shiftDate(d,1)){
+          if(blocked.has(d)){conflict=true;break;}
+          if(workdays().includes(dow(d))&&!holidayNameForDate(d)){
+            const days=Math.max(0,1-(ledger.get(d)||0));
+            if(days)extra.push({date:d,type:'vacation',days});
+          }
+        }
+        if(conflict)continue;
+        const merged=[...reserved,...extra];
+        // Reserve already booked leave, including later years drawing on carryover.
+        const lastYear=Math.max(+end.slice(0,4),lastReservedYear);
+        let affordable=true;
+        for(let y=+start.slice(0,4);y<=lastYear;y++){
+          if(!baseline.has(y))baseline.set(y,vacationBreakdown(y));
+          const balance=vacationBreakdown(y,merged,r=>r.days);
+          if(extra.length&&(!balance.active||balance.remaining<Math.min(0,baseline.get(y).remaining??0))){affordable=false;break;}
+        }
+        if(affordable)ideas.push({start,end,cost:extra.reduce((sum,r)=>sum+r.days,0)});
+      }
+      const selected=[];
+      for(const idea of ideas.sort((a,b)=>a.cost-b.cost||a.start.localeCompare(b.start))){
+        if(selected.every(p=>idea.end<p.start||idea.start>p.end))selected.push(idea);
+        if(selected.length===3)break;
+      }
+      return selected;
+    }
+    function addAction(container,label,handler) {
+      const b=document.createElement('button');b.type='button';b.className='secondary small';b.textContent=label;
+      b.addEventListener('click',handler);$(container).append(b);return b;
+    }
+    function openHelper(key) {
+      if(!enabled(key))return 'Diese Funktion ist in deinen Einstellungen ausgeschaltet.';
+      setActiveTab(['Leave','Plan'].includes(key)?'planning':'analytics');
+      const el=$('smart'+key);el.open=true;el.scrollIntoView({block:'start'});
+      return 'Bereich geöffnet.';
+    }
+    function localIntent(q) {
+      const s=q.toLowerCase(),now=currentMonth(),today=localDateString();
+      const count=s.match(/letzten?\s+(\d+|drei|zwei|sechs|zwölf)\s+monat/);
+      const n=count?(Number(count[1])||({drei:3,zwei:2,sechs:6,zwölf:12}[count[1]])):3;
+      if(n<1||n>24)throw Error('Bitte 1–24 Monate wählen.');
+      let from=addMonths(now,-n)+'-01',to=shiftDate(now+'-01',-1);
+      const names=['januar','februar','märz','april','mai','juni','juli','august','september','oktober','november','dezember'];
+      const month=names.findIndex(name=>new RegExp('\\b'+name+'\\b').test(s));
+      const year=s.match(/\b(20\d{2}|21\d{2})\b/)?.[1]||now.slice(0,4);
+      const named=month>=0?year+'-'+String(month+1).padStart(2,'0'):null;
+      if(named){from=named+'-01';to=monthEnd(named);}
+      else if(/dies(?:en|em|er) monat/.test(s)){from=now+'-01';to=today;}
+      else if(/letzten monat|vormonat/.test(s))from=addMonths(now,-1)+'-01';
+      else if(/dieses jahr|in diesem jahr/.test(s)){from=year+'-01-01';to=today;}
+      if(!named&&!count){
+        if(/\bgestern\b/.test(s))from=to=shiftDate(today,-1);
+        else if(/\bheute\b/.test(s))from=to=today;
+        else if(/letzte[nr]? woche|vergangene[nr]? woche/.test(s)){
+          from=shiftDate(today,-6-(dow(today)||7));to=shiftDate(from,6);
+        }else if(/diese[rn]? woche/.test(s)){from=shiftDate(today,1-(dow(today)||7));to=today;}
+        else if(/letztes jahr|vorjahr/.test(s)){from=(+year-1)+'-01-01';to=(+year-1)+'-12-31';}
+        else if(/\b(20\d{2}|21\d{2})\b/.test(s)){from=year+'-01-01';to=year+'-12-31';}
+      }
+      const friday=s.match(/freitag\w*[^\d]{0,35}(\d+(?:[.,]\d+)?)\s*(?:stunden|std|h)/);
+      const target=s.match(/(-?\d+(?:[.,]\d+)?)\s*(?:stunden\s+)?überstunden/);
+      if(target&&/ziel|bis|müsste|möchte/.test(s))return {kind:'goal',month:named||(/jahresende/.test(s)?year+'-12':now),goal:Number(target[1].replace(',','.')),additional:/aufbauen|zusätzlich|weitere/.test(s),friday:friday?Number(friday[1].replace(',','.')):null};
+      if(/urlaub|frei haben/.test(s)){
+        const amount=s.match(/(\d+|zehn|sieben|vierzehn)\s+tage/);
+        const days=amount?(Number(amount[1])||({zehn:10,sieben:7,vierzehn:14}[amount[1]])):null;
+        return {kind:'leave',days,spring:/frühjahr|frühling/.test(s)};
+      }
+      if(/ungewöhn|fehler|auffällig/.test(s))return {kind:'checks'};
+      if(/plan|nächste woche/.test(s))return {kind:'plan'};
+      if(/wochentag|am längsten/.test(s))return {kind:'weekday',from,to};
+      if(/überstunden|zeitkonto/.test(s))return {kind:/stand|zeitkonto|insgesamt/.test(s)?'balance':'overtime',from,to};
+      if(/bericht|analysiere|gearbeitet|arbeitsstunden/.test(s))return {kind:'work',from,to};
+      return {kind:'unknown'};
+    }
+    function answerIntent(i) {
+      const today=localDateString();
+      if(i.kind==='goal'){
+        if(!enabled('Plan'))return 'Der Arbeitszeitplaner ist ausgeschaltet.';
+        const p=monthProjection(i.month);
+        if(!Number.isFinite(i.goal)||Math.abs(i.goal)>10000)throw Error('Bitte ein gültiges Stundenziel angeben.');
+        const h=Math.max(0,p.target-p.credited+i.goal-(i.additional?0:p.opening)-p.planned/60);
+        if(Number.isFinite(i.friday)&&i.friday>=0&&i.friday<=10)$('aiFriday').value=i.friday;
+        $('aiDeadline').value=i.month;$('aiTarget').value=i.goal;$('aiPlanMode').value=i.additional?'delta':'balance';resetPlan();
+        const conditional=i.month>currentMonth()?' Für '+monthTitle(i.month)+' allein: Wenn alle vorangehenden offenen Monate genau ihr Soll erreichen, fehlen dort '+displayTime(Math.max(0,monthStats(i.month).target-monthStats(i.month).credited+i.goal-(i.additional?0:p.opening)))+' Nettoarbeitsstunden vor Abzug geplanter Schichten.':'';
+        return 'Prognose bis '+monthTitle(i.month)+': '+displayTime(h)+' zusätzliche Nettoarbeit über vorhandene Pläne hinaus. Ausgangsstand '+signedHoursText(p.opening)+', Soll '+displayTime(p.target)+', angerechnet '+displayTime(p.credited)+', bereits geplant '+fmtMin(p.planned)+'. Ziel: '+displayTime(i.goal)+(i.additional?' zusätzlich.':' Gesamtstand.')+' Verteilung unter Planen → Intelligenter Arbeitszeitplaner.'+conditional;
+      }
+      if(i.kind==='checks')return enabled('Checks')?(checkEntries().slice(0,5).map(x=>displayDay(x.date)+' · '+x.note).join('\n')||'Keine Auffälligkeiten in den letzten 90 Tagen.'):'Fehlerhinweise sind ausgeschaltet.';
+      if(i.kind==='plan'){if(!enabled('Plan'))return openHelper('Plan');$('aiPlanMode').value='week';openHelper('Plan');$('aiPlanGo').click();return 'Wochenvorschlag unter Planen geöffnet.';}
+      if(i.kind==='leave'){
+        if(!enabled('Leave'))return openHelper('Leave');
+        if(Number.isInteger(i.days)&&i.days>=1&&i.days<=60)$('aiLength').value=i.days;
+        if(i.spring){
+          const year=Number(today.slice(0,4))+(today.slice(5)>'05-31'?1:0);
+          $('aiFrom').value=[today,year+'-03-01'].sort().at(-1);$('aiUntil').value=year+'-05-31';
+        }
+        openHelper('Leave');$('aiLeaveGo').click();return 'Urlaubsvorschläge unter Planen geöffnet.';
+      }
+      if(i.kind==='unknown')return 'Nenne einen Zeitraum und eine Kennzahl, etwa „Überstunden in den letzten drei Monaten“ oder „Arbeitsstunden im Oktober“.';
+      if(!validDate(i.from)||!validDate(i.to)||i.to<i.from)throw Error('Der angefragte Zeitraum ist unklar.');
+      if(i.kind==='balance'||i.kind==='overtime'){
+        const first=[i.from.endsWith('-01')?i.from.slice(0,7):addMonths(i.from.slice(0,7),1),state.settings.accountStartMonth].sort().at(-1);
+        const last=[addMonths(currentMonth(),-1),i.to===monthEnd(i.to.slice(0,7))?i.to.slice(0,7):addMonths(i.to.slice(0,7),-1)].sort()[0];
+        if(last<first)return 'Für diesen Zeitraum gibt es keinen abgeschlossenen Kontomonat.';
+        const close=closingBalanceForMonth(last);
+        return i.kind==='balance'?'Gesamtstand Ende '+monthTitle(last)+': '+signedHoursText(close)+'.':
+          'Abgeschlossene Monate '+monthTitle(first)+' bis '+monthTitle(last)+': '+signedHoursText(close-balanceBeforeMonth(first))+'. Anfangsstand '+signedHoursText(balanceBeforeMonth(first))+', Endstand '+signedHoursText(close)+'.';
+      }
+      const end=[i.to,today].sort()[0],p=describePeriod(i.from,end);
+      if(!p.n)return 'Keine gebuchten Arbeitstage im angefragten Zeitraum.';
+      return displayDay(i.from)+' – '+displayDay(end)+' · '+(i.kind==='weekday'?p.sorted.map(b=>WEEKDAYS[b.i]+': '+fmtMin(b.avg)+' im Schnitt ('+b.n+' Tage)').join('\n'):
+        fmtMin(p.minutes)+' tatsächlich gearbeitet an '+p.n+' Tagen, durchschnittlich '+fmtMin(p.avg)+' pro Tag.');
+    }
+    let planDraft=null, contextStamp='', speech=null, onlineGeneration=0;
+    function resetPlan(){
+      planDraft=null;message('aiPlanResult','');$('aiPlanSave').hidden=true;
+    }
+    function renderIntelligence(){
+      const stamp=[activeStorageKey,revision,localDateString()].join('|');
+      if(contextStamp!==stamp){
+        onlineGeneration++;speech?.abort();resetPlan();
+        for(const id of ['aiLeaves','aiAnswer','aiNarrative','aiEntryMsg'])message(id,'');
+        if(contextStamp.split('|')[0]!==activeStorageKey){
+          $('aiEntry').value='';$('aiQuestion').value='';
+          $('aiTarget').value=15;$('aiFriday').value=6;$('aiDeadline').value=currentMonth();
+          $('aiPlanMode').value='delta';$('aiMonth').value=addMonths(currentMonth(),-1);
+          $('aiLength').value=10;$('aiFrom').value=localDateString();$('aiUntil').value=shiftDate(localDateString(),120);
+        }
+        contextStamp=stamp;
+      }
+      for(const key of Object.keys(features)){
+        $('aiSwitch'+key).checked=enabled(key);
+        if(key!=='Online')$('smart'+key).classList.toggle('hidden',!enabled(key));
+      }
+      $('aiOnline').hidden=!enabled('Online');$('aiNarrate').hidden=!enabled('Online');
+      if(!enabled('Entry'))speech?.abort();
+      renderLearned();
+      if(enabled('Checks')){
+        const issues=checkEntries();message('aiChecks',issues.length?issues.length+' Hinweise':'Keine Auffälligkeiten gefunden.');
+        for(const item of issues)addAction('aiChecks',displayDay(item.date)+' · '+item.note,()=>{
+          selectedMonth=item.date.slice(0,7);selectedCalendarDate=item.date;setActiveTab('calendar');renderAll();
+        });
+      }
+    }
+    for(const [key,name] of Object.entries(features)){
+      const label=document.createElement('label'),box=document.createElement('input');
+      box.type='checkbox';box.id='aiSwitch'+key;label.append(box,name);$('aiSwitches').append(label);
+      box.addEventListener('change',withWriteLock(async()=>{
+        const previous=state.settings.assistance;
+        state.settings.assistance={...previous,[key]:box.checked};
+        try{await persistState();}catch(e){state.settings.assistance=previous;renderIntelligence();throw e;}
+        renderAll();
+      }));
+    }
+    $('manualDate').addEventListener('change',renderLearned);
+    $('aiTemplate').addEventListener('click',()=>{
+      const date=$('manualDate').value,t=typicalShift(date);if(t&&enabled('Template'))fillManual(date,t);
+    });
+    $('aiFill').addEventListener('click',()=>{
+      try{const r=parseQuickEntry($('aiEntry').value);fillManual(r.date,r);message('aiEntryMsg',displayDay(r.date)+' · '+r.start+'–'+r.end+' · '+r.breakMinutes+' Min. Pause. Formular unten prüfen.');}
+      catch(e){message('aiEntryMsg',e.message);}
+    });
+    const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+    $('aiMic').hidden=!Recognition;
+    message('aiMicHint',Recognition?'Beim Diktieren kann der Sprachdienst deines Browsers Audio verarbeiten.':'Zum Diktieren das Mikrofon der Bildschirmtastatur verwenden.');
+    $('aiMic').addEventListener('click',()=>{
+      if(speech){speech.stop();return;}
+      try{
+        const r=new Recognition();speech=r;r.lang='de-DE';
+        r.onresult=e=>{if(speech===r&&enabled('Entry'))$('aiEntry').value=e.results[0][0].transcript;};
+        r.onerror=()=>message('aiEntryMsg','Diktat nicht verfügbar. Nutze die Tastatur oder deren Mikrofon.');
+        r.onend=()=>{speech=null;message('aiMic','Diktieren');};
+        r.start();message('aiMic','Diktat beenden');
+      }catch{speech=null;message('aiEntryMsg','Bitte das Mikrofon der Tastatur verwenden.');}
+    });
+    $('aiMonth').addEventListener('change',()=>{onlineGeneration++;message('aiNarrative','');renderSmartReports(+$('analysisYear').value);});
+    for(const [label,q] of [['Letzte drei Monate','Überstunden in den letzten drei Monaten'],['Längste Arbeitstage','An welchen Wochentagen arbeite ich durchschnittlich am längsten?'],['Nächste Woche','Plane nächste Woche'],['Resturlaub','Wie nutze ich meinen Resturlaub?']])
+      addAction('aiPrompts',label,()=>{$('aiQuestion').value=q;$('aiAsk').click();});
+    $('aiAsk').addEventListener('click',()=>{
+      onlineGeneration++;
+      try{message('aiAnswer',answerIntent(localIntent($('aiQuestion').value)));}
+      catch(e){message('aiAnswer',e.message);}
+    });
+    async function askOnline(action){
+      const isReport=action==='report',key=isReport?'Report':'Chat',id=isReport?'aiNarrative':'aiAnswer';
+      if(!enabled('Online')||!enabled(key))return;
+      if(!cloudSession){message(id,'Bitte zuerst im Supabase-Konto anmelden. Die lokale Assistenz ist verfügbar.');return;}
+      const input=(isReport?$('aiMonthly').textContent:$('aiQuestion').value).trim();
+      if(!input){message(id,'Bitte eine Frage eingeben.');return;}
+      const generation=++onlineGeneration,owner=activeStorageKey;
+      message(id,'OpenRouter verarbeitet die Anfrage …');
+      try {
+        const {data,error}=await configuredSupabase().functions.invoke('arbeitszeit-assistent',{body:{action,input,today:localDateString()}});
+        if(generation!==onlineGeneration||owner!==activeStorageKey)return;
+        if(error||!data)throw Error();
+        message(id,isReport?data.text:answerIntent(data.intent));
+      }catch{if(generation===onlineGeneration&&owner===activeStorageKey)message(id,'Online-Anfrage fehlgeschlagen. Anmeldung, Funktionsbereitstellung und OpenRouter-Budget prüfen. Lokale Auswertungen bleiben verfügbar.');}
+    }
+    $('aiOnline').addEventListener('click',()=>askOnline('question'));
+    $('aiNarrate').addEventListener('click',()=>askOnline('report'));
+    $('aiDeadline').value=currentMonth();
+    for(const id of ['aiDeadline','aiTarget','aiFriday','aiPlanMode'])$(id).addEventListener('input',resetPlan);
+    $('aiPlanGo').addEventListener('click',()=>{
+      resetPlan();
+      try {
+        planDraft=computePlan();
+        message('aiPlanResult',[planDraft.summary,planDraft.rows.length+' neue Schichten · maximal 10 Std. netto pro Tag.',
+          ...planDraft.rows.map(p=>displayDay(p.date)+' · '+p.start+'–'+p.end+' · '+p.breakMinutes+' Min. Pause')].join('\n'));
+        $('aiPlanSave').hidden=!planDraft.rows.length;
+      }catch(e){message('aiPlanResult',e.message);}
+    });
+    $('aiPlanSave').addEventListener('click',withWriteLock(async()=>{
+      if(!enabled('Plan')||!planDraft?.rows.length)return;
+      const current=computePlan();
+      if(JSON.stringify(current)!==JSON.stringify(planDraft)){resetPlan();message('aiPlanResult','Daten geändert. Vorschlag bitte neu berechnen.');return;}
+      const previous=state.plans||[],rows=current.rows;
+      if(previous.length+rows.length>10000)throw Error('Die maximale Anzahl geplanter Schichten ist erreicht.');
+      state.plans=[...previous,...rows.map(p=>({...p,id:makeId()}))];
+      try{await persistState();}catch(e){state.plans=previous;throw e;}
+      renderWorkPlanMonthOptions(rows[0].date.slice(0,7));renderAll();
+      message('aiPlanResult',rows.length+' Schichten unter Planen gespeichert.');
+    }));
+    $('aiFrom').value=localDateString();$('aiUntil').value=shiftDate(localDateString(),120);
+    for(const id of ['aiFrom','aiUntil','aiLength'])$(id).addEventListener('input',()=>message('aiLeaves',''));
+    $('aiLeaveGo').addEventListener('click',()=>{
+      try{
+        const ideas=vacationIdeas();
+        message('aiLeaves',ideas.length?'Günstigste getrennte Zeiträume nach zusätzlichen Urlaubstagen:':'Kein passender Zeitraum mit deinem verbleibenden Urlaub.');
+        for(const v of ideas)addAction('aiLeaves',displayDay(v.start)+' – '+displayDay(v.end)+' · '+v.cost+' zusätzliche Urlaubstage',()=>{
+          $('planStart').value=v.start;$('planEnd').value=v.end;renderPlanning();$('planStart').scrollIntoView({block:'center'});
+        });
+      }catch(e){message('aiLeaves',e.message);}
     });
 
     initialize();
