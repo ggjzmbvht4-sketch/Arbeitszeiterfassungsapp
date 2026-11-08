@@ -1570,11 +1570,131 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 @media(max-width:360px){#aiOptionFields {grid-template-columns:1fr}.analysis-scope .analysis-year-picker {min-width:100%}}
 </style>
 
+
+<style>
+/* NEXT V11: kompaktes, durchgängiges UI für iPhone und Desktop */
+.header-assistant{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:8px 13px;border-radius:14px;background:var(--accent-light);border:1px solid var(--control-edge);color:var(--ink);font-weight:750;white-space:nowrap}
+.header-assistant span:first-child{font-size:1.3rem;color:var(--primary-ink)}
+.assistant-invite{display:flex;gap:12px;align-items:center;text-align:left;width:100%;border:1px solid var(--control-edge);color:var(--ink);background:var(--surface-muted);padding:14px 16px;border-radius:18px;margin:10px 0 14px;min-height:70px}
+.assistant-invite span:nth-child(2){flex:1;min-width:0;display:grid;gap:4px}.assistant-invite strong{font-size:.97rem}.assistant-invite small{font-size:.82rem;color:var(--muted);line-height:1.4}.assistant-invite-icon{display:grid;place-items:center;width:39px;height:39px;border-radius:13px;color:var(--primary-ink);background:var(--accent-light);font-size:1.5rem;flex-shrink:0}
+.assistant-invite-analysis{margin-block:6px 18px}
+.entry-assist{background:var(--surface-muted);border-color:var(--line);padding:14px;border-radius:18px}.entry-assist summary{display:list-item;font-size:.96rem;font-weight:700}.entry-assist .ai-body{gap:10px}.entry-assist textarea{min-height:80px;width:100%;resize:vertical;padding:12px;font:inherit;border:1px solid var(--control-edge);border-radius:13px;background:var(--surface);color:var(--ink)}.entry-assist-actions{display:grid;grid-template-columns:1fr auto;gap:8px}.entry-assist-actions button{min-height:46px}.entry-feedback{font-size:.86rem;line-height:1.5;color:var(--ink);white-space:pre-line}.entry-feedback:empty{display:none}
+.report-period-selector{display:grid;gap:8px}.month-stepper{display:flex;justify-content:center;align-items:center;gap:10px;background:var(--surface-muted);border-radius:15px;border:1px solid var(--line);padding:6px}.month-stepper strong{flex:1;text-align:center;font-weight:750;font-size:1.03rem}.month-stepper button{width:44px;min-width:44px;min-height:42px;padding:5px;border-radius:11px;font-size:1.45rem;line-height:1}.report-card{background:var(--surface-muted);border:1px solid var(--line);border-radius:18px;padding:14px;overflow:hidden}.report-card-heading{display:grid;gap:4px}.report-card-heading strong{font-size:.97rem}.report-card-heading small{color:var(--muted);font-size:.82rem}.report-story{background:var(--surface-muted);border:1px solid var(--line);border-radius:15px;padding:14px;line-height:1.55;font-size:.9rem;white-space:normal}.report-story:empty{display:none}.report-story p{margin:0 0 9px}.report-story p:last-child{margin-bottom:0}.report-year-details{padding:12px;border:1px solid var(--line);border-radius:14px}.report-year-details summary{cursor:pointer;font-weight:650}.report-year-details .report-story{margin-top:12px}#aiReportChart svg{width:100%;height:auto;max-height:215px;display:block}
+.ai-preferences{scroll-margin-top:80px}.ai-preferences>details>summary{display:flex;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:4px 0}.ai-preferences>details>summary::-webkit-details-marker{display:none}.ai-settings-summary-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--accent-light);font-size:1.4rem;color:var(--primary-ink)}.ai-preferences summary span:nth-child(2){display:grid;gap:4px;flex:1}.ai-preferences summary small{font-size:.83rem;color:var(--muted);font-weight:400}.ai-preferences>details>summary:after{content:'⌄';font-size:1.35rem;color:var(--muted)}.ai-preferences>details[open]>summary:after{content:'⌃'}#aiSwitches .assist-setting{padding:12px 0}.ai-preferences .assist-options{border-top:1px solid var(--line);padding-top:12px}#aiOptionFields{grid-template-columns:repeat(2,minmax(0,1fr))}.template-save-row{display:flex;justify-content:stretch;margin-top:24px;padding-top:12px;border-top:1px solid var(--line)}.template-save-row button{width:100%;min-height:48px}
+.assistant-overlay{position:fixed;z-index:9999;inset:0;background:rgba(11,27,30,.58);display:flex;align-items:flex-end;justify-content:center;padding:12px;box-sizing:border-box}.assistant-overlay.hidden{display:none!important}.assistant-dialog{width:100%;max-width:680px;height:min(88dvh,850px);min-height:400px;border-radius:25px 25px 18px 18px;background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:0 24px 80px #0005;display:flex;flex-direction:column;overflow:hidden}.assistant-top{display:flex;gap:12px;align-items:center;padding:17px 18px;border-bottom:1px solid var(--line)}.assistant-top h2{margin:0;font-size:1.15rem}.assistant-top p{font-size:.8rem;margin:4px 0 0;color:var(--muted)}.assistant-symbol{font-size:1.45rem;background:var(--accent-light);color:var(--primary-ink);padding:7px;border-radius:13px}.assistant-close{margin-left:auto;min-width:44px;height:44px;padding:6px}.assistant-chat-body{padding:18px;flex:1;overflow:auto;overscroll-behavior:contain}.assistant-welcome{background:var(--surface-muted);border:1px solid var(--line);padding:16px;border-radius:17px}.assistant-welcome strong{font-size:1.05rem}.assistant-welcome p{font-size:.87rem;line-height:1.5;margin:7px 0 0;color:var(--muted)}.assistant-suggestions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.assistant-suggestions button{border:1px solid var(--control-edge);background:var(--surface-muted);color:var(--ink);padding:8px 11px;min-height:44px;border-radius:999px;font-size:.8rem}.assistant-conversation{display:grid;gap:14px}.assistant-message{padding:13px 15px;border-radius:17px;max-width:94%;line-height:1.5;font-size:.91rem;overflow-wrap:anywhere;white-space:pre-wrap}.assistant-message.user{justify-self:end;background:var(--accent-light);border:1px solid var(--control-edge)}.assistant-message.bot{justify-self:start;background:var(--surface-muted);border:1px solid var(--line)}.assistant-message .who{font-size:.75rem;font-weight:750;color:var(--muted);margin-bottom:5px}.assistant-message .body{white-space:pre-wrap}.assistant-message.pending .body{color:var(--muted)}.assistant-answer-actions:empty,.assistant-last-answer:empty{display:none}.assistant-last-answer{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}.assistant-form{border-top:1px solid var(--line);padding:12px 17px;display:grid;gap:8px}.assistant-form textarea{resize:none;min-height:66px;max-height:120px;width:100%;border-radius:14px;border:1px solid var(--control-edge);background:var(--surface-muted);color:var(--ink);font:inherit;padding:12px;box-sizing:border-box}.assistant-form-actions{display:flex;gap:8px;align-items:center}.assistant-form-actions span:first-child{flex:1;font-size:.72rem;color:var(--muted);line-height:1.3}.assistant-form-actions button{min-height:42px}.assistant-bottom-link{border:0;border-top:1px solid var(--line);color:var(--muted);padding:10px;background:transparent;text-decoration:underline;font-size:.79rem;border-radius:0}.sr-only{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+@media(max-width:600px){.assistant-overlay{padding:0}.assistant-dialog{height:calc(100dvh - env(safe-area-inset-top) - 4px);max-height:none;border-radius:22px 22px 0 0;padding-bottom:env(safe-area-inset-bottom)}.assistant-top{padding:12px 14px}.assistant-chat-body{padding:14px}.assistant-form{padding:11px 14px}.header-assistant{padding:7px 10px;font-size:.84rem}.entry-assist-actions button{padding-inline:8px}.report-card{padding:12px}#aiOptionFields{grid-template-columns:1fr}}
+#todayAskAssistant,#analyticsAskAssistant{background:var(--surface-muted)!important;color:var(--ink)!important;border:1px solid var(--control-edge)!important;box-shadow:none!important}
+#todayAskAssistant strong,#analyticsAskAssistant strong{color:var(--ink)!important}
+#todayAskAssistant small,#analyticsAskAssistant small{color:var(--muted)!important}
+#todayAskAssistant .assistant-invite-icon,#analyticsAskAssistant .assistant-invite-icon{background:var(--accent-light);color:var(--primary-ink)}
+#assistantSettingsLink{background:var(--surface)!important;color:var(--muted)!important;border-color:var(--line)!important;box-shadow:none!important}
+#aiNarrative{white-space:pre-line}
+
+/* NEXT V12: palettes, appearance, carryover and assistant UI */
+:root {--ai-card-border:var(--control-edge)}
+.theme-options{grid-template-columns:repeat(auto-fit,minmax(min(100%,91px),1fr));gap:9px}
+.theme-option{min-height:82px;font-size:.78rem}
+.theme-dot{width:33px;height:33px}
+@media(max-width:430px){.theme-options{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}}
+.appearance-mode{border-top:1px solid var(--line);margin-top:16px;padding-top:17px}
+.appearance-switch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:11px}
+.appearance-switch button{min-width:0;font-size:.82rem;padding:10px 4px;min-height:44px}
+.appearance-switch button[aria-pressed="true"]{background:var(--accent-light);border:2px solid var(--accent);color:var(--ink)}
+.carryover-fields{padding:13px;background:var(--surface-muted);border:1px solid var(--line);border-radius:16px;margin:10px 0}
+.carryover-fields label{font-weight:700}
+.carryover-date-row{display:grid;grid-template-columns:minmax(90px,1fr) minmax(120px,2fr);gap:10px;margin:8px 0}
+.carryover-date-row select{min-height:46px;margin:0}
+.carryover-summary{background:var(--accent-light);border-radius:14px;padding:12px;color:var(--ink);line-height:1.45;font-size:.86rem;margin:12px 0}
+.carryover-summary:empty{display:none}
+
+.theme-petrol{background:linear-gradient(135deg,#6faeb8,#145e6b)}
+:root[data-theme="petrol"]{--accent:#167d8d;--accent-light:#dcecee;--primary-ink:#145e6b;--ink:#134c56;--frost:#eff6f7;--bg:#eff6f7;--work-fill:#b9d8dd;--leave-fill:#dcecee;--holiday-mark:#167d8d;--chart-accent:#145e6b;--chart-bar:#73b1bb;--theme-halo:#b9d8dd;--theme-halo-secondary:#dcecee;--theme-card-a:#b9d8dd;--theme-card-b:#add2d7;--theme-card-c:#dcecee;--empty-bg:#eff6f7;--placeholder-tone:#6d7a80}
+@media(prefers-color-scheme:dark){:root[data-theme="petrol"]{--accent:#81b9c1;--accent-light:#0e313c;--primary-ink:#14626f;--ink:#edf6f7;--frost:#0b1e27;--bg:#0b1e27;--surface:#0d2c36;--surface-muted:#0e3742;--field-glass:#0f3a45;--text:#eff6f7;--muted:#bacad0;--line:#2a5661;--rim:#d6f3ff1f;--control-edge:#d6f3ff30;--glass:#0e313cee;--work-fill:#0f424d;--leave-fill:#0e313c;--holiday-mark:#8abec6;--chart-accent:#7fb8c0;--chart-bar:#4597a4;--theme-halo:#0e313c;--theme-halo-secondary:#0e313c;--theme-card-a:#0e313c;--theme-card-b:#104753;--theme-card-c:#0e313c;--empty-bg:#0e313c}}
+
+.theme-sage{background:linear-gradient(135deg,#a8b8a6,#556956)}
+:root[data-theme="sage"]{--accent:#728c70;--accent-light:#eaeeea;--primary-ink:#556956;--ink:#415347;--frost:#f5f7f5;--bg:#f5f7f5;--work-fill:#d5dcd4;--leave-fill:#eaeeea;--holiday-mark:#728c70;--chart-accent:#556956;--chart-bar:#aabaa9;--theme-halo:#d5dcd4;--theme-halo-secondary:#eaeeea;--theme-card-a:#d5dcd4;--theme-card-b:#ced7cd;--theme-card-c:#eaeeea;--empty-bg:#f5f7f5;--placeholder-tone:#6d7a80}
+@media(prefers-color-scheme:dark){:root[data-theme="sage"]{--accent:#b3c1b2;--accent-light:#293633;--primary-ink:#596d5a;--ink:#edf6f7;--frost:#162023;--bg:#162023;--surface:#24302f;--surface-muted:#2e3c37;--field-glass:#32403a;--text:#eff6f7;--muted:#bacad0;--line:#4a5b57;--rim:#d6f3ff1f;--control-edge:#d6f3ff30;--glass:#293633ee;--work-fill:#394840;--leave-fill:#293633;--holiday-mark:#b8c6b8;--chart-accent:#b1c0b0;--chart-bar:#8ea38d;--theme-halo:#293633;--theme-halo-secondary:#293633;--theme-card-a:#293633;--theme-card-b:#3e4e44;--theme-card-c:#293633;--empty-bg:#293633}}
+
+.theme-coral{background:linear-gradient(135deg,#eaa698,#a05546)}
+:root[data-theme="coral"]{--accent:#dd7059;--accent-light:#faeae6;--primary-ink:#a05546;--ink:#76453c;--frost:#fdf5f3;--bg:#fdf5f3;--work-fill:#f5d4cd;--leave-fill:#faeae6;--holiday-mark:#dd7059;--chart-accent:#a05546;--chart-bar:#eba99b;--theme-halo:#f5d4cd;--theme-halo-secondary:#faeae6;--theme-card-a:#f5d4cd;--theme-card-b:#f3cdc5;--theme-card-c:#faeae6;--empty-bg:#fdf5f3;--placeholder-tone:#6d7a80}
+@media(prefers-color-scheme:dark){:root[data-theme="coral"]{--accent:#edb2a5;--accent-light:#492e2c;--primary-ink:#a85849;--ink:#edf6f7;--frost:#231c21;--bg:#231c21;--surface:#3f2929;--surface-muted:#54322f;--field-glass:#5a3531;--text:#eff6f7;--muted:#bacad0;--line:#6f514f;--rim:#d6f3ff1f;--control-edge:#d6f3ff30;--glass:#492e2cee;--work-fill:#693c36;--leave-fill:#492e2c;--holiday-mark:#eeb8ac;--chart-accent:#ecb0a4;--chart-bar:#e48d7a;--theme-halo:#492e2c;--theme-halo-secondary:#492e2c;--theme-card-a:#492e2c;--theme-card-b:#744039;--theme-card-c:#492e2c;--empty-bg:#492e2c}}
+
+.theme-amber{background:linear-gradient(135deg,#d5b079,#886023)}
+:root[data-theme="amber"]{--accent:#bb8027;--accent-light:#f5ecdf;--primary-ink:#886023;--ink:#664d22;--frost:#faf6f0;--bg:#faf6f0;--work-fill:#ebd9be;--leave-fill:#f5ecdf;--holiday-mark:#bb8027;--chart-accent:#886023;--chart-bar:#d6b37d;--theme-halo:#ebd9be;--theme-halo-secondary:#f5ecdf;--theme-card-a:#ebd9be;--theme-card-b:#e7d3b3;--theme-card-c:#f5ecdf;--empty-bg:#faf6f0;--placeholder-tone:#6d7a80}
+@media(prefers-color-scheme:dark){:root[data-theme="amber"]{--accent:#daba8a;--accent-light:#3f321d;--primary-ink:#8f6424;--ink:#edf6f7;--frost:#1f1e1b;--bg:#1f1e1b;--surface:#362d1c;--surface-muted:#48381e;--field-glass:#4d3b1e;--text:#eff6f7;--muted:#bacad0;--line:#63573e;--rim:#d6f3ff1f;--control-edge:#d6f3ff30;--glass:#3f321dee;--work-fill:#5a431f;--leave-fill:#3f321d;--holiday-mark:#ddc093;--chart-accent:#dab988;--chart-bar:#c99952;--theme-halo:#3f321d;--theme-halo-secondary:#3f321d;--theme-card-a:#3f321d;--theme-card-b:#624820;--theme-card-c:#3f321d;--empty-bg:#3f321d}}
+
+.theme-navy{background:linear-gradient(135deg,#8290b2,#2a3c64)}
+:root[data-theme="navy"]{--accent:#354c83;--accent-light:#e1e4ec;--primary-ink:#2a3c64;--ink:#223350;--frost:#f1f2f6;--bg:#f1f2f6;--work-fill:#c2c9da;--leave-fill:#e1e4ec;--holiday-mark:#354c83;--chart-accent:#2a3c64;--chart-bar:#8694b5;--theme-halo:#c2c9da;--theme-halo-secondary:#e1e4ec;--theme-card-a:#c2c9da;--theme-card-b:#b8c0d4;--theme-card-c:#e1e4ec;--empty-bg:#f1f2f6;--placeholder-tone:#6d7a80}
+@media(prefers-color-scheme:dark){:root[data-theme="navy"]{--accent:#929ebc;--accent-light:#172339;--primary-ink:#2b3e68;--ink:#edf6f7;--frost:#0f1826;--bg:#0f1826;--surface:#152034;--surface-muted:#19263e;--field-glass:#1a2741;--text:#eff6f7;--muted:#bacad0;--line:#34455e;--rim:#d6f3ff1f;--control-edge:#d6f3ff30;--glass:#172339ee;--work-fill:#1d2c49;--leave-fill:#172339;--holiday-mark:#9aa6c1;--chart-accent:#909dbb;--chart-bar:#5d709c;--theme-halo:#172339;--theme-halo-secondary:#172339;--theme-card-a:#172339;--theme-card-b:#202e4e;--theme-card-c:#172339;--empty-bg:#172339}}
+
+.theme-graphite{background:linear-gradient(135deg,#9ea4ac,#4a525d)}
+:root[data-theme="graphite"]{--accent:#636c79;--accent-light:#e8e9eb;--primary-ink:#4a525d;--ink:#3a434c;--frost:#f4f5f6;--bg:#f4f5f6;--work-fill:#d0d3d7;--leave-fill:#e8e9eb;--holiday-mark:#636c79;--chart-accent:#4a525d;--chart-bar:#a1a7af;--theme-halo:#d0d3d7;--theme-halo-secondary:#e8e9eb;--theme-card-a:#d0d3d7;--theme-card-b:#c8ccd0;--theme-card-c:#e8e9eb;--empty-bg:#f4f5f6;--placeholder-tone:#6d7a80}
+@media(prefers-color-scheme:dark){:root[data-theme="graphite"]{--accent:#abb0b7;--accent-light:#252c36;--primary-ink:#4d5561;--ink:#edf6f7;--frost:#151c25;--bg:#151c25;--surface:#202831;--surface-muted:#29313b;--field-glass:#2c343d;--text:#eff6f7;--muted:#bacad0;--line:#44505a;--rim:#d6f3ff1f;--control-edge:#d6f3ff30;--glass:#252c36ee;--work-fill:#323a44;--leave-fill:#252c36;--holiday-mark:#b1b6bc;--chart-accent:#a9aeb5;--chart-bar:#828994;--theme-halo:#252c36;--theme-halo-secondary:#252c36;--theme-card-a:#252c36;--theme-card-b:#363e49;--theme-card-c:#252c36;--empty-bg:#252c36}}
+
+/* Explizite Modi überschreiben die System-Darstellung. */
+:root[data-effective-appearance="light"] { color-scheme:light;--surface:#fff;--surface-muted:#f7fbfb;--text:#203331;--muted:#627873;--line:#e2eae9;--glass:rgba(255,255,255,.84);--rim:rgba(255,255,255,.9);--field-glass:rgba(255,255,255,.88);--control-edge:#d5e1df;--danger-ink:#a63e49;--danger-bg:#fff1f2;--danger-border:#edb9c1;--green-light:#e9f6f5;--red-light:#f1fdfc;--empty-bg:#f3f8f7}
+:root[data-effective-appearance="dark"] { color-scheme:dark;--surface:#20302f;--surface-muted:#293a39;--text:#f0f6f6;--muted:#acc6c3;--line:#3a4c4a;--glass:rgba(32,49,48,.89);--rim:#e2ffff22;--field-glass:#284a47;--control-edge:#c8f2ee35;--green-light:#203b39;--red-light:#2b4543;--danger-ink:#ffb7bb;--danger-bg:#4c252d;--danger-border:#89525c;--empty-bg:#243733}
+:root[data-effective-appearance="dark"] input,:root[data-effective-appearance="dark"] select,:root[data-effective-appearance="dark"] textarea {color:var(--text);background:var(--field-glass);border-color:var(--control-edge)}
+:root[data-effective-appearance="light"] input,:root[data-effective-appearance="light"] select,:root[data-effective-appearance="light"] textarea {color:var(--text);background:var(--field-glass);border-color:var(--control-edge)}
+:root[data-effective-appearance="dark"] .app-header,:root[data-effective-appearance="dark"] .tabs{background:var(--glass)}
+:root[data-effective-appearance="light"] .app-header,:root[data-effective-appearance="light"] .tabs{background:var(--glass)}
+:root[data-effective-appearance="light"] .clock-card,:root[data-effective-appearance="dark"] .clock-card{background:radial-gradient(ellipse at left top,var(--theme-card-a),transparent 85%),linear-gradient(125deg,var(--theme-card-a),var(--theme-card-b),var(--theme-card-c));color:var(--ink)}
+:root[data-effective-appearance="dark"] .positive{color:#8bf0e2}
+:root[data-effective-appearance="light"] .positive{color:#16746c}
+
+:root[data-theme="turquoise"][data-effective-appearance="light"]{--frost:#edfbfa;--bg:#edfbfa;--accent:#23bbae;--accent-light:#e2f6f4;--primary-ink:#1c817b;--ink:#15635f;--theme-halo:#caefec;--theme-halo-secondary:#dcf4f2;--theme-card-a:#caefec;--theme-card-b:#b2e7e3;--theme-card-c:#dcf4f2;--work-fill:#b2e7e3;--leave-fill:#dcf4f2;--chart-accent:#1c817b;--chart-bar:#65cfc6;--holiday-mark:#23bbae}
+:root[data-theme="turquoise"][data-effective-appearance="dark"]{--frost:#112927;--bg:#112927;--accent:#8ddcd5;--accent-light:#12494a;--primary-ink:#1e8e86;--ink:#eff7f8;--theme-halo:#124446;--theme-halo-secondary:#103a3d;--theme-card-a:#124446;--theme-card-b:#155c5b;--theme-card-c:#103a3d;--work-fill:#155c5b;--leave-fill:#124446;--holiday-mark:#8ddcd5;--chart-accent:#86dad2;--chart-bar:#4fc9be;--surface:#103a3d;--surface-muted:#124b4c;--field-glass:#134c4d;--line:#358180;--glass:#103a3ded;--empty-bg:#124446}
+
+:root[data-theme="blue"][data-effective-appearance="light"]{--frost:#eef5ff;--bg:#eef5ff;--accent:#2461af;--accent-light:#e3eaf5;--primary-ink:#1d467b;--ink:#153a5f;--theme-halo:#cad9ec;--theme-halo-secondary:#dce6f2;--theme-card-a:#cad9ec;--theme-card-b:#b2c8e3;--theme-card-c:#dce6f2;--work-fill:#b2c8e3;--leave-fill:#dce6f2;--chart-accent:#1d467b;--chart-bar:#6690c7;--holiday-mark:#2461af}
+:root[data-theme="blue"][data-effective-appearance="dark"]{--frost:#101f34;--bg:#101f34;--accent:#8dadd5;--accent-light:#132b4a;--primary-ink:#1f4c87;--ink:#eff7f8;--theme-halo:#122946;--theme-halo-secondary:#10243d;--theme-card-a:#122946;--theme-card-b:#15345b;--theme-card-c:#10243d;--work-fill:#15345b;--leave-fill:#122946;--holiday-mark:#8dadd5;--chart-accent:#87a8d3;--chart-bar:#5081bf;--surface:#10243d;--surface-muted:#132c4c;--field-glass:#132d4e;--line:#365880;--glass:#10243ded;--empty-bg:#122946}
+
+:root[data-theme="violet"][data-effective-appearance="light"]{--frost:#f6f2ff;--bg:#f6f2ff;--accent:#7250ac;--accent-light:#ede8f4;--primary-ink:#503b79;--ink:#38335e;--theme-halo:#ddd5eb;--theme-halo-secondary:#e8e3f2;--theme-card-a:#ddd5eb;--theme-card-b:#cec2e2;--theme-card-c:#e8e3f2;--work-fill:#cec2e2;--leave-fill:#e8e3f2;--chart-accent:#503b79;--chart-bar:#9c84c5;--holiday-mark:#7250ac}
+:root[data-theme="violet"][data-effective-appearance="dark"]{--frost:#21182f;--bg:#21182f;--accent:#b6a4d4;--accent-light:#2c264a;--primary-ink:#584085;--ink:#eff7f8;--theme-halo:#292445;--theme-halo-secondary:#23203c;--theme-card-a:#292445;--theme-card-b:#382d5a;--theme-card-c:#23203c;--work-fill:#382d5a;--leave-fill:#292445;--holiday-mark:#b6a4d4;--chart-accent:#b19fd1;--chart-bar:#8e73bd;--surface:#23203c;--surface-muted:#2d264b;--field-glass:#2e274c;--line:#59517f;--glass:#23203ced;--empty-bg:#292445}
+
+:root[data-theme="forest"][data-effective-appearance="light"]{--frost:#effaf3;--bg:#effaf3;--accent:#267354;--accent-light:#e3ede9;--primary-ink:#1e5240;--ink:#164336;--theme-halo:#cbddd6;--theme-halo-secondary:#dce9e4;--theme-card-a:#cbddd6;--theme-card-b:#b3cec3;--theme-card-c:#dce9e4;--work-fill:#b3cec3;--leave-fill:#dce9e4;--chart-accent:#1e5240;--chart-bar:#679d87;--holiday-mark:#267354}
+:root[data-theme="forest"][data-effective-appearance="dark"]{--frost:#142720;--bg:#142720;--accent:#8eb6a6;--accent-light:#13312c;--primary-ink:#205a45;--ink:#eff7f8;--theme-halo:#122e2b;--theme-halo-secondary:#112927;--theme-card-a:#122e2b;--theme-card-b:#163c33;--theme-card-c:#112927;--work-fill:#163c33;--leave-fill:#122e2b;--holiday-mark:#8eb6a6;--chart-accent:#88b2a1;--chart-bar:#518f76;--surface:#112927;--surface-muted:#14322d;--field-glass:#14332e;--line:#366057;--glass:#112927ed;--empty-bg:#122e2b}
+
+:root[data-theme="rose"][data-effective-appearance="light"]{--frost:#fff2f5;--bg:#fff2f5;--accent:#ac496c;--accent-light:#f4e7ec;--primary-ink:#753750;--ink:#523041;--theme-halo:#ebd3dc;--theme-halo-secondary:#f2e2e7;--theme-card-a:#ebd3dc;--theme-card-b:#e2bfcc;--theme-card-c:#f2e2e7;--work-fill:#e2bfcc;--leave-fill:#f2e2e7;--chart-accent:#753750;--chart-bar:#c58098;--holiday-mark:#ac496c}
+:root[data-theme="rose"][data-effective-appearance="dark"]{--frost:#301923;--bg:#301923;--accent:#d4a0b3;--accent-light:#3f2334;--primary-ink:#823b56;--ink:#eff7f8;--theme-halo:#3b2232;--theme-halo-secondary:#311e2d;--theme-card-a:#3b2232;--theme-card-b:#512a3e;--theme-card-c:#311e2d;--work-fill:#512a3e;--leave-fill:#3b2232;--holiday-mark:#d4a0b3;--chart-accent:#d19bae;--chart-bar:#bd6d89;--surface:#311e2d;--surface-muted:#412435;--field-glass:#432536;--line:#734d62;--glass:#311e2ded;--empty-bg:#3b2232}
+
+:root[data-theme="petrol"][data-effective-appearance="light"]{--frost:#eff6f7;--bg:#eff6f7;--accent:#167d8d;--accent-light:#e1eef0;--primary-ink:#145965;--ink:#0f4750;--theme-halo:#c7e0e4;--theme-halo-secondary:#daeaed;--theme-card-a:#c7e0e4;--theme-card-b:#add2d7;--theme-card-c:#daeaed;--work-fill:#add2d7;--leave-fill:#daeaed;--chart-accent:#145965;--chart-bar:#5ca4af;--holiday-mark:#167d8d}
+:root[data-theme="petrol"][data-effective-appearance="dark"]{--frost:#0b1e27;--bg:#0b1e27;--accent:#86bbc4;--accent-light:#0e353f;--primary-ink:#14616e;--ink:#eff7f8;--theme-halo:#0e313c;--theme-halo-secondary:#0d2b35;--theme-card-a:#0e313c;--theme-card-b:#0f414c;--theme-card-c:#0d2b35;--work-fill:#0f414c;--leave-fill:#0e313c;--holiday-mark:#86bbc4;--chart-accent:#7fb8c0;--chart-bar:#4597a4;--surface:#0d2b35;--surface-muted:#0e3640;--field-glass:#0e3742;--line:#2f6571;--glass:#0d2b35ed;--empty-bg:#0e313c}
+
+:root[data-theme="sage"][data-effective-appearance="light"]{--frost:#f5f7f5;--bg:#f5f7f5;--accent:#728c70;--accent-light:#edf0ec;--primary-ink:#506252;--ink:#384e43;--theme-halo:#dde3dd;--theme-halo-secondary:#e8ede8;--theme-card-a:#dde3dd;--theme-card-b:#ced7cd;--theme-card-c:#e8ede8;--work-fill:#ced7cd;--leave-fill:#e8ede8;--chart-accent:#506252;--chart-bar:#9cae9b;--holiday-mark:#728c70}
+:root[data-theme="sage"][data-effective-appearance="dark"]{--frost:#162023;--bg:#162023;--accent:#b6c3b5;--accent-light:#2c3a36;--primary-ink:#586c59;--ink:#eff7f8;--theme-halo:#293633;--theme-halo-secondary:#232f2e;--theme-card-a:#293633;--theme-card-b:#38473f;--theme-card-c:#232f2e;--work-fill:#38473f;--leave-fill:#293633;--holiday-mark:#b6c3b5;--chart-accent:#b1c0b0;--chart-bar:#8ea38d;--surface:#232f2e;--surface-muted:#2d3b37;--field-glass:#2e3c37;--line:#596c64;--glass:#232f2eed;--empty-bg:#293633}
+
+:root[data-theme="coral"][data-effective-appearance="light"]{--frost:#fdf5f3;--bg:#fdf5f3;--accent:#dd7059;--accent-light:#fbece9;--primary-ink:#955043;--ink:#684139;--theme-halo:#f7ddd7;--theme-halo-secondary:#fae8e4;--theme-card-a:#f7ddd7;--theme-card-b:#f3cdc5;--theme-card-c:#fae8e4;--work-fill:#f3cdc5;--leave-fill:#fae8e4;--chart-accent:#955043;--chart-bar:#e79b8b;--holiday-mark:#dd7059}
+:root[data-theme="coral"][data-effective-appearance="dark"]{--frost:#231c21;--bg:#231c21;--accent:#edb5a9;--accent-light:#50302e;--primary-ink:#a65748;--ink:#eff7f8;--theme-halo:#492e2c;--theme-halo-secondary:#3d2828;--theme-card-a:#492e2c;--theme-card-b:#673b35;--theme-card-c:#3d2828;--work-fill:#673b35;--leave-fill:#492e2c;--holiday-mark:#edb5a9;--chart-accent:#ecb0a4;--chart-bar:#e48d7a;--surface:#3d2828;--surface-muted:#52312f;--field-glass:#54322f;--line:#895f5a;--glass:#3d2828ed;--empty-bg:#492e2c}
+
+:root[data-theme="amber"][data-effective-appearance="light"]{--frost:#faf6f0;--bg:#faf6f0;--accent:#bb8027;--accent-light:#f6eee3;--primary-ink:#7f5b23;--ink:#594822;--theme-halo:#efe1cb;--theme-halo-secondary:#f4ebdc;--theme-card-a:#efe1cb;--theme-card-b:#e7d3b3;--theme-card-c:#f4ebdc;--work-fill:#e7d3b3;--leave-fill:#f4ebdc;--chart-accent:#7f5b23;--chart-bar:#cfa668;--holiday-mark:#bb8027}
+:root[data-theme="amber"][data-effective-appearance="dark"]{--frost:#1f1e1b;--bg:#1f1e1b;--accent:#dcbd8f;--accent-light:#44361e;--primary-ink:#8d6324;--ink:#eff7f8;--theme-halo:#3f321d;--theme-halo-secondary:#342c1c;--theme-card-a:#3f321d;--theme-card-b:#58421f;--theme-card-c:#342c1c;--work-fill:#58421f;--leave-fill:#3f321d;--holiday-mark:#dcbd8f;--chart-accent:#dab988;--chart-bar:#c99952;--surface:#342c1c;--surface-muted:#46371e;--field-glass:#48381e;--line:#7a6643;--glass:#342c1ced;--empty-bg:#3f321d}
+
+:root[data-theme="navy"][data-effective-appearance="light"]{--frost:#f1f2f6;--bg:#f1f2f6;--accent:#354c83;--accent-light:#e5e8ef;--primary-ink:#28395f;--ink:#1d314b;--theme-halo:#cfd4e1;--theme-halo-secondary:#dfe2eb;--theme-card-a:#cfd4e1;--theme-card-b:#b8c0d4;--theme-card-c:#dfe2eb;--work-fill:#b8c0d4;--leave-fill:#dfe2eb;--chart-accent:#28395f;--chart-bar:#7282a8;--holiday-mark:#354c83}
+:root[data-theme="navy"][data-effective-appearance="dark"]{--frost:#0f1826;--bg:#0f1826;--accent:#96a2bf;--accent-light:#18243c;--primary-ink:#2b3d67;--ink:#eff7f8;--theme-halo:#172339;--theme-halo-secondary:#141f32;--theme-card-a:#172339;--theme-card-b:#1d2b48;--theme-card-c:#141f32;--work-fill:#1d2b48;--leave-fill:#172339;--holiday-mark:#96a2bf;--chart-accent:#909dbb;--chart-bar:#5d709c;--surface:#141f32;--surface-muted:#19253d;--field-glass:#19263e;--line:#3d4f6c;--glass:#141f32ed;--empty-bg:#172339}
+
+:root[data-theme="graphite"][data-effective-appearance="light"]{--frost:#f4f5f6;--bg:#f4f5f6;--accent:#636c79;--accent-light:#ebecee;--primary-ink:#464e58;--ink:#323f47;--theme-halo:#dadcdf;--theme-halo-secondary:#e6e7ea;--theme-card-a:#dadcdf;--theme-card-b:#c8ccd0;--theme-card-c:#e6e7ea;--work-fill:#c8ccd0;--leave-fill:#e6e7ea;--chart-accent:#464e58;--chart-bar:#9298a1;--holiday-mark:#636c79}
+:root[data-theme="graphite"][data-effective-appearance="dark"]{--frost:#151c25;--bg:#151c25;--accent:#aeb3b9;--accent-light:#272f39;--primary-ink:#4d5560;--ink:#eff7f8;--theme-halo:#252c36;--theme-halo-secondary:#1f2730;--theme-card-a:#252c36;--theme-card-b:#313943;--theme-card-c:#1f2730;--work-fill:#313943;--leave-fill:#252c36;--holiday-mark:#aeb3b9;--chart-accent:#a9aeb5;--chart-bar:#828994;--surface:#1f2730;--surface-muted:#28303a;--field-glass:#29313b;--line:#525d68;--glass:#1f2730ed;--empty-bg:#252c36}
+
+/* V12 – integrierte, sichere KI-Hilfen */
+.assistant-context-chip{display:inline-flex;align-items:center;max-width:100%;font-size:.78rem;padding:7px 11px;border:1px solid var(--control-edge);background:var(--accent-light);color:var(--ink);border-radius:999px;margin:10px 0}
+.assistant-proposal,.assistant-chart{margin-top:12px;padding:13px;border:1px solid var(--control-edge);border-radius:16px;background:var(--surface);white-space:normal}
+.assistant-proposal strong,.assistant-chart strong{display:block;font-size:.87rem;line-height:1.4}.assistant-proposal p{font-size:.83rem;margin:8px 0 12px;color:var(--muted);line-height:1.5}
+.assistant-proposal button{width:100%;padding:9px 10px;font-size:.84rem}.assistant-chart{display:grid;gap:9px}
+.assistant-chart-row{display:grid;grid-template-columns:minmax(65px,1fr) minmax(80px,2fr) 62px;align-items:center;gap:8px;font-size:.77rem}
+.assistant-chart-row>span:last-child{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.assistant-chart-track{height:14px;border-radius:7px;background:var(--accent-light);overflow:hidden}.assistant-chart-bar{height:100%;background:var(--chart-accent);border-radius:7px}.assistant-chart-bar.negative{background:var(--chart-bar)}.assistant-chart small{font-size:.72rem;color:var(--muted)}
+.context-ask-button{width:100%;margin-bottom:12px;text-align:left;min-height:48px;border:1px solid var(--control-edge);background:var(--surface-muted);color:var(--ink)}
+.batch-preview{margin-top:12px;padding:13px;border-radius:16px;border:1px solid var(--control-edge);background:var(--surface)}.batch-preview:empty{display:none}.batch-preview ul{padding-left:22px;font-size:.86rem;line-height:1.7}.batch-preview button{margin:5px 8px 5px 0;max-width:100%}
+.assistant-mic{min-width:42px;padding:6px;border-radius:12px}.assistant-form-actions span:first-child{flex:1}
+@media(max-width:360px){.assistant-chart-row{grid-template-columns:62px 1fr 56px;gap:5px;font-size:.69rem}.assistant-top h2{font-size:1rem}}
+.vacation-expiry-hint{background:var(--accent-light);border:1px solid var(--control-edge);color:var(--ink);border-radius:13px;padding:12px;line-height:1.5;font-size:.85rem;margin-top:13px}
+</style>
+
 </head>
 
 <body>
   <header class="app-header">
     <h1>Arbeitszeit</h1>
+    <button id="headerAssistant" class="header-assistant" type="button" aria-label="KI-Assistent öffnen" title="KI-Assistent öffnen"><span aria-hidden="true">✦</span> <span>KI fragen</span></button>
     <button id="headerSettings" class="header-settings" type="button" aria-label="Einstellungen und Konto öffnen" title="Einstellungen und Konto öffnen">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l-1.88 1.88a1.65 1.65 0 0 0-1.82-.33l-.1.04A1.65 1.65 0 0 0 15 19.9V20h-6v-.1a1.65 1.65 0 0 0-.93-1.49l-.1-.04a1.65 1.65 0 0 0-1.82.33l-1.88-1.88A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.5-1H3v-4h.1a1.65 1.65 0 0 0 1.5-1 1.65 1.65 0 0 0-.33-1.82L6.15 5.3a1.65 1.65 0 0 0 1.82.33A1.65 1.65 0 0 0 9 4.1V4h6v.1a1.65 1.65 0 0 0 1.03 1.53 1.65 1.65 0 0 0 1.82-.33l1.88 1.88A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.5 1h.1v4h-.1a1.65 1.65 0 0 0-1.5 1Z"/></svg>
     </button>
@@ -1585,9 +1705,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
   <div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div></div>
   <button type="button" id="cloudBanner" class="cloud-banner" aria-label="Cloud-Konto und Synchronisierung öffnen"><span class="cloud-badge"><i class="cloud-dot" id="cloudBannerDot"></i><span id="cloudBannerLabel">Nur auf diesem Gerät</span></span><small id="cloudBannerDetail">Konto einrichten ›</small></button>
 
+  <button id="todayAskAssistant" type="button" class="assistant-invite"><span class="assistant-invite-icon" aria-hidden="true">✦</span><span><strong>Fragen zu deinen Zeiten?</strong><small>Stunden, Urlaub, Überstunden und mehr mit KI verstehen</small></span><span aria-hidden="true">›</span></button>
   <form class="clock-card manual-card" id="manualForm">
     <div class="manual-head"><h2>Arbeitszeit eintragen</h2><label class="manual-date">Datum<input id="manualDate" type="date" min="2000-01-01" max="2200-12-31" required></label></div>
-<details id="smartEntry" class="ai-card entry-assist"><summary>Mit Text oder Sprache ausfüllen</summary><div class="ai-body"><label>Arbeitszeit beschreiben<input id="aiEntry" maxlength="240" placeholder="Gestern von 7:15 bis 16:30, 45 Minuten Pause"></label><div class="actions"><button type="button" class="secondary" id="aiFill">Eingabe prüfen</button><button type="button" class="secondary" id="aiMic">Diktieren</button></div><small class="hint" id="aiMicHint"></small><div id="aiEntryMsg" class="ai-output" role="status"></div></div></details>
+<details id="smartEntry" class="ai-card entry-assist"><summary><span aria-hidden="true">✦</span> Natürlich eingeben oder diktieren</summary><div class="ai-body"><p class="hint">Beschreibe deinen Tag so, wie du ihn jemandem erzählen würdest. Die KI füllt die Felder aus – gespeichert wird erst nach deiner Prüfung.</p><label for="aiEntry">Deine Arbeitszeit</label><textarea id="aiEntry" rows="2" maxlength="600" placeholder="Ich habe gestern um halb acht angefangen, war bis Viertel nach vier da und hatte eine Dreiviertelstunde Pause."></textarea><div class="entry-assist-actions"><button type="button" id="aiFill">Zeiten übernehmen</button><button type="button" class="secondary" id="aiMic">🎙 Diktieren</button></div><small class="hint" id="aiMicHint"></small><div id="aiEntryMsg" class="entry-feedback" role="status" aria-live="polite"></div><div id="aiBatchPreview" class="batch-preview" role="group" aria-label="Überprüfte Arbeitszeitvorschläge"></div></div></details>
     <div class="manual-switch" role="group" aria-label="Eingabeart"><button id="byRange" type="button" aria-pressed="true">Von – bis</button><button id="byDuration" type="button" aria-pressed="false">Dauer</button></div>
     <div class="manual-fields"><label id="startLabel">Beginn<input id="manualStart" type="time" required></label><label id="endLabel">Ende<input id="manualEnd" type="time" required></label><label class="hidden" id="durationLabel">Dauer vor Pause (Std.)<input id="manualDuration" type="number" min="0.01" max="24" step="0.01" placeholder="7,5" disabled></label><label>Pause (Min.)<input id="manualPause" type="number" min="0" max="1439" step="1" value="0"></label></div>
     <div id="manualPlannedHint" class="planned-hint hidden"><span id="manualPlannedText"></span><button id="manualUsePlan" type="button" class="secondary small">Geplante Zeit übernehmen</button></div>
@@ -1636,7 +1757,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
           <button id="analysisYearPrev" class="secondary" type="button" aria-label="Vorheriges Jahr">‹</button>
           <strong id="analysisYearText" aria-live="polite">–</strong><input id="analysisYear" type="hidden">
           <button id="analysisYearNext" class="secondary" type="button" aria-label="Nächstes Jahr">›</button>
-        </div><button type="button" id="aiSettingsJump" class="secondary small">Assistenz einstellen</button></div>
+        </div></div>
       <div class="clock-card insight-hero"><span class="eyebrow">DEIN ZEITKONTO</span>
         <h2 id="analyticsIntro">Alles im Blick.</h2><p id="insightHeroCaption">Letzter abgeschlossener Monat</p>
         <strong class="insight-number" id="insightBalance">–</strong>
@@ -1649,7 +1770,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         <div class="metric"><span>Ø Arbeitstag</span><strong id="statAverage">–</strong></div>
         <div class="metric"><span>Urlaub gebucht</span><strong id="statVacationUsed">–</strong></div>
       </div>
-<section id="smartReport" class="panel ai-card"><h2>Was sich bei dir verändert</h2><div class="ai-body"><label>Berichtsmonat<select id="aiMonth" aria-label="Berichtsmonat im ausgewählten Jahr"></select></label><div id="aiInsightCards" class="insight-cards"></div><div id="aiMonthly" class="ai-output" role="status"></div><div id="aiReportChart"></div><div id="aiYearly" class="ai-output" role="status"></div><button type="button" class="secondary" id="aiNarrate">Zusammenhänge mit KI einordnen</button><small class="hint">KI-Einordnung · Die berechneten Kennzahlen stehen darüber.</small><div id="aiNarrative" class="ai-output" role="status"></div></div></section><section id="smartChat" class="panel ai-card"><h2>Deine Zeit verstehen</h2><div class="ai-body"><label>Frage zu deinen Arbeitszeiten<input id="aiQuestion" maxlength="600" placeholder="Wann arbeite ich im Schnitt am längsten?"></label><div class="actions"><button type="button" class="secondary" id="aiAsk">Fragen</button><button type="button" class="secondary" id="aiOnline">Lokal auswerten</button></div><div class="actions" id="aiPrompts"></div><div id="aiAnswerActions" class="actions"></div><div id="aiAnswer" class="ai-output" role="status"></div><details id="aiEvidence" class="hidden"><summary>Berechnungsgrundlage ansehen</summary><div id="aiEvidenceText" class="ai-output"></div></details></div></section>      <section class="panel"><div class="section-head"><h2>Überstundenentwicklung</h2><span class="mini-label">Gewähltes Jahr</span></div>
+<section id="smartReport" class="panel ai-card"><h2>Was sich bei dir verändert</h2><div class="ai-body"><div class="report-period-selector"><span class="hint">Berichtsmonat</span><div class="month-stepper" role="group" aria-label="Berichtsmonat wählen"><button type="button" id="aiMonthPrev" class="secondary" aria-label="Vorheriger Monat">‹</button><strong id="aiMonthLabel" aria-live="polite">–</strong><input id="aiMonth" type="hidden"><button type="button" id="aiMonthNext" class="secondary" aria-label="Nächster Monat">›</button></div></div><div id="aiInsightCards" class="insight-cards"></div><div class="report-card"><div class="report-card-heading"><strong>Vergleich zum Vormonat</strong><small>Ø Nettoarbeitszeit je erfasstem Arbeitstag</small></div><div id="aiReportChart" role="img" aria-label="Vergleich der durchschnittlichen Arbeitstage"></div></div><div id="aiMonthly" class="report-story" role="status"></div><details class="report-year-details"><summary>Jahresüberblick ansehen</summary><div id="aiYearly" class="report-story" role="status"></div></details><button type="button" class="secondary" id="aiNarrate">✦ Entwicklung von KI erklären lassen</button><div id="aiNarrative" class="report-story" role="status"></div><button type="button" id="aiSettingsJump" class="secondary small">KI-Einstellungen</button></div></section><button type="button" id="analyticsAskAssistant" class="assistant-invite assistant-invite-analysis"><span class="assistant-invite-icon" aria-hidden="true">✦</span><span><strong>Mehr über deine Zeiten erfahren</strong><small>Stelle dem Assistenten jede Frage zu deinen Buchungen.</small></span><span aria-hidden="true">›</span></button>      <section class="panel"><div class="section-head"><h2>Überstundenentwicklung</h2><span class="mini-label">Gewähltes Jahr</span></div>
         <div id="balanceChart" class="insight-chart" role="img" aria-label="Entwicklung des Zeitkontos"></div>
         <p class="hint">Nur abgeschlossene Monate – keine Hochrechnung für den laufenden Monat.</p>
       </section>
@@ -1713,8 +1834,8 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     </section>
 
     <section id="planningPanel" class="view-stack hidden" aria-labelledby="planningTitle">
-      <div class="clock-card planning-hero"><span class="eyebrow">VORAUSDENKEN</span><h2 id="planningTitle">Zeit clever planen.</h2><p class="clock-caption">Arbeitszeiten vorausplanen – strikt getrennt von tatsächlichen Buchungen und Überstunden.</p></div>
-<details id="smartPlan" class="panel ai-card"><summary>Intelligenter Arbeitszeitplaner</summary><div class="ai-body"><label>Dein Wunsch<input id="aiPlanRequest" maxlength="600" placeholder="Bis Ende Dezember 15 Überstunden aufbauen, freitags höchstens 6 Stunden"></label><button type="button" id="aiPlanInterpret" class="secondary">Wunsch übernehmen</button><div id="aiPlanRequestStatus" role="status"></div><label>Planungsziel<select id="aiPlanMode"><option value="delta">Zusätzliche Überstunden bis Monatsende</option><option value="balance">Gewünschter Gesamtstand bis Monatsende</option><option value="week">Typische Schichten für nächste Woche</option></select></label><p class="hint">Deine Arbeitstage, Schichtzeiten und Tagesgrenzen kommen aus den Assistenz-Einstellungen. Der Vorschlag berücksichtigt bestehende Schichten, Feiertage und Abwesenheiten.</p><div class="two-col"><label id="aiDeadlineLabel">Zielmonat<input id="aiDeadline" type="month"></label><label id="aiTargetLabel">Überstundenziel (Std.)<input id="aiTarget" type="number" value="15" step="0.25"></label></div><label>Freitags höchstens (Nettostunden)<input id="aiFriday" type="number" min="0" max="10" step="0.25" value="6"></label><button type="button" class="secondary" id="aiPlanGo">Vorschlag berechnen</button><div id="aiPlanSummary" class="ai-output"></div><div id="aiPlanResult" class="ai-output" role="status"></div><button type="button" class="secondary" id="aiPlanSave">Als Schichtplanung speichern</button></div></details><details id="smartLeave" class="panel ai-card"><summary>Urlaubsassistent</summary><div class="ai-body"><label>Dein Urlaubswunsch<input id="aiLeaveRequest" maxlength="600" placeholder="Im Frühjahr zehn Tage frei mit möglichst wenig Urlaub"></label><button type="button" id="aiLeaveInterpret" class="secondary">Zeiträume vorschlagen</button><div id="aiLeaveRequestStatus" role="status"></div><div class="two-col"><label>Frühester Beginn<input id="aiFrom" type="date"></label><label>Spätestes Ende<input id="aiUntil" type="date"></label></div><label>Zusammenhängende freie Tage<input id="aiLength" type="number" min="1" max="60" value="10"></label><button type="button" class="secondary" id="aiLeaveGo">Zeiträume vergleichen</button><div id="aiLeaves" class="ai-output" role="status"></div></div></details>
+      <div class="clock-card planning-hero"><span class="eyebrow">SCHICHTEN &amp; URLAUB</span><h2 id="planningTitle">Deine Planung im Blick.</h2><p class="clock-caption">Erhaltene Schichten eintragen und Urlaub verwalten. Geplante Zeiten werden nicht als Arbeitszeit gebucht.</p></div>
+<details id="smartPlan" class="panel ai-card hidden" hidden aria-hidden="true"><summary>Intelligenter Arbeitszeitplaner</summary><div class="ai-body"><label>Dein Wunsch<input id="aiPlanRequest" maxlength="600" placeholder="Bis Ende Dezember 15 Überstunden aufbauen, freitags höchstens 6 Stunden"></label><button type="button" id="aiPlanInterpret" class="secondary">Wunsch übernehmen</button><div id="aiPlanRequestStatus" role="status"></div><label>Planungsziel<select id="aiPlanMode"><option value="delta">Zusätzliche Überstunden bis Monatsende</option><option value="balance">Gewünschter Gesamtstand bis Monatsende</option><option value="week">Typische Schichten für nächste Woche</option></select></label><p class="hint">Deine Arbeitstage, Schichtzeiten und Tagesgrenzen kommen aus den Assistenz-Einstellungen. Der Vorschlag berücksichtigt bestehende Schichten, Feiertage und Abwesenheiten.</p><div class="two-col"><label id="aiDeadlineLabel">Zielmonat<input id="aiDeadline" type="month"></label><label id="aiTargetLabel">Überstundenziel (Std.)<input id="aiTarget" type="number" value="15" step="0.25"></label></div><label>Freitags höchstens (Nettostunden)<input id="aiFriday" type="number" min="0" max="10" step="0.25" value="6"></label><button type="button" class="secondary" id="aiPlanGo">Vorschlag berechnen</button><div id="aiPlanSummary" class="ai-output"></div><div id="aiPlanResult" class="ai-output" role="status"></div><button type="button" class="secondary" id="aiPlanSave">Als Schichtplanung speichern</button></div></details><details id="smartLeave" class="panel ai-card"><summary>Urlaubsassistent</summary><div class="ai-body"><label>Dein Urlaubswunsch<input id="aiLeaveRequest" maxlength="600" placeholder="Im Frühjahr zehn Tage frei mit möglichst wenig Urlaub"></label><button type="button" id="aiLeaveInterpret" class="secondary">Zeiträume vorschlagen</button><div id="aiLeaveRequestStatus" role="status"></div><div class="two-col"><label>Frühester Beginn<input id="aiFrom" type="date"></label><label>Spätestes Ende<input id="aiUntil" type="date"></label></div><label>Zusammenhängende freie Tage<input id="aiLength" type="number" min="1" max="60" value="10"></label><button type="button" class="secondary" id="aiLeaveGo">Zeiträume vergleichen</button><div id="aiLeaves" class="ai-output" role="status"></div></div></details>
       <section class="panel" id="workPlanPanel">
         <div class="section-head"><h2>Arbeitszeiten planen</h2><span class="mini-label">Keine Buchung</span></div>
         <p class="hint">Geplante Schichten bleiben getrennt: keine Anrechnung auf das Stundenkonto, keine Übertragung in den Kalender oder nach Apple Kalender. Erst wenn du sie bewusst übernimmst und speicherst, werden sie zu einer echten Buchung.</p>
@@ -1762,11 +1883,11 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         <label for="bridgeYear">Jahr</label><input id="bridgeYear" type="number" min="2000" max="2200" step="1" inputmode="numeric">
         <div id="bridgeIdeas"></div>
       </section>
-      <section class="panel"><h2>Dein Freizeitbudget</h2><div class="grid two-dashboard"><div class="metric"><span>Resturlaub im Jahr</span><strong id="planVacationBalance">–</strong></div><div class="metric"><span>Überstunden · letzter Monatsabschluss</span><strong id="planHoursBalance">–</strong></div></div></section>
+      <section class="panel"><h2>Dein Freizeitbudget</h2><div class="grid two-dashboard"><div class="metric"><span>Resturlaub im Jahr</span><strong id="planVacationBalance">–</strong></div><div class="metric"><span>Überstunden · letzter Monatsabschluss</span><strong id="planHoursBalance">–</strong></div></div><p id="vacationExpiryNotice" class="vacation-expiry-hint hidden" role="status"></p></section>
     </section>
 
     <section id="morePanel" class="view-stack hidden">
-<section id="aiPreferences" class="panel ai-card"><h2>Assistenz &amp; KI</h2><div class="ai-body"><div id="aiSwitches"></div><details class="assist-options"><summary>Hinweise, Vorlagen und Planung anpassen</summary><form id="aiOptionsForm"><h3>Deine Vorgaben</h3><div id="aiOptionFields"></div><button type="submit">Vorgaben speichern</button><div id="aiOptionsStatus" role="status"></div></form></details><p class="hint">Bei aktiver Online-KI werden deine Fragen und auf Wunsch die berechneten Berichte an OpenRouter übermittelt. Automatische KI-Berichte kannst du unter den Vorgaben einschalten.</p></div></section>
+
       <div class="feature-intro"><span class="eyebrow">PERSÖNLICH</span><h2>Deine App. Deine Regeln.</h2><p class="hint">Konto, Automatisierungen, Vorlagen und Einstellungen – an einem Ort.</p></div>
       <section id="appearancePanel" class="panel"><h2>Darstellung</h2>
             <fieldset class="theme-picker" aria-describedby="themeHelp">
@@ -1778,8 +1899,15 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
                 <label class="theme-option"><input type="radio" name="appTheme" value="violet"><span class="theme-dot theme-violet" aria-hidden="true"></span><span>Violett</span></label>
                 <label class="theme-option"><input type="radio" name="appTheme" value="forest"><span class="theme-dot theme-forest" aria-hidden="true"></span><span>Grün</span></label>
                 <label class="theme-option"><input type="radio" name="appTheme" value="rose"><span class="theme-dot theme-rose" aria-hidden="true"></span><span>Rosé</span></label>
+                <label class="theme-option"><input type="radio" name="appTheme" value="petrol"><span class="theme-dot theme-petrol" aria-hidden="true"></span><span>Petrol</span></label>
+                <label class="theme-option"><input type="radio" name="appTheme" value="sage"><span class="theme-dot theme-sage" aria-hidden="true"></span><span>Salbei</span></label>
+                <label class="theme-option"><input type="radio" name="appTheme" value="coral"><span class="theme-dot theme-coral" aria-hidden="true"></span><span>Koralle</span></label>
+                <label class="theme-option"><input type="radio" name="appTheme" value="amber"><span class="theme-dot theme-amber" aria-hidden="true"></span><span>Bernstein</span></label>
+                <label class="theme-option"><input type="radio" name="appTheme" value="navy"><span class="theme-dot theme-navy" aria-hidden="true"></span><span>Nachtblau</span></label>
+                <label class="theme-option"><input type="radio" name="appTheme" value="graphite"><span class="theme-dot theme-graphite" aria-hidden="true"></span><span>Graphit</span></label>
               </div>
               <p id="themeStatus" class="status" role="status" aria-live="polite"></p>
+              <div class="appearance-mode" aria-label="Darstellung"><strong>Darstellungsmodus</strong><div class="appearance-switch" role="group" aria-label="Hell, Dunkel oder automatisch"><button type="button" class="secondary" data-appearance-choice="auto">Automatisch</button><button type="button" class="secondary" data-appearance-choice="light">Hell</button><button type="button" class="secondary" data-appearance-choice="dark">Dunkel</button></div><p class="hint">Automatisch übernimmt die Einstellung deines Geräts.</p></div>
             </fieldset>
       </section>
 
@@ -1913,8 +2041,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         <form id="templateForm"><label for="templateName">Name</label><input id="templateName" type="text" placeholder="z. B. Frühschicht" maxlength="36" required>
           <div class="plan-range"><label>Beginn<input id="templateStart" type="time" required></label><label>Ende<input id="templateEnd" type="time" required></label></div>
           <label for="templateBreak">Pause (Minuten)</label><input id="templateBreak" type="number" min="0" max="1439" step="1" value="30" inputmode="numeric" required>
-          <button type="submit">Vorlage speichern</button></form><div id="templateList"></div><p id="templateStatus" class="status" role="status"></p>
+          <div class="template-save-row"><button type="submit">Vorlage speichern</button></div></form><div id="templateList"></div><p id="templateStatus" class="status" role="status"></p>
       </section>
+      <section id="aiPreferences" class="panel settings-group ai-preferences"><details id="aiSettingsDetails"><summary><span class="ai-settings-summary-icon" aria-hidden="true">✦</span><span><strong>KI-Assistent &amp; intelligente Hilfen</strong><small>Fragen, Eingabe per Sprache und Analyse</small></span></summary><div class="ai-body"><p class="hint">KI-Antworten benötigen ein verbundenes Cloud-Konto und einen konfigurierten OpenRouter-Schlüssel. Normale Zeiterfassung und lokale Auswertungen funktionieren weiterhin ohne KI.</p><div id="aiSwitches"></div><details class="assist-options"><summary>Weitere Einstellungen für Hinweise und Vorlagen</summary><form id="aiOptionsForm"><div id="aiOptionFields"></div><button type="submit">Änderungen speichern</button><div id="aiOptionsStatus" role="status"></div></form></details><p class="hint">Bei Fragen werden die benötigten Zeitdaten zur Beantwortung an das eingestellte KI-Modell gesendet. Notizen und Kontodaten wie E-Mail-Adressen werden nicht übertragen. Die KI darf nichts ohne deine Bestätigung eintragen.</p></div></details></section>
       <section class="panel settings-group" id="securityPanel"><h2>Sicherheit</h2>
         <p class="hint">Optional mit Passkey anmelden, beispielsweise über Face ID. Supabase-Passkeys sind experimentell und müssen im Supabase-Dashboard freigeschaltet werden.</p>
         <div class="cloud-actions"><button id="registerPasskey" type="button" class="secondary">Passkey einrichten</button><button id="passkeyLogin" type="button" class="secondary">Mit Passkey anmelden</button><button id="logoutOtherDevices" type="button" class="secondary">Andere Geräte abmelden</button><button id="logoutAllDevices" type="button" class="secondary">Alle Geräte abmelden</button></div>
@@ -1940,8 +2069,8 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 
       <div class="panel settings-group">
         <div class="toolbar" style="justify-content:space-between">
-          <h3>Einstellungen</h3>
-          <button id="settingsToggle" class="secondary small" type="button">Anzeigen</button>
+          <div><h3>Arbeitszeit &amp; Zeitkonto</h3><p class="hint">Sollstunden, Startsaldo, Urlaub und Gutschriften</p></div>
+          <button id="settingsToggle" class="secondary small" type="button" aria-expanded="false" aria-controls="settingsContent">Bearbeiten</button>
         </div>
 
         <div id="settingsContent" class="hidden">
@@ -1977,8 +2106,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
             <div id="weekdaySettings" class="weekday-list"></div>
 
             <label for="vacationCarryoverMode">Übertrag von Urlaubstagen</label>
-            <select id="vacationCarryoverMode"><option value="unlimited">Unbegrenzt (bisherige Berechnung)</option><option value="march31">Verfall nach dem 31. März</option><option value="none">Kein Übertrag</option></select>
-            <p class="hint">Vertragsregelung prüfen. Gesetzlicher Urlaubsverfall kann weitere Voraussetzungen haben.</p>
+            <select id="vacationCarryoverMode"><option value="unlimited">Unbegrenzt übertragen</option><option value="custom">Bis zu einem bestimmten Datum übertragen</option><option value="none">Kein Übertrag</option></select>
+            <div id="vacationCarryoverDateFields" class="carryover-fields hidden"><label>Verfall im Folgejahr (einschließlich)</label><div class="carryover-date-row"><select id="vacationCarryoverDay" aria-label="Verfallstag"></select><select id="vacationCarryoverMonth" aria-label="Verfallsmonat"></select></div><p class="hint">Beispiel: Resturlaub aus 2026 kann bis einschließlich des gewählten Datums 2027 verwendet werden. Am 29. Februar gilt in Nicht-Schaltjahren der 28. Februar.</p></div>
+            <div class="carryover-summary" id="vacationCarryoverPreview" role="status" aria-live="polite"></div>
+            <p class="hint">Deine individuelle Vertrags- und Rechtslage geht vor. Ein gesetzlicher Urlaubsverfall hängt unter Umständen von zusätzlichen Voraussetzungen ab.</p>
             <label for="vacationStartYear">Urlaubsberechnung beginnt ab Jahr</label>
             <input id="vacationStartYear" type="number" min="2000" max="2200" step="1" required>
             <p class="hint">Der Urlaubsübertrag richtet sich nach der oben gewählten Regel. Bitte die tatsächlichen betrieblichen und gesetzlichen Regelungen berücksichtigen.</p>
@@ -2008,7 +2139,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     <button id="calendarTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="M8 14h2m4 0h2M8 18h2"/></svg><span>Kalender</span></button>
     <button id="analyticsTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V12M9 20V7M14 20v-4M19 20V4"/><path d="M2 20h20"/></svg><span>Analysen</span></button>
     <button id="detailsTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Monate</span></button>
-    <button id="planningTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="m8 16 2 2 5-5"/></svg><span>Planen</span></button>
+    <button id="planningTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="m8 16 2 2 5-5"/></svg><span>Planung</span></button>
   </nav>
 
   <div id="entryOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="entryDialogTitle">
@@ -2089,6 +2220,24 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
   </div>
 
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<div id="assistantOverlay" class="assistant-overlay hidden" role="presentation">
+  <section id="smartChat" class="assistant-dialog" role="dialog" aria-modal="true" aria-labelledby="assistantTitle" tabindex="-1">
+    <div class="assistant-top"><div class="assistant-symbol" aria-hidden="true">✦</div><div><h2 id="assistantTitle">Dein Zeit-Assistent</h2><p>Frag mich alles rund um deine Arbeitszeiten.</p></div><button type="button" id="assistantClose" class="assistant-close secondary" aria-label="Assistent schließen">✕</button></div>
+    <div id="assistantChatBody" class="assistant-chat-body">
+      <div id="assistantWelcome" class="assistant-welcome"><strong>Was möchtest du wissen?</strong><p>Frag nach konkreten Zeiten, vergleiche Monate, lass dir Diagramme erstellen oder bereite Änderungen vor. Gespeichert wird nur nach Bestätigung.</p></div>
+      <div id="assistantPageContext" class="assistant-context-chip" role="status">Kontext: Heute</div>
+      <div id="aiPrompts" class="assistant-suggestions" aria-label="Beispielfragen"></div>
+      <div id="aiConversation" class="assistant-conversation" role="log" aria-live="polite" aria-relevant="additions"></div>
+      <div id="aiAnswerActions" class="assistant-answer-actions"></div>
+      <div id="aiAnswer" class="assistant-last-answer" role="status"></div>
+      <details id="aiEvidence" class="hidden"><summary>Berechnungsgrundlage ansehen</summary><div id="aiEvidenceText" class="report-story"></div></details>
+    </div>
+    <form id="assistantForm" class="assistant-form"><label for="aiQuestion" class="sr-only">Deine Frage</label><textarea id="aiQuestion" rows="2" maxlength="1200" placeholder="Was möchtest du zu deinen Arbeitszeiten wissen?"></textarea><div class="assistant-form-actions"><span id="assistantStatus" role="status">Änderungen werden immer zuerst gezeigt.</span><button type="button" id="assistantMic" class="secondary assistant-mic" aria-label="Frage diktieren" title="Frage diktieren">🎙</button><button type="button" class="secondary small" id="aiOnline" hidden aria-hidden="true" tabindex="-1" title="Lokale Antworten">Lokal</button><button id="aiAsk" type="submit">Senden <span aria-hidden="true">↑</span></button></div></form>
+    <button type="button" id="assistantSettingsLink" class="assistant-bottom-link">KI-Einstellungen</button>
+  </section>
+</div>
+
   <script type="module">
     const DB_NAME = "arbeitszeit-app";
     const DB_VERSION = 1;
@@ -2126,7 +2275,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       reminderWeekdays:[1,2,3,4,5],
       notifyThreshold: null,
       appTheme: 'turquoise',
-      vacationCarryoverMode: 'unlimited'
+      vacationCarryoverMode: 'unlimited',
+      vacationCarryoverDate: '03-31',
+      appAppearance: 'auto'
     };
 
     let state = { settings: { ...DEFAULT_SETTINGS }, records: [], plans: [] };
@@ -2159,10 +2310,16 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     let undoTimeout = null;
 
     const $ = (id) => document.getElementById(id);
-    const THEME_COLORS={turquoise:['#edfbfa','#112927'],blue:['#eef5ff','#101f34'],violet:['#f6f2ff','#21182f'],forest:['#effaf3','#142720'],rose:['#fff2f5','#301923']};
+    const THEME_COLORS={turquoise:['#edfbfa','#112927'],blue:['#eef5ff','#101f34'],violet:['#f6f2ff','#21182f'],forest:['#effaf3','#142720'],rose:['#fff2f5','#301923'],petrol:['#eaf7f9','#132e36'],sage:['#f1f6ed','#242f29'],coral:['#fff0e9','#3e2926'],amber:['#fff6e2','#362e1c'],navy:['#edf1fa','#171f36'],graphite:['#f0f2f5','#22262c']};
     function applyTheme(theme) {
       const name=Object.hasOwn(THEME_COLORS,theme)?theme:'turquoise';
       document.documentElement.setAttribute('data-theme',name);
+      const mode=['auto','light','dark'].includes(state.settings.appAppearance)?state.settings.appAppearance:'auto';
+      document.documentElement.setAttribute('data-appearance',mode);
+      const actual=mode==='auto'?(window.matchMedia?.('(prefers-color-scheme: dark)').matches?'dark':'light'):mode;
+      document.documentElement.setAttribute('data-effective-appearance',actual);
+      document.documentElement.style.colorScheme=actual;
+      document.querySelectorAll('[data-appearance-choice]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.appearanceChoice===mode)));
       const [light,dark]=THEME_COLORS[name];
       document.querySelector('meta[name="theme-color"][media*="light"]')?.setAttribute('content',light);
       document.querySelector('meta[name="theme-color"][media*="dark"]')?.setAttribute('content',dark);
@@ -2321,8 +2478,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         throw new Error("Ungültige Kalender- oder Feiertagseinstellungen.");
       }
       settings.holidayWeekdays = [...new Set(settings.holidayWeekdays)];
-      if(!['unlimited','march31','none'].includes(settings.vacationCarryoverMode))settings.vacationCarryoverMode='unlimited';
-      if(!['turquoise','blue','violet','forest','rose'].includes(settings.appTheme))
+      if(!['unlimited','march31','custom','none'].includes(settings.vacationCarryoverMode))settings.vacationCarryoverMode='unlimited';
+      if(!validCarryoverDate(settings.vacationCarryoverDate)) settings.vacationCarryoverDate='03-31';
+      if(!['auto','light','dark'].includes(settings.appAppearance))settings.appAppearance='auto';
+      if(!Object.hasOwn(THEME_COLORS,settings.appTheme))
         throw new Error('Ungültiges Farbschema.');
       const ids = new Set();
       const records = candidate.records.map(record => {
@@ -2578,25 +2737,42 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       return ym >= currentMonth() ? "noch offen" : signedHoursText(balance);
     }
 
+    function validCarryoverDate(value){
+      if(typeof value!=='string'||!/^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/.test(value))return false;
+      const [month,day]=value.split('-').map(Number);
+      return day<=new Date(2024,month,0).getDate();
+    }
+    function carryoverDeadline(year,settings=state.settings){
+      const rule=validCarryoverDate(settings.vacationCarryoverDate)?settings.vacationCarryoverDate:'03-31';
+      const [month,day]=rule.split('-').map(Number);
+      // Der 29. Februar fällt in Jahren ohne Schalttag auf den 28. Februar.
+      const actual=Math.min(day,new Date(year,month,0).getDate());
+      return `${year}-${String(month).padStart(2,'0')}-${String(actual).padStart(2,'0')}`;
+    }
     function vacationBreakdown(year, ledger=state.records, quantity=effectiveVacationDays){
       const firstYear=Number(state.settings.vacationStartYear),entitlement=Number(state.settings.vacationEntitlement)||0;
-      if(year<firstYear)return {active:false,firstYear,entitlement,carryover:0,taken:0,planned:0,remaining:null,expired:0};
+      if(year<firstYear)return {active:false,firstYear,entitlement,carryover:0,taken:0,planned:0,remaining:null,expired:0,expiring:0,expiresOn:null};
       const mode=state.settings.vacationCarryoverMode||'unlimited',today=localDateString();
       let carry=0,result=null;
       for(let y=firstYear;y<=year;y++){
+        const cutoff=carryoverDeadline(y),limited=mode==='custom'||mode==='march31';
         const startCarry=mode==='none'?0:Math.max(0,carry);
-        let old=startCarry,current=entitlement,taken=0,planned=0,expired=0;
-        const records=ledger.filter(r=>r.type==='vacation'&&r.date.startsWith(y+'-')).sort((a,b)=>a.date.localeCompare(b.date));
-        let cutoffPassed=false;
-        for(const r of records){
-          if(mode==='march31'&&!cutoffPassed&&r.date>`${y}-03-31`){expired+=old;old=0;cutoffPassed=true;}
-          const qty=quantity(r),oldUsed=Math.min(old,qty);
-          old-=oldUsed;current-=qty-oldUsed;
+        let old=startCarry,current=entitlement,taken=0,planned=0,expired=0,carryUsed=0;
+        const rows=ledger.filter(r=>r.type==='vacation'&&r.date.startsWith(y+'-')).sort((a,b)=>a.date.localeCompare(b.date));
+        for(const r of rows){
+          const qty=quantity(r);
+          // Nur Urlaubsbuchungen BIS zum Verfallstag können Vorjahresurlaub aufbrauchen,
+          // auch wenn diese frühzeitig für die nächsten Wochen geplant wurden.
+          const oldUsed=Math.min(limited&&r.date>cutoff?0:old,qty);
+          old-=oldUsed;carryUsed+=oldUsed;current-=qty-oldUsed;
           if(r.date>today)planned+=qty;else taken+=qty;
         }
-        if(mode==='march31'&&!cutoffPassed){expired+=old;old=0;}
+        if(limited&&(y<Number(today.slice(0,4))||today>cutoff)){
+          expired=old;old=0;
+        }
         carry=old+current;
-        result={active:true,firstYear,entitlement,carryover:startCarry,taken,planned,remaining:carry,expired};
+        result={active:true,firstYear,entitlement,carryover:startCarry,carryUsed,taken,planned,
+          remaining:carry,expired,expiring:limited?old:0,expiresOn:limited?cutoff:null};
       }
       return result;
     }
@@ -2605,7 +2781,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const b=vacationBreakdown(year);
       if(!b.active)return `Urlaubsberechnung ${year} noch nicht aktiv – eingestellt ab ${b.firstYear}. Urlaubsstartjahr bitte prüfen.`;
       const fmt=v=>v.toLocaleString('de-DE',{maximumFractionDigits:2});
-      return `Urlaub ${year}: ${fmt(b.entitlement)} Tage Anspruch + ${fmt(b.carryover)} Übertrag – ${fmt(b.taken)} genommen – ${fmt(b.planned)} zukünftig gebucht${b.expired?' – '+fmt(b.expired)+' rechnerisch verfallen':''} = ${fmt(b.remaining)} Tage. Feiertage und nicht ausgewählte Urlaubstage werden nicht abgezogen.`;
+      return `Urlaub ${year}: ${fmt(b.entitlement)} Tage Anspruch + ${fmt(b.carryover)} Übertrag – ${fmt(b.taken)} genommen – ${fmt(b.planned)} zukünftig gebucht${b.expired?' – '+fmt(b.expired)+' rechnerisch verfallen':''} = ${fmt(b.remaining)} Tage.${b.expiring?' Davon '+fmt(b.expiring)+' Vorjahrestage gültig bis einschließlich '+displayDay(b.expiresOn)+'.':''} Feiertage und nicht ausgewählte Urlaubstage werden nicht abgezogen.`;
     }
 
     function escapeHtml(value) {
@@ -3256,6 +3432,34 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     }).join("");
     $("accountStartYear").innerHTML = Array.from({length:201}, (_, index) =>
       '<option>' + (2000 + index) + '</option>').join("");
+    $('vacationCarryoverMonth').innerHTML=Array.from({length:12},(_,i)=>{
+      const m=String(i+1).padStart(2,'0');
+      return '<option value="'+m+'">'+monthFormatter.format(new Date(2024,i,1))+'</option>';
+    }).join('');
+    $('vacationCarryoverDay').innerHTML=Array.from({length:31},(_,i)=>{
+      const d=String(i+1).padStart(2,'0');return '<option value="'+d+'">'+(i+1)+'.</option>';
+    }).join('');
+    function updateCarryoverPreview(){
+      const mode=$('vacationCarryoverMode').value,custom=mode==='custom';
+      $('vacationCarryoverDateFields').classList.toggle('hidden',!custom);
+      const selected=$('vacationCarryoverMonth').value+'-'+$('vacationCarryoverDay').value;
+      const valid=validCarryoverDate(selected);
+      if(custom&&!valid){message('vacationCarryoverPreview','Diesen Tag gibt es im ausgewählten Monat nicht.');return;}
+      const y=Number(localDateString().slice(0,4)),deadline=carryoverDeadline(y+1,{vacationCarryoverDate:selected});
+      const wording=mode==='none'?'Resturlaub wird nicht ins Folgejahr übertragen.':mode==='unlimited'?'Resturlaub wird zeitlich unbegrenzt weitergeführt.':'Resturlaub aus '+y+' ist bis einschließlich '+displayDay(deadline)+' im Folgejahr verfügbar.';
+      message('vacationCarryoverPreview',wording+' Änderungen wirken sich auch auf bisherige Urlaubssalden aus.');
+    }
+    for(const id of ['vacationCarryoverMode','vacationCarryoverDay','vacationCarryoverMonth'])$(id).addEventListener('change',updateCarryoverPreview);
+    function renderVacationExpiryNotice(){
+      const host=$('vacationExpiryNotice');
+      if(!host)return;
+      const b=vacationBreakdown(Number(localDateString().slice(0,4)));
+      const today=localDateString();
+      if(!b.active||!b.expiring||!b.expiresOn||b.expiresOn<today){host.classList.add('hidden');return;}
+      host.classList.remove('hidden');
+      const days=Math.ceil((parseDate(b.expiresOn)-parseDate(today))/86400000);
+      host.textContent=b.expiring.toLocaleString('de-DE',{maximumFractionDigits:1})+' Vorjahres-Urlaubstage sind noch bis einschließlich '+displayDay(b.expiresOn)+' gültig.'+(days<=60?' Frist in '+days+' Tagen.':'');
+    }
     function renderSettings() {
       const settings = state.settings;
       const choice=document.querySelector(`input[name="appTheme"][value="${settings.appTheme||'turquoise'}"]`);
@@ -3272,7 +3476,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $("vacationHours").value = settings.vacationHours;
       $("sickHours").value = settings.sickHours;
       $("vacationStartYear").value = settings.vacationStartYear;
-      $('vacationCarryoverMode').value=settings.vacationCarryoverMode||'unlimited';
+      $('vacationCarryoverMode').value=settings.vacationCarryoverMode==='march31'?'custom':(settings.vacationCarryoverMode||'unlimited');
+      const carry=validCarryoverDate(settings.vacationCarryoverDate)?settings.vacationCarryoverDate:'03-31';
+      $('vacationCarryoverMonth').value=carry.slice(0,2);$('vacationCarryoverDay').value=carry.slice(3);
+      updateCarryoverPreview();
 
       $("weekdaySettings").innerHTML = WEEKDAYS.map((name, day) => `
         <label class="weekday">
@@ -3299,6 +3506,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       refreshManualPlanHint();
       renderAnalytics();
       renderPlanning();
+      renderVacationExpiryNotice();
       renderExtrasSettings();
       updateEmptyTimes();
       renderContextAssistance();
@@ -3872,7 +4080,8 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const content = $("settingsContent");
       const opening = content.classList.contains("hidden");
       content.classList.toggle("hidden");
-      $("settingsToggle").textContent = opening ? "Ausblenden" : "Anzeigen";
+      $("settingsToggle").textContent = opening ? "Schließen" : "Bearbeiten";
+      $("settingsToggle").setAttribute("aria-expanded",String(opening));
       if (opening) renderSettings();
     });
 
@@ -4031,6 +4240,18 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }
     }));
 
+    document.querySelectorAll('[data-appearance-choice]').forEach(button=>button.addEventListener('click',withWriteLock(async()=>{
+      const mode=button.dataset.appearanceChoice;
+      if(!['auto','light','dark'].includes(mode))return;
+      const previous=state.settings.appAppearance;
+      state.settings.appAppearance=mode;applyTheme(state.settings.appTheme);
+      try{await persistState();showStatus($('themeStatus'),'Darstellung gespeichert.','success');}
+      catch(error){state.settings.appAppearance=previous;applyTheme(state.settings.appTheme);showStatus($('themeStatus'),error.message,'error');}
+    })));
+    window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener?.('change',()=>{
+      if(state.settings.appAppearance==='auto')applyTheme(state.settings.appTheme);
+    });
+
     $("settingsForm").addEventListener("submit", withWriteLock(async (event) => {
       event.preventDefault();
       const fields = [
@@ -4076,6 +4297,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       next.targetMode = "fixed";
       next.appTheme=document.querySelector('input[name="appTheme"]:checked')?.value||state.settings.appTheme;
       next.vacationCarryoverMode=$('vacationCarryoverMode').value;
+      next.vacationCarryoverDate=$('vacationCarryoverMonth').value+'-'+$('vacationCarryoverDay').value;
+      if(next.vacationCarryoverMode==='custom'&&!validCarryoverDate(next.vacationCarryoverDate)){
+        showStatus($('settingsStatus'),'Bitte einen gültigen Tag für den Urlaubsübertrag auswählen.','error');return;
+      }
       next.leaveDays=[...document.querySelectorAll('input[name="leaveDay"]:checked')].map(input=>Number(input.value));
       next.accountStartMonth = startMonth;
       next.holidayWeekdays = [...document.querySelectorAll('input[name="holidayWeekday"]:checked')]
@@ -5514,9 +5739,22 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     function syncReportYear(){
       const year=$('analysisYear').value;
       if(reportYearScope===year)return;
-      $('aiMonth').innerHTML=Array.from({length:12},(_,m)=>{const ym=year+'-'+String(m+1).padStart(2,'0');return '<option value="'+ym+'">'+escapeHtml(monthTitle(ym))+'</option>';}).join('');
+      // Monatswechsel erfolgt ausschließlich über die Pfeile, ohne Dropdown.
       reportYearScope=year;onlineGeneration++;message('aiNarrative','');message('aiAnswer','');message('aiAnswerActions','');$('aiEvidence').classList.add('hidden');message('aiEvidenceText','');
-      $('aiMonth').value=year===String(new Date().getFullYear())?addMonths(currentMonth(),-1).startsWith(year)?addMonths(currentMonth(),-1):currentMonth():year+'-12';
+      $('aiMonth').value=year===String(new Date().getFullYear())?(addMonths(currentMonth(),-1).startsWith(year)?addMonths(currentMonth(),-1):currentMonth()):year+'-12';
+      updateReportMonthStepper();
+    }
+    function updateReportMonthStepper(){
+      const month=$('aiMonth').value,year=$('analysisYear').value;
+      $('aiMonthLabel').textContent=validMonth(month)?monthTitle(month):'–';
+      $('aiMonthPrev').disabled=!validMonth(month)||month===year+'-01';
+      $('aiMonthNext').disabled=!validMonth(month)||month===year+'-12';
+    }
+    function moveReportMonth(step){
+      const month=$('aiMonth').value,ym=addMonths(month,step);
+      if(!validMonth(month)||!ym.startsWith($('analysisYear').value))return;
+      $('aiMonth').value=ym;onlineGeneration++;message('aiNarrative','');
+      updateReportMonthStepper();renderSmartReports(Number($('analysisYear').value));void maybeAutoReport();
     }
     function renderAssistOptions(){
       const options=assistOptions(),stamp=activeStorageKey+JSON.stringify(options);
@@ -5532,7 +5770,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $('aiFriday').max=String(options.planMax);$('aiFriday').value=options.planFriday;
     }
     function openAssistSettings(){
-      setActiveTab('more');$('aiPreferences').scrollIntoView({block:'start',behavior:'smooth'});
+      setActiveTab('more');$('aiSettingsDetails').open=true;$('aiPreferences').scrollIntoView({block:'start',behavior:'smooth'});
     }
     function infoCard(host,title,value,detail){
       const article=document.createElement('article');article.className='assist-insight';
@@ -5593,7 +5831,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     }
     function showAnswer(text,intent){
       message('aiAnswer',text);message('aiAnswerActions','');$('aiEvidence').classList.add('hidden');message('aiEvidenceText','');
-      if(intent?.kind==='goal'&&enabled('Plan'))addAction('aiAnswerActions','Arbeitszeiten für dieses Ziel vorschlagen',()=>{openHelper('Plan');$('aiPlanGo').click();});
+      // Planung von Arbeitszeiten wird nicht mehr angeboten.
       if(intent?.kind==='work'||intent?.kind==='weekday'){
         const from=intent.from,to=[intent.to,localDateString()].sort()[0];
         if(validDate(from)&&validDate(to)){
@@ -5621,9 +5859,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }
       return answerIntent(intent);
     }
-    async function invokeAssistant(action,input){
+    async function invokeAssistant(action,input,extras={}){
       if(!cloudSession)throw Error('Melde dich in deinem Cloud-Konto an, um die KI zu nutzen.');
-      const {data,error}=await configuredSupabase().functions.invoke('arbeitszeit-assistent',{body:{action,input,today:localDateString(),analysisYear:Number($('analysisYear').value)||new Date().getFullYear()}});
+      const {data,error}=await configuredSupabase().functions.invoke('arbeitszeit-assistent',{body:{action,input,today:localDateString(),analysisYear:Number($('analysisYear').value)||new Date().getFullYear(),...extras}});
       if(error){
         let reason='';try{const payload=await error.context?.json();reason=payload?.error||'';}catch{}
         throw Error(reason||'Die KI ist gerade nicht erreichbar. Prüfe die Verbindung und die Einrichtung der Edge Function.');
@@ -5673,10 +5911,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     // Assistance uses the same local ledger as V6. Only explicit UI actions persist data.
     const features = {
       Chat:'Persönlicher Assistent', Entry:'Text- und Spracheingabe', Checks:'Fehlerhinweise',
-      Report:'Monats- und Jahresberichte', Plan:'Arbeitszeitplaner', Template:'Lernende Vorlagen',
+      Report:'Auswertungen und KI-Berichte', Template:'Automatisch erkannte Vorlagen',
       Leave:'Urlaubsassistent', Online:'OpenRouter für Fragen und Berichte'
     };
-    const enabled = key => typeof state.settings.assistance?.[key] === 'boolean'
+    const enabled = key => key==='Plan'?false:typeof state.settings.assistance?.[key] === 'boolean'
       ? state.settings.assistance[key] : key !== 'Online';
     const message = (id, value) => { $(id).textContent=value; };
     const shiftDate = (date, days) => {
@@ -5720,6 +5958,16 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         (prior.n?' Vergleich: '+displayDay(previousFrom)+' – '+displayDay(previousTo)+'.':'');
     }
 
+    function compareAverageChart(data){
+      if(data.some(x=>!x.n))return '<p class="hint">Zum Vergleich fehlen noch erfasste Arbeitstage in einem der Monate.</p>';
+      const maximum=Math.max(2,...data.map(x=>x.v)),limit=Math.ceil(maximum/2)*2;
+      const baseline=173,top=26,height=baseline-top;
+      const bars=data.map((d,i)=>{
+        const x=i===0?105:350,h=Math.max(3,height*d.v/limit),y=baseline-h;
+        return `<rect x="${x}" y="${y}" width="114" height="${h}" rx="10" fill="var(--chart-bar)" opacity="${i===0?.55:1}"><title>${escapeHtml(d.title)}: ${d.v.toFixed(2)} Stunden</title></rect><text x="${x+57}" y="${Math.max(20,y-8)}" text-anchor="middle" font-size="17" font-weight="700" fill="currentColor">${Number(d.v.toFixed(2)).toLocaleString('de-DE')} h</text><text x="${x+57}" y="204" text-anchor="middle" font-size="15" fill="currentColor">${escapeHtml(d.label)}</text>`;
+      }).join('');
+      return `<svg viewBox="0 0 565 217" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><line x1="36" y1="173" x2="528" y2="173" stroke="currentColor" opacity=".2" stroke-width="1.5"/><line x1="36" y1="95" x2="528" y2="95" stroke="currentColor" stroke-dasharray="3 6" opacity=".15"/><text x="34" y="90" font-size="11" text-anchor="end" fill="currentColor" opacity=".7">${limit/2} h</text>${bars}</svg>`;
+    }
     function renderSmartReports(year) {
       if(!enabled('Report'))return;
       const today=localDateString(),m=$('aiMonth').value||addMonths(currentMonth(),-1);
@@ -5727,22 +5975,33 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const comparison=addMonths(m,-1);
       const periodEnd=monthEnd(m)<today?monthEnd(m):today;
       const prevEnd=m===currentMonth()?[monthEnd(comparison),comparison+today.slice(7)].sort()[0]:monthEnd(comparison);
-      let monthlyText=m>currentMonth()?'Der Berichtsmonat liegt in der Zukunft.':reportText(m+'-01',periodEnd,comparison+'-01',prevEnd);
-      if(m<=currentMonth()){
-        const stats=monthStats(m),creditedAbsence=stats.vacationHours+stats.sickHours+stats.holidayHours;
-        if(creditedAbsence)monthlyText+=' Zum Monatssoll zählen zusätzlich '+displayTime(creditedAbsence)+' aus Urlaub, Krankheit und den Feiertagen des Monats.';
-        if(monthIsClosed(m))monthlyText+=' Der Monat ist mit '+signedHoursText(stats.delta)+' abgeschlossen.';
-        else monthlyText+=' Zum Monatssoll von '+displayTime(stats.target)+' fehlen unter Einbeziehung der Monatsgutschriften '+displayTime(Math.max(0,stats.target-stats.credited))+'.';
+      const stats=monthStats(m),total=describePeriod(m+'-01',periodEnd),previous=describePeriod(comparison+'-01',prevEnd),yearValue=Number(m.slice(0,4));
+      const monthTitleText=monthTitle(m);
+      const creditedAbsence=stats.vacationHours+stats.sickHours+stats.holidayHours;
+      const story=[];
+      if(m>currentMonth())story.push('Dieser Monat liegt noch in der Zukunft. Hier erscheinen deine Werte, sobald Buchungen vorliegen.');
+      else if(!total.n)story.push('Für '+monthTitleText+' sind noch keine Arbeitszeiten erfasst.');
+      else {
+        story.push('Im '+monthTitleText+' hast du an '+total.n+' Tagen insgesamt '+fmtMin(total.minutes)+' gearbeitet.');
+        if(previous.n){const diff=Math.round(total.avg-previous.avg);story.push('Verglichen mit '+monthTitle(comparison)+' war dein erfasster Arbeitstag im Schnitt '+(diff===0?'gleich lang.':Math.abs(diff)+' Minuten '+(diff>0?'länger.':'kürzer.')));}
+        else story.push('Für einen Vergleich mit dem Vormonat fehlen noch Arbeitszeiten.');
       }
-      message('aiMonthly',monthlyText);
+      if(m<=currentMonth()){
+        if(creditedAbsence)story.push('Zusätzlich zum Arbeiten wurden '+displayTime(creditedAbsence)+' aus Urlaub, Krankheit und Feiertagen angerechnet.');
+        if(monthIsClosed(m))story.push('Monatsveränderung deines Zeitkontos: '+signedHoursText(stats.delta)+'.');
+        else story.push('Der Monat ist noch nicht abgeschlossen; eine endgültige Überstundenbilanz gibt es erst danach.');
+      }
+      $('aiMonthly').innerHTML=story.map(t=>'<p>'+escapeHtml(t)+'</p>').join('');
       const compare=[{month:comparison,to:prevEnd},{month:m,to:periodEnd}].map(({month,to})=>{
         const data=describePeriod(month+'-01',to);
         return {n:data.n,v:data.avg/60,title:monthTitle(month),label:parseDate(month+'-01').toLocaleDateString('de-DE',{month:'short'})};
       });
-      $('aiReportChart').innerHTML=compare.every(x=>x.n)?'<small>Durchschnitt je gebuchtem Arbeitstag</small>'+barChart(compare):'';
+      $('aiReportChart').innerHTML=compareAverageChart(compare);
       periodInsight('aiInsightCards',m+'-01',periodEnd,comparison+'-01',prevEnd);
       const end=[year+'-12-31',today].sort()[0],priorMonth=(year-1)+end.slice(4,7);
-      message('aiYearly',year>Number(today.slice(0,4))?'Das Berichtsjahr liegt in der Zukunft.':'Jahr '+year+' · '+reportText(year+'-01-01',end,(year-1)+'-01-01',[monthEnd(priorMonth),(year-1)+end.slice(4)].sort()[0]));
+      const yearText=year>Number(today.slice(0,4))?'Dieses Jahr liegt in der Zukunft.':reportText(year+'-01-01',end,(year-1)+'-01-01',[monthEnd(priorMonth),(year-1)+end.slice(4)].sort()[0]);
+      $('aiYearly').innerHTML='<p>'+escapeHtml(yearText).replaceAll('\n','</p><p>')+'</p>';
+      updateReportMonthStepper();
     }
     function typicalShift(date) {
       const cutoff=[date,localDateString()].sort()[0];
@@ -5984,7 +6243,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     function answerIntent(i) {
       const today=localDateString();
       if(i.kind==='goal'){
-        if(!enabled('Plan'))return 'Der Arbeitszeitplaner ist ausgeschaltet.';
+        if(!enabled('Plan'))return 'Der Arbeitszeitplaner ist entfernt. Ich kann aber dein Zeitkonto und bisherige Überstunden erklären.';
         const p=monthProjection(i.month);
         if(!Number.isFinite(i.goal)||Math.abs(i.goal)>10000)throw Error('Bitte ein gültiges Stundenziel angeben.');
         const h=Math.max(0,p.target-p.credited+i.goal-(i.additional?0:p.opening)-p.planned/60);
@@ -6036,6 +6295,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         $('aiEvidence').classList.add('hidden');message('aiEvidenceText','');
         for(const id of ['aiLeaves','aiAnswer','aiAnswerActions','aiNarrative','aiEntryMsg'])message(id,'');
         if(contextStamp.split('|')[0]!==activeStorageKey){
+          if(typeof assistantChatHistory!=='undefined'){assistantChatHistory=[];assistantOwner=activeStorageKey;message('aiConversation','');$('assistantWelcome').classList.remove('hidden');}
           $('aiEntry').value='';$('aiQuestion').value='';
           $('aiTarget').value=15;$('aiFriday').value=6;$('aiDeadline').value=currentMonth();
           $('aiPlanMode').value='delta';reportYearScope='';$('aiMonth').value=addMonths(currentMonth(),-1);
@@ -6048,8 +6308,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         $('aiSwitch'+key).checked=enabled(key);
         if(key!=='Online')$('smart'+key).classList.toggle('hidden',!enabled(key));
       }
-      $('aiOnline').hidden=!enabled('Online');
-      $('aiAsk').textContent=enabled('Online')?'Mit KI fragen':'Fragen';
+      $('aiOnline').hidden=true; // Kein zweiter, missverständlicher Antwortmodus im Chat.
+      $('headerAssistant').classList.toggle('hidden',!enabled('Chat'));$('todayAskAssistant').classList.toggle('hidden',!enabled('Chat'));$('analyticsAskAssistant').classList.toggle('hidden',!enabled('Chat'));
+      $('aiAsk').disabled=!enabled('Chat');
       $('aiNarrate').disabled=!enabled('Online');$('aiNarrate').hidden=!enabled('Online');
       if(!enabled('Entry'))speech?.abort();
       renderAssistOptions();
@@ -6065,7 +6326,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const row=document.createElement('div');row.className='assist-setting';
       const text=document.createElement('div'),label=document.createElement('label'),hint=document.createElement('p'),box=document.createElement('input');
       box.type='checkbox';box.id='aiSwitch'+key;label.htmlFor=box.id;label.textContent=name;
-      hint.textContent=({Chat:'Fragen zu deiner Zeit und konkrete nächste Schritte.',Entry:'Sätze oder Diktat vor dem Speichern prüfen.',Checks:'Auffällige Buchungen direkt auf Heute und im Kalender finden.',Report:'Entwicklungen in Analysen und Monatsdetails erklären.',Plan:'Wochen und Überstundenziele als Vorschau berechnen.',Template:'Deine üblichen Schichten aus Buchungen lernen.',Leave:'Freie Zeiträume mit deinem Resturlaub vergleichen.',Online:'KI-Anfragen über dein eingerichtetes OpenRouter-Modell. Lokale Hilfen funktionieren auch bei ausgeschalteter KI.'})[key];
+      hint.textContent=({Chat:'Fragen zu deiner Zeit und konkrete nächste Schritte.',Entry:'Sätze oder Diktat vor dem Speichern prüfen.',Checks:'Auffällige Buchungen direkt auf Heute und im Kalender finden.',Report:'Entwicklungen in Analysen und Monatsdetails erklären.',Template:'Deine üblichen Schichten aus Buchungen lernen.',Leave:'Freie Zeiträume mit deinem Resturlaub vergleichen.',Online:'Freie Fragen mit KI beantworten und Spracheingaben verstehen. Benötigt Cloud-Anmeldung und OpenRouter.'})[key];
       text.append(label,hint);row.append(text,box);$('aiSwitches').append(row);
       box.addEventListener('change',withWriteLock(async()=>{
         const previous=state.settings.assistance;
@@ -6079,14 +6340,34 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     $('aiTemplate').addEventListener('click',()=>{
       const date=$('manualDate').value,t=typicalShift(date);if(t&&enabled('Template'))fillManual(date,t);
     });
-    $('aiFill').addEventListener('click',()=>{
+    let entryInterpreting=false;
+    async function fillFromNaturalLanguage(){
+      const input=$('aiEntry').value.trim();
+      if(!input){message('aiEntryMsg','Beschreibe zuerst deine Arbeitszeit.');return;}
+      if(entryInterpreting)return;
+      entryInterpreting=true;
+      const action=$('aiFill'),oldLabel=action.textContent;
+      action.disabled=true;action.textContent='Wird geprüft …';
       try{
-        const r=parseQuickEntry($('aiEntry').value);fillManual(r.date,r);
-        message('aiEntryMsg',displayDay(r.date)+' · '+r.start+'–'+r.end+' · '+r.breakMinutes+' Min. Pause · '+fmtMin(timeToMinutes(r.end)-timeToMinutes(r.start)-r.breakMinutes)+' netto. Prüfe die ausgefüllten Felder.');
-      }catch(error){
-        if(enabled('Online'))void requestIntent($('aiEntry').value,'aiEntryMsg','entry');else message('aiEntryMsg',error.message);
-      }
-    });
+        if(enabled('Online')&&cloudSession){
+          const owner=activeStorageKey,generation=onlineGeneration;
+          const result=await invokeAssistant('entries',input);
+          if(owner!==activeStorageKey||generation!==onlineGeneration){message('aiEntryMsg','Daten wurden verändert. Bitte Eingabe erneut prüfen.');return;}
+          if(!Array.isArray(result.entries)||!result.entries.length||!result.entries.every(validAiShift))
+            throw Error(result.question||'Bitte Datum, Beginn, Ende und Pause genauer angeben.');
+          if(result.entries.length===1){const r=result.entries[0];fillManual(r.date,r);
+            message('aiEntryMsg',displayDay(r.date)+' · '+r.start+'–'+r.end+' · '+r.breakMinutes+' Minuten Pause. Bitte Eintrag prüfen und speichern.');
+            $('aiBatchPreview').replaceChildren();
+          }else{showAiBatchPreview(result.entries);
+            message('aiEntryMsg',result.entries.length+' Einträge erkannt. Bitte Vorschau kontrollieren.');}
+        }else{
+          try{const r=parseQuickEntry(input);fillManual(r.date,r);
+            message('aiEntryMsg',displayDay(r.date)+' · '+r.start+'–'+r.end+' · '+r.breakMinutes+' Min. Pause. Prüfe anschließend die vorausgefüllten Felder. Ohne KI werden nur eindeutig formulierte Angaben erkannt.');
+          }catch(error){message('aiEntryMsg',(enabled('Online')&&!cloudSession?'Für natürliche Sprache zuerst im Cloud-Konto anmelden. ':'')+error.message);}
+        }
+      }finally{entryInterpreting=false;action.disabled=false;action.textContent=oldLabel;}
+    }
+    $('aiFill').addEventListener('click',()=>void fillFromNaturalLanguage());
     const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
     $('aiMic').hidden=!Recognition;
     message('aiMicHint',Recognition?'Beim Diktieren kann der Sprachdienst deines Browsers Audio verarbeiten.':'Zum Diktieren das Mikrofon der Bildschirmtastatur verwenden.');
@@ -6094,16 +6375,303 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       if(speech){speech.stop();return;}
       try{
         const r=new Recognition();speech=r;r.lang='de-DE';
-        r.onresult=e=>{if(speech===r&&enabled('Entry'))$('aiEntry').value=e.results[0][0].transcript;};
+        r.onresult=e=>{if(speech===r&&enabled('Entry')){$('aiEntry').value=e.results[0][0].transcript;message('aiEntryMsg','Diktat erkannt. Arbeitszeit wird geprüft …');void fillFromNaturalLanguage();}};
         r.onerror=()=>message('aiEntryMsg','Diktat nicht verfügbar. Nutze die Tastatur oder deren Mikrofon.');
-        r.onend=()=>{speech=null;message('aiMic','Diktieren');};
+        r.onend=()=>{speech=null;message('aiMic','🎙 Diktieren');};
         r.start();message('aiMic','Diktat beenden');
       }catch{speech=null;message('aiEntryMsg','Bitte das Mikrofon der Tastatur verwenden.');}
     });
-    $('aiMonth').addEventListener('change',()=>{onlineGeneration++;message('aiNarrative','');renderSmartReports(+$('analysisYear').value);void maybeAutoReport();});
-    for(const [label,q] of [['Letzte drei Monate','Überstunden in den letzten drei Monaten'],['Längste Arbeitstage','An welchen Wochentagen arbeite ich durchschnittlich am längsten?'],['Nächste Woche','Plane nächste Woche'],['Resturlaub','Wie nutze ich meinen Resturlaub?']])
-      addAction('aiPrompts',label,()=>{$('aiQuestion').value=q;$('aiAsk').click();});
-    $('aiAsk').addEventListener('click',()=>requestIntent($('aiQuestion').value,'aiAnswer'));
+    $('aiMonthPrev').addEventListener('click',()=>moveReportMonth(-1));$('aiMonthNext').addEventListener('click',()=>moveReportMonth(1));
+    let assistantChatHistory=[], assistantOwner='', chatPending=false,assistantRestoreFocus=null;
+    function openChat(){
+      if(!enabled('Chat'))return;
+      assistantRestoreFocus=document.activeElement;
+      $('assistantOverlay').classList.remove('hidden');
+      $('assistantStatus').textContent=enabled('Online')?(cloudSession?'Online-KI aktiv · Zeitdaten werden für diese Frage übertragen.':'Online-KI braucht eine Cloud-Anmeldung. Einstellungen öffnen.'):'Einfache Fragen lokal · für freie Fragen Online-KI aktivieren.';
+      document.body.style.overflow='hidden';
+      updateAssistantPageContext();
+      $('aiQuestion').focus();
+    }
+    function updateAssistantPageContext(){
+      const labels={overview:'Heute',calendar:'Kalender · '+displayDay(selectedCalendarDate),
+        analytics:'Analysen · '+($('analysisYear').value||currentMonth().slice(0,4)),
+        details:'Monate · '+monthTitle(selectedMonth),
+        planning:'Schichten & Urlaub',more:'Einstellungen'};
+      message('assistantPageContext','Berücksichtige diese Ansicht: '+(labels[activeTab]||'Heute'));
+    }
+    function askFromCurrentPage(question){
+      if(!enabled('Chat'))return;
+      openChat();$('aiQuestion').value=question;
+      $('aiQuestion').focus();
+    }
+    function closeChat(){
+      $('assistantOverlay').classList.add('hidden');document.body.style.overflow='';assistantRestoreFocus?.focus?.();
+    }
+    for(const id of ['headerAssistant','todayAskAssistant','analyticsAskAssistant'])$(id).addEventListener('click',openChat);
+    for(const [id,section,label,question] of [
+      ['calendarAssistantBtn','calendarPanel','✦ Ausgewählten Tag fragen',()=>`Was war an ${displayDay(selectedCalendarDate)}? Erkläre die Buchungen und mögliche Besonderheiten.`],
+      ['monthAssistantBtn','detailsPanel','✦ Diesen Monat verstehen',()=>`Analysiere ${monthTitle(selectedMonth)} und vergleiche mit dem Vormonat.`],
+      ['planningAssistantBtn','planningPanel','✦ Zu Urlaub und Schichten fragen',()=>`Wie viel Resturlaub steht mir zur Verfügung, welche geplanten Schichten habe ich und was läuft bald ab?`]
+    ]){
+      const target=$(section);
+      if(!target)continue;
+      const button=document.createElement('button');button.id=id;button.type='button';button.className='secondary context-ask-button';button.textContent=label;
+      button.addEventListener('click',()=>askFromCurrentPage(question()));
+      if(target.firstElementChild)target.insertBefore(button,target.firstElementChild);else target.append(button);
+    }
+    $('assistantClose').addEventListener('click',closeChat);
+    $('assistantOverlay').addEventListener('click',e=>{if(e.target===$('assistantOverlay'))closeChat();});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('assistantOverlay').classList.contains('hidden'))closeChat();});
+    $('assistantSettingsLink').addEventListener('click',()=>{closeChat();openAssistSettings();});
+    // Keyboard users stay inside the modal while it is open (as with entry dialog).
+    document.addEventListener('keydown',event=>{
+      if(event.key!=='Tab'||$('assistantOverlay').classList.contains('hidden'))return;
+      const focusables=[...$('smartChat').querySelectorAll('button:not([disabled]):not([hidden]), textarea:not([disabled]), summary, a[href]')]
+        .filter(el=>el.getClientRects().length && getComputedStyle(el).visibility!=='hidden');
+      if(!focusables.length)return;
+      const first=focusables[0],last=focusables.at(-1);
+      if(event.shiftKey && (document.activeElement===first || !$('smartChat').contains(document.activeElement))){event.preventDefault();last.focus();}
+      else if(!event.shiftKey && (document.activeElement===last || !$('smartChat').contains(document.activeElement))){event.preventDefault();first.focus();}
+    });
+    function appendAssistantMessage(role,answer,pending=false){
+      const node=document.createElement('article');node.className='assistant-message '+role+(pending?' pending':'');
+      const title=document.createElement('div');title.className='who';title.textContent=role==='user'?'Du':'✦ Zeit-Assistent';
+      const body=document.createElement('div');body.className='body';body.textContent=answer;
+      node.append(title,body);$('aiConversation').append(node);
+      $('assistantChatBody').scrollTop=$('assistantChatBody').scrollHeight;
+      $('assistantWelcome').classList.add('hidden');return {node,body};
+    }
+    // Berechnete Werte und nur die notwendigen Buchungsfelder; keine Notizen, IDs oder Kontaktdaten.
+    // Die gesamte Übermittlung erfolgt nur nach Klick auf "Fragen" und bei aktivierter Online-KI.
+    function assistantDataContext(question=""){
+      const today=localDateString(),year=Number($('analysisYear').value)||Number(today.slice(0,4));
+      const yearSet=new Set([year,Number(today.slice(0,4))]);
+      for(const r of state.records)yearSet.add(Number(r.date.slice(0,4)));
+      const r2=v=>Math.round((Number(v)||0)*100)/100;
+      const payQuery=/\b(?:geld|gehalt|lohn|verdienst|euro|bezahlung|stundensatz|vergütung|wert|brutto|nettoverdienst)\b|€/i
+        .test([question,...assistantChatHistory.slice(-6).map(m=>m.content)].join(' '));
+      const entries=state.records.slice().sort((a,b)=>b.date.localeCompare(a.date));
+      // Bei sehr großen Datenmengen keine vermeintlich vollständige Gesamtauswertung vortäuschen.
+      // Ein ausdrücklich genanntes älteres Jahr geht vor dem sonst jüngsten Verlauf.
+      const mentionedYears=[...new Set([...question.matchAll(/\b(?:20|21)\d{2}\b/g)].map(m=>m[0]))];
+      const prioritized=mentionedYears.length?entries.filter(r=>mentionedYears.includes(r.date.slice(0,4))):[];
+      const selected=[...new Set([...prioritized,...entries])].slice(0,1800),limited=entries.length>selected.length;
+      const compact=selected.map(r=>{
+        const item={date:r.date,type:r.type};
+        if(r.type==='work')Object.assign(item,{netHours:r2(r.hours),start:r.start||null,end:r.end||null,pauseMinutes:r.breakMinutes||0});
+        else if(r.type==='vacation')Object.assign(item,{days:r2(effectiveVacationDays(r)),creditedHours:r2(recordHours(r))});
+        else if(r.type==='sick')item.creditedHours=r2(recordHours(r));
+        return item;
+      });
+      const months=new Set(entries.map(r=>r.date.slice(0,7)));
+      // Auch abgeschlossene Monate ohne Arbeit zählen zum Zeitkonto.
+      let cur=state.settings.accountStartMonth||currentMonth(),limit=0;
+      while(cur<=currentMonth()&&limit++<120){months.add(cur);cur=addMonths(cur,1);}
+      const monthList=[...months].filter(validMonth).sort();
+      const monthly=monthList.slice(-300).map(m=>{
+        const p=monthStats(m);return {month:m,workedHours:r2(p.work),workDays:describePeriod(m+'-01',monthEnd(m)).n,
+          vacationDays:r2(p.vacationDays),vacationCreditHours:r2(p.vacationHours),sickCreditHours:r2(p.sickHours),holidayCreditHours:r2(p.holidayHours),targetHours:r2(p.target),creditedTotalHours:r2(p.credited),changeHours:r2(p.delta),
+          closingBalanceHours:monthIsClosed(m)?r2(closingBalanceForMonth(m)):null,closed:monthIsClosed(m)};
+      });
+      const annual=[...yearSet].filter(y=>y>=2000&&y<=2200).sort().map(y=>{
+        const p=describePeriod(y+'-01-01',y+'-12-31'),v=vacationBreakdown(y);
+        return {year:y,workedHours:r2(p.minutes/60),workDays:p.n,averageWorkdayHours:r2(p.avg/60),weekdayAverages:p.sorted.map(x=>({weekday:WEEKDAYS[x.i],hours:r2(x.avg/60),days:x.n})),vacationRemainingDays:v.active?r2(v.remaining):null,vacationTakenDays:v.active?r2(v.taken):null};
+      });
+      const planned=(state.plans||[]).filter(p=>p.date>=today).slice(0,300).map(p=>({date:p.date,start:p.start,end:p.end,breakMinutes:p.breakMinutes}));
+      const allDays=[...dailyWork('2000-01-01','2200-12-31')].sort(([a],[b])=>b.localeCompare(a));
+      const prioritizedDays=mentionedYears.length?allDays.filter(([date])=>mentionedYears.includes(date.slice(0,4))):[];
+      const perDay=[...new Set([...prioritizedDays,...allDays])].slice(0,1200)
+        .map(([date,d])=>({date,netHours:r2(d.minutes/60),breakMinutes:d.pause,entries:d.rows.length}));
+      const pageContext={page:activeTab,selectedMonth,selectedCalendarDate,
+        analysisYear:year,planningMonth:$('workPlanMonth')?.value||currentMonth(),
+        selectedDayBookings:state.records.filter(r=>r.date===selectedCalendarDate).map(r=>({type:r.type,date:r.date,...(r.type==='work'?{start:r.start||null,end:r.end||null,breakMinutes:r.breakMinutes||0,netHours:r2(r.hours)}:{days:r.days||0})}))};
+      const y=Number(today.slice(0,4)),vacation=vacationBreakdown(y);
+      const data={today,selectedAnalysisYear:year,pageContext,
+        vacation:{year:y,entitlement:r2(vacation.entitlement),remaining:r2(vacation.remaining),carryover:r2(vacation.carryover),
+          expiring:r2(vacation.expiring),expiresOn:vacation.expiresOn,expired:r2(vacation.expired),planned:r2(vacation.planned),
+          carryoverMode:state.settings.vacationCarryoverMode,deadlineRule:state.settings.vacationCarryoverDate||'03-31'},
+        scope:{entriesIncluded:compact.length,totalEntries:entries.length,entriesTruncated:limited,monthsTruncated:monthList.length>monthly.length,dailyTruncated:allDays.length>perDay.length,planTruncated:(state.plans||[]).filter(x=>x.date>=today).length>planned.length},
+        account:{startMonth:state.settings.accountStartMonth,openingHours:r2(state.settings.openingBalance),defaultMonthlyTargetHours:r2(state.settings.monthlyTarget),
+          ...(payQuery?{hourlyRateEUR:r2(state.settings.hourlyRate),overtimeBonusPercent:r2(state.settings.overtimeBonus)}:{}),
+          latestClosedMonth:addMonths(currentMonth(),-1),latestClosedBalanceHours:r2(balanceBeforeMonth(currentMonth()))},
+        monthly,annual,daily:perDay,entries:compact,upcomingPlans:planned};
+      // Begrenze den Kontext so, dass Chat-Anfragen auch bei langjähriger Erfassung funktionieren.
+      // Die Monatssummen bleiben vollständig im gewählten 300-Monatsfenster.
+      while(JSON.stringify(data).length>180000&&(data.entries.length||data.daily.length)){
+        if(data.entries.length>=data.daily.length&&data.entries.length>10)data.entries.splice(Math.max(10,Math.floor(data.entries.length*.75)));
+        else if(data.daily.length>10)data.daily.splice(Math.max(10,Math.floor(data.daily.length*.75)));
+        else break;
+        data.scope.entriesTruncated=true;data.scope.dailyTruncated=true;
+        data.scope.entriesIncluded=data.entries.length;
+      }
+      return data;
+    }
+    // Das Sprachmodell darf nur Handlungsvorschläge liefern. Hier prüft die App
+    // Vorschläge gegen den aktuellen Ledger und verwendet ihre bestehenden Formulare.
+    function validAiShift(item){
+      if(!item||!validDate(item.date)||!/^([01]\d|2[0-3]):[0-5]\d$/.test(item.start)||
+        !/^([01]\d|2[0-3]):[0-5]\d$/.test(item.end)||!Number.isInteger(item.breakMinutes))return false;
+      return item.breakMinutes>=0&&item.breakMinutes<1440&&
+        timeToMinutes(item.end)-timeToMinutes(item.start)>item.breakMinutes;
+    }
+    function assistantSuggestionCard(reply,heading,description,buttonLabel,handler){
+      const card=document.createElement('section');card.className='assistant-proposal';
+      const title=document.createElement('strong');title.textContent=heading;
+      const detail=document.createElement('p');detail.textContent=description;
+      const button=document.createElement('button');button.type='button';button.textContent=buttonLabel;
+      button.addEventListener('click',()=>{
+        // Vorschläge sind nur für den ursprünglichen Datenstand gültig.
+        if(card.dataset.revision!==activeStorageKey+'|'+revision){button.disabled=true;detail.textContent='Die Daten haben sich verändert. Bitte den Vorschlag neu anfordern.';return;}
+        try{handler();}catch(err){detail.textContent=err.message;}
+      });
+      card.dataset.revision=activeStorageKey+'|'+revision;
+      card.append(title,detail,button);reply.node.append(card);
+      return card;
+    }
+    function applyAssistantProposal(reply,proposal){
+      if(!proposal||typeof proposal!=='object')return;
+      if(proposal.kind==='entry'&&validAiShift(proposal)){
+        const label=displayDay(proposal.date)+' · '+proposal.start+'–'+proposal.end+' · '+proposal.breakMinutes+' Minuten Pause';
+        assistantSuggestionCard(reply,'Arbeitszeit vorgeschlagen',label,'Im Formular überprüfen',()=>{
+          closeChat();setActiveTab('overview');fillManual(proposal.date,proposal);$('manualForm').scrollIntoView({block:'center'});
+        });
+      }else if(proposal.kind==='edit_break'&&validDate(proposal.date)&&Number.isInteger(proposal.breakMinutes)&&proposal.breakMinutes>=0){
+        const work=state.records.filter(r=>r.date===proposal.date&&r.type==='work');
+        if(work.length!==1){assistantSuggestionCard(reply,'Änderung noch unklar',
+          'An diesem Datum gibt es '+work.length+' Arbeitsbuchungen. Bitte öffne den Tag im Kalender und wähle den richtigen Eintrag.','Im Kalender ansehen',()=>{
+            closeChat();selectedCalendarDate=proposal.date;selectedMonth=proposal.date.slice(0,7);setActiveTab('calendar');renderAll();
+          });return;}
+        const item=work[0],duration=item.mode==='range'?timeToMinutes(item.end)-timeToMinutes(item.start):Math.round((item.hours+item.breakMinutes/60)*60);
+        if(proposal.breakMinutes>=duration)return;
+        assistantSuggestionCard(reply,'Pause ändern',displayDay(item.date)+': '+item.breakMinutes+' auf '+proposal.breakMinutes+' Minuten.','Änderung im Formular prüfen',()=>{
+          closeChat();openEditor(item.id);$('breakMinutes').value=String(proposal.breakMinutes);
+          message('entryStatus','KI-Vorschlag eingesetzt. Prüfe die Angaben und tippe auf „Änderungen speichern“.');
+        });
+      }else if(proposal.kind==='carryover'&&['unlimited','none','custom'].includes(proposal.mode)){
+        const date=proposal.date;
+        if(proposal.mode==='custom'&&!validCarryoverDate(date))return;
+        const description=proposal.mode==='none'?'Resturlaub nicht übertragen':proposal.mode==='unlimited'?'Resturlaub unbegrenzt übertragen':
+          'Resturlaub bis '+date.slice(3)+'.'+date.slice(0,2)+'. des Folgejahres übertragen';
+        assistantSuggestionCard(reply,'Urlaubsregel anpassen',description,'Einstellungen prüfen',()=>{
+          closeChat();setActiveTab('more');$('settingsContent').classList.remove('hidden');$('settingsToggle').setAttribute('aria-expanded','true');
+          $('settingsToggle').textContent='Schließen';$('vacationCarryoverMode').value=proposal.mode;
+          if(proposal.mode==='custom'){$('vacationCarryoverMonth').value=date.slice(0,2);$('vacationCarryoverDay').value=date.slice(3);}
+          updateCarryoverPreview();$('vacationCarryoverPreview').scrollIntoView({block:'center'});
+          message('settingsStatus','KI-Vorschlag zur Prüfung geladen. Erst „Einstellungen speichern“ übernimmt ihn.');
+        });
+      }else if(proposal.kind==='entry_batch'&&Array.isArray(proposal.entries)&&proposal.entries.length>=2&&proposal.entries.length<=14&&proposal.entries.every(validAiShift)){
+        const rows=proposal.entries.map(x=>({...x}));
+        assistantSuggestionCard(reply,rows.length+' Arbeitszeiten vorgeschlagen',rows.map(x=>displayDay(x.date)+': '+x.start+'–'+x.end+' ('+x.breakMinutes+' Min. Pause)').join(' · '),
+          'Alle Einträge vor dem Speichern prüfen',()=>{closeChat();showAiBatchPreview(rows);setActiveTab('overview');$('smartEntry').open=true;$('smartEntry').scrollIntoView({block:'center'});});
+      }
+    }
+    function renderAssistantChart(reply,spec){
+      if(!spec||!['worked','credited','delta','balance'].includes(spec.metric)||!Number.isInteger(spec.months)||spec.months<2||spec.months>12)return;
+      const end=validMonth(spec.endMonth)?spec.endMonth:(spec.metric==='balance'?addMonths(currentMonth(),-1):currentMonth());
+      if(end>currentMonth())return;
+      const data=[];
+      for(let offset=spec.months-1;offset>=0;offset--){
+        const month=addMonths(end,-offset);
+        const m=monthStats(month),value=spec.metric==='worked'?m.work:spec.metric==='credited'?m.credited:
+          spec.metric==='delta'?m.delta:(monthIsClosed(month)?closingBalanceForMonth(month):null);
+        data.push({month,value});
+      }
+      const max=Math.max(1,...data.map(x=>Math.abs(x.value||0)));
+      const node=document.createElement('section');node.className='assistant-chart';
+      const heading=document.createElement('strong');heading.textContent=({worked:'Tatsächlich gearbeitet',credited:'Angerechnete Zeit',delta:'Monatliche Überstundenänderung',balance:'Zeitkonto am Monatsende'})[spec.metric]+' · Stunden';node.append(heading);
+      for(const item of data){
+        const r=document.createElement('div');r.className='assistant-chart-row';
+        const label=document.createElement('span');label.textContent=monthTitle(item.month);
+        const barWrap=document.createElement('div');barWrap.className='assistant-chart-track';
+        const bar=document.createElement('div');bar.className='assistant-chart-bar'+(item.value<0?' negative':'');bar.style.width=(item.value===null?0:Math.max(2,Math.abs(item.value)/max*100))+'%';barWrap.append(bar);
+        const value=document.createElement('span');value.textContent=item.value===null?'–':(Math.round(item.value*10)/10).toLocaleString('de-DE')+' h';
+        r.append(label,barWrap,value);node.append(r);
+      }
+      const foot=document.createElement('small');foot.textContent='Werte aus den Berechnungen der App, nicht von der KI geschätzt.';node.append(foot);
+      reply.node.append(node);
+    }
+    function showAiBatchPreview(rows){
+      const host=$('aiBatchPreview');host.replaceChildren();
+      const title=document.createElement('strong');title.textContent=rows.length+' vorgeschlagene Arbeitszeiten';host.append(title);
+      const list=document.createElement('ul');for(const item of rows){const li=document.createElement('li');li.textContent=displayDay(item.date)+' · '+item.start+'–'+item.end+' · '+item.breakMinutes+' Min. Pause';list.append(li);}host.append(list);
+      const note=document.createElement('p');note.className='hint';note.textContent='Die vorgeschlagenen Tage werden erst nach deinem Klick gespeichert. Bestehende und überschneidende Einträge werden nicht überschrieben.';host.append(note);
+      const action=document.createElement('button');action.type='button';action.textContent=rows.length+' Zeiten verbindlich speichern';host.append(action);
+      const cancel=document.createElement('button');cancel.type='button';cancel.className='secondary';cancel.textContent='Verwerfen';host.append(cancel);cancel.addEventListener('click',()=>host.replaceChildren());
+      const initialOwner=activeStorageKey,initialRevision=revision;
+      action.addEventListener('click',withWriteLock(async()=>{
+        if(initialOwner!==activeStorageKey||initialRevision!==revision)throw Error('Der Datenbestand hat sich geändert. Bitte erneut prüfen.');
+        if(!rows.every(validAiShift))throw Error('Die vorgeschlagenen Zeiten sind nicht eindeutig.');
+        const ids=new Set(),records=rows.map(item=>({id:makeId(),date:item.date,type:'work',mode:'range',start:item.start,end:item.end,
+          breakMinutes:item.breakMinutes,hours:(timeToMinutes(item.end)-timeToMinutes(item.start)-item.breakMinutes)/60}));
+        for(const r of records){
+          if(ids.has(r.date+':'+r.start)||absenceError(r)||overlapsExistingRange(r))throw Error('Mindestens eine Buchung überschneidet sich mit bestehenden Zeiten oder Abwesenheiten. Bitte Einträge einzeln prüfen.');
+          ids.add(r.date+':'+r.start);
+        }
+        for(let a=0;a<records.length;a++)for(let b=a+1;b<records.length;b++){
+          if(records[a].date===records[b].date && timeToMinutes(records[a].start)<timeToMinutes(records[b].end)&&timeToMinutes(records[b].start)<timeToMinutes(records[a].end))throw Error('Vorgeschlagene Zeiten überschneiden sich.');
+        }
+        const old=state.records;
+        state.records=[...old,...records];
+        try{await persistState();host.replaceChildren();renderAll();message('aiEntryMsg',records.length+' Arbeitszeiten gespeichert.');}
+        catch(err){state.records=old;throw err;}
+      }));
+    }
+    async function askAssistantQuestion(){
+      const q=$('aiQuestion').value.trim();if(!q||chatPending)return;
+      if(assistantOwner!==activeStorageKey){assistantChatHistory=[];assistantOwner=activeStorageKey;message('aiConversation','');}
+      appendAssistantMessage('user',q);$('aiQuestion').value='';
+      const reply=appendAssistantMessage('bot','Wird ausgewertet …',true);
+      const owner=activeStorageKey,generation=onlineGeneration;
+      chatPending=true;$('aiAsk').disabled=true;$('aiOnline').disabled=true;
+      try{
+        let answer;
+        if(enabled('Online')){
+          if(!cloudSession)throw Error('Für KI-Fragen zuerst im Cloud-Konto anmelden. Du kannst die App ansonsten weiterhin lokal nutzen.');
+          const response=await invokeAssistant('chat',q,{context:assistantDataContext(q),history:assistantChatHistory.slice(-8)});
+          if(typeof response.text!=='string'||!response.text.trim())throw Error('Die KI konnte die Frage nicht beantworten.');
+          answer=response.text.trim();
+          reply.proposal=response.proposal;
+          reply.chart=response.chart;
+        }else{
+          answer=applyAssistantIntent(localIntent(q));
+          if(localIntent(q).kind==='unknown')answer='Ohne Online-KI kann ich nur einfache, vordefinierte Zeitfragen auswerten. Aktiviere die KI in Einstellungen → KI-Assistent & intelligente Hilfen, um auch frei formulierte Fragen zu stellen.';
+        }
+        if(owner!==activeStorageKey){reply.node.remove();return;}
+        if(generation!==onlineGeneration){
+          reply.body.textContent='Deine Zeitdaten haben sich während der Anfrage geändert. Bitte stelle die Frage erneut.';
+          reply.node.classList.remove('pending');return;
+        }
+        reply.body.textContent=answer;reply.node.classList.remove('pending');message('aiAnswer',answer);
+        applyAssistantProposal(reply,reply.proposal);renderAssistantChart(reply,reply.chart);
+        assistantChatHistory.push({role:'user',content:q},{role:'assistant',content:answer});
+        assistantChatHistory=assistantChatHistory.slice(-10);
+      }catch(e){
+        if(owner!==activeStorageKey)reply.node.remove();
+        else {reply.body.textContent=generation===onlineGeneration?e.message:'Die Daten haben sich geändert. Bitte erneut fragen.';reply.node.classList.remove('pending');if(generation===onlineGeneration)message('aiAnswer',e.message);}
+      }
+      finally{chatPending=false;$('aiAsk').disabled=!enabled('Chat');$('aiOnline').disabled=false;$('assistantChatBody').scrollTop=$('assistantChatBody').scrollHeight;}
+    }
+    for(const [label,q] of [['Überstunden','Wie hat sich mein Zeitkonto in den letzten sechs Monaten entwickelt?'],['Arbeitsrhythmus','An welchen Wochentagen arbeite ich normalerweise am längsten?'],['Urlaub','Wie viel Urlaub habe ich noch und was ist bereits gebucht?'],['Vergleichen','Wie unterscheiden sich meine letzten beiden abgeschlossenen Monate?'],['Diagramm','Zeig mir ein Diagramm meiner Arbeitsstunden der letzten sechs Monate.'],['Korrigieren','Ändere die Pause von gestern auf 30 Minuten.']])
+      addAction('aiPrompts',label,()=>{$('aiQuestion').value=q;void askAssistantQuestion();});
+    $('assistantForm').addEventListener('submit',e=>{e.preventDefault();void askAssistantQuestion();});
+    const chatRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+    $('assistantMic').title=chatRecognition?'Frage diktieren':'Mikrofon der iPhone-Tastatur verwenden';
+    $('assistantMic').addEventListener('click',()=>{
+      if(!chatRecognition){$('aiQuestion').focus();$('assistantStatus').textContent='Nutze das Mikrofon deiner Bildschirmtastatur.';return;}
+      if(speech){speech.stop();return;}
+      try{
+        const r=new chatRecognition();speech=r;r.lang='de-DE';r.interimResults=false;
+        r.onresult=event=>{if(speech!==r)return;$('aiQuestion').value=event.results[0][0].transcript;$('assistantStatus').textContent='Diktat erkannt. Prüfe deine Frage und tippe auf Senden.';};
+        r.onerror=()=>{$('assistantStatus').textContent='Diktat nicht möglich. Nutze das Mikrofon der Tastatur.';};
+        r.onend=()=>{if(speech===r)speech=null;$('assistantMic').textContent='🎙';};
+        r.start();$('assistantMic').textContent='■';
+      }catch{speech=null;$('aiQuestion').focus();}
+    });
+    $('aiOnline').addEventListener('click',()=>{
+      const q=$('aiQuestion').value.trim();if(!q)return;
+      try{const intent=localIntent(q);const answer=applyAssistantIntent(intent);appendAssistantMessage('user',q);appendAssistantMessage('bot',answer);message('aiAnswer',answer);$('aiQuestion').value='';}
+      catch(error){appendAssistantMessage('bot',error.message);}
+    });
     async function askOnline(action){
       if(!enabled('Online')||!enabled('Report')||onlinePending)return;
       const input=[$('aiMonthly').textContent,$('aiYearly').textContent].join('\n');
@@ -6118,10 +6686,6 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }catch(error){if(generation===onlineGeneration&&owner===activeStorageKey)message('aiNarrative',error.message);}
       finally{onlinePending=false;}
     }
-    $('aiOnline').addEventListener('click',()=>{
-      onlineGeneration++;
-      try{const intent=localIntent($('aiQuestion').value);showAnswer(applyAssistantIntent(intent),intent);}catch(error){message('aiAnswer',error.message);}
-    });
     $('aiNarrate').addEventListener('click',()=>askOnline('report'));
     $('aiDeadline').value=currentMonth();
     for(const id of ['aiDeadline','aiTarget','aiFriday','aiPlanMode'])$(id).addEventListener('input',resetPlan);
@@ -6159,30 +6723,21 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     $('aiSettingsJump').addEventListener('click',openAssistSettings);
     for(const [key,label,unit] of [
       ['checkDays','Hinweise rückblickend','Tage'],['deviationMinutes','Ungewöhnliche Abweichung ab','Minuten'],
-      ['templateWeeks','Vorlagen lernen aus','Wochen'],['templateSamples','Gleiche Wochentage betrachten','Tage'],['templateMin','Mindestens gleiche Schichten','Tage'],
-      ['planStart','Üblicher Arbeitsbeginn','time'],['planPause','Übliche Pause','Minuten'],['planHours','Üblicher Arbeitstag netto','Stunden'],['planMax','Höchstens netto pro Tag','Stunden'],['planFriday','Freitags höchstens netto','Stunden']]){
+      ['templateWeeks','Vorlagen lernen aus','Wochen'],['templateSamples','Gleiche Wochentage betrachten','Tage'],['templateMin','Mindestens gleiche Schichten','Tage']]){
       const wrap=document.createElement('label');wrap.textContent=label+(unit==='time'?'':' ('+unit+')');
       const input=document.createElement('input');input.id='assist_'+key;input.required=true;
       input.type=unit==='time'?'time':'number';
       if(ASSIST_RANGES[key]){[input.min,input.max]=ASSIST_RANGES[key];input.step=['planHours','planMax','planFriday'].includes(key)?'.25':'1';}
       wrap.append(input);$('aiOptionFields').append(wrap);
     }
-    const weekdays=document.createElement('fieldset'),legend=document.createElement('legend');legend.textContent='Arbeitstage für neue Planungsvorschläge';weekdays.append(legend);
-    const choices=document.createElement('div');choices.className='weekday-options';
-    for(const day of [1,2,3,4,5,6,0]){
-      const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.dataset.assistDay=String(day);label.append(input,WEEKDAYS[day].slice(0,2));choices.append(label);
-    }
-    weekdays.append(choices);$('aiOptionFields').append(weekdays);
     const autoLabel=document.createElement('label');autoLabel.className='wide';
     const auto=document.createElement('input');auto.type='checkbox';auto.id='assist_autoReports';
     autoLabel.append(auto,'KI-Bericht beim Öffnen der Analysen automatisch erstellen. Dabei werden die berechneten Monats- und Jahreskennzahlen an OpenRouter gesendet.');$('aiOptionFields').append(autoLabel);
     $('aiOptionsForm').addEventListener('submit',withWriteLock(async()=>{
       const input={};
-      for(const key of Object.keys(ASSIST_RANGES))input[key]=$('assist_'+key).valueAsNumber;
-      input.planStart=$('assist_planStart').value;input.autoReports=$('assist_autoReports').checked;
-      input.planWeekdays=[...document.querySelectorAll('[data-assist-day]:checked')].map(el=>Number(el.dataset.assistDay));
-      if(!input.planWeekdays.length){message('aiOptionsStatus','Wähle mindestens einen Arbeitstag für Planungsvorschläge.');return;}
-      if(input.templateMin>input.templateSamples||input.planHours>input.planMax||input.planFriday>input.planMax){message('aiOptionsStatus','Die Mindestzahl gleicher Schichten muss in den Betrachtungsumfang passen. Tagesdauer und Freitagsgrenze dürfen die Tageshöchstgrenze nicht überschreiten.');return;}
+      for(const key of ['checkDays','deviationMinutes','templateWeeks','templateSamples','templateMin'])input[key]=$('assist_'+key).valueAsNumber;
+      Object.assign(input,{planStart:assistOptions().planStart,planPause:assistOptions().planPause,planHours:assistOptions().planHours,planMax:assistOptions().planMax,planFriday:assistOptions().planFriday,planWeekdays:assistOptions().planWeekdays,autoReports:$('assist_autoReports').checked});
+      if(input.templateMin>input.templateSamples){message('aiOptionsStatus','Die Mindestzahl gleicher Schichten muss in den Betrachtungsumfang passen. Tagesdauer und Freitagsgrenze dürfen die Tageshöchstgrenze nicht überschreiten.');return;}
       const previous=state.settings.assistanceOptions;state.settings.assistanceOptions=cleanAssistOptions(input);
       try{await persistState();}catch(error){state.settings.assistanceOptions=previous;throw error;}
       narrativeCache.clear();autoReportAttempts.clear();optionsStamp='';renderAll();message('aiOptionsStatus','Deine Vorgaben sind gespeichert.');
@@ -6195,7 +6750,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     updatePlanMode();
     $('aiPlanInterpret').addEventListener('click',()=>requestIntent($('aiPlanRequest').value,'aiPlanRequestStatus','plan'));
     $('aiLeaveInterpret').addEventListener('click',()=>requestIntent($('aiLeaveRequest').value,'aiLeaveRequestStatus','leave'));
-    $('aiQuestion').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('aiAsk').click();}});
+    $('aiQuestion').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();void askAssistantQuestion();}});
     $('aiEntry').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('aiFill').click();}});
 
     initialize();
