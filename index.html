@@ -1102,18 +1102,124 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 .entry-plan-tag{display:inline-block;margin-left:4px;padding:2px 7px;border-radius:8px;background:var(--accent-light);color:var(--ink);font-size:.72rem;font-weight:700}
 @media(max-width:360px){.plan-weekday-grid{gap:3px}.plan-weekday-grid label{font-size:.7rem;padding:9px 0}}
 @media(prefers-color-scheme:dark){.closed-hero-balance strong.positive{color:#8bf0e2}.closed-hero-balance strong.negative{color:#ffc6a2}.plan-weekday-grid label{background:var(--surface-muted)}}
+
+/* NEXT V4: five primary tabs, one settings entry point, mobile controls. */
+:root {
+  --theme-card-a:#bce2df; --theme-card-b:#c3eeea; --theme-card-c:#dcf7f5;
+  --theme-halo:#d9f1ef; --theme-halo-secondary:#ddf5f3;
+  --theme-soft:#edfbfa; --theme-deep:#075a56;
+}
+:root[data-theme="blue"] {
+  --accent:#2461af;--accent-light:#dceaff;--primary-ink:#1b5096;--ink:#203f6d;
+  --frost:#eef5ff;--bg:#eef5ff;--work-fill:#d7e7ff;--leave-fill:#e6f1fc;--holiday-mark:#3771bf;
+  --theme-card-a:#d8e8ff;--theme-card-b:#c4dcfa;--theme-card-c:#e9f3ff;--theme-halo:#cce1fa;--theme-halo-secondary:#d8e8ff;
+}
+:root[data-theme="violet"] {
+  --accent:#7250ac;--accent-light:#eadff7;--primary-ink:#614394;--ink:#503b79;
+  --frost:#f6f2ff;--bg:#f6f2ff;--work-fill:#e4d7f4;--leave-fill:#f0e9fa;--holiday-mark:#795cad;
+  --theme-card-a:#e4d8f5;--theme-card-b:#dac8f0;--theme-card-c:#f2e9ff;--theme-halo:#e5daf5;--theme-halo-secondary:#efe6fa;
+}
+:root[data-theme="forest"] {
+  --accent:#267354;--accent-light:#d9f0e3;--primary-ink:#205e47;--ink:#275744;
+  --frost:#effaf3;--bg:#effaf3;--work-fill:#cfeadd;--leave-fill:#e5f5eb;--holiday-mark:#428d6b;
+  --theme-card-a:#d5eedd;--theme-card-b:#bfe5d2;--theme-card-c:#e5f8ec;--theme-halo:#d3eedf;--theme-halo-secondary:#dff4e6;
+}
+:root[data-theme="rose"] {
+  --accent:#ac496c;--accent-light:#fae0e8;--primary-ink:#963e61;--ink:#743853;
+  --frost:#fff2f6;--bg:#fff2f6;--work-fill:#f5d9e4;--leave-fill:#fbe9ee;--holiday-mark:#b76585;
+  --theme-card-a:#f7dce6;--theme-card-b:#f4cedd;--theme-card-c:#ffeff4;--theme-halo:#f9e1eb;--theme-halo-secondary:#fbe8ee;
+}
+body { background:radial-gradient(ellipse at 3% 20%,var(--theme-halo) 0,transparent 46%),radial-gradient(ellipse at 95% 5%,var(--theme-halo-secondary) 0,transparent 54%),var(--frost);background-attachment:fixed; }
+.clock-card { color:var(--ink);background:radial-gradient(ellipse at 4% 15%,#ffffff94 0,transparent 58%),linear-gradient(118deg,var(--theme-card-a),var(--theme-card-b) 72%,var(--theme-card-c)); }
+.app-header {gap:10px;min-height:60px;}
+.app-header h1 {min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.header-settings { flex:0 0 46px; width:46px;height:46px;min-height:46px; padding:9px; display:grid;place-items:center;border:1px solid var(--control-edge);border-radius:15px;color:var(--ink);background:var(--field-glass);box-shadow:var(--reflection);}
+.header-settings svg {width:23px;height:23px;}
+.header-settings.active {background:var(--accent-light);color:var(--primary-ink);border-color:var(--accent);}
+.five-tabs { grid-template-columns:repeat(5,minmax(0,1fr)); max-width:590px;width:min(590px,calc(100% - 22px));gap:3px; }
+.five-tabs .tab {display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;min-height:57px;padding:7px 1px;font-size:clamp(.68rem,2.55vw,.79rem);white-space:nowrap;letter-spacing:0;}
+.five-tabs .tab-icon {display:block;width:22px;height:22px;margin:0;flex:none;}
+.five-tabs .tab span {display:block;}
+.planned-hint.plan-done {background:var(--accent-light);border:2px solid var(--accent);box-shadow:inset 4px 0 0 var(--primary-ink);}
+.planned-hint.plan-done span {color:var(--ink);font-weight:690;}
+.plan-month-picker { display:grid;grid-template-columns:45px minmax(0,1fr) 45px; gap:8px;align-items:end;padding:8px;margin:14px 0 13px;border:1px solid var(--control-edge);border-radius:18px;background:var(--field-glass);}
+.plan-month-picker button {min-width:45px;width:45px;min-height:48px;padding:5px;border-radius:13px;font-size:1.6rem;}
+.plan-month-select-label {display:flex;flex-direction:column;gap:4px;min-width:0;margin:0;font-weight:600;font-size:.75rem;color:var(--muted);}
+.plan-month-select-label select {width:100%;min-width:0;min-height:48px;margin:0;padding:10px 28px 10px 12px;border-radius:12px;background:var(--surface);font-size:1rem;font-weight:700;color:var(--text);}
+.theme-picker {border:0;border-bottom:1px solid var(--line);padding:6px 0 16px;margin:0 0 15px;min-width:0;}
+.theme-picker legend {font-weight:740;font-size:1.03rem;padding:0;}
+.theme-picker .hint {margin:9px 0 12px;}
+.theme-options {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;}
+.theme-option {display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;min-width:0;min-height:83px;padding:10px 4px;margin:0;background:var(--field-glass);border:1px solid var(--control-edge);border-radius:16px;font-size:.72rem;text-align:center;cursor:pointer;}
+.theme-option:has(input:checked) {background:var(--accent-light);border:2px solid var(--accent);padding:9px 3px;}
+.theme-option input {position:absolute;opacity:0;width:1px;height:1px;min-height:1px;}
+.theme-option:focus-within {outline:2px solid var(--accent);outline-offset:2px;}
+.theme-dot {width:30px;height:30px;flex:none;border-radius:50%;box-shadow:inset 0 1px 2px #fff9,0 2px 6px #0001;}
+.theme-turquoise {background:linear-gradient(135deg,#27c6b6,#075a56)}
+.theme-blue {background:linear-gradient(135deg,#69b8ff,#2054a4)}
+.theme-violet {background:linear-gradient(135deg,#b3a0e9,#6344a0)}
+.theme-forest {background:linear-gradient(135deg,#8fd6a6,#206445)}
+.theme-rose {background:linear-gradient(135deg,#ffa4c0,#943b60)}
+@media(max-width:430px) {
+  main {padding-inline:clamp(9px,3.2vw,14px);}
+  .five-tabs {bottom:max(7px,env(safe-area-inset-bottom));width:calc(100% - 18px);gap:2px;padding:5px;border-radius:24px;}
+  .five-tabs .tab {min-height:58px;max-width:100%;border-radius:18px;font-size:clamp(.67rem,2.65vw,.76rem);}
+  .five-tabs .tab-icon {width:21px;height:21px;}
+  .app-header {padding-inline:16px;}
+  .theme-options {gap:5px;}
+  .theme-option {font-size:.66rem;min-height:77px;padding-inline:2px;}
+  .theme-dot {width:27px;height:27px;}
+  .plan-month-picker {gap:5px;padding:6px;grid-template-columns:42px minmax(0,1fr) 42px;}
+  .plan-month-picker button {width:42px;min-width:42px;}
+  .plan-list-item .actions {width:100%;}
+  .plan-list-item .actions button {flex:1 1 auto;}
+  .entry .row {width:100%;justify-content:flex-start;}
+  .sheet { max-height:calc(100dvh - env(safe-area-inset-top) - 12px); padding:16px;}
+  #entryForm input[type="time"],#manualForm input[type="time"],.plan-range input[type="time"] {min-width:0;width:100%;}
+  .view-stack input:not([type="checkbox"],[type="file"]),.sheet input:not([type="checkbox"],[type="file"]),.view-stack select,.sheet select {font-size: max(16px,1rem);}
+  .manual-footer {gap:10px;}
+  .manual-footer button {min-height:48px;}
+  .calendar-day .day-status {overflow:hidden;}
+}
+@media(max-width:360px){
+ .five-tabs {width:calc(100% - 10px);}
+ .five-tabs .tab {font-size:.65rem;}
+ .five-tabs .tab-icon {width:20px;height:20px;}
+ .theme-options {grid-template-columns:repeat(3,minmax(0,1fr));}
+ .theme-option {min-height:70px;}
+ .plan-month-select-label select {padding-left:7px;font-size:.95rem;}
+}
+#appearancePanel h2 {margin:0 0 10px;}
+#appearancePanel .theme-picker {border-bottom:0;margin:0;padding-bottom:0;}
+@media(prefers-color-scheme:dark) {
+ :root {--theme-card-a:#205b56;--theme-card-b:#34615d;--theme-card-c:#18413e;--theme-halo:#264e4b;--theme-halo-secondary:#193f3c;}
+ :root[data-theme="blue"] {--accent:#94c5ff;--accent-light:#19395e;--primary-ink:#2464aa;--ink:#e0edff;--frost:#101f34;--work-fill:#1b4269;--leave-fill:#213950;--holiday-mark:#91bde9;--theme-halo:#1a3151;--theme-halo-secondary:#142b47;--theme-card-a:#183656;--theme-card-b:#234d72;--theme-card-c:#1e3859;}
+ :root[data-theme="violet"] {--accent:#d0bbff;--accent-light:#3a2859;--primary-ink:#644a9b;--ink:#f1e8ff;--frost:#21182f;--work-fill:#3c2d5c;--leave-fill:#302744;--holiday-mark:#bba4ef;--theme-halo:#302447;--theme-halo-secondary:#291e3b;--theme-card-a:#342450;--theme-card-b:#49396c;--theme-card-c:#382753;}
+ :root[data-theme="forest"] {--accent:#93e6b3;--accent-light:#214b37;--primary-ink:#257450;--ink:#e0f9ea;--frost:#142720;--work-fill:#20533b;--leave-fill:#203f30;--holiday-mark:#99d4b0;--theme-halo:#1b4230;--theme-halo-secondary:#1b3828;--theme-card-a:#204e39;--theme-card-b:#2e6149;--theme-card-c:#214734;}
+ :root[data-theme="rose"] {--accent:#ffadca;--accent-light:#5d2740;--primary-ink:#a64e73;--ink:#ffe9f1;--frost:#301923;--work-fill:#613148;--leave-fill:#492838;--holiday-mark:#eca0bf;--theme-halo:#422232;--theme-halo-secondary:#3a1e2d;--theme-card-a:#5b3046;--theme-card-b:#77445b;--theme-card-c:#542b40;}
+ :root[data-theme="blue"] {--glass:rgba(28,48,73,.88);--surface:#213751;--surface-muted:#294562;--field-glass:#2d4563;--text:#eff7ff;--muted:#b1c6dc;--line:#405773;--rim:#b5d7ff24;--control-edge:#c7e0ff32;}
+ :root[data-theme="violet"] {--glass:rgba(43,32,63,.9);--surface:#302445;--surface-muted:#413157;--field-glass:#403257;--text:#f7f0ff;--muted:#cebddf;--line:#604979;--rim:#e6d5ff24;--control-edge:#dfcaff30;}
+ :root[data-theme="forest"] {--glass:rgba(26,52,41,.9);--surface:#214635;--surface-muted:#2a5040;--field-glass:#294d3c;--text:#ecfff5;--muted:#b6d8c6;--line:#3e6a51;--rim:#c5eccc24;--control-edge:#c5eccc30;}
+ :root[data-theme="rose"] {--glass:rgba(55,31,45,.9);--surface:#442838;--surface-muted:#573447;--field-glass:#503044;--text:#fff2f6;--muted:#e4c3d3;--line:#77485f;--rim:#ffcedd24;--control-edge:#ffc5df30;}
+ body {background:radial-gradient(ellipse at top right,var(--theme-halo),transparent 65%),var(--frost);}
+ .clock-card {color:var(--ink);background:radial-gradient(ellipse at left top,var(--theme-card-a),transparent 65%),linear-gradient(125deg,var(--theme-card-a),var(--theme-card-b) 70%,var(--theme-card-c));}
+ .plan-month-select-label select {background:var(--surface-muted);}
+}
+
 </style>
 </head>
 
 <body>
   <header class="app-header">
     <h1>Arbeitszeit</h1>
-    <button id="quickAddButton" class="outline small" type="button">+ Eintrag</button>
+    <button id="headerSettings" class="header-settings" type="button" aria-label="Einstellungen und Konto öffnen" title="Einstellungen und Konto öffnen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l-1.88 1.88a1.65 1.65 0 0 0-1.82-.33l-.1.04A1.65 1.65 0 0 0 15 19.9V20h-6v-.1a1.65 1.65 0 0 0-.93-1.49l-.1-.04a1.65 1.65 0 0 0-1.82.33l-1.88-1.88A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.5-1H3v-4h.1a1.65 1.65 0 0 0 1.5-1 1.65 1.65 0 0 0-.33-1.82L6.15 5.3a1.65 1.65 0 0 0 1.82.33A1.65 1.65 0 0 0 9 4.1V4h6v.1a1.65 1.65 0 0 0 1.03 1.53 1.65 1.65 0 0 0 1.82-.33l1.88 1.88A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.5 1h.1v4h-.1a1.65 1.65 0 0 0-1.5 1Z"/></svg>
+    </button>
   </header>
 
   <main>
     <section id="todayPanel">
-  <div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div><button id="preferences" class="glass-button" aria-label="Einstellungen öffnen">⚙</button></div>
+  <div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div></div>
   <button type="button" id="cloudBanner" class="cloud-banner" aria-label="Cloud-Konto und Synchronisierung öffnen"><span class="cloud-badge"><i class="cloud-dot" id="cloudBannerDot"></i><span id="cloudBannerLabel">Nur auf diesem Gerät</span></span><small id="cloudBannerDetail">Konto einrichten ›</small></button>
   <form class="clock-card manual-card" id="manualForm">
     <div class="manual-head"><h2>Arbeitszeit eintragen</h2><label class="manual-date">Datum<input id="manualDate" type="date" min="2000-01-01" max="2200-12-31" required></label></div>
@@ -1243,7 +1349,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
           <p class="hint">Einzelnen Tag oder Zeitraum von maximal 90 Kalendertagen planen. Die Auswahl gilt nur für Planungen, niemals für deine gebuchten Arbeitszeiten.</p>
           <label for="workPlanTemplate">Gespeicherte Vorauswahl nutzen (optional)</label>
           <select id="workPlanTemplate"><option value="">Eigene Zeiten eingeben</option></select>
-          <div class="plan-day-actions" style="margin-top:5px"><span class="hint" style="flex:1">Vorlagen findest du unter „Mehr“.</span><button id="workPlanManageTemplates" type="button" class="secondary small">Vorlagen verwalten</button></div>
+          <div class="plan-day-actions" style="margin-top:5px"><span class="hint" style="flex:1">Vorlagen findest du in den Einstellungen (Zahnrad oben rechts).</span><button id="workPlanManageTemplates" type="button" class="secondary small">Vorlagen verwalten</button></div>
           <div id="workPlanRangeOptions" class="plan-weekday-block hidden">
             <fieldset class="plan-weekday-fieldset">
               <legend>Für welche Tage im Zeitraum?</legend>
@@ -1265,7 +1371,12 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
           <button type="submit">Nur Planung speichern</button>
           <p id="workPlanStatus" class="status" role="status" aria-live="polite"></p>
         </form>
-        <div class="section-head"><h3>Deine geplanten Schichten</h3><label class="compact-label">Monat<input id="workPlanMonth" type="month"></label></div>
+        <div class="section-head"><h3>Deine geplanten Schichten</h3></div>
+        <div class="plan-month-picker" role="group" aria-label="Monat der geplanten Schichten auswählen">
+          <button id="workPlanPrevMonth" type="button" class="secondary" aria-label="Vorheriger Monat">‹</button>
+          <label class="plan-month-select-label"><span>Monat auswählen</span><select id="workPlanMonth" aria-label="Monat für geplante Schichten"><option value="">Monat wählen</option></select></label>
+          <button id="workPlanNextMonth" type="button" class="secondary" aria-label="Nächster Monat">›</button>
+        </div>
         <div id="workPlanList"></div>
       </section>
       <section class="panel"><h2>Urlaub planen</h2><p class="hint">Wähle einen Zeitraum. Feiertage und deine festgelegten Urlaubstage werden berücksichtigt.</p>
@@ -1282,6 +1393,20 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 
     <section id="morePanel" class="view-stack hidden">
       <div class="feature-intro"><span class="eyebrow">PERSÖNLICH</span><h2>Deine App. Deine Regeln.</h2><p class="hint">Konto, Automatisierungen, Vorlagen und Einstellungen – an einem Ort.</p></div>
+      <section id="appearancePanel" class="panel"><h2>Darstellung</h2>
+            <fieldset class="theme-picker" aria-describedby="themeHelp">
+              <legend>Farbschema der App</legend>
+              <p id="themeHelp" class="hint">Wähle eine Farbe. Sie wird auf diesem Gerät gespeichert und bei Verbindung mit der Cloud synchronisiert.</p>
+              <div class="theme-options" id="themeOptions">
+                <label class="theme-option"><input type="radio" name="appTheme" value="turquoise"><span class="theme-dot theme-turquoise" aria-hidden="true"></span><span>Türkis</span></label>
+                <label class="theme-option"><input type="radio" name="appTheme" value="blue"><span class="theme-dot theme-blue" aria-hidden="true"></span><span>Blau</span></label>
+                <label class="theme-option"><input type="radio" name="appTheme" value="violet"><span class="theme-dot theme-violet" aria-hidden="true"></span><span>Violett</span></label>
+                <label class="theme-option"><input type="radio" name="appTheme" value="forest"><span class="theme-dot theme-forest" aria-hidden="true"></span><span>Grün</span></label>
+                <label class="theme-option"><input type="radio" name="appTheme" value="rose"><span class="theme-dot theme-rose" aria-hidden="true"></span><span>Rosé</span></label>
+              </div>
+              <p id="themeStatus" class="status" role="status" aria-live="polite"></p>
+            </fieldset>
+      </section>
 
       <section class="panel" id="cloudPanel">
         <div class="cloud-heading"><span class="cloud-hero-icon" aria-hidden="true">☁</span><div><h3>Konto &amp; Cloud</h3><p class="hint">Deine Arbeitszeiten auf allen Geräten – automatisch gesichert.</p></div></div>
@@ -1423,6 +1548,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 
         <div id="settingsContent" class="hidden">
           <form id="settingsForm">
+
             <div class="two-col">
               <div>
                 <label for="monthlyTarget">Monatliches Soll (Stunden)</label>
@@ -1476,12 +1602,11 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
   </main>
 
   <nav class="tabs five-tabs" aria-label="Hauptnavigation">
-    <button id="overviewTab" class="tab active" type="button" aria-current="page"><span class="tab-icon" aria-hidden="true">⌂</span>Heute</button>
-    <button id="calendarTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">▦</span>Kalender</button>
-    <button id="analyticsTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">▥</span>Analysen</button>
-    <button id="detailsTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">▤</span>Monate</button>
-    <button id="planningTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">◈</span>Planen</button>
-    <button id="moreTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">⚙</span>Mehr</button>
+    <button id="overviewTab" class="tab active" type="button" aria-current="page"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg><span>Heute</span></button>
+    <button id="calendarTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="M8 14h2m4 0h2M8 18h2"/></svg><span>Kalender</span></button>
+    <button id="analyticsTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V12M9 20V7M14 20v-4M19 20V4"/><path d="M2 20h20"/></svg><span>Analysen</span></button>
+    <button id="detailsTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Monate</span></button>
+    <button id="planningTab" class="tab" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="m8 16 2 2 5-5"/></svg><span>Planen</span></button>
   </nav>
 
   <div id="entryOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="entryDialogTitle">
@@ -1595,7 +1720,8 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       overtimeBonus: 0,
       reminderEnabled: false,
       reminderTime: '19:00',
-      notifyThreshold: null
+      notifyThreshold: null,
+      appTheme: 'turquoise'
     };
 
     let state = { settings: { ...DEFAULT_SETTINGS }, records: [], plans: [] };
@@ -1628,6 +1754,14 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     let undoTimeout = null;
 
     const $ = (id) => document.getElementById(id);
+    const THEME_COLORS={turquoise:['#edfbfa','#112927'],blue:['#eef5ff','#101f34'],violet:['#f6f2ff','#21182f'],forest:['#effaf3','#142720'],rose:['#fff2f5','#301923']};
+    function applyTheme(theme) {
+      const name=Object.hasOwn(THEME_COLORS,theme)?theme:'turquoise';
+      document.documentElement.setAttribute('data-theme',name);
+      const [light,dark]=THEME_COLORS[name];
+      document.querySelector('meta[name="theme-color"][media*="light"]')?.setAttribute('content',light);
+      document.querySelector('meta[name="theme-color"][media*="dark"]')?.setAttribute('content',dark);
+    }
 
     function parseDate(value) {
       const [year, month, day] = value.split("-").map(Number);
@@ -1782,6 +1916,8 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
         throw new Error("Ungültige Kalender- oder Feiertagseinstellungen.");
       }
       settings.holidayWeekdays = [...new Set(settings.holidayWeekdays)];
+      if(!['turquoise','blue','violet','forest','rose'].includes(settings.appTheme))
+        throw new Error('Ungültiges Farbschema.');
       const ids = new Set();
       const records = candidate.records.map(record => {
         if (!record || typeof record.id !== "string" || !record.id.trim() || ids.has(record.id) ||
@@ -2333,7 +2469,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     function setActiveTab(tab) {
       activeTab = tab;
       $("sectionTitle").classList.toggle("hidden", tab === "overview");
-      $("sectionTitle").textContent = ({calendar:"Kalender",analytics:"Analysen",details:"Monatsdetails",planning:"Planen",more:"Mehr"})[tab] || "";
+      $("sectionTitle").textContent = ({calendar:"Kalender",analytics:"Analysen",details:"Monatsdetails",planning:"Planen",more:"Einstellungen"})[tab] || "";
       $("todayPanel").classList.toggle("hidden", tab !== "overview");
       $("monthBar").classList.toggle("hidden", tab !== "calendar");
       $("detailsPanel").classList.toggle("hidden", tab !== "details");
@@ -2342,13 +2478,15 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       $("planningPanel").classList.toggle("hidden", tab !== "planning");
       $("morePanel").classList.toggle("hidden", tab !== "more");
 
-      for (const id of ["overviewTab", "calendarTab", "analyticsTab", "detailsTab", "planningTab", "moreTab"]) {
+      for (const id of ["overviewTab", "calendarTab", "analyticsTab", "detailsTab", "planningTab"]) {
         const active = id === `${tab}Tab`;
         $(id).classList.toggle("active", active);
         if (active) $(id).setAttribute("aria-current", "page");
         else $(id).removeAttribute("aria-current");
       }
 
+      $("headerSettings").classList.toggle("active", tab === "more");
+      $("headerSettings").setAttribute("aria-label", tab === "more" ? "Einstellungen geöffnet" : "Einstellungen und Konto öffnen");
       if (tab === "calendar") renderCalendar();
       if (tab === "analytics") renderAnalytics();
       if (tab === "details") renderOverview();
@@ -2690,11 +2828,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     $("forgetShift").addEventListener("click",withWriteLock(async()=>{
       if(state.stamps?.length && confirm("Die offenen Stempel aus der Vorversion verwerfen?")) await resolveOldShift([]);
     }));
-    $("preferences").addEventListener("click",()=>{
-      setActiveTab("more");
-      $("settingsContent").classList.remove("hidden"); $("settingsToggle").textContent="Ausblenden";
-      renderSettings(); $("settingsContent").scrollIntoView({block:"start"});
-    });
+
 
     const monthFormatter = new Intl.DateTimeFormat("de-DE", { month: "long" });
     $("accountStartMonth").innerHTML = Array.from({length:12}, (_, index) => {
@@ -2705,6 +2839,9 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       '<option>' + (2000 + index) + '</option>').join("");
     function renderSettings() {
       const settings = state.settings;
+      const choice=document.querySelector(`input[name="appTheme"][value="${settings.appTheme||'turquoise'}"]`);
+      if(choice)choice.checked=true;
+      applyTheme(settings.appTheme);
       $("leaveDays").innerHTML=[1,2,3,4,5,6,0].map(d=>'<label class="weekday"><input type="checkbox" name="leaveDay" value="'+d+'" '+((settings.leaveDays ?? [1,2,3,4,5]).includes(d)?"checked":"")+'>'+WEEKDAYS[d]+'</label>').join("");
       $("monthlyTarget").value = settings.monthlyTarget;
       $("openingBalance").value = settings.openingBalance;
@@ -2877,7 +3014,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       const balance=balanceBeforeMonth(currentMonth());
       $('planHoursBalance').textContent=state.settings.accountStartMonth>=currentMonth()?'Noch kein Abschluss':signedHoursText(balance);
       if(!$('workPlanDate').value)$('workPlanDate').value=today;
-      if(!$('workPlanMonth').value)$('workPlanMonth').value=currentMonth();
+      if(!$('workPlanMonth').value)renderWorkPlanMonthOptions(currentMonth());
       renderWorkPlans();
       const start=$('planStart').value,end=$('planEnd').value;
       try {
@@ -2903,13 +3040,23 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     // Separate Arbeitsplanung: ausschließlich state.plans, niemals state.records.
     function planForDate(date) {return (state.plans||[]).find(p=>p.date===date)||null;}
     function refreshManualPlanHint() {
-      const plan=planForDate($('manualDate').value),node=$('manualPlannedHint');
-      node.classList.toggle('hidden',!plan);
-      if(plan)$('manualPlannedText').textContent=`Geplant für diesen Tag: ${plan.start}–${plan.end} Uhr, ${plan.breakMinutes} Min. Pause${plan.note?' · '+plan.note:''}. Noch nicht gebucht.`;
+      const date=$('manualDate').value;
+      const plan=planForDate(date),node=$('manualPlannedHint'),button=$('manualUsePlan');
+      const booked=state.records.filter(r=>r.type==='work'&&r.date===date&&r.fromPlan===true);
+      node.classList.toggle('hidden',!plan && !booked.length);
+      node.classList.toggle('plan-done',booked.length>0);
+      button.classList.toggle('hidden',!plan||booked.length>0);
+      if(booked.length){
+        const time=booked.map(r=>r.mode==='range'?`${r.start}–${r.end} Uhr`:hoursText(r.hours)).join(' · ');
+        $('manualPlannedText').textContent=`✓ Geplante Zeit bereits übernommen und gespeichert${time?' · '+time:''}. Die Buchung ist in deinen Einträgen sichtbar.`;
+      }else if(plan){
+        $('manualPlannedText').textContent=`Geplant für diesen Tag: ${plan.start}–${plan.end} Uhr, ${plan.breakMinutes} Min. Pause${plan.note?' · '+plan.note:''}. Noch nicht gebucht.`;
+      }
     }
     function refreshEntryPlanHint() {
       const plan=planForDate($('entryDate').value);
-      const visible=Boolean(plan) && !editingId && $('entryType').value==='work';
+      const alreadyBooked=state.records.some(r=>r.date===$('entryDate').value&&r.type==='work'&&r.fromPlan);
+      const visible=Boolean(plan) && !editingId && $('entryType').value==='work' && !alreadyBooked;
       $('entryPlannedHint').classList.toggle('hidden',!visible);
       if(visible)$('entryPlannedText').textContent=`Geplant: ${plan.start}–${plan.end} Uhr, ${plan.breakMinutes} Min. Pause${plan.note?' · '+plan.note:''}. Der Plan wird nur auf Wunsch übernommen.`;
     }
@@ -2930,7 +3077,9 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       entryAppliedPlanDate=null;showEntryPlanApplied();refreshEntryPlanHint();
     });
     $('manualUsePlan').addEventListener('click',()=>{
-      const plan=planForDate($('manualDate').value);if(plan)applyPlanToManual(plan);
+      const date=$('manualDate').value;
+      if(state.records.some(r=>r.date===date&&r.type==='work'&&r.fromPlan))return;
+      const plan=planForDate(date);if(plan)applyPlanToManual(plan);
     });
     $('entryUsePlan').addEventListener('click',()=>{
       const plan=planForDate($('entryDate').value);if(plan&&!editingId)applyPlanToEntry(plan);
@@ -2983,7 +3132,17 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
         updateWorkPlanPreview();
       });
     }
+    function renderWorkPlanMonthOptions(preferredMonth=null) {
+      const selector=$('workPlanMonth');
+      const selected=validMonth(preferredMonth)?preferredMonth:(validMonth(selector.value)?selector.value:currentMonth());
+      const months=new Set([selected, ...((state.plans||[]).map(plan=>plan.date.slice(0,7)))]);
+      for(let offset=-12;offset<=12;offset++)months.add(addMonths(selected,offset));
+      const options=[...months].filter(validMonth).sort();
+      selector.innerHTML=options.map(month=>`<option value="${month}">${escapeHtml(monthTitle(month))}</option>`).join('');
+      selector.value=selected;
+    }
     function renderWorkPlans() {
+      renderWorkPlanMonthOptions();
       const month=$('workPlanMonth').value||currentMonth(),out=$('workPlanList');
       const list=(state.plans||[]).filter(p=>p.date.startsWith(month)).sort((a,b)=>a.date.localeCompare(b.date));
       out.innerHTML=list.length?list.map(p=>`<div class="plan-list-item"><div><strong>${escapeHtml(displayDay(p.date))} · ${escapeHtml(p.start)}–${escapeHtml(p.end)} Uhr</strong><small>${p.breakMinutes} Min. Pause${p.note?' · '+escapeHtml(p.note):''} · nur geplant</small></div><div class="actions"><button type="button" class="secondary small" data-plan-edit="${escapeHtml(p.date)}">Bearbeiten</button><button type="button" class="secondary small" data-plan-delete="${escapeHtml(p.date)}">Entfernen</button></div></div>`).join(''):'<p class="hint">Für diesen Monat sind noch keine Schichten geplant.</p>';
@@ -3008,6 +3167,15 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       updateWorkPlanPreview();
     }
     $('workPlanMonth').addEventListener('change',renderWorkPlans);
+    for(const [id,step] of [['workPlanPrevMonth',-1],['workPlanNextMonth',1]]) {
+      $(id).addEventListener('click',()=>{
+        const value=addMonths($('workPlanMonth').value||currentMonth(),step);
+        if(!validMonth(value))return;
+        // Monat wird über echte Auswahlelemente (und Pfeile) gewechselt.
+        renderWorkPlanMonthOptions(value);
+        renderWorkPlans();
+      });
+    }
     $('workPlanForm').addEventListener('submit',withWriteLock(async()=>{
       const date=$('workPlanDate').value,endDate=$('workPlanEndDate').value||date;
       const start=$('workPlanStart').value,end=$('workPlanEnd').value,
@@ -3028,7 +3196,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       try{
         // validate before writing, without counting plans as records
         validateState(state);
-        await persistState();$('workPlanMonth').value=date.slice(0,7);
+        await persistState();renderWorkPlanMonthOptions(date.slice(0,7));
         $('workPlanEndDate').value='';renderAll();
         showStatus(status,dates.length+' Planung(en) gespeichert. Keine Arbeitszeit wurde gebucht.','success');
       }catch(error){state.plans=previous;showStatus(status,'Planung konnte nicht gespeichert werden: '+error.message,'error');}
@@ -3204,7 +3372,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       element.className = `status${type ? ` ${type}` : ""}`;
     }
 
-    $("quickAddButton").addEventListener("click", () => openEntry(activeTab === "overview" ? localDateString() : selectedCalendarDate));
+    $("headerSettings").addEventListener("click", () => setActiveTab("more"));
     $("addDayEntryButton").addEventListener("click", () => openEntry(selectedCalendarDate));
     $("closeEntryButton").addEventListener("click", closeEntry);
     $("cancelEditButton").addEventListener("click", () => {
@@ -3223,7 +3391,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 
     $("overviewTab").addEventListener("click", () => setActiveTab("overview"));
     $("calendarTab").addEventListener("click", () => setActiveTab("calendar"));
-    $("moreTab").addEventListener("click", () => setActiveTab("more"));
+
     $("analyticsTab").addEventListener("click", () => setActiveTab("analytics"));
     $("detailsTab").addEventListener("click", () => setActiveTab("details"));
     $("planningTab").addEventListener("click", () => setActiveTab("planning"));
@@ -3378,6 +3546,23 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       }
     }));
 
+    $("themeOptions").addEventListener("change",withWriteLock(async()=>{
+      const selected=document.querySelector('input[name="appTheme"]:checked')?.value;
+      if(!Object.hasOwn(THEME_COLORS,selected))return;
+      const previous=state.settings.appTheme;
+      state.settings.appTheme=selected;
+      applyTheme(selected);
+      try {
+        await persistState();
+        showStatus($("themeStatus"),"Farbschema gespeichert und für die Cloud-Synchronisierung vorgemerkt.","success");
+      } catch(error) {
+        state.settings.appTheme=previous;applyTheme(previous);
+        const oldRadio=document.querySelector(`input[name="appTheme"][value="${previous}"]`);
+        if(oldRadio)oldRadio.checked=true;
+        showStatus($("themeStatus"),"Farbschema konnte nicht gespeichert werden: "+error.message,"error");
+      }
+    }));
+
     $("settingsForm").addEventListener("submit", withWriteLock(async (event) => {
       event.preventDefault();
       const fields = [
@@ -3421,6 +3606,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       }
 
       next.targetMode = "fixed";
+      next.appTheme=document.querySelector('input[name="appTheme"]:checked')?.value||state.settings.appTheme;
       next.leaveDays=[...document.querySelectorAll('input[name="leaveDay"]:checked')].map(input=>Number(input.value));
       next.accountStartMonth = startMonth;
       next.holidayWeekdays = [...document.querySelectorAll('input[name="holidayWeekday"]:checked')]
