@@ -984,6 +984,92 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
 }
 
 #cloudPanel #cloudForgotPassword {background:transparent !important;border:0 !important;color:var(--accent) !important;min-height:38px;padding:5px 10px;box-shadow:none;width:max-content;justify-self:center;}
+
+/* Arbeitszeit NEXT – fünf klare App-Bereiche mit gerätegerechtem Layout. */
+body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
+.five-tabs { grid-template-columns: repeat(5, minmax(0,1fr)); width:min(660px,calc(100% - 20px)); }
+.five-tabs .tab { min-width:0; padding:6px 2px; font-size:clamp(.61rem,2.4vw,.74rem); line-height:1.2; }
+.five-tabs .tab-icon { font-size:1.25rem; margin-bottom:3px; line-height:1.2; }
+.five-tabs .tab.active { background:var(--accent-light); font-weight:760; }
+.feature-intro { padding:4px 5px 22px; }
+.feature-intro h2 { font-size:clamp(1.9rem,7vw,2.7rem); line-height:1.05; letter-spacing:-.055em; margin:9px 0; }
+.eyebrow { letter-spacing:.15em; font-size:.7rem; font-weight:790; text-transform:uppercase; color:var(--ink); }
+.insight-hero,.planning-hero { padding:clamp(23px,5vw,35px); margin-bottom:14px; }
+.insight-hero h2,.planning-hero h2 { font-size:clamp(1.7rem,7vw,2.6rem); letter-spacing:-.05em; margin:12px 0 10px; }
+.insight-hero p { margin:7px 0; }
+.insight-number { display:block; font-size:clamp(2.35rem,10vw,4rem); font-weight:720; font-variant-numeric:tabular-nums; letter-spacing:-.06em; line-height:1.25; overflow-wrap:anywhere; }
+.insight-subline { display:flex; align-items:center; justify-content:space-between; gap:9px; flex-wrap:wrap; padding-top:15px; margin-top:8px; border-top:1px solid var(--control-edge); font-size:.83rem; font-weight:620; }
+#insightForecastHint { opacity:.7; }
+.two-dashboard { grid-template-columns:repeat(2,minmax(0,1fr)); margin:0 0 14px; }
+.two-dashboard .metric { min-width:0; background:var(--glass); border-radius:18px; padding:15px; }
+.two-dashboard .metric span { font-size:.79rem; }
+.two-dashboard .metric strong { font-size:clamp(1.03rem,4vw,1.5rem); line-height:1.2; overflow-wrap:anywhere; }
+.insight-chart { display:block; width:100%; min-height:175px; overflow-x:auto; }
+.insight-chart svg { display:block; width:100%; height:auto; min-height:175px; }
+.insight-chart text { font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif; }
+.section-head { flex-wrap:wrap; }
+.section-head .compact-label { min-width:100px; width:112px; margin:0; font-size:.75rem; }
+.section-head .compact-label input { margin-top:3px; }
+.mini-label { color:var(--muted); font-size:.8rem; white-space:nowrap; }
+.collapsible-section { padding:0; overflow:hidden; }
+.collapsible-section > summary { list-style:none; font-weight:740; padding:20px 18px; cursor:pointer; }
+.collapsible-section > summary::-webkit-details-marker { display:none; }
+.collapsible-section > summary:after { content:'⌄'; float:right; }
+.collapsible-section[open] > summary:after { content:'⌃'; }
+.collapsible-section > #analysisMonthSelector { padding:0 18px 12px; }
+.collapsible-section > #overviewPanel { padding:0 16px 18px; }
+.collapsible-section > #overviewPanel .panel { padding:14px; }
+.collapsible-section > #overviewPanel .report-hero { padding:16px; border-radius:18px; }
+.collapsible-section > #overviewPanel .report-total { font-size:2.3rem; }
+.plan-range { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.plan-range label { min-width:0; }
+.plan-range input { min-width:0; width:100%; }
+.simulation-result { display:flex; flex-direction:column; margin:14px 0; padding:17px 18px; border:1px solid var(--control-edge); background:var(--accent-light); border-radius:18px; gap:5px; }
+.simulation-result span { font-size:.84rem; }
+.simulation-result strong { display:block; font-variant-numeric:tabular-nums; font-size:clamp(1.9rem,7vw,2.4rem); letter-spacing:-.05em; overflow-wrap:anywhere; }
+.simulation-result small { color:var(--muted); line-height:1.4; }
+.bridge-idea { border:1px solid var(--control-edge); background:var(--field-glass); border-radius:17px; padding:13px; margin:10px 0; }
+.bridge-idea strong { display:block; font-size:.9rem; }
+.bridge-idea small { display:block; margin:6px 0 8px; color:var(--muted); line-height:1.3; }
+.bridge-idea button { width:100%; }
+.quick-templates { display:flex; flex-wrap:wrap; gap:7px; margin-top:4px; }
+.quick-templates:empty { display:none; }
+.quick-templates .template-pill { border:1px solid #ffffffbc; background:#ffffffb5; color:#16524d; min-height:35px; border-radius:18px; font-size:.76rem; padding:5px 11px; }
+.template-list-row { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; border-top:1px solid var(--control-edge); padding:11px 0; }
+.template-list-row strong,.template-list-row small { display:block; }
+.template-list-row small { font-size:.76rem; color:var(--muted); }
+.template-list-row button { font-size:.76rem; min-height:35px; }
+.settings-feature { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.settings-feature>div { flex:1; min-width:0; }
+.settings-feature strong { font-size:.92rem; }
+.settings-feature p { margin:6px 0; }
+.toggle-label { margin:0; display:flex; flex-direction:column; align-items:center; gap:6px; font-size:.72rem; }
+.toggle-label input[type=checkbox] { width:22px; height:22px; }
+#historyList .history-row { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; align-items:center; padding:11px 0; border-bottom:1px solid var(--control-edge); }
+.history-row div { min-width:0; }
+.history-row strong { display:block; font-size:.86rem; }
+.history-row small { display:block; font-size:.74rem; color:var(--muted); }
+.history-row button { font-size:.78rem; min-height:38px; }
+#monthBar.hidden + #analyticsPanel { margin-top:0; }
+@media(max-width:600px) {
+ .five-tabs { bottom:max(7px,env(safe-area-inset-bottom)); padding:4px; gap:1px; border-radius:22px; }
+ .five-tabs .tab { min-height:53px; border-radius:17px; }
+ .two-dashboard .metric { padding:12px; }
+ .plan-range { grid-template-columns:minmax(0,1fr); gap:0; }
+ .plan-range input[type=time],.plan-range input[type=date] { min-height:50px; }
+ #templateForm .plan-range { grid-template-columns:minmax(0,1fr); }
+ .insight-chart { min-height:160px; }
+ .insight-chart svg { min-height:160px; }
+ .compact-label { flex:0 0 auto; }
+}
+@media(max-width:360px) {
+ main { padding-inline:9px; }
+ .five-tabs { width:calc(100% - 10px); }
+ .five-tabs .tab { font-size:.61rem; padding:4px 0; }
+ .five-tabs .tab-icon { font-size:1.15rem; }
+}
+@media(prefers-color-scheme:dark) { .quick-templates .template-pill { background:#244c48; color:#e2fffb; border-color:#346d66; } .bridge-idea { background:var(--surface-muted); } }
+
 </style>
 </head>
 
@@ -1001,6 +1087,7 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
     <div class="manual-head"><h2>Arbeitszeit eintragen</h2><label class="manual-date">Datum<input id="manualDate" type="date" min="2000-01-01" max="2200-12-31" required></label></div>
     <div class="manual-switch" role="group" aria-label="Eingabeart"><button id="byRange" type="button" aria-pressed="true">Von – bis</button><button id="byDuration" type="button" aria-pressed="false">Dauer</button></div>
     <div class="manual-fields"><label id="startLabel">Beginn<input id="manualStart" type="time" required></label><label id="endLabel">Ende<input id="manualEnd" type="time" required></label><label class="hidden" id="durationLabel">Dauer vor Pause (Std.)<input id="manualDuration" type="number" min="0.01" max="24" step="0.01" placeholder="7,5" disabled></label><label>Pause (Min.)<input id="manualPause" type="number" min="0" max="1439" step="1" value="0"></label></div>
+    <div class="quick-templates" id="quickTemplates" aria-label="Gespeicherte Arbeitszeitvorlagen"></div>
     <div class="manual-footer"><div><span class="clock-caption">Nettoarbeitszeit</span><output id="manualNet" aria-live="polite">—</output></div><button type="submit">Eintrag speichern</button></div>
     <div id="manualStatus" role="status"></div>
   </form>
@@ -1016,25 +1103,6 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
       <div class="month-control"><span aria-hidden="true" id="monthPickerText"></span><input id="monthPicker" type="month" min="2000-01" max="2200-12" aria-label="Monat auswählen"></div>
       <button id="nextMonth" class="secondary" type="button" aria-label="Nächster Monat">›</button>
     </div>
-
-    <section id="overviewPanel" class="view-stack hidden">
-      <div class="clock-card report-hero"><h2 id="overviewHeading">Monatsübersicht</h2>
-        <strong class="report-total" id="creditedMetric">–</strong><span class="clock-caption">Angerechnete Zeit</span></div>
-      <div class="panel">
-      <div class="grid">
-        <div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
-        <div class="metric"><span>Noch bis zum Soll</span><strong id="remainingMetric">–</strong></div>
-        <div class="metric" id="closedDelta"><span>Abgeschlossene Monatsdifferenz</span><strong id="deltaMetric">–</strong></div>
-        <div class="metric"><span>Überstunden am Ende des Vormonats</span><strong id="carryMetric">–</strong></div>
-        <div class="metric"><span id="closingLabel">Zeitkonto Monatsende</span><strong id="closingMetric">–</strong></div>
-      </div>
-      <p id="accountExplanation" class="hint"></p>
-      <p id="vacationBalance" class="hint"></p>
-
-      </div>
-      <div class="panel"><h3>Einträge des Monats</h3>
-      <div id="entriesList"></div></div>
-    </section>
 
     <section id="calendarPanel" class="view-stack hidden">
       <div class="clock-card calendar-heading"><h2 id="calendarSubtitle"></h2></div>
@@ -1057,7 +1125,84 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
       </div>
     </section>
 
+    <section id="analyticsPanel" class="view-stack hidden" aria-labelledby="analyticsIntro">
+      <div class="clock-card insight-hero"><span class="eyebrow">DEIN ZEITKONTO</span>
+        <h2 id="analyticsIntro">Alles im Blick.</h2><p id="insightHeroCaption">Aktueller Gesamtstand</p>
+        <strong class="insight-number" id="insightBalance">–</strong>
+        <div class="insight-subline"><span id="insightForecast">Prognose wird berechnet</span><span id="insightForecastHint">Monatsende</span></div>
+      </div>
+      <div class="grid two-dashboard" id="analyticsQuickStats">
+        <div class="metric"><span>Gearbeitet dieses Jahr</span><strong id="statYearWork">–</strong></div>
+        <div class="metric"><span>Resturlaub</span><strong id="statVacation">–</strong></div>
+        <div class="metric"><span>Ø Arbeitstag</span><strong id="statAverage">–</strong></div>
+        <div class="metric"><span>Wert des Zeitkontos*</span><strong id="statValue">–</strong></div>
+      </div>
+      <section class="panel"><div class="section-head"><h2>Überstundenentwicklung</h2><span class="mini-label">12 Monate</span></div>
+        <div id="balanceChart" class="insight-chart" role="img" aria-label="Entwicklung des Zeitkontos"></div>
+        <p class="hint">Kumuliertes Zeitkonto am jeweiligen Monatsende. Der aktuelle Monat ist vorläufig.</p>
+      </section>
+      <section class="panel">
+        <div class="section-head"><h2>Jahresanalyse</h2><label class="compact-label">Jahr <input id="analysisYear" type="number" min="2000" max="2200" step="1" inputmode="numeric"></label></div>
+        <div class="grid two-dashboard">
+          <div class="metric"><span>Arbeitstage erfasst</span><strong id="statDays">–</strong></div>
+          <div class="metric"><span>Längster Arbeitstag</span><strong id="statLongest">–</strong></div>
+          <div class="metric"><span>Pausen gesamt</span><strong id="statBreaks">–</strong></div>
+          <div class="metric"><span>Zum Vorjahr</span><strong id="statYoY">–</strong></div>
+        </div>
+        <h3>Gearbeitete Stunden je Monat</h3>
+        <div id="monthlyChart" class="insight-chart" role="img" aria-label="Arbeitsstunden pro Monat"></div>
+      </section>
+      <details class="panel collapsible-section" id="monthlyDetails"><summary>Monatsdetails & einzelne Einträge</summary>
+        <div id="analysisMonthSelector"></div>
+    <section id="overviewPanel" class="view-stack hidden">
+      <div class="clock-card report-hero"><h2 id="overviewHeading">Monatsübersicht</h2>
+        <strong class="report-total" id="creditedMetric">–</strong><span class="clock-caption">Angerechnete Zeit</span></div>
+      <div class="panel">
+      <div class="grid">
+        <div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
+        <div class="metric"><span>Noch bis zum Soll</span><strong id="remainingMetric">–</strong></div>
+        <div class="metric" id="closedDelta"><span>Abgeschlossene Monatsdifferenz</span><strong id="deltaMetric">–</strong></div>
+        <div class="metric"><span>Überstunden am Ende des Vormonats</span><strong id="carryMetric">–</strong></div>
+        <div class="metric"><span id="closingLabel">Zeitkonto Monatsende</span><strong id="closingMetric">–</strong></div>
+      </div>
+      <p id="accountExplanation" class="hint"></p>
+      <p id="vacationBalance" class="hint"></p>
+
+      </div>
+      <div class="panel"><h3>Einträge des Monats</h3>
+      <div id="entriesList"></div></div>
+    </section>
+
+      </details>
+      <section class="panel"><h2>Berichte exportieren</h2><p class="hint">Deine bisherigen PDF-Berichte stehen weiterhin zur Verfügung.</p>
+        <button id="analysisExportJump" class="secondary" type="button">Zu den PDF-Berichten</button>
+        <p class="hint">* Rechenwert, keine Auszahlungszusage.</p>
+      </section>
+    </section>
+
+    <section id="planningPanel" class="view-stack hidden" aria-labelledby="planningTitle">
+      <div class="clock-card planning-hero"><span class="eyebrow">VORAUSDENKEN</span><h2 id="planningTitle">Zeit clever planen.</h2><p class="clock-caption">Erst simulieren, dann entscheiden – ohne deine echten Einträge zu verändern.</p></div>
+      <section class="panel"><div class="section-head"><h2>Überstunden-Simulator</h2><span class="mini-label">aktueller Monat</span></div>
+        <p class="hint">Wie würde sich dein Zeitkonto entwickeln, wenn du die verbleibenden Arbeitstage jeweils so viele Stunden arbeitest?</p>
+        <label for="simDailyHours">Geplante Netto-Stunden pro Arbeitstag</label>
+        <input id="simDailyHours" type="number" min="0" max="24" step="0.25" inputmode="decimal" value="8">
+        <div class="simulation-result"><span>Prognose zum Monatsende</span><strong id="simProjectedBalance">–</strong><small id="simDetail">–</small></div>
+        <p class="hint">Berechnet auf Basis deiner aktuellen Einträge, deiner Urlaubstage, Feiertage und deines Monatssolls. Bereits geplante Tage werden nicht doppelt gezählt.</p>
+      </section>
+      <section class="panel"><h2>Urlaub planen</h2><p class="hint">Wähle einen Zeitraum. Feiertage und deine festgelegten Urlaubstage werden berücksichtigt.</p>
+        <div class="plan-range"><label>Von<input id="planStart" type="date"></label><label>Bis einschließlich<input id="planEnd" type="date"></label></div>
+        <div class="simulation-result"><span>Benötigter Urlaub</span><strong id="planNeeded">–</strong><small id="planRemaining">–</small></div>
+        <button id="planBook" type="button">Urlaub im Kalender eintragen</button><p id="planStatus" class="status" role="status"></p>
+      </section>
+      <section class="panel"><h2>Brückentage entdecken</h2><p class="hint">Ideen für lange freie Zeiträume in Baden-Württemberg. Nur Vorschläge – bestehende Termine und deine Urlaubstage bleiben unverändert.</p>
+        <label for="bridgeYear">Jahr</label><input id="bridgeYear" type="number" min="2000" max="2200" step="1" inputmode="numeric">
+        <div id="bridgeIdeas"></div>
+      </section>
+      <section class="panel"><h2>Dein Freizeitbudget</h2><div class="grid two-dashboard"><div class="metric"><span>Resturlaub im Jahr</span><strong id="planVacationBalance">–</strong></div><div class="metric"><span>Zeitkonto aktuell (vorläufig)</span><strong id="planHoursBalance">–</strong></div></div></section>
+    </section>
+
     <section id="morePanel" class="view-stack hidden">
+      <div class="feature-intro"><span class="eyebrow">PERSÖNLICH</span><h2>Deine App. Deine Regeln.</h2><p class="hint">Konto, Automatisierungen, Vorlagen und Einstellungen – an einem Ort.</p></div>
 
       <section class="panel" id="cloudPanel">
         <div class="cloud-heading"><span class="cloud-hero-icon" aria-hidden="true">☁</span><div><h3>Konto &amp; Cloud</h3><p class="hint">Deine Arbeitszeiten auf allen Geräten – automatisch gesichert.</p></div></div>
@@ -1087,6 +1232,7 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
             <button id="cloudAuthSubmit" type="submit">Anmelden</button>
             <button id="cloudForgotPassword" class="quiet" type="button">Passwort vergessen?</button>
             <p class="hint cloud-persist-hint">Du bleibst auf diesem Gerät angemeldet, bis du dich selbst abmeldest.</p>
+            <button id="cloudPasskeyLogin" type="button" class="secondary">Mit Passkey / Face ID anmelden</button>
           </form>
         </div>
         <div id="cloudLoggedIn" class="hidden">
@@ -1152,6 +1298,42 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
         </div>
       </section>
 
+      <section class="panel settings-group" id="automationPanel">
+        <h2>Erinnerungen &amp; Automatisierung</h2>
+        <div class="settings-feature"><div><strong>Erinnerung an Arbeitszeit</strong><p class="hint">Benachrichtigung, wenn du an einem Arbeitstag noch nichts eingetragen hast.</p></div><label class="toggle-label"><input id="reminderEnabled" type="checkbox"><span>Aktiv</span></label></div>
+        <label for="reminderTime">Uhrzeit der Erinnerung</label><input id="reminderTime" type="time" value="19:00">
+        <label for="notifyThreshold">Zeitkonto-Hinweis ab (Stunden, optional)</label><input id="notifyThreshold" type="number" min="0" max="10000" step="0.5" placeholder="z. B. 20" inputmode="decimal">
+        <div class="cloud-actions"><button id="saveAutomation" type="button">Erinnerungen speichern</button><button id="enablePush" type="button" class="secondary">iPhone-Mitteilungen aktivieren</button></div>
+        <p id="pushStatus" class="status" role="status"></p>
+        <p class="hint">Push funktioniert auf dem iPhone ab iOS 16.4 für Home-Bildschirm-Web-Apps. Dazu muss die beigefügte Supabase-Push-Funktion einmalig eingerichtet werden. Keine Mitteilungen ohne Zustimmung.</p>
+      </section>
+      <section class="panel settings-group" id="templatePanel"><h2>Arbeitszeit-Vorlagen</h2><p class="hint">Häufige Zeiten speichern und auf „Heute“ mit einem Tipp eintragen.</p>
+        <form id="templateForm"><label for="templateName">Name</label><input id="templateName" type="text" placeholder="z. B. Frühschicht" maxlength="36" required>
+          <div class="plan-range"><label>Beginn<input id="templateStart" type="time" required></label><label>Ende<input id="templateEnd" type="time" required></label></div>
+          <label for="templateBreak">Pause (Minuten)</label><input id="templateBreak" type="number" min="0" max="1439" step="1" value="30" inputmode="numeric" required>
+          <button type="submit">Vorlage speichern</button></form><div id="templateList"></div><p id="templateStatus" class="status" role="status"></p>
+      </section>
+      <section class="panel settings-group" id="moneyPanel"><h2>Stundenlohn &amp; Überstundenwert</h2><p class="hint">Die Schätzung wird nur aus deinem gespeicherten Stundenlohn berechnet. Sie ist keine Abrechnung oder Auszahlungszusage.</p>
+        <label for="hourlyRate">Brutto-Stundenlohn (€)</label><input id="hourlyRate" type="number" min="0" max="10000" step="0.01" inputmode="decimal" placeholder="z. B. 25,00">
+        <label for="overtimeBonus">Optionaler Überstundenzuschlag (%)</label><input id="overtimeBonus" type="number" min="0" max="300" step="1" inputmode="decimal" value="0">
+        <button id="saveMoney" type="button">Berechnung speichern</button><p id="moneyStatus" class="status" role="status"></p>
+      </section>
+      <section class="panel settings-group" id="shortcutPanel"><h2>Siri &amp; Kurzbefehle</h2>
+        <p class="hint">Erstelle einen iPhone-Kurzbefehl, der die App mit bereits ausgefüllten Arbeitszeiten öffnet. Du bestätigst jeden Eintrag selbst, bevor er gespeichert wird.</p>
+        <div class="plan-range"><label>Beginn<input id="shortcutStart" type="time" value="07:00"></label><label>Ende<input id="shortcutEnd" type="time" value="15:30"></label></div>
+        <label>Pause (Min.)<input id="shortcutPause" type="number" min="0" max="1439" step="1" value="30"></label>
+        <button id="copyShortcut" type="button" class="secondary">Link für Apple Kurzbefehle kopieren</button><p id="shortcutStatus" class="status" role="status"></p>
+      </section>
+      <section class="panel settings-group" id="securityPanel"><h2>Sicherheit</h2>
+        <p class="hint">Optional mit Passkey anmelden, beispielsweise über Face ID. Supabase-Passkeys sind experimentell und müssen im Supabase-Dashboard freigeschaltet werden.</p>
+        <div class="cloud-actions"><button id="registerPasskey" type="button" class="secondary">Passkey einrichten</button><button id="passkeyLogin" type="button" class="secondary">Mit Passkey anmelden</button><button id="logoutAllDevices" type="button" class="secondary">Alle Geräte abmelden</button></div>
+        <p id="passkeyStatus" class="status" role="status"></p>
+      </section>
+      <section class="panel settings-group" id="historyPanel"><h2>Wiederherstellung &amp; Cloud-Versionen</h2>
+        <p class="hint">Gesicherte Versionen deines Datenbestands anzeigen und bei Bedarf bewusst wiederherstellen. Dafür muss die neue SQL-Erweiterung einmalig ausgeführt werden.</p>
+        <button id="loadHistory" class="secondary" type="button">Gesicherte Versionen anzeigen</button>
+        <div id="historyList"></div><p id="historyStatus" class="status" role="status"></p>
+      </section>
       <div class="panel settings-group">
         <h3>PDF-Export</h3>
         <button id="monthlyPdfButton" type="button">Monats-PDF exportieren</button>
@@ -1225,16 +1407,12 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
     </section>
   </main>
 
-  <nav class="tabs" aria-label="Hauptnavigation">
-    <button id="overviewTab" class="tab active" type="button" aria-current="page">
-      <span class="tab-icon" aria-hidden="true">◷</span>Heute
-    </button>
-    <button id="calendarTab" class="tab" type="button">
-      <span class="tab-icon" aria-hidden="true">▦</span>Kalender
-    </button>
-    <button id="moreTab" class="tab" type="button">
-      <span class="tab-icon" aria-hidden="true">▥</span>Auswertung
-    </button>
+  <nav class="tabs five-tabs" aria-label="Hauptnavigation">
+    <button id="overviewTab" class="tab active" type="button" aria-current="page"><span class="tab-icon" aria-hidden="true">⌂</span>Heute</button>
+    <button id="calendarTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">▦</span>Kalender</button>
+    <button id="analyticsTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">▥</span>Analysen</button>
+    <button id="planningTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">◈</span>Planen</button>
+    <button id="moreTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">⚙</span>Mehr</button>
   </nav>
 
   <div id="entryOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="entryDialogTitle">
@@ -1340,7 +1518,13 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
       sickHours: 8,
       vacationStartYear: new Date().getFullYear(),
       accountStartMonth: currentMonth(),
-      openingBalance: 0
+      openingBalance: 0,
+      quickTemplates: [],
+      hourlyRate: 0,
+      overtimeBonus: 0,
+      reminderEnabled: false,
+      reminderTime: '19:00',
+      notifyThreshold: null
     };
 
     let state = { settings: { ...DEFAULT_SETTINGS }, records: [] };
@@ -1571,6 +1755,27 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
       delete settings.rounding; delete settings.roundScope; delete settings.roundMarks;
       if (!Array.isArray(settings.leaveDays) || !settings.leaveDays.every(n=>Number.isInteger(n)&&n>=0&&n<=6))
         throw new Error("Ungültige Urlaubseinstellungen.");
+      // Vorlagen und weitere Kontofunktionen gehören zum vollständigen Snapshot.
+      // Ungültige importierte/remote Werte werden nicht stillschweigend gespeichert.
+      if (!Array.isArray(settings.quickTemplates) || settings.quickTemplates.length>8 ||
+          !settings.quickTemplates.every(t=>t&&typeof t.id==='string'&&t.id.length>0&&
+            typeof t.name==='string'&&t.name.length>0&&t.name.length<=36&&
+            /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(t.start)&&
+            /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(t.end)&&
+            Number.isInteger(t.breakMinutes)&&t.breakMinutes>=0&&t.breakMinutes<1440&&
+            timeToMinutes(t.end)-timeToMinutes(t.start)>t.breakMinutes)) {
+        throw new Error('Ungültige Schnellvorlage.');
+      }
+      for (const [key,max] of [['hourlyRate',10000],['overtimeBonus',300]]) {
+        if(typeof settings[key]!=='number'||!Number.isFinite(settings[key])||settings[key]<0||settings[key]>max)
+          throw new Error('Ungültiger Wert in '+key+'.');
+      }
+      if(typeof settings.reminderEnabled!=='boolean'||
+         !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(settings.reminderTime)||
+         (settings.notifyThreshold!==null&&
+          (typeof settings.notifyThreshold!=='number'||!Number.isFinite(settings.notifyThreshold)||
+           settings.notifyThreshold<0||settings.notifyThreshold>10000)))
+        throw new Error('Ungültige Erinnerungseinstellung.');
       const stamps=candidate.stamps ?? [];
       if (!validStamps(stamps)) throw new Error("Ungültige Stempelzeiten.");
       return { settings, records, stamps };
@@ -2028,14 +2233,16 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
     function setActiveTab(tab) {
       activeTab = tab;
       $("sectionTitle").classList.toggle("hidden", tab === "overview");
-      $("sectionTitle").textContent = tab === "calendar" ? "Kalender" : "Auswertung";
+      $("sectionTitle").textContent = ({calendar:"Kalender",analytics:"Analysen",planning:"Planen",more:"Mehr"})[tab] || "";
       $("todayPanel").classList.toggle("hidden", tab !== "overview");
-      $("monthBar").classList.toggle("hidden", tab === "overview");
-      $("overviewPanel").classList.toggle("hidden", tab !== "more");
+      $("monthBar").classList.toggle("hidden", !["calendar","analytics"].includes(tab));
+      $("overviewPanel").classList.toggle("hidden", tab !== "analytics");
       $("calendarPanel").classList.toggle("hidden", tab !== "calendar");
+      $("analyticsPanel").classList.toggle("hidden", tab !== "analytics");
+      $("planningPanel").classList.toggle("hidden", tab !== "planning");
       $("morePanel").classList.toggle("hidden", tab !== "more");
 
-      for (const id of ["overviewTab", "calendarTab", "moreTab"]) {
+      for (const id of ["overviewTab", "calendarTab", "analyticsTab", "planningTab", "moreTab"]) {
         const active = id === `${tab}Tab`;
         $(id).classList.toggle("active", active);
         if (active) $(id).setAttribute("aria-current", "page");
@@ -2043,6 +2250,10 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
       }
 
       if (tab === "calendar") renderCalendar();
+      if (tab === "analytics") renderAnalytics();
+      if (tab === "planning") renderPlanning();
+      if (tab === "more" && cloudSession) void primePushKey();
+      window.scrollTo({top:0,behavior:"instant"});
     }
 
     function vacationDates(start,end) {
@@ -2397,6 +2608,352 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
       $("reportYear").value = Number(selectedMonth.slice(0, 4));
       renderOverview();
       renderCalendar();
+      renderQuickTemplates();
+      renderAnalytics();
+      renderPlanning();
+      renderExtrasSettings();
+      void maybeNotifyThreshold();
+    }
+
+    // =================== Arbeitszeit NEXT: Auswertung & Planung ===================
+    const euroAmount = value => Number(value).toLocaleString('de-DE',{style:'currency',currency:'EUR'});
+    const safeNumber = value => Number.isFinite(Number(value)) ? Number(value) : 0;
+    const workDates = () => state.settings.leaveDays ?? [1,2,3,4,5];
+    const netWorkHours = date => dateRecords(date).filter(r=>r.type==='work').reduce((total,r)=>total+Number(r.hours||0),0);
+    const daysInMonthKey = ym => {const [y,m]=ym.split('-').map(Number);return new Date(y,m,0).getDate();};
+    const nextDayKey = day => {const dt=parseDate(day);dt.setDate(dt.getDate()+1);return localDateString(dt);};
+    const displayDay = day => parseDate(day).toLocaleDateString('de-DE',{day:'numeric',month:'short',year:'numeric'});
+    function displayTime(num) {return Number(num||0).toLocaleString('de-DE',{maximumFractionDigits:1})+' Std.';}
+    function storedTemplates() {return Array.isArray(state.settings.quickTemplates)?state.settings.quickTemplates:[];}
+    function plannedDailyHours() {return Math.max(0,Math.min(24,safeNumber($('simDailyHours').value)));}
+    function planningEstimate(hours=plannedDailyHours()) {
+      const ym=currentMonth(), today=localDateString(), days=daysInMonthKey(ym);
+      let futureDays=0, otherCredits=0;
+      for(let d=1;d<=days;d++) {
+        const day=`${ym}-${String(d).padStart(2,'0')}`;
+        if(day<=today)continue;
+        const records=dateRecords(day);
+        if(records.length || (holidayCreditForDate(day)?.hours>0)) continue;
+        if(workDates().includes(parseDate(day).getDay()))futureDays++;
+      }
+      // monthStats() umfasst bereits alle geplanten Einträge und Feiertage, unabhängig vom Datum.
+      const stats=monthStats(ym);
+      const total=balanceBeforeMonth(ym)+stats.credited+futureDays*hours-stats.target;
+      return {total,futureDays,additional:futureDays*hours,month:ym};
+    }
+    function renderQuickTemplates() {
+      const quick=$('quickTemplates'), templates=storedTemplates();
+      quick.innerHTML=templates.map(t=>`<button type="button" class="template-pill" data-template="${escapeHtml(t.id)}">⚡ ${escapeHtml(t.name)}</button>`).join('');
+      quick.querySelectorAll('[data-template]').forEach(btn=>btn.addEventListener('click',()=>{
+        const t=storedTemplates().find(x=>x.id===btn.dataset.template);if(!t)return;
+        setManualMode('range');$('manualStart').value=t.start;$('manualEnd').value=t.end;
+        $('manualPause').value=String(t.breakMinutes);previewManual();
+        $('manualStatus').textContent=`${t.name} eingesetzt – bitte noch speichern.`;
+      }));
+      $('templateList').innerHTML=templates.map(t=>`<div class="template-list-row"><div><strong>${escapeHtml(t.name)}</strong><small>${escapeHtml(t.start)}–${escapeHtml(t.end)} · ${t.breakMinutes} Min. Pause</small></div><button type="button" class="secondary" data-remove-template="${escapeHtml(t.id)}">Entfernen</button></div>`).join('') || '<p class="hint">Noch keine Vorlagen gespeichert.</p>';
+      $('templateList').querySelectorAll('[data-remove-template]').forEach(btn=>btn.addEventListener('click',withWriteLock(async()=>{
+        const previous=structuredClone(state.settings);
+        state.settings.quickTemplates=storedTemplates().filter(t=>t.id!==btn.dataset.removeTemplate);
+        try{await persistState();renderQuickTemplates();}catch(error){state.settings=previous;throw error;}
+      })));
+    }
+    function lastMonths(count=12) {
+      return Array.from({length:count},(_,i)=>addMonths(currentMonth(),i-count+1));
+    }
+    function lineChart(data,labeler) {
+      if(!data.length)return '<p class="hint">Noch keine Daten vorhanden.</p>';
+      const w=600,h=196, left=25,right=16,top=18,bottom=39;
+      const vals=data.map(x=>x.v), max=Math.max(1,...vals), min=Math.min(0,...vals);
+      const range=Math.max(1,max-min);
+      const x=i=>left+(w-left-right)*(data.length===1?0.5:i/(data.length-1));
+      const y=v=>top+(h-top-bottom)*(max-v)/range;
+      const path=data.map((d,i)=>`${i===0?'M':'L'} ${x(i).toFixed(1)} ${y(d.v).toFixed(1)}`).join(' ');
+      const zero=y(0);
+      const labels=data.map((d,i)=>`<text x="${x(i)}" y="${h-15}" font-size="12" text-anchor="middle" fill="currentColor" opacity=".7">${escapeHtml(labeler(d))}</text>`).join('');
+      const dots=data.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d.v)}" r="3.2" fill="#118c81"><title>${escapeHtml(d.title||'')} ${hoursText(d.v)}</title></circle>`).join('');
+      const grid=[0,.5,1].map(t=>{const v=min+range*t;return `<line x1="${left}" x2="${w-right}" y1="${y(v)}" y2="${y(v)}" stroke="currentColor" opacity=".1" stroke-dasharray="3 5"/>`;}).join('');
+      return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">${grid}<line x1="${left}" y1="${zero}" x2="${w-right}" y2="${zero}" stroke="#118c81" opacity=".4"/><path d="${path}" fill="none" stroke="#128f84" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"/>${dots}${labels}</svg>`;
+    }
+    function barChart(data) {
+      if(!data.length)return '';
+      const w=600,h=192,left=15,right=8,top=15,bottom=30;
+      const max=Math.max(1,...data.map(x=>x.v));
+      const per=(w-left-right)/data.length,bar=Math.min(32,per*.56);
+      return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><line x1="${left}" x2="${w-right}" y1="${h-bottom}" y2="${h-bottom}" stroke="currentColor" opacity=".14"/>${data.map((d,i)=>{const x=left+per*i+(per-bar)/2, height=(h-bottom-top)*d.v/max, y=h-bottom-height;return `<rect x="${x}" y="${y}" width="${bar}" height="${Math.max(.1,height)}" rx="5" fill="${d.current?'#14786e':'#78cbc3'}"><title>${escapeHtml(d.title)}: ${hoursText(d.v)}</title></rect><text x="${x+bar/2}" y="${h-9}" text-anchor="middle" font-size="12" fill="currentColor" opacity=".7">${escapeHtml(d.label)}</text>`;}).join('')}</svg>`;
+    }
+    function renderAnalytics() {
+      if(!$('analysisYear').value)$('analysisYear').value=String(new Date().getFullYear());
+      const now=currentMonth(), today=localDateString(), thisYear=Number($('analysisYear').value)||new Date().getFullYear();
+      const stats=monthStats(now), balance=closingBalanceForMonth(now);
+      $('insightBalance').textContent=balance===null?'Noch nicht aktiv':signedHoursText(balance);
+      $('insightHeroCaption').textContent='Zeitkonto · '+monthTitle(now)+' (vorläufig)';
+      const forecast=planningEstimate(8);
+      $('insightForecast').textContent='Prognose bei 8 Std./Tag: '+signedHoursText(forecast.total);
+      $('statYearWork').textContent=displayTime(Array.from({length:12},(_,m)=>monthStats(`${thisYear}-${String(m+1).padStart(2,'0')}`).work).reduce((a,b)=>a+b,0));
+      $('statVacation').textContent=vacationBalanceAt(thisYear).toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage';
+      const yearRecords=state.records.filter(r=>r.type==='work' && r.date.startsWith(thisYear+'-'));
+      const byDay=new Map();let breaks=0;
+      for(const r of yearRecords){byDay.set(r.date,(byDay.get(r.date)||0)+r.hours);breaks+=Number(r.breakMinutes||0);}
+      const sum=[...byDay.values()].reduce((a,b)=>a+b,0);
+      $('statAverage').textContent=byDay.size?displayTime(sum/byDay.size):'–';
+      $('statDays').textContent=String(byDay.size);
+      $('statLongest').textContent=byDay.size?displayTime(Math.max(...byDay.values())):'–';
+      $('statBreaks').textContent=displayTime(breaks/60);
+      const previous=Array.from({length:12},(_,m)=>monthStats(`${thisYear-1}-${String(m+1).padStart(2,'0')}`).work).reduce((a,b)=>a+b,0);
+      $('statYoY').textContent=previous?((sum-previous>=0?'+':'')+displayTime(sum-previous)):'–';
+      const gross=safeNumber(state.settings.hourlyRate), bonus=safeNumber(state.settings.overtimeBonus);
+      $('statValue').textContent=gross && balance!==null?euroAmount(Math.max(0,balance)*gross*(1+bonus/100)):'Nicht eingestellt';
+      $('balanceChart').innerHTML=lineChart(lastMonths().map(ym=>({v:closingBalanceForMonth(ym)??0,title:monthTitle(ym),ym})),d=>d.ym.slice(5));
+      $('monthlyChart').innerHTML=barChart(Array.from({length:12},(_,m)=>{const ym=`${thisYear}-${String(m+1).padStart(2,'0')}`;return {label:new Date(thisYear,m,1).toLocaleString('de-DE',{month:'short'}).replace('.',''),v:monthStats(ym).work,title:monthTitle(ym),current:ym===now};}));
+      $('analysisMonthSelector').innerHTML=`<span class="hint">Für einen anderen Monat die Pfeile oberhalb nutzen.</span>`;
+    }
+    function bridgeSuggestions(year) {
+      const today=localDateString(), start=localDateString(new Date(Math.max(year,new Date().getFullYear()),year===new Date().getFullYear()?new Date().getMonth():0,1,12));
+      const nextYear=`${year+1}-01-01`, list=[];
+      for(let date=parseDate(`${year}-01-01`);date.getFullYear()===year;date.setDate(date.getDate()+1)) {
+        const beginning=localDateString(date);if(beginning<today)continue;
+        for(let span=4;span<=10;span++) {
+          const from=parseDate(beginning),until=new Date(from);until.setDate(until.getDate()+span-1);
+          if(until.getFullYear()!==year)continue;
+          const end=localDateString(until), days=[];
+          for(let t=new Date(from);t<=until;t.setDate(t.getDate()+1))days.push(localDateString(t));
+          const work=days.filter(d=>workDates().includes(parseDate(d).getDay()) && !holidayCreditForDate(d)?.hours);
+          const already=work.filter(d=>dateRecords(d).some(r=>r.type==='vacation'));
+          const newDays=work.filter(d=>!dateRecords(d).some(r=>r.type==='vacation'));
+          if(newDays.some(d=>dateRecords(d).some(r=>r.type==='work'||r.type==='sick')))continue;
+          if(newDays.length<1 || newDays.length>3 || days.length-newDays.length<2)continue;
+          const holiday=days.some(d=>holidayCreditForDate(d)?.hours>0);
+          if(!holiday)continue;
+          list.push({start:beginning,end,days:newDays.length,total:days.length,score:days.length/newDays.length,workDates:newDays});
+        }
+      }
+      list.sort((a,b)=>b.score-a.score||b.total-a.total||a.start.localeCompare(b.start));
+      const selected=[];
+      for(const idea of list) {
+        if(selected.some(x=>!(idea.end<x.start||idea.start>x.end)))continue;
+        selected.push(idea); if(selected.length>=4)break;
+      }
+      return selected;
+    }
+    function renderPlanning() {
+      const today=localDateString();
+      if(!$('planStart').value)$('planStart').value=today;
+      if(!$('planEnd').value)$('planEnd').value=today;
+      if(!$('bridgeYear').value)$('bridgeYear').value=String(new Date().getFullYear());
+      const sim=planningEstimate(),valid=Number.isFinite(sim.total);
+      $('simProjectedBalance').textContent=valid?signedHoursText(sim.total):'–';
+      $('simDetail').textContent=sim.futureDays+' noch nicht belegte geplante Arbeitstage · '+displayTime(sim.additional)+' zusätzlich';
+      $('planVacationBalance').textContent=vacationBalanceAt(new Date().getFullYear()).toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage';
+      const balance=closingBalanceForMonth(currentMonth());
+      $('planHoursBalance').textContent=balance===null?'Nicht aktiv':signedHoursText(balance);
+      const start=$('planStart').value,end=$('planEnd').value;
+      try {
+        const dates=vacationDates(start,end), existing=dates.filter(date=>dateRecords(date).some(r=>r.type==='vacation'));
+        const unused=dates.length-existing.length, left=vacationBalanceAt(Number(start.slice(0,4)))-unused;
+        $('planNeeded').textContent=unused+' Tag'+(unused===1?'':'e');
+        $('planRemaining').textContent='Bereits erfasster Urlaub: '+existing.length+' · Rest danach: '+left.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage';
+        $('planBook').disabled=unused===0;
+      }catch(err){$('planNeeded').textContent='–';$('planRemaining').textContent=err.message;$('planBook').disabled=true;}
+      const year=Number($('bridgeYear').value);
+      if(Number.isInteger(year) && year>=2000 && year<=2200) {
+        const ideas=bridgeSuggestions(year);
+        $('bridgeIdeas').innerHTML=ideas.length?ideas.map(x=>`<div class="bridge-idea"><strong>${x.total} Tage frei mit ${x.days} Urlaubstagen</strong><small>${displayDay(x.start)} – ${displayDay(x.end)}</small><button type="button" class="secondary" data-bridge-start="${x.start}" data-bridge-end="${x.end}">Zeitraum planen</button></div>`).join(''):'<p class="hint">Für dieses Jahr wurden keine passenden Vorschläge gefunden.</p>';
+        $('bridgeIdeas').querySelectorAll('[data-bridge-start]').forEach(b=>b.addEventListener('click',()=>{
+          $('planStart').value=b.dataset.bridgeStart;$('planEnd').value=b.dataset.bridgeEnd;renderPlanning();
+          $('planStart').scrollIntoView({behavior:'smooth',block:'center'});
+        }));
+      }
+    }
+    function renderExtrasSettings(){
+      $('reminderEnabled').checked=Boolean(state.settings.reminderEnabled);
+      $('reminderTime').value=state.settings.reminderTime||'19:00';
+      $('notifyThreshold').value=state.settings.notifyThreshold??'';
+      $('hourlyRate').value=state.settings.hourlyRate||'';
+      $('overtimeBonus').value=state.settings.overtimeBonus||0;
+    }
+    $('analysisYear').addEventListener('change',renderAnalytics);
+    $('simDailyHours').addEventListener('input',renderPlanning);
+    for(const id of ['planStart','planEnd'])$(id).addEventListener('change',renderPlanning);
+    $('bridgeYear').addEventListener('change',renderPlanning);
+    $('analysisExportJump').addEventListener('click',()=>{
+      setActiveTab('more');$('monthlyPdfButton').scrollIntoView({behavior:'smooth',block:'center'});
+    });
+    $('planBook').addEventListener('click',()=>{
+      const start=$('planStart').value,end=$('planEnd').value;
+      try {
+        const dates=vacationDates(start,end);
+        if(!dates.length)throw new Error('Keine zählenden Urlaubstage in diesem Zeitraum.');
+        if(dates.some(d=>dateRecords(d).some(r=>r.type==='vacation'||r.type==='sick'||r.type==='work')))
+          throw new Error('Im Zeitraum gibt es bereits Einträge. Bitte im Kalender prüfen, bevor du weitere Urlaubstage erfasst.');
+        openEntry(start);$('entryType').value='vacation';$('vacationEnd').value=end;setEntryTypeVisibility();
+      }catch(e){showStatus($('planStatus'),e.message,'error');}
+    });
+    $('templateForm').addEventListener('submit',withWriteLock(async()=>{
+      const name=$('templateName').value.trim(),start=$('templateStart').value,end=$('templateEnd').value,
+      br=Number($('templateBreak').value),regex=/^(?:[01]\d|2[0-3]):[0-5]\d$/;
+      if(!name||name.length>36||!regex.test(start)||!regex.test(end)||!Number.isInteger(br)||br<0||br>=1440||timeToMinutes(end)-timeToMinutes(start)-br<=0) {
+        showStatus($('templateStatus'),'Bitte gültige Zeiten (Ende nach Beginn) und Pausen angeben.','error');return;
+      }
+      if(storedTemplates().length>=8){showStatus($('templateStatus'),'Maximal acht Vorlagen möglich.','error');return;}
+      const previous=structuredClone(state.settings);
+      state.settings.quickTemplates=[...storedTemplates(),{id:makeId(),name,start,end,breakMinutes:br}];
+      try{await persistState();$('templateForm').reset();$('templateBreak').value='30';renderQuickTemplates();showStatus($('templateStatus'),'Vorlage gespeichert. Sie erscheint ab jetzt auf „Heute“.','success');}
+      catch(error){state.settings=previous;throw error;}
+    }));
+    $('saveMoney').addEventListener('click',withWriteLock(async()=>{
+      const rate=$('hourlyRate').value===''?0:Number($('hourlyRate').value),bonus=Number($('overtimeBonus').value);
+      if(!Number.isFinite(rate)||rate<0||rate>10000||!Number.isFinite(bonus)||bonus<0||bonus>300){showStatus($('moneyStatus'),'Bitte gültige Werte eintragen.','error');return;}
+      const previous=structuredClone(state.settings);state.settings.hourlyRate=rate;state.settings.overtimeBonus=bonus;
+      try{await persistState();renderAnalytics();showStatus($('moneyStatus'),'Einstellungen gespeichert.','success');}
+      catch(e){state.settings=previous;throw e;}
+    }));
+    $('saveAutomation').addEventListener('click',withWriteLock(async()=>{
+      const hour=$('reminderTime').value,threshold=$('notifyThreshold').value;
+      if(!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(hour)||threshold!==''&&(!Number.isFinite(Number(threshold))||Number(threshold)<0||Number(threshold)>10000)){
+        showStatus($('pushStatus'),'Bitte gültige Erinnerungszeiten und Grenzwerte eingeben.','error');return;
+      }
+      const previous=structuredClone(state.settings);
+      Object.assign(state.settings,{reminderEnabled:$('reminderEnabled').checked,reminderTime:hour,notifyThreshold:threshold===''?null:Number(threshold)});
+      try{await persistState();showStatus($('pushStatus'),'Einstellungen gespeichert. Für Benachrichtigungen zusätzlich „Aktivieren“ wählen.','success');}
+      catch(error){state.settings=previous;throw error;}
+    }));
+    $('copyShortcut').addEventListener('click',async()=>{
+      try {
+        const start=$('shortcutStart').value,end=$('shortcutEnd').value,br=Number($('shortcutPause').value);
+        if(!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(start)||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(end)||!Number.isInteger(br)||br<0||timeToMinutes(end)-timeToMinutes(start)-br<=0)throw new Error('Beginn, Ende oder Pause ungültig.');
+        const url=new URL(location.origin+location.pathname);url.searchParams.set('action','entry');url.searchParams.set('start',start);url.searchParams.set('end',end);url.searchParams.set('pause',String(br));
+        await navigator.clipboard.writeText(url.toString());
+        showStatus($('shortcutStatus'),'Link kopiert. In Apple Kurzbefehle → „URL öffnen“ einfügen.','success');
+      }catch(e){showStatus($('shortcutStatus'),e?.message||'Kopieren nicht möglich.','error');}
+    });
+    let shortcutOpened=false;
+    function handleShortcutIntent(){
+      if(shortcutOpened)return;
+      const q=new URLSearchParams(location.search);if(q.get('action')!=='entry')return;
+      const start=q.get('start'),end=q.get('end'),br=Number(q.get('pause')||0);
+      if(!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(start||'')||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(end||'')||!Number.isInteger(br)||br<0||br>=1440||timeToMinutes(end)-timeToMinutes(start)-br<=0)return;
+      shortcutOpened=true;
+      history.replaceState(null,'',location.pathname+location.hash);
+      setActiveTab('overview');openEntry(localDateString());$('startTime').value=start;$('endTime').value=end;$('breakMinutes').value=String(br);
+      showStatus($('entryStatus'),'Aus deinem Kurzbefehl übernommen. Prüfe die Zeit und tippe auf „Eintrag speichern“.','success');
+    }
+    async function restoreHistoryVersion(id){
+      if(!cloudSession)throw new Error('Bitte zuerst anmelden.');
+      if(cloudDirty||cloudConflict)throw new Error('Erst alle lokalen Änderungen synchronisieren bzw. einen Konflikt lösen.');
+      const {data,error}=await configuredSupabase().from('snapshot_history').select('state,version,created_at').eq('id',id).single();
+      if(error)throw error;
+      const recovered=validateState(data.state);
+      if(!confirm('Diese Version vom '+new Date(data.created_at).toLocaleString('de-DE')+' wiederherstellen? Dein aktueller Cloudstand wird dabei durch diese Version ersetzt. Eine Kopie des aktuellen Stands bleibt im Versionsverlauf.'))return;
+      const current=await getCloudSnapshot();
+      if(current.version!==cloudVersion)throw new Error('Ein anderes Gerät hat zwischenzeitlich Änderungen gespeichert. Erst synchronisieren.');
+      const response=await putCloudSnapshot(recovered,current.version);
+      await replaceLocalSnapshot(recovered,response.version,false);
+      cloudConflict=false;markCloudSynced();renderAll();updateCloudUI();
+      showStatus($('historyStatus'),'Die frühere Version wurde wiederhergestellt und synchronisiert.','success');
+    }
+    $('loadHistory').addEventListener('click',async()=>{
+      try{
+        if(!cloudSession)throw new Error('Bitte zuerst im Bereich „Konto & Cloud“ anmelden.');
+        const {data,error}=await configuredSupabase().from('snapshot_history').select('id,version,created_at').order('created_at',{ascending:false}).limit(30);
+        if(error)throw error;
+        $('historyList').innerHTML=data.length?data.map(row=>`<div class="history-row"><div><strong>${new Date(row.created_at).toLocaleString('de-DE')}</strong><small>Cloudversion ${Number(row.version)}</small></div><button type="button" class="secondary" data-restore-id="${row.id}">Wiederherstellen</button></div>`).join(''):'<p class="hint">Noch keine früheren Versionen vorhanden.</p>';
+        $('historyList').querySelectorAll('[data-restore-id]').forEach(b=>b.addEventListener('click',async()=>{
+          b.disabled=true;
+          try{await restoreHistoryVersion(b.dataset.restoreId);}catch(e){showStatus($('historyStatus'),e.message,'error');}finally{b.disabled=false;}
+        }));
+        showStatus($('historyStatus'),data.length+' gesicherte Version(en) gefunden.','success');
+      }catch(e){showStatus($('historyStatus'),'Versionsverlauf nicht verfügbar: '+e.message,'error');}
+    });
+    async function passkeyAction(action,statusId='passkeyStatus'){
+      const status=$(statusId);
+      try{
+        if(!window.PublicKeyCredential)throw new Error('Passkeys werden auf diesem Gerät nicht unterstützt.');
+        const client=configuredSupabase();
+        if(action==='register'&&!cloudSession)throw new Error('Bitte zuerst mit Passwort anmelden.');
+        const response=action==='register'?await client.auth.registerPasskey():await client.auth.signInWithPasskey();
+        if(response.error)throw response.error;
+        if(action==='login'&&response.data?.session)await activateCloudSession({user:response.data.session.user});
+        showStatus(status,action==='register'?'Passkey eingerichtet. Du kannst künftig damit einloggen.':'Mit Passkey angemeldet.','success');
+      }catch(e){showStatus(status,'Passkey: '+e.message+'. Prüfe die Passkey-Einstellungen im Supabase Dashboard.','error');}
+    }
+    $('registerPasskey').addEventListener('click',()=>void passkeyAction('register'));
+    $('passkeyLogin').addEventListener('click',()=>void passkeyAction('login'));
+    $('cloudPasskeyLogin').addEventListener('click',async()=>{
+      try{
+        if(!cloudClient){const conf=cloudConfigFromInputs();setSupabaseConfig(conf);}
+        await passkeyAction('login','cloudStatus');
+      }catch(e){showCloudStatus(e.message,'error');}
+    });
+    // Push: only users who granted permission and registered a subscription can receive reminders.
+    let pushPublicKey='';
+    let pushKeyLoading=null;
+    function primePushKey(){
+      if(pushPublicKey || !cloudSession || !cloudConfiguredUrl)return Promise.resolve();
+      if(pushKeyLoading)return pushKeyLoading;
+      pushKeyLoading=fetch(`${cloudConfiguredUrl}/functions/v1/arbeitszeit-push?action=config`,{cache:'no-store'})
+        .then(async resp=>{if(!resp.ok)throw new Error('Push-Funktion nicht eingerichtet.');return resp.json()})
+        .then(data=>{pushPublicKey=typeof data.publicKey==='string'?data.publicKey:'';})
+        .catch(()=>{ /* Einrichtung optional: Fehler erst bei Aktivierung zeigen. */ })
+        .finally(()=>{pushKeyLoading=null;});
+      return pushKeyLoading;
+    }
+    function decodeVapidKey(base64){
+      const v=(base64||'').replace(/-/g,'+').replace(/_/g,'/'),raw=atob(v.padEnd(Math.ceil(v.length/4)*4,'='));
+      return Uint8Array.from(raw,ch=>ch.charCodeAt(0));
+    }
+    $('enablePush').addEventListener('click',async()=>{
+      try{
+        if(!cloudSession)throw new Error('Für Push-Mitteilungen bitte zuerst anmelden.');
+        if(!('serviceWorker' in navigator)||!('PushManager' in window)||!('Notification' in window))throw new Error('Dieses Gerät unterstützt keine Web-Push-Mitteilungen.');
+        if(!pushPublicKey){
+          void primePushKey();
+          throw new Error('Der Push-Dienst ist noch nicht bereit. Prüfe die Supabase-Einrichtung und tippe anschließend erneut.');
+        }
+        const perm=await Notification.requestPermission();
+        if(perm!=='granted')throw new Error('Benachrichtigungen wurden nicht erlaubt.');
+        const sw=await navigator.serviceWorker.ready;
+        const sub=await sw.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:decodeVapidKey(pushPublicKey)});
+        const endpoint=sub.endpoint;
+        const {error}=await configuredSupabase().from('push_subscriptions').upsert({user_id:cloudSession.user.id,endpoint,subscription:sub.toJSON()},{onConflict:'user_id,endpoint'});
+        if(error)throw error;
+        showStatus($('pushStatus'),'Push-Mitteilungen auf diesem Gerät aktiviert.','success');
+      }catch(e){showStatus($('pushStatus'),e.message,'error');}
+    });
+
+    async function removePushSubscriptionFromDevice(){
+      try{
+        if(!('serviceWorker'in navigator)||!cloudSession)return;
+        const sw=await navigator.serviceWorker.getRegistration();
+        const sub=await sw?.pushManager?.getSubscription();
+        if(!sub)return;
+        await configuredSupabase().from('push_subscriptions').delete().eq('user_id',cloudSession.user.id).eq('endpoint',sub.endpoint);
+        await sub.unsubscribe();
+      }catch(e){ console.warn('Push-Gerät konnte nicht vollständig abgemeldet werden:',e); }
+    }
+    $('logoutAllDevices').addEventListener('click',async()=>{
+      try{
+        if(!cloudSession)throw new Error('Bitte zuerst anmelden.');
+        if(cloudDirty)throw new Error('Zuerst noch offene Änderungen synchronisieren.');
+        if(!confirm('Alle deine Anmeldesitzungen widerrufen? Auch dieses Gerät wird abgemeldet.'))return;
+        await removePushSubscriptionFromDevice();
+        const {error}=await configuredSupabase().auth.signOut({scope:'global'});
+        await switchToGuest();
+        if(error)throw error;
+        showStatus($('passkeyStatus'),'Alle Sitzungen wurden widerrufen.','success');
+      }catch(e){showStatus($('passkeyStatus'),e.message,'error');}
+    });
+    async function maybeNotifyThreshold(){
+      const limit=state.settings.notifyThreshold;
+      if(limit==null||!Number.isFinite(Number(limit))||Number(limit)<=0||!cloudSession)return;
+      const account=closingBalanceForMonth(currentMonth());
+      if(account==null||account<Number(limit)||!('Notification'in window)||Notification.permission!=='granted')return;
+      const key=`arbeitszeit-threshold-${cloudSession.user.id}-${localDateString()}-${Number(limit)}`;
+      if(localStorage.getItem(key))return;
+      localStorage.setItem(key,'1');
+      try{
+        const sw=await navigator.serviceWorker.ready;
+        await sw.showNotification('Arbeitszeit – Zeitkonto',{body:`Dein vorläufiges Zeitkonto hat ${Number(limit).toLocaleString('de-DE')} Stunden erreicht.`,tag:'arbeitszeit-threshold',icon:'./icon-192.png'});
+      }catch(e){ localStorage.removeItem(key); }
     }
 
     function timeToMinutes(value) {
@@ -2429,6 +2986,8 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
     $("overviewTab").addEventListener("click", () => setActiveTab("overview"));
     $("calendarTab").addEventListener("click", () => setActiveTab("calendar"));
     $("moreTab").addEventListener("click", () => setActiveTab("more"));
+    $("analyticsTab").addEventListener("click", () => setActiveTab("analytics"));
+    $("planningTab").addEventListener("click", () => setActiveTab("planning"));
     $("entryType").addEventListener("change", setEntryTypeVisibility);
     $("workMode").addEventListener("change", setWorkModeVisibility);
 
@@ -3392,8 +3951,10 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
       if(cloudClient && cloudConfiguredUrl===url && cloudConfiguredKey===key) return cloudClient;
       cloudConfiguredUrl=url;
       cloudConfiguredKey=key;
+      pushPublicKey='';
       cloudClient=window.supabase.createClient(url,key,{
         auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,
+          experimental:{passkey:true},
           storageKey:`arbeitszeit-supabase-auth-${new URL(url).hostname}`}
       });
       cloudClient.auth.onAuthStateChange((event,session)=>{
@@ -3438,6 +3999,7 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
       const guest=await guestData();
       cloudGuestCount=Array.isArray(guest?.records)?guest.records.length:0;
       renderSettings();renderAll();updateCloudUI();
+      void primePushKey();
       $("cloudCalendarUrl").value="";
       showCloudStatus(cached?"Kontodaten vom Gerät geladen. Prüfe die Cloud …":"Konto geöffnet. Prüfe die Cloud …");
       if(!options.skipNetwork && navigator.onLine) await reconcileCloud();
@@ -3724,6 +4286,7 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
       if(cloudDirty && !confirm("Einträge wurden noch nicht hochgeladen. Sie bleiben auf diesem Gerät im Konto gespeichert. Trotzdem abmelden?"))return;
       cloudConnecting=true;
       try {
+        await removePushSubscriptionFromDevice();
         const {error}=await configuredSupabase().auth.signOut({scope:"local"});
         // Supabase löscht bei "local" die Sitzung dieses Geräts bereits vor
         // einem etwaigen Netzwerkfehler beim Widerruf des Refresh Tokens.
@@ -3905,6 +4468,7 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
         renderAll();
         clearDeprecatedCalendarSecrets();
         await restoreStoredCloudSession();
+        handleShortcutIntent();
         let lastDay = localDateString();
         setInterval(() => {
           if (document.visibilityState !== "visible" || writeBusy) return;
