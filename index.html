@@ -985,9 +985,9 @@ input::-webkit-datetime-edit { min-width: 0; text-align: left; }
 
 #cloudPanel #cloudForgotPassword {background:transparent !important;border:0 !important;color:var(--accent) !important;min-height:38px;padding:5px 10px;box-shadow:none;width:max-content;justify-self:center;}
 
-/* Arbeitszeit NEXT – fünf klare App-Bereiche mit gerätegerechtem Layout. */
+/* Arbeitszeit NEXT – sechs klare App-Bereiche mit gerätegerechtem Layout. */
 body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
-.five-tabs { grid-template-columns: repeat(5, minmax(0,1fr)); width:min(660px,calc(100% - 20px)); }
+.five-tabs { grid-template-columns: repeat(6, minmax(0,1fr)); width:min(760px,calc(100% - 14px)); }
 .five-tabs .tab { min-width:0; padding:6px 2px; font-size:clamp(.61rem,2.4vw,.74rem); line-height:1.2; }
 .five-tabs .tab-icon { font-size:1.25rem; margin-bottom:3px; line-height:1.2; }
 .five-tabs .tab.active { background:var(--accent-light); font-weight:760; }
@@ -1065,11 +1065,20 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 @media(max-width:360px) {
  main { padding-inline:9px; }
  .five-tabs { width:calc(100% - 10px); }
- .five-tabs .tab { font-size:.61rem; padding:4px 0; }
+ .five-tabs .tab { font-size:.56rem; padding:4px 0; letter-spacing:-.02em; }
  .five-tabs .tab-icon { font-size:1.15rem; }
 }
 @media(prefers-color-scheme:dark) { .quick-templates .template-pill { background:#244c48; color:#e2fffb; border-color:#346d66; } .bridge-idea { background:var(--surface-muted); } }
 
+/* NEXT V2: separate Arbeitsplanung und kompakte Sechs-Tab-Leiste. */
+#detailMonthBar{margin:5px 0 15px}
+#detailsPanel > #overviewPanel{padding:0}
+.planned-hint{display:flex;flex-direction:column;gap:9px;padding:11px 13px;margin:10px 0;border:1px solid var(--control-edge);border-radius:15px;background:var(--accent-light);font-size:.84rem;line-height:1.4}
+.planned-hint button{align-self:flex-start}
+.plan-list-item{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:12px;border:1px solid var(--control-edge);border-radius:16px;margin:9px 0;background:var(--field-glass)}
+.plan-list-item small{display:block;margin-top:4px;color:var(--muted);line-height:1.4}
+.plan-list-item button{min-height:35px}
+@media(max-width:360px){.five-tabs{width:calc(100% - 8px);gap:0}.five-tabs .tab-icon{font-size:1.07rem}.five-tabs .tab{min-height:52px}}
 </style>
 </head>
 
@@ -1087,6 +1096,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     <div class="manual-head"><h2>Arbeitszeit eintragen</h2><label class="manual-date">Datum<input id="manualDate" type="date" min="2000-01-01" max="2200-12-31" required></label></div>
     <div class="manual-switch" role="group" aria-label="Eingabeart"><button id="byRange" type="button" aria-pressed="true">Von – bis</button><button id="byDuration" type="button" aria-pressed="false">Dauer</button></div>
     <div class="manual-fields"><label id="startLabel">Beginn<input id="manualStart" type="time" required></label><label id="endLabel">Ende<input id="manualEnd" type="time" required></label><label class="hidden" id="durationLabel">Dauer vor Pause (Std.)<input id="manualDuration" type="number" min="0.01" max="24" step="0.01" placeholder="7,5" disabled></label><label>Pause (Min.)<input id="manualPause" type="number" min="0" max="1439" step="1" value="0"></label></div>
+    <div id="manualPlannedHint" class="planned-hint hidden"><span id="manualPlannedText"></span><button id="manualUsePlan" type="button" class="secondary small">Geplante Zeit übernehmen</button></div>
     <div class="quick-templates" id="quickTemplates" aria-label="Gespeicherte Arbeitszeitvorlagen"></div>
     <div class="manual-footer"><div><span class="clock-caption">Nettoarbeitszeit</span><output id="manualNet" aria-live="polite">—</output></div><button type="submit">Eintrag speichern</button></div>
     <div id="manualStatus" role="status"></div>
@@ -1127,19 +1137,19 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 
     <section id="analyticsPanel" class="view-stack hidden" aria-labelledby="analyticsIntro">
       <div class="clock-card insight-hero"><span class="eyebrow">DEIN ZEITKONTO</span>
-        <h2 id="analyticsIntro">Alles im Blick.</h2><p id="insightHeroCaption">Aktueller Gesamtstand</p>
+        <h2 id="analyticsIntro">Alles im Blick.</h2><p id="insightHeroCaption">Letzter abgeschlossener Monat</p>
         <strong class="insight-number" id="insightBalance">–</strong>
-        <div class="insight-subline"><span id="insightForecast">Prognose wird berechnet</span><span id="insightForecastHint">Monatsende</span></div>
+        <div class="insight-subline"><span id="insightForecast">Ohne laufenden Monat oder Prognose.</span></div>
       </div>
       <div class="grid two-dashboard" id="analyticsQuickStats">
         <div class="metric"><span>Gearbeitet dieses Jahr</span><strong id="statYearWork">–</strong></div>
         <div class="metric"><span>Resturlaub</span><strong id="statVacation">–</strong></div>
         <div class="metric"><span>Ø Arbeitstag</span><strong id="statAverage">–</strong></div>
-        <div class="metric"><span>Wert des Zeitkontos*</span><strong id="statValue">–</strong></div>
+        <div class="metric"><span>Urlaub gebucht</span><strong id="statVacationUsed">–</strong></div>
       </div>
       <section class="panel"><div class="section-head"><h2>Überstundenentwicklung</h2><span class="mini-label">12 Monate</span></div>
         <div id="balanceChart" class="insight-chart" role="img" aria-label="Entwicklung des Zeitkontos"></div>
-        <p class="hint">Kumuliertes Zeitkonto am jeweiligen Monatsende. Der aktuelle Monat ist vorläufig.</p>
+        <p class="hint">Nur abgeschlossene Monate – keine Hochrechnung für den laufenden Monat.</p>
       </section>
       <section class="panel">
         <div class="section-head"><h2>Jahresanalyse</h2><label class="compact-label">Jahr <input id="analysisYear" type="number" min="2000" max="2200" step="1" inputmode="numeric"></label></div>
@@ -1150,11 +1160,28 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
           <div class="metric"><span>Zum Vorjahr</span><strong id="statYoY">–</strong></div>
         </div>
         <h3>Gearbeitete Stunden je Monat</h3>
-        <div id="monthlyChart" class="insight-chart" role="img" aria-label="Arbeitsstunden pro Monat"></div>
+        <div id="monthlyChart" class="insight-chart" role="img" aria-label="Gearbeitete Stunden pro Monat mit Stundenachse"></div>
+        <p class="hint">Skala links in Stunden. Der laufende Monat zeigt nur tatsächlich erfasste Arbeitszeit.</p>
       </section>
-      <details class="panel collapsible-section" id="monthlyDetails"><summary>Monatsdetails & einzelne Einträge</summary>
-        <div id="analysisMonthSelector"></div>
-    <section id="overviewPanel" class="view-stack hidden">
+      <section class="panel"><h2>Arbeitsrhythmus</h2>
+        <div class="grid two-dashboard">
+          <div class="metric"><span>Ø Pause je Arbeitstag</span><strong id="statAvgBreak">–</strong></div>
+          <div class="metric"><span>Typischer Arbeitsbeginn</span><strong id="statTypicalStart">–</strong></div>
+          <div class="metric"><span>Stärkster Wochentag</span><strong id="statBusiestWeekday">–</strong></div>
+          <div class="metric"><span>Ø Stunden je Monat</span><strong id="statMonthlyAverage">–</strong></div>
+        </div>
+        <h3>Arbeitsstunden nach Wochentag</h3>
+        <div id="weekdayChart" class="insight-chart" role="img" aria-label="Arbeitsstunden je Wochentag mit Stundenachse"></div>
+      </section>
+    </section>
+    <section id="detailsPanel" class="view-stack hidden" aria-label="Monatsdetails und einzelne Einträge">
+      <p class="hint" style="margin:0 4px 12px">Wähle einen Monat, um alle Werte und Einträge einzusehen.</p>
+      <div id="detailMonthBar" class="month-bar" aria-label="Monat für Details auswählen">
+        <button id="detailsPreviousMonth" class="secondary" type="button" aria-label="Vorheriger Monat">‹</button>
+        <div class="month-control"><span aria-hidden="true" id="detailsMonthText"></span><input id="detailsMonthPicker" type="month" min="2000-01" max="2200-12" aria-label="Monat für Details auswählen"></div>
+        <button id="detailsNextMonth" class="secondary" type="button" aria-label="Nächster Monat">›</button>
+      </div>
+    <section id="overviewPanel" class="view-stack">
       <div class="clock-card report-hero"><h2 id="overviewHeading">Monatsübersicht</h2>
         <strong class="report-total" id="creditedMetric">–</strong><span class="clock-caption">Angerechnete Zeit</span></div>
       <div class="panel">
@@ -1173,21 +1200,27 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       <div id="entriesList"></div></div>
     </section>
 
-      </details>
       <section class="panel"><h2>Berichte exportieren</h2><p class="hint">Deine bisherigen PDF-Berichte stehen weiterhin zur Verfügung.</p>
         <button id="analysisExportJump" class="secondary" type="button">Zu den PDF-Berichten</button>
-        <p class="hint">* Rechenwert, keine Auszahlungszusage.</p>
+
       </section>
     </section>
 
     <section id="planningPanel" class="view-stack hidden" aria-labelledby="planningTitle">
-      <div class="clock-card planning-hero"><span class="eyebrow">VORAUSDENKEN</span><h2 id="planningTitle">Zeit clever planen.</h2><p class="clock-caption">Erst simulieren, dann entscheiden – ohne deine echten Einträge zu verändern.</p></div>
-      <section class="panel"><div class="section-head"><h2>Überstunden-Simulator</h2><span class="mini-label">aktueller Monat</span></div>
-        <p class="hint">Wie würde sich dein Zeitkonto entwickeln, wenn du die verbleibenden Arbeitstage jeweils so viele Stunden arbeitest?</p>
-        <label for="simDailyHours">Geplante Netto-Stunden pro Arbeitstag</label>
-        <input id="simDailyHours" type="number" min="0" max="24" step="0.25" inputmode="decimal" value="8">
-        <div class="simulation-result"><span>Prognose zum Monatsende</span><strong id="simProjectedBalance">–</strong><small id="simDetail">–</small></div>
-        <p class="hint">Berechnet auf Basis deiner aktuellen Einträge, deiner Urlaubstage, Feiertage und deines Monatssolls. Bereits geplante Tage werden nicht doppelt gezählt.</p>
+      <div class="clock-card planning-hero"><span class="eyebrow">VORAUSDENKEN</span><h2 id="planningTitle">Zeit clever planen.</h2><p class="clock-caption">Arbeitszeiten vorausplanen – strikt getrennt von tatsächlichen Buchungen und Überstunden.</p></div>
+      <section class="panel" id="workPlanPanel">
+        <div class="section-head"><h2>Arbeitszeiten planen</h2><span class="mini-label">Keine Buchung</span></div>
+        <p class="hint">Geplante Schichten bleiben getrennt: keine Anrechnung auf das Stundenkonto, keine Übertragung in den Kalender oder nach Apple Kalender. Erst wenn du sie bewusst übernimmst und speicherst, werden sie zu einer echten Buchung.</p>
+        <form id="workPlanForm">
+          <div class="plan-range"><label>Datum<input id="workPlanDate" type="date" required></label><label>Wiederholen bis (optional)<input id="workPlanEndDate" type="date"></label></div>
+          <p class="hint">Bei einem Zeitraum nur die unter Einstellungen gewählten Urlaub-/Arbeitstage, bis maximal 90 Tage. Bestehende Planungen werden nur nach Bestätigung ersetzt.</p>
+          <div class="plan-range"><label>Beginn<input id="workPlanStart" type="time" required></label><label>Ende<input id="workPlanEnd" type="time" required></label></div>
+          <div class="plan-range"><label>Pause (Min.)<input id="workPlanBreak" type="number" min="0" max="1439" step="1" inputmode="numeric" value="30" required></label><label>Notiz (optional)<input id="workPlanNote" type="text" maxlength="100" placeholder="z. B. Frühschicht"></label></div>
+          <button type="submit">Nur Planung speichern</button>
+          <p id="workPlanStatus" class="status" role="status" aria-live="polite"></p>
+        </form>
+        <div class="section-head"><h3>Deine geplanten Schichten</h3><label class="compact-label">Monat<input id="workPlanMonth" type="month"></label></div>
+        <div id="workPlanList"></div>
       </section>
       <section class="panel"><h2>Urlaub planen</h2><p class="hint">Wähle einen Zeitraum. Feiertage und deine festgelegten Urlaubstage werden berücksichtigt.</p>
         <div class="plan-range"><label>Von<input id="planStart" type="date"></label><label>Bis einschließlich<input id="planEnd" type="date"></label></div>
@@ -1198,7 +1231,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
         <label for="bridgeYear">Jahr</label><input id="bridgeYear" type="number" min="2000" max="2200" step="1" inputmode="numeric">
         <div id="bridgeIdeas"></div>
       </section>
-      <section class="panel"><h2>Dein Freizeitbudget</h2><div class="grid two-dashboard"><div class="metric"><span>Resturlaub im Jahr</span><strong id="planVacationBalance">–</strong></div><div class="metric"><span>Zeitkonto aktuell (vorläufig)</span><strong id="planHoursBalance">–</strong></div></div></section>
+      <section class="panel"><h2>Dein Freizeitbudget</h2><div class="grid two-dashboard"><div class="metric"><span>Resturlaub im Jahr</span><strong id="planVacationBalance">–</strong></div><div class="metric"><span>Überstunden · letzter Monatsabschluss</span><strong id="planHoursBalance">–</strong></div></div></section>
     </section>
 
     <section id="morePanel" class="view-stack hidden">
@@ -1313,17 +1346,6 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
           <label for="templateBreak">Pause (Minuten)</label><input id="templateBreak" type="number" min="0" max="1439" step="1" value="30" inputmode="numeric" required>
           <button type="submit">Vorlage speichern</button></form><div id="templateList"></div><p id="templateStatus" class="status" role="status"></p>
       </section>
-      <section class="panel settings-group" id="moneyPanel"><h2>Stundenlohn &amp; Überstundenwert</h2><p class="hint">Die Schätzung wird nur aus deinem gespeicherten Stundenlohn berechnet. Sie ist keine Abrechnung oder Auszahlungszusage.</p>
-        <label for="hourlyRate">Brutto-Stundenlohn (€)</label><input id="hourlyRate" type="number" min="0" max="10000" step="0.01" inputmode="decimal" placeholder="z. B. 25,00">
-        <label for="overtimeBonus">Optionaler Überstundenzuschlag (%)</label><input id="overtimeBonus" type="number" min="0" max="300" step="1" inputmode="decimal" value="0">
-        <button id="saveMoney" type="button">Berechnung speichern</button><p id="moneyStatus" class="status" role="status"></p>
-      </section>
-      <section class="panel settings-group" id="shortcutPanel"><h2>Siri &amp; Kurzbefehle</h2>
-        <p class="hint">Erstelle einen iPhone-Kurzbefehl, der die App mit bereits ausgefüllten Arbeitszeiten öffnet. Du bestätigst jeden Eintrag selbst, bevor er gespeichert wird.</p>
-        <div class="plan-range"><label>Beginn<input id="shortcutStart" type="time" value="07:00"></label><label>Ende<input id="shortcutEnd" type="time" value="15:30"></label></div>
-        <label>Pause (Min.)<input id="shortcutPause" type="number" min="0" max="1439" step="1" value="30"></label>
-        <button id="copyShortcut" type="button" class="secondary">Link für Apple Kurzbefehle kopieren</button><p id="shortcutStatus" class="status" role="status"></p>
-      </section>
       <section class="panel settings-group" id="securityPanel"><h2>Sicherheit</h2>
         <p class="hint">Optional mit Passkey anmelden, beispielsweise über Face ID. Supabase-Passkeys sind experimentell und müssen im Supabase-Dashboard freigeschaltet werden.</p>
         <div class="cloud-actions"><button id="registerPasskey" type="button" class="secondary">Passkey einrichten</button><button id="passkeyLogin" type="button" class="secondary">Mit Passkey anmelden</button><button id="logoutAllDevices" type="button" class="secondary">Alle Geräte abmelden</button></div>
@@ -1411,6 +1433,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     <button id="overviewTab" class="tab active" type="button" aria-current="page"><span class="tab-icon" aria-hidden="true">⌂</span>Heute</button>
     <button id="calendarTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">▦</span>Kalender</button>
     <button id="analyticsTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">▥</span>Analysen</button>
+    <button id="detailsTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">▤</span>Monate</button>
     <button id="planningTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">◈</span>Planen</button>
     <button id="moreTab" class="tab" type="button"><span class="tab-icon" aria-hidden="true">⚙</span>Mehr</button>
   </nav>
@@ -1434,6 +1457,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
         </select>
 
         <div id="workFields">
+          <div id="entryPlannedHint" class="planned-hint hidden"><span id="entryPlannedText"></span><button id="entryUsePlan" type="button" class="secondary small">Geplante Zeit übernehmen</button></div>
           <label for="workMode">Arbeitszeit eingeben als</label>
           <select id="workMode">
             <option value="range">Beginn und Ende</option>
@@ -1527,7 +1551,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       notifyThreshold: null
     };
 
-    let state = { settings: { ...DEFAULT_SETTINGS }, records: [] };
+    let state = { settings: { ...DEFAULT_SETTINGS }, records: [], plans: [] };
     let db;
     let revision = 0;
     let writeBusy = false;
@@ -1778,13 +1802,26 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
         throw new Error('Ungültige Erinnerungseinstellung.');
       const stamps=candidate.stamps ?? [];
       if (!validStamps(stamps)) throw new Error("Ungültige Stempelzeiten.");
-      return { settings, records, stamps };
+      const plans=candidate.plans ?? [],seenDates=new Set(),seenIds=new Set();
+      const time=/^(?:[01]\d|2[0-3]):[0-5]\d$/;
+      if(!Array.isArray(plans)||plans.length>10000)throw new Error('Ungültiger Umfang der Arbeitsplanung.');
+      const cleanPlans=plans.map(item=>{
+        if(!item||typeof item.id!=='string'||!item.id||seenIds.has(item.id)||!validDate(item.date)||seenDates.has(item.date)||
+           !time.test(item.start)||!time.test(item.end)||!Number.isInteger(item.breakMinutes)||item.breakMinutes<0||item.breakMinutes>1439||
+           timeToMinutes(item.end)-timeToMinutes(item.start)<=item.breakMinutes||typeof (item.note??'')!=='string'||(item.note??'').length>100)
+          throw new Error('Ungültiger Arbeitsplan.');
+        seenIds.add(item.id);seenDates.add(item.date);
+        return {id:item.id,date:item.date,start:item.start,end:item.end,breakMinutes:item.breakMinutes,note:item.note||''};
+      });
+      return { settings, records, stamps, plans:cleanPlans };
     }
 
     function absenceError(record) {
       const others = state.records.filter(item => item.id !== record.id && item.date === record.date);
       const holiday = holidayCreditForDate(record.date);
-      if (record.type === "vacation" && holiday && holiday.hours > 0) return "Für einen angerechneten Feiertag wird kein Urlaub benötigt.";
+      if (record.type === "vacation" && holidayNameForDate(record.date)) return "Für gesetzliche Feiertage wird kein Urlaub benötigt.";
+      if (record.type === "vacation" && !(state.settings.leaveDays??[1,2,3,4,5]).includes(parseDate(record.date).getDay()))
+        return "Dieser Wochentag ist nicht als Urlaubstag ausgewählt. Bitte deine Urlaubstage unter Einstellungen prüfen.";
       const entries = [...others, record];
       const vacations = entries.filter(item => item.type === "vacation");
       const vacationDays = vacations.reduce((sum, item) => sum + item.days, 0);
@@ -1942,21 +1979,28 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 
     function reportClosing(ym, balance) {
       if (balance === null) return ym < state.settings.accountStartMonth ? "nicht aktiv" : "ausstehend";
-      return signedHoursText(balance) + (ym === currentMonth() ? " (vorläufig)" : "");
+      return ym >= currentMonth() ? "noch offen" : signedHoursText(balance);
     }
 
-    function vacationBalanceAt(year) {
-      const firstYear = Number(state.settings.vacationStartYear) || year;
-      if (year < firstYear) return 0;
-
-      let balance = (Number(state.settings.vacationEntitlement) || 0) * (year - firstYear + 1);
-      for (const record of state.records) {
-        const recordYear = Number(record.date.slice(0, 4));
-        if (record.type === "vacation" && recordYear >= firstYear && recordYear <= year) {
-          balance -= effectiveVacationDays(record);
-        }
+    function vacationBreakdown(year){
+      const firstYear=Number(state.settings.vacationStartYear),entitlement=Number(state.settings.vacationEntitlement)||0;
+      if(year<firstYear)return {active:false,firstYear,entitlement,carryover:0,taken:0,planned:0,remaining:null};
+      const first=`${firstYear}-01-01`,last=`${year}-12-31`,today=localDateString();
+      let taken=0,planned=0;
+      for(const r of state.records){
+        if(r.type!=='vacation'||r.date<first||r.date>last)continue;
+        const days=effectiveVacationDays(r);
+        if(r.date>today)planned+=days;else taken+=days;
       }
-      return balance;
+      const carryover=(year-firstYear)*entitlement;
+      return {active:true,firstYear,entitlement,carryover,taken,planned,remaining:entitlement+carryover-taken-planned};
+    }
+    function vacationBalanceAt(year){return vacationBreakdown(year).remaining;}
+    function vacationSummary(year){
+      const b=vacationBreakdown(year);
+      if(!b.active)return `Urlaubsberechnung ${year} noch nicht aktiv – eingestellt ab ${b.firstYear}. Urlaubsstartjahr bitte prüfen.`;
+      const fmt=v=>v.toLocaleString('de-DE',{maximumFractionDigits:2});
+      return `Urlaub ${year}: ${fmt(b.entitlement)} Tage Anspruch + ${fmt(b.carryover)} rechnerischer Übertrag – ${fmt(b.taken)} genommen – ${fmt(b.planned)} zukünftig gebucht = ${fmt(b.remaining)} Tage. Feiertage und nicht ausgewählte Urlaubstage werden nicht abgezogen.`;
     }
 
     function escapeHtml(value) {
@@ -1995,7 +2039,8 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     }
 
     function effectiveVacationDays(record) {
-      if (record.type !== "vacation" || (holidayCreditForDate(record.date)?.hours || 0) > 0) return 0;
+      if (record.type !== "vacation" || holidayNameForDate(record.date) ||
+          !(state.settings.leaveDays??[1,2,3,4,5]).includes(parseDate(record.date).getDay())) return 0;
       const sameDay = state.records.filter(item => item.date === record.date);
       if (sameDay.some(item => item.type === "sick")) return 0;
       let used = 0;
@@ -2046,23 +2091,19 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       $("deltaMetric").className = stats.delta >= 0 ? "positive" : "negative";
 
       $("carryMetric").textContent = signedHoursText(opening);
-      const inProgress = active && selectedMonth === currentMonth();
-      $("closingLabel").textContent = inProgress
-        ? "Überstunden gesamt am Monatsende (vorläufig)"
-        : "Überstunden gesamt am Monatsende";
-      $("closingMetric").textContent = closing !== null ? signedHoursText(closing) : active ? "Monat steht noch aus" : "Nicht aktiv";
-      $("closingMetric").className = closing === null ? "" : closing >= 0 ? "positive" : "negative";
+      $("closingLabel").textContent = "Überstunden gesamt am Monatsende";
+      $("closingMetric").textContent = closed && closing !== null ? signedHoursText(closing) : active ? "Noch offen" : "Nicht aktiv";
+      $("closingMetric").className = !closed || closing === null ? "" : closing >= 0 ? "positive" : "negative";
 
       $("accountExplanation").textContent = !active
         ? "Dieser Monat liegt vor dem Start des Zeitkontos und wird nicht in den Saldo übernommen."
         : closed
         ? "Der Monat ist abgeschlossen. Nachträgliche Änderungen berechnen spätere Überträge neu."
         : selectedMonth > currentMonth() ? "Der Monat hat noch nicht begonnen."
-        : "Der vorläufige Gesamtstand enthält den Übertrag und alle bisher angerechneten Stunden. Das volle Monatssoll ist bereits abgezogen.";
+        : "Der Monat läuft noch. Die abgeschlossenen Überstunden bleiben unverändert, bis der Monat endet. Bisherige Arbeitsstunden stehen separat oben.";
 
       const year = Number(selectedMonth.slice(0, 4));
-      $("vacationBalance").textContent =
-        `Urlaubsstand ${year} inkl. erfasster Planung: ${vacationBalanceAt(year).toLocaleString("de-DE", { maximumFractionDigits: 2 })} Tage verfügbar.`;
+      $("vacationBalance").textContent=vacationSummary(year);
 
       renderEntries();
     }
@@ -2233,16 +2274,16 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     function setActiveTab(tab) {
       activeTab = tab;
       $("sectionTitle").classList.toggle("hidden", tab === "overview");
-      $("sectionTitle").textContent = ({calendar:"Kalender",analytics:"Analysen",planning:"Planen",more:"Mehr"})[tab] || "";
+      $("sectionTitle").textContent = ({calendar:"Kalender",analytics:"Analysen",details:"Monatsdetails",planning:"Planen",more:"Mehr"})[tab] || "";
       $("todayPanel").classList.toggle("hidden", tab !== "overview");
-      $("monthBar").classList.toggle("hidden", !["calendar","analytics"].includes(tab));
-      $("overviewPanel").classList.toggle("hidden", tab !== "analytics");
+      $("monthBar").classList.toggle("hidden", tab !== "calendar");
+      $("detailsPanel").classList.toggle("hidden", tab !== "details");
       $("calendarPanel").classList.toggle("hidden", tab !== "calendar");
       $("analyticsPanel").classList.toggle("hidden", tab !== "analytics");
       $("planningPanel").classList.toggle("hidden", tab !== "planning");
       $("morePanel").classList.toggle("hidden", tab !== "more");
 
-      for (const id of ["overviewTab", "calendarTab", "analyticsTab", "planningTab", "moreTab"]) {
+      for (const id of ["overviewTab", "calendarTab", "analyticsTab", "detailsTab", "planningTab", "moreTab"]) {
         const active = id === `${tab}Tab`;
         $(id).classList.toggle("active", active);
         if (active) $(id).setAttribute("aria-current", "page");
@@ -2251,6 +2292,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 
       if (tab === "calendar") renderCalendar();
       if (tab === "analytics") renderAnalytics();
+      if (tab === "details") renderOverview();
       if (tab === "planning") renderPlanning();
       if (tab === "more" && cloudSession) void primePushKey();
       window.scrollTo({top:0,behavior:"instant"});
@@ -2262,7 +2304,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       const cursor=parseDate(start);
       while(localDateString(cursor)<=end) {
         const date=localDateString(cursor);
-        if((state.settings.leaveDays ?? [1,2,3,4,5]).includes(cursor.getDay()) && !(holidayCreditForDate(date)?.hours>0)) dates.push(date);
+        if((state.settings.leaveDays ?? [1,2,3,4,5]).includes(cursor.getDay()) && !holidayNameForDate(date)) dates.push(date);
         cursor.setDate(cursor.getDate()+1);
       }
       return dates;
@@ -2319,6 +2361,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       // iOS Safari öffnet sonst häufig direkt den nativen Time-Picker.
       $("entryOverlay").querySelector(".sheet").scrollTop = 0;
       $("entryDialogTitle").focus({ preventScroll: true });
+      refreshEntryPlanHint();
     }
 
     function openEditor(id) {
@@ -2355,6 +2398,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       // Auch beim Bearbeiten keinen Date-/Time-Picker automatisch öffnen.
       $("entryOverlay").querySelector(".sheet").scrollTop = 0;
       $("entryDialogTitle").focus({ preventScroll: true });
+      refreshEntryPlanHint();
     }
 
     function closeEntry() {
@@ -2508,6 +2552,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     $("byRange").addEventListener("click",()=>setManualMode("range"));
     $("byDuration").addEventListener("click",()=>setManualMode("duration"));
     $("manualForm").addEventListener("input",previewManual);
+    $("manualDate").addEventListener("change",refreshManualPlanHint);
     $("manualForm").addEventListener("submit",withWriteLock(async()=>{
       const net=netMinutes(), date=$("manualDate").value, status=$("manualStatus");
       if(!validDate(date) || !net) { status.textContent="Bitte Datum und Arbeitszeit prüfen. Die Pause muss kürzer als die Anwesenheit sein."; return; }
@@ -2538,12 +2583,12 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       $("timeline").querySelectorAll("[data-today-edit]").forEach(b=>b.addEventListener("click",()=>openEditor(b.dataset.todayEdit)));
       $("oldShift").classList.toggle("hidden",!state.stamps?.length);
       if(state.stamps?.length) $("oldShiftStart").textContent="Beginn: "+new Date(state.stamps[0]).toLocaleString("de-DE")+". Trage das Ende ein, um die bereits erfassten Zeiten zu übernehmen.";
-      const eligible = month >= state.settings.accountStartMonth;
+      const eligible = addMonths(month,-1) >= state.settings.accountStartMonth;
       const total = balanceBeforeMonth(month);
       const cutoff = parseDate(month+"-01");
       cutoff.setDate(0);
       $("balanceLabel").textContent="Überstunden · Stand "+cutoff.toLocaleDateString("de-DE",{day:"numeric",month:"long",year:"numeric"});
-      $("todayBalance").textContent=eligible ? (total>0?"+":"")+durationLabel(total*60)+" Std." : "Nicht aktiv";
+      $("todayBalance").textContent=eligible ? (total>0?"+":"")+durationLabel(total*60)+" Std." : "Noch kein Abschluss";
     }
     async function resolveOldShift(records) {
       const previous=state;
@@ -2605,10 +2650,13 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       renderToday();
       $("monthPicker").value = selectedMonth;
       $("monthPickerText").textContent=monthTitle(selectedMonth);
+      $("detailsMonthPicker").value=selectedMonth;
+      $("detailsMonthText").textContent=monthTitle(selectedMonth);
       $("reportYear").value = Number(selectedMonth.slice(0, 4));
       renderOverview();
       renderCalendar();
       renderQuickTemplates();
+      refreshManualPlanHint();
       renderAnalytics();
       renderPlanning();
       renderExtrasSettings();
@@ -2616,31 +2664,11 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     }
 
     // =================== Arbeitszeit NEXT: Auswertung & Planung ===================
-    const euroAmount = value => Number(value).toLocaleString('de-DE',{style:'currency',currency:'EUR'});
     const safeNumber = value => Number.isFinite(Number(value)) ? Number(value) : 0;
     const workDates = () => state.settings.leaveDays ?? [1,2,3,4,5];
-    const netWorkHours = date => dateRecords(date).filter(r=>r.type==='work').reduce((total,r)=>total+Number(r.hours||0),0);
-    const daysInMonthKey = ym => {const [y,m]=ym.split('-').map(Number);return new Date(y,m,0).getDate();};
-    const nextDayKey = day => {const dt=parseDate(day);dt.setDate(dt.getDate()+1);return localDateString(dt);};
     const displayDay = day => parseDate(day).toLocaleDateString('de-DE',{day:'numeric',month:'short',year:'numeric'});
-    function displayTime(num) {return Number(num||0).toLocaleString('de-DE',{maximumFractionDigits:1})+' Std.';}
-    function storedTemplates() {return Array.isArray(state.settings.quickTemplates)?state.settings.quickTemplates:[];}
-    function plannedDailyHours() {return Math.max(0,Math.min(24,safeNumber($('simDailyHours').value)));}
-    function planningEstimate(hours=plannedDailyHours()) {
-      const ym=currentMonth(), today=localDateString(), days=daysInMonthKey(ym);
-      let futureDays=0, otherCredits=0;
-      for(let d=1;d<=days;d++) {
-        const day=`${ym}-${String(d).padStart(2,'0')}`;
-        if(day<=today)continue;
-        const records=dateRecords(day);
-        if(records.length || (holidayCreditForDate(day)?.hours>0)) continue;
-        if(workDates().includes(parseDate(day).getDay()))futureDays++;
-      }
-      // monthStats() umfasst bereits alle geplanten Einträge und Feiertage, unabhängig vom Datum.
-      const stats=monthStats(ym);
-      const total=balanceBeforeMonth(ym)+stats.credited+futureDays*hours-stats.target;
-      return {total,futureDays,additional:futureDays*hours,month:ym};
-    }
+    function displayTime(num){return Number(num||0).toLocaleString('de-DE',{maximumFractionDigits:1})+' Std.';}
+    function storedTemplates(){return Array.isArray(state.settings.quickTemplates)?state.settings.quickTemplates:[];}
     function renderQuickTemplates() {
       const quick=$('quickTemplates'), templates=storedTemplates();
       quick.innerHTML=templates.map(t=>`<button type="button" class="template-pill" data-template="${escapeHtml(t.id)}">⚡ ${escapeHtml(t.name)}</button>`).join('');
@@ -2658,7 +2686,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       })));
     }
     function lastMonths(count=12) {
-      return Array.from({length:count},(_,i)=>addMonths(currentMonth(),i-count+1));
+      return Array.from({length:count},(_,i)=>addMonths(currentMonth(),i-count));
     }
     function lineChart(data,labeler) {
       if(!data.length)return '<p class="hint">Noch keine Daten vorhanden.</p>';
@@ -2674,38 +2702,59 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       const grid=[0,.5,1].map(t=>{const v=min+range*t;return `<line x1="${left}" x2="${w-right}" y1="${y(v)}" y2="${y(v)}" stroke="currentColor" opacity=".1" stroke-dasharray="3 5"/>`;}).join('');
       return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">${grid}<line x1="${left}" y1="${zero}" x2="${w-right}" y2="${zero}" stroke="#118c81" opacity=".4"/><path d="${path}" fill="none" stroke="#128f84" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"/>${dots}${labels}</svg>`;
     }
-    function barChart(data) {
-      if(!data.length)return '';
-      const w=600,h=192,left=15,right=8,top=15,bottom=30;
-      const max=Math.max(1,...data.map(x=>x.v));
-      const per=(w-left-right)/data.length,bar=Math.min(32,per*.56);
-      return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><line x1="${left}" x2="${w-right}" y1="${h-bottom}" y2="${h-bottom}" stroke="currentColor" opacity=".14"/>${data.map((d,i)=>{const x=left+per*i+(per-bar)/2, height=(h-bottom-top)*d.v/max, y=h-bottom-height;return `<rect x="${x}" y="${y}" width="${bar}" height="${Math.max(.1,height)}" rx="5" fill="${d.current?'#14786e':'#78cbc3'}"><title>${escapeHtml(d.title)}: ${hoursText(d.v)}</title></rect><text x="${x+bar/2}" y="${h-9}" text-anchor="middle" font-size="12" fill="currentColor" opacity=".7">${escapeHtml(d.label)}</text>`;}).join('')}</svg>`;
+    function barChart(data){
+      if(!data.length)return '<p class="hint">Noch keine Daten.</p>';
+      const w=620,h=222,left=48,right=10,top=18,bottom=37;
+      const max=Math.max(1,...data.map(d=>d.v)),limit=Math.max(5,Math.ceil(max/5)*5);
+      const per=(w-left-right)/data.length,bar=Math.min(34,per*.6);
+      const grid=Array.from({length:5},(_,i)=>{
+        const val=limit*i/4,y=h-bottom-(h-bottom-top)*i/4;
+        return `<line x1="${left}" y1="${y}" x2="${w-right}" y2="${y}" stroke="currentColor" opacity=".12"/><text x="${left-6}" y="${y+4}" text-anchor="end" fill="currentColor" font-size="12" opacity=".85">${Number(val.toFixed(1)).toLocaleString('de-DE')}</text>`;
+      }).join('');
+      const bars=data.map((d,i)=>{
+        const x=left+per*i+(per-bar)/2,height=Math.max(0,(h-bottom-top)*d.v/limit),y=h-bottom-height;
+        return `<rect x="${x}" y="${y}" width="${bar}" height="${height}" rx="4" fill="#65bdb2"><title>${escapeHtml(d.title)}: ${Number(d.v).toLocaleString('de-DE',{maximumFractionDigits:1})} Std.</title></rect><text x="${x+bar/2}" y="${h-12}" text-anchor="middle" font-size="12" fill="currentColor" opacity=".8">${escapeHtml(d.label)}</text>`;
+      }).join('');
+      return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">${grid}<text x="3" y="12" font-size="11" fill="currentColor">Std.</text>${bars}</svg>`;
     }
     function renderAnalytics() {
       if(!$('analysisYear').value)$('analysisYear').value=String(new Date().getFullYear());
-      const now=currentMonth(), today=localDateString(), thisYear=Number($('analysisYear').value)||new Date().getFullYear();
-      const stats=monthStats(now), balance=closingBalanceForMonth(now);
-      $('insightBalance').textContent=balance===null?'Noch nicht aktiv':signedHoursText(balance);
-      $('insightHeroCaption').textContent='Zeitkonto · '+monthTitle(now)+' (vorläufig)';
-      const forecast=planningEstimate(8);
-      $('insightForecast').textContent='Prognose bei 8 Std./Tag: '+signedHoursText(forecast.total);
-      $('statYearWork').textContent=displayTime(Array.from({length:12},(_,m)=>monthStats(`${thisYear}-${String(m+1).padStart(2,'0')}`).work).reduce((a,b)=>a+b,0));
-      $('statVacation').textContent=vacationBalanceAt(thisYear).toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage';
-      const yearRecords=state.records.filter(r=>r.type==='work' && r.date.startsWith(thisYear+'-'));
-      const byDay=new Map();let breaks=0;
-      for(const r of yearRecords){byDay.set(r.date,(byDay.get(r.date)||0)+r.hours);breaks+=Number(r.breakMinutes||0);}
-      const sum=[...byDay.values()].reduce((a,b)=>a+b,0);
-      $('statAverage').textContent=byDay.size?displayTime(sum/byDay.size):'–';
-      $('statDays').textContent=String(byDay.size);
-      $('statLongest').textContent=byDay.size?displayTime(Math.max(...byDay.values())):'–';
+      const now=currentMonth(),last=addMonths(now,-1),year=Number($('analysisYear').value)||new Date().getFullYear();
+      const start=state.settings.accountStartMonth,balance=balanceBeforeMonth(now);
+      $('insightBalance').textContent=start>last?'Noch kein Abschluss':signedHoursText(balance);
+      $('insightHeroCaption').textContent='Überstunden · Stand '+monthTitle(last);
+      $('insightForecast').textContent='Laufender Monat und Planungen bleiben unberücksichtigt.';
+      const months=Array.from({length:12},(_,m)=>`${year}-${String(m+1).padStart(2,'0')}`);
+      const monthly=months.map(ym=>monthStats(ym).work),yearWork=monthly.reduce((a,b)=>a+b,0);
+      $('statYearWork').textContent=displayTime(yearWork);
+      const vacation=vacationBreakdown(year);
+      $('statVacation').textContent=vacation.active?vacation.remaining.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage':'–';
+      $('statVacationUsed').textContent=vacation.active?(vacation.taken+vacation.planned).toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage':'–';
+      const records=state.records.filter(r=>r.type==='work'&&r.date.startsWith(year+'-'));
+      const byDay=new Map(),byWeekday=[0,0,0,0,0,0,0],starts=[];let breaks=0;
+      for(const r of records){
+        byDay.set(r.date,(byDay.get(r.date)||0)+Number(r.hours||0));
+        byWeekday[parseDate(r.date).getDay()]+=Number(r.hours||0);
+        breaks+=Number(r.breakMinutes||0);
+        if(r.mode==='range'&&r.start)starts.push(timeToMinutes(r.start));
+      }
+      const total=[...byDay.values()].reduce((a,b)=>a+b,0),days=byDay.size;
+      $('statAverage').textContent=days?displayTime(total/days):'–';
+      $('statDays').textContent=String(days);
+      $('statLongest').textContent=days?displayTime(Math.max(...byDay.values())):'–';
       $('statBreaks').textContent=displayTime(breaks/60);
-      const previous=Array.from({length:12},(_,m)=>monthStats(`${thisYear-1}-${String(m+1).padStart(2,'0')}`).work).reduce((a,b)=>a+b,0);
-      $('statYoY').textContent=previous?((sum-previous>=0?'+':'')+displayTime(sum-previous)):'–';
-      const gross=safeNumber(state.settings.hourlyRate), bonus=safeNumber(state.settings.overtimeBonus);
-      $('statValue').textContent=gross && balance!==null?euroAmount(Math.max(0,balance)*gross*(1+bonus/100)):'Nicht eingestellt';
-      $('balanceChart').innerHTML=lineChart(lastMonths().map(ym=>({v:closingBalanceForMonth(ym)??0,title:monthTitle(ym),ym})),d=>d.ym.slice(5));
-      $('monthlyChart').innerHTML=barChart(Array.from({length:12},(_,m)=>{const ym=`${thisYear}-${String(m+1).padStart(2,'0')}`;return {label:new Date(thisYear,m,1).toLocaleString('de-DE',{month:'short'}).replace('.',''),v:monthStats(ym).work,title:monthTitle(ym),current:ym===now};}));
-      $('analysisMonthSelector').innerHTML=`<span class="hint">Für einen anderen Monat die Pfeile oberhalb nutzen.</span>`;
+      const prev=Array.from({length:12},(_,m)=>monthStats(`${year-1}-${String(m+1).padStart(2,'0')}`).work).reduce((a,b)=>a+b,0);
+      $('statYoY').textContent=prev?((total-prev>=0?'+':'')+displayTime(total-prev)):'–';
+      $('statAvgBreak').textContent=days?Math.round(breaks/days)+' Min.':'–';
+      if(starts.length){starts.sort((a,b)=>a-b);const n=starts[Math.floor(starts.length/2)];$('statTypicalStart').textContent=String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');}
+      else $('statTypicalStart').textContent='–';
+      const maximum=Math.max(...byWeekday),dayName=['So','Mo','Di','Mi','Do','Fr','Sa'];
+      $('statBusiestWeekday').textContent=maximum?dayName[byWeekday.indexOf(maximum)]+' · '+displayTime(maximum):'–';
+      const count=year===new Date().getFullYear()?new Date().getMonth()+1:12;
+      $('statMonthlyAverage').textContent=displayTime(yearWork/Math.max(1,count));
+      $('balanceChart').innerHTML=lineChart(lastMonths().filter(ym=>ym>=start).map(ym=>({v:closingBalanceForMonth(ym),title:monthTitle(ym),ym})).filter(d=>d.v!==null),d=>d.ym.slice(5));
+      $('monthlyChart').innerHTML=barChart(months.map((ym,m)=>({label:new Date(year,m,1).toLocaleString('de-DE',{month:'short'}).replace('.',''),v:monthly[m],title:monthTitle(ym)})));
+      $('weekdayChart').innerHTML=barChart([1,2,3,4,5,6,0].map(d=>({label:dayName[d],v:byWeekday[d],title:['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'][d]})));
     }
     function bridgeSuggestions(year) {
       const today=localDateString(), start=localDateString(new Date(Math.max(year,new Date().getFullYear()),year===new Date().getFullYear()?new Date().getMonth():0,1,12));
@@ -2717,12 +2766,12 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
           if(until.getFullYear()!==year)continue;
           const end=localDateString(until), days=[];
           for(let t=new Date(from);t<=until;t.setDate(t.getDate()+1))days.push(localDateString(t));
-          const work=days.filter(d=>workDates().includes(parseDate(d).getDay()) && !holidayCreditForDate(d)?.hours);
+          const work=days.filter(d=>workDates().includes(parseDate(d).getDay()) && !holidayNameForDate(d));
           const already=work.filter(d=>dateRecords(d).some(r=>r.type==='vacation'));
           const newDays=work.filter(d=>!dateRecords(d).some(r=>r.type==='vacation'));
           if(newDays.some(d=>dateRecords(d).some(r=>r.type==='work'||r.type==='sick')))continue;
           if(newDays.length<1 || newDays.length>3 || days.length-newDays.length<2)continue;
-          const holiday=days.some(d=>holidayCreditForDate(d)?.hours>0);
+          const holiday=days.some(d=>holidayNameForDate(d));
           if(!holiday)continue;
           list.push({start:beginning,end,days:newDays.length,total:days.length,score:days.length/newDays.length,workDates:newDays});
         }
@@ -2740,19 +2789,23 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       if(!$('planStart').value)$('planStart').value=today;
       if(!$('planEnd').value)$('planEnd').value=today;
       if(!$('bridgeYear').value)$('bridgeYear').value=String(new Date().getFullYear());
-      const sim=planningEstimate(),valid=Number.isFinite(sim.total);
-      $('simProjectedBalance').textContent=valid?signedHoursText(sim.total):'–';
-      $('simDetail').textContent=sim.futureDays+' noch nicht belegte geplante Arbeitstage · '+displayTime(sim.additional)+' zusätzlich';
-      $('planVacationBalance').textContent=vacationBalanceAt(new Date().getFullYear()).toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage';
-      const balance=closingBalanceForMonth(currentMonth());
-      $('planHoursBalance').textContent=balance===null?'Nicht aktiv':signedHoursText(balance);
+      const vacation=vacationBreakdown(new Date().getFullYear());
+      $('planVacationBalance').textContent=vacation.active?vacation.remaining.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage':'–';
+      const balance=balanceBeforeMonth(currentMonth());
+      $('planHoursBalance').textContent=state.settings.accountStartMonth>=currentMonth()?'Noch kein Abschluss':signedHoursText(balance);
+      if(!$('workPlanDate').value)$('workPlanDate').value=today;
+      if(!$('workPlanMonth').value)$('workPlanMonth').value=currentMonth();
+      renderWorkPlans();
       const start=$('planStart').value,end=$('planEnd').value;
       try {
-        const dates=vacationDates(start,end), existing=dates.filter(date=>dateRecords(date).some(r=>r.type==='vacation'));
-        const unused=dates.length-existing.length, left=vacationBalanceAt(Number(start.slice(0,4)))-unused;
-        $('planNeeded').textContent=unused+' Tag'+(unused===1?'':'e');
-        $('planRemaining').textContent='Bereits erfasster Urlaub: '+existing.length+' · Rest danach: '+left.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage';
-        $('planBook').disabled=unused===0;
+        const dates=vacationDates(start,end);
+        const already=dates.reduce((n,date)=>n+dateRecords(date).filter(r=>r.type==='vacation').reduce((x,r)=>x+effectiveVacationDays(r),0),0);
+        const unavailable=dates.filter(date=>dateRecords(date).some(r=>r.type==='sick'||r.type==='work'));
+        const needed=dates.length-already,b=vacationBreakdown(Number(start.slice(0,4)));
+        $('planNeeded').textContent=needed.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage';
+        $('planRemaining').textContent=!b.active?'Für dieses Jahr ist der Urlaubsanspruch noch nicht aktiv. Einstellungen prüfen.':
+          'Bereits gebucht: '+already.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage · Rest nach zusätzlicher Buchung: '+(b.remaining-needed).toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage'+(unavailable.length?' · Einige Tage sind bereits anderweitig belegt.':'');
+        $('planBook').disabled=needed<=0||unavailable.length>0;
       }catch(err){$('planNeeded').textContent='–';$('planRemaining').textContent=err.message;$('planBook').disabled=true;}
       const year=Number($('bridgeYear').value);
       if(Number.isInteger(year) && year>=2000 && year<=2200) {
@@ -2764,15 +2817,97 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
         }));
       }
     }
+    // Separate Arbeitsplanung: ausschließlich state.plans, niemals state.records.
+    function planForDate(date) {return (state.plans||[]).find(p=>p.date===date)||null;}
+    function refreshManualPlanHint() {
+      const plan=planForDate($('manualDate').value),node=$('manualPlannedHint');
+      node.classList.toggle('hidden',!plan);
+      if(plan)$('manualPlannedText').textContent=`Geplant für diesen Tag: ${plan.start}–${plan.end} Uhr, ${plan.breakMinutes} Min. Pause${plan.note?' · '+plan.note:''}. Noch nicht gebucht.`;
+    }
+    function refreshEntryPlanHint() {
+      const plan=planForDate($('entryDate').value);
+      const visible=Boolean(plan) && !editingId && $('entryType').value==='work';
+      $('entryPlannedHint').classList.toggle('hidden',!visible);
+      if(visible)$('entryPlannedText').textContent=`Geplant: ${plan.start}–${plan.end} Uhr, ${plan.breakMinutes} Min. Pause${plan.note?' · '+plan.note:''}. Der Plan wird nur auf Wunsch übernommen.`;
+    }
+    function applyPlanToManual(plan) {
+      setManualMode('range');$('manualStart').value=plan.start;$('manualEnd').value=plan.end;
+      $('manualPause').value=String(plan.breakMinutes);previewManual();
+      $('manualStatus').textContent='Plan übernommen – erst nach „Eintrag speichern“ wird die Zeit gebucht.';
+    }
+    function applyPlanToEntry(plan) {
+      $('entryType').value='work';$('workMode').value='range';setEntryTypeVisibility();
+      $('startTime').value=plan.start;$('endTime').value=plan.end;
+      $('breakMinutes').value=String(plan.breakMinutes);$('workNote').value=plan.note||'';
+      showStatus($('entryStatus'),'Plan vorausgewählt. Bitte tatsächliche Zeiten prüfen und erst dann speichern.','success');
+    }
+    $('manualUsePlan').addEventListener('click',()=>{
+      const plan=planForDate($('manualDate').value);if(plan)applyPlanToManual(plan);
+    });
+    $('entryUsePlan').addEventListener('click',()=>{
+      const plan=planForDate($('entryDate').value);if(plan&&!editingId)applyPlanToEntry(plan);
+    });
+    function renderWorkPlans() {
+      const month=$('workPlanMonth').value||currentMonth(),out=$('workPlanList');
+      const list=(state.plans||[]).filter(p=>p.date.startsWith(month)).sort((a,b)=>a.date.localeCompare(b.date));
+      out.innerHTML=list.length?list.map(p=>`<div class="plan-list-item"><div><strong>${escapeHtml(displayDay(p.date))} · ${escapeHtml(p.start)}–${escapeHtml(p.end)} Uhr</strong><small>${p.breakMinutes} Min. Pause${p.note?' · '+escapeHtml(p.note):''} · nur geplant</small></div><div class="actions"><button type="button" class="secondary small" data-plan-edit="${escapeHtml(p.date)}">Bearbeiten</button><button type="button" class="secondary small" data-plan-delete="${escapeHtml(p.date)}">Entfernen</button></div></div>`).join(''):'<p class="hint">Für diesen Monat sind noch keine Schichten geplant.</p>';
+      out.querySelectorAll('[data-plan-edit]').forEach(button=>button.addEventListener('click',()=>{
+        const plan=planForDate(button.dataset.planEdit);if(!plan)return;
+        $('workPlanDate').value=plan.date;$('workPlanEndDate').value='';
+        $('workPlanStart').value=plan.start;$('workPlanEnd').value=plan.end;
+        $('workPlanBreak').value=String(plan.breakMinutes);$('workPlanNote').value=plan.note;
+        $('workPlanForm').scrollIntoView({behavior:'smooth',block:'center'});
+        showStatus($('workPlanStatus'),'Du bearbeitest die Planung für '+displayDay(plan.date)+'.','');
+      }));
+      out.querySelectorAll('[data-plan-delete]').forEach(button=>button.addEventListener('click',withWriteLock(async()=>{
+        const date=button.dataset.planDelete;
+        if(!confirm('Planung für '+displayDay(date)+' entfernen? Eine eventuell gebuchte Arbeitszeit bleibt unverändert.'))return;
+        const previous=state.plans;
+        state.plans=previous.filter(p=>p.date!==date);
+        try{await persistState();renderWorkPlans();refreshManualPlanHint();refreshEntryPlanHint();showStatus($('workPlanStatus'),'Planung entfernt. Gebuchte Zeiten bleiben unverändert.','success');}
+        catch(error){state.plans=previous;throw error;}
+      })));
+      refreshManualPlanHint();
+    }
+    $('workPlanMonth').addEventListener('change',renderWorkPlans);
+    $('workPlanForm').addEventListener('submit',withWriteLock(async()=>{
+      const date=$('workPlanDate').value,endDate=$('workPlanEndDate').value||date;
+      const start=$('workPlanStart').value,end=$('workPlanEnd').value,
+        pause=Number($('workPlanBreak').value),note=$('workPlanNote').value.trim();
+      const status=$('workPlanStatus');
+      if(!validDate(date)||!validDate(endDate)||endDate<date){showStatus(status,'Bitte einen gültigen Zeitraum eingeben.','error');return;}
+      if(!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(start)||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(end)||
+         !Number.isInteger(pause)||pause<0||pause>1439||timeToMinutes(end)-timeToMinutes(start)<=pause){
+        showStatus(status,'Beginn, Ende oder Pause ungültig. Ende muss nach Beginn liegen.','error');return;
+      }
+      const dates=[],cursor=parseDate(date);
+      while(localDateString(cursor)<=endDate && dates.length<91){
+        const day=localDateString(cursor);
+        if(date===endDate || workDates().includes(cursor.getDay()))dates.push(day);
+        cursor.setDate(cursor.getDate()+1);
+        if((cursor.getTime()-parseDate(date).getTime())>92*86400000)break;
+      }
+      if((parseDate(endDate).getTime()-parseDate(date).getTime())/86400000>89){showStatus(status,'Bitte höchstens 90 Kalendertage auf einmal planen.','error');return;}
+      if(!dates.length){showStatus(status,'Im Zeitraum gibt es keine ausgewählten Arbeitstage.','error');return;}
+      const existing=dates.filter(d=>planForDate(d));
+      if(existing.length&&!confirm(`${existing.length} vorhandene Planung(en) werden ersetzt. Fortfahren?`))return;
+      const previous=state.plans||[];
+      state.plans=[...previous.filter(p=>!dates.includes(p.date)),...dates.map(d=>({id:makeId(),date:d,start,end,breakMinutes:pause,note}))];
+      try{
+        // validate before writing, without counting plans as records
+        validateState(state);
+        await persistState();$('workPlanMonth').value=date.slice(0,7);
+        $('workPlanEndDate').value='';renderAll();
+        showStatus(status,dates.length+' Planung(en) gespeichert. Keine Arbeitszeit wurde gebucht.','success');
+      }catch(error){state.plans=previous;showStatus(status,'Planung konnte nicht gespeichert werden: '+error.message,'error');}
+    }));
     function renderExtrasSettings(){
       $('reminderEnabled').checked=Boolean(state.settings.reminderEnabled);
       $('reminderTime').value=state.settings.reminderTime||'19:00';
       $('notifyThreshold').value=state.settings.notifyThreshold??'';
-      $('hourlyRate').value=state.settings.hourlyRate||'';
-      $('overtimeBonus').value=state.settings.overtimeBonus||0;
+
     }
     $('analysisYear').addEventListener('change',renderAnalytics);
-    $('simDailyHours').addEventListener('input',renderPlanning);
     for(const id of ['planStart','planEnd'])$(id).addEventListener('change',renderPlanning);
     $('bridgeYear').addEventListener('change',renderPlanning);
     $('analysisExportJump').addEventListener('click',()=>{
@@ -2800,13 +2935,6 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       try{await persistState();$('templateForm').reset();$('templateBreak').value='30';renderQuickTemplates();showStatus($('templateStatus'),'Vorlage gespeichert. Sie erscheint ab jetzt auf „Heute“.','success');}
       catch(error){state.settings=previous;throw error;}
     }));
-    $('saveMoney').addEventListener('click',withWriteLock(async()=>{
-      const rate=$('hourlyRate').value===''?0:Number($('hourlyRate').value),bonus=Number($('overtimeBonus').value);
-      if(!Number.isFinite(rate)||rate<0||rate>10000||!Number.isFinite(bonus)||bonus<0||bonus>300){showStatus($('moneyStatus'),'Bitte gültige Werte eintragen.','error');return;}
-      const previous=structuredClone(state.settings);state.settings.hourlyRate=rate;state.settings.overtimeBonus=bonus;
-      try{await persistState();renderAnalytics();showStatus($('moneyStatus'),'Einstellungen gespeichert.','success');}
-      catch(e){state.settings=previous;throw e;}
-    }));
     $('saveAutomation').addEventListener('click',withWriteLock(async()=>{
       const hour=$('reminderTime').value,threshold=$('notifyThreshold').value;
       if(!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(hour)||threshold!==''&&(!Number.isFinite(Number(threshold))||Number(threshold)<0||Number(threshold)>10000)){
@@ -2817,26 +2945,6 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       try{await persistState();showStatus($('pushStatus'),'Einstellungen gespeichert. Für Benachrichtigungen zusätzlich „Aktivieren“ wählen.','success');}
       catch(error){state.settings=previous;throw error;}
     }));
-    $('copyShortcut').addEventListener('click',async()=>{
-      try {
-        const start=$('shortcutStart').value,end=$('shortcutEnd').value,br=Number($('shortcutPause').value);
-        if(!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(start)||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(end)||!Number.isInteger(br)||br<0||timeToMinutes(end)-timeToMinutes(start)-br<=0)throw new Error('Beginn, Ende oder Pause ungültig.');
-        const url=new URL(location.origin+location.pathname);url.searchParams.set('action','entry');url.searchParams.set('start',start);url.searchParams.set('end',end);url.searchParams.set('pause',String(br));
-        await navigator.clipboard.writeText(url.toString());
-        showStatus($('shortcutStatus'),'Link kopiert. In Apple Kurzbefehle → „URL öffnen“ einfügen.','success');
-      }catch(e){showStatus($('shortcutStatus'),e?.message||'Kopieren nicht möglich.','error');}
-    });
-    let shortcutOpened=false;
-    function handleShortcutIntent(){
-      if(shortcutOpened)return;
-      const q=new URLSearchParams(location.search);if(q.get('action')!=='entry')return;
-      const start=q.get('start'),end=q.get('end'),br=Number(q.get('pause')||0);
-      if(!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(start||'')||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(end||'')||!Number.isInteger(br)||br<0||br>=1440||timeToMinutes(end)-timeToMinutes(start)-br<=0)return;
-      shortcutOpened=true;
-      history.replaceState(null,'',location.pathname+location.hash);
-      setActiveTab('overview');openEntry(localDateString());$('startTime').value=start;$('endTime').value=end;$('breakMinutes').value=String(br);
-      showStatus($('entryStatus'),'Aus deinem Kurzbefehl übernommen. Prüfe die Zeit und tippe auf „Eintrag speichern“.','success');
-    }
     async function restoreHistoryVersion(id){
       if(!cloudSession)throw new Error('Bitte zuerst anmelden.');
       if(cloudDirty||cloudConflict)throw new Error('Erst alle lokalen Änderungen synchronisieren bzw. einen Konflikt lösen.');
@@ -2905,10 +3013,8 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       try{
         if(!cloudSession)throw new Error('Für Push-Mitteilungen bitte zuerst anmelden.');
         if(!('serviceWorker' in navigator)||!('PushManager' in window)||!('Notification' in window))throw new Error('Dieses Gerät unterstützt keine Web-Push-Mitteilungen.');
-        if(!pushPublicKey){
-          void primePushKey();
-          throw new Error('Der Push-Dienst ist noch nicht bereit. Prüfe die Supabase-Einrichtung und tippe anschließend erneut.');
-        }
+        if(!pushPublicKey)await primePushKey();
+        if(!pushPublicKey)throw new Error('Push-Dienst nicht erreichbar. Prüfe die Supabase-Funktion und die Secrets.');
         const perm=await Notification.requestPermission();
         if(perm!=='granted')throw new Error('Benachrichtigungen wurden nicht erlaubt.');
         const sw=await navigator.serviceWorker.ready;
@@ -2945,14 +3051,14 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     async function maybeNotifyThreshold(){
       const limit=state.settings.notifyThreshold;
       if(limit==null||!Number.isFinite(Number(limit))||Number(limit)<=0||!cloudSession)return;
-      const account=closingBalanceForMonth(currentMonth());
+      const account=state.settings.accountStartMonth>=currentMonth()?null:balanceBeforeMonth(currentMonth());
       if(account==null||account<Number(limit)||!('Notification'in window)||Notification.permission!=='granted')return;
       const key=`arbeitszeit-threshold-${cloudSession.user.id}-${localDateString()}-${Number(limit)}`;
       if(localStorage.getItem(key))return;
       localStorage.setItem(key,'1');
       try{
         const sw=await navigator.serviceWorker.ready;
-        await sw.showNotification('Arbeitszeit – Zeitkonto',{body:`Dein vorläufiges Zeitkonto hat ${Number(limit).toLocaleString('de-DE')} Stunden erreicht.`,tag:'arbeitszeit-threshold',icon:'./icon-192.png'});
+        await sw.showNotification('Arbeitszeit – Zeitkonto',{body:`Dein abgeschlossenes Zeitkonto hat ${Number(limit).toLocaleString('de-DE')} Stunden erreicht.`,tag:'arbeitszeit-threshold',icon:'./icon-192.png'});
       }catch(e){ localStorage.removeItem(key); }
     }
 
@@ -2987,8 +3093,10 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     $("calendarTab").addEventListener("click", () => setActiveTab("calendar"));
     $("moreTab").addEventListener("click", () => setActiveTab("more"));
     $("analyticsTab").addEventListener("click", () => setActiveTab("analytics"));
+    $("detailsTab").addEventListener("click", () => setActiveTab("details"));
     $("planningTab").addEventListener("click", () => setActiveTab("planning"));
-    $("entryType").addEventListener("change", setEntryTypeVisibility);
+    $("entryType").addEventListener("change",()=>{setEntryTypeVisibility();refreshEntryPlanHint();});
+    $("entryDate").addEventListener("change",refreshEntryPlanHint);
     $("workMode").addEventListener("change", setWorkModeVisibility);
 
     $("settingsToggle").addEventListener("click", () => {
@@ -3013,6 +3121,18 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       renderAll();
     });
 
+    $("detailsPreviousMonth").addEventListener("click",()=>{
+      const value=addMonths(selectedMonth,-1);if(!validMonth(value))return;
+      selectedMonth=value;selectedCalendarDate=`${value}-01`;renderAll();
+    });
+    $("detailsNextMonth").addEventListener("click",()=>{
+      const value=addMonths(selectedMonth,1);if(!validMonth(value))return;
+      selectedMonth=value;selectedCalendarDate=`${value}-01`;renderAll();
+    });
+    $("detailsMonthPicker").addEventListener("change",()=>{
+      const value=$("detailsMonthPicker").value;if(!validMonth(value))return;
+      selectedMonth=value;selectedCalendarDate=`${value}-01`;renderAll();
+    });
     $("monthPicker").addEventListener("change", () => {
       if (!validMonth($("monthPicker").value)) return;
       selectedMonth = $("monthPicker").value;
@@ -3608,7 +3728,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
           { text: "Monatszusammenfassung", kind: "section" },
           { text: `Soll ${hoursText(stats.target)} · Gearbeitet ${hoursText(stats.work)} · Angerechnet ${hoursText(stats.credited)}`, kind: "summary" },
           { text: `Feiertage ${hoursText(stats.holidayHours)} · Urlaub ${hoursText(stats.vacationHours)} · Krankheit ${hoursText(stats.sickHours)}`, kind: "normal" },
-          { text: `Vorläufige Monatsdifferenz ${signedHoursText(stats.delta)} · Übertrag aus Vormonat ${signedHoursText(opening)}`, kind: "summary" },
+          { text: closed ? `Abgeschlossene Monatsdifferenz ${signedHoursText(stats.delta)} · Übertrag aus Vormonat ${signedHoursText(opening)}` : `Monatsdifferenz: noch offen · Überstunden zum Ende des Vormonats ${signedHoursText(opening)}`, kind: "summary" },
           { text: `Überstunden gesamt am Monatsende ${reportClosing(ym, closing)}`, kind: "normal" },
           { text: "", kind: "blank" },
           { text: "Tagesdetails", kind: "section" }
@@ -3642,7 +3762,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
           vacation += stats.vacationHours;
           sick += stats.sickHours;
           credited += stats.credited;
-          annualDelta += stats.delta;
+          if (monthIsClosed(`${year}-${String(month).padStart(2, "0")}`)) annualDelta += stats.delta;
         }
 
         const lines = [
@@ -3650,9 +3770,9 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
           { text: "Jahreszusammenfassung", kind: "section" },
           { text: `Jahressoll ${hoursText(target)} · Gearbeitet ${hoursText(worked)} · Angerechnet ${hoursText(credited)}`, kind: "summary" },
           { text: `Feiertage ${hoursText(holiday)} · Urlaub ${hoursText(vacation)} · Krankheit ${hoursText(sick)}`, kind: "normal" },
-          { text: `Jahresdifferenz ${signedHoursText(annualDelta)} · Übertrag im Dezember ${signedHoursText(balanceBeforeMonth(`${year}-12`))}`, kind: "summary" },
+          { text: `Differenz abgeschlossener Monate ${signedHoursText(annualDelta)} · Aktueller Zeitkontostand: nur abgeschlossene Monate`, kind: "summary" },
           { text: `Zeitkonto Jahresende ${reportClosing(`${year}-12`, closingBalanceForMonth(`${year}-12`))}`, kind: "normal" },
-          { text: `Urlaubsstand inkl. erfasster Planung ${vacationBalanceAt(year).toLocaleString("de-DE", { maximumFractionDigits: 2 })} Tage`, kind: "normal" },
+          { text: vacationBalanceAt(year)===null ? `Urlaubsberechnung für ${year} noch nicht aktiv` : `Resturlaub inkl. gebuchter Urlaubstage ${vacationBalanceAt(year).toLocaleString("de-DE", { maximumFractionDigits: 2 })} Tage`, kind: "normal" },
           { text: "", kind: "blank" },
           { text: "Monatsübersicht", kind: "section" }
         ];
@@ -3665,7 +3785,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 
           lines.push({
             text: `${monthTitle(ym)} | Soll ${hoursText(stats.target)} | Gearbeitet ${hoursText(stats.work)} | ` +
-              `Angerechnet ${hoursText(stats.credited)} | Differenz ${signedHoursText(stats.delta)} | ` +
+              `Angerechnet ${hoursText(stats.credited)} | Differenz ${monthIsClosed(ym)?signedHoursText(stats.delta):'Noch offen'} | ` +
               `Übertrag ${signedHoursText(opening)} | Gesamtstand am Monatsende ${reportClosing(ym, closing)}`,
             kind: "normal"
           });
@@ -4468,7 +4588,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
         renderAll();
         clearDeprecatedCalendarSecrets();
         await restoreStoredCloudSession();
-        handleShortcutIntent();
+
         let lastDay = localDateString();
         setInterval(() => {
           if (document.visibilityState !== "visible" || writeBusy) return;
