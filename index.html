@@ -1543,6 +1543,33 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 #aiSwitches input {width:20px;height:20px}
 .ai-body .actions {flex-wrap:wrap}
 </style>
+<style>
+.analysis-scope {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.analysis-scope h2 {margin:0}
+.analysis-scope .analysis-year-picker {margin:0;flex:1;min-width:170px}
+.entry-assist {border:1px solid var(--control-edge);border-radius:16px;padding:12px;background:var(--surface-muted);margin:12px 0}
+.entry-assist summary {font-size:.95rem}
+.insight-cards {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px}
+.assist-insight {padding:14px;border:1px solid var(--control-edge);border-radius:16px;background:var(--surface-muted);min-width:0}
+.assist-insight h3 {font-size:.85rem;font-weight:500;margin:0 0 7px;color:var(--muted)}
+.assist-insight strong {font-size:1.3rem;line-height:1.3}
+.assist-insight p {font-size:.85rem;line-height:1.5;margin:8px 0 0;color:var(--muted)}
+#aiSwitches .assist-setting {display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.assist-setting div {flex:1;min-width:0}.assist-setting label {font-weight:650}
+.assist-setting p {margin:4px 0;font-size:.85rem;color:var(--muted);line-height:1.4}
+#aiSwitches input {width:22px;height:22px;flex-shrink:0}
+#aiOptionFields {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:15px}
+#aiOptionFields fieldset,#aiOptionFields .wide {grid-column:1/-1;min-width:0}
+#aiOptionFields .weekday-options {display:flex;flex-wrap:wrap;gap:10px}
+#aiOptionFields .weekday-options label {display:flex;align-items:center;gap:5px}
+#aiOptionFields input[type=checkbox] {width:20px;height:20px}
+#aiAnswerActions svg {width:100%;max-height:230px}
+#todayAssistanceContent button {text-align:left;white-space:normal;width:100%}
+#aiPlanResult .plan-list-item {gap:10px;flex-wrap:wrap}
+#aiPreferences {scroll-margin-top:85px}
+@media(max-width:360px){#aiOptionFields {grid-template-columns:1fr}.analysis-scope .analysis-year-picker {min-width:100%}}
+</style>
+
 </head>
 
 <body>
@@ -1557,9 +1584,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     <section id="todayPanel">
   <div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div></div>
   <button type="button" id="cloudBanner" class="cloud-banner" aria-label="Cloud-Konto und Synchronisierung öffnen"><span class="cloud-badge"><i class="cloud-dot" id="cloudBannerDot"></i><span id="cloudBannerLabel">Nur auf diesem Gerät</span></span><small id="cloudBannerDetail">Konto einrichten ›</small></button>
-<details id="smartEntry" class="panel ai-card"><summary>Zeit per Text oder Sprache eintragen</summary><div class="ai-body"><label>Arbeitszeit beschreiben<input id="aiEntry" maxlength="240" placeholder="Gestern von 7:15 bis 16:30, 45 Minuten Pause"></label><div class="actions"><button type="button" class="secondary" id="aiFill">Formular ausfüllen</button><button type="button" class="secondary" id="aiMic">Diktieren</button></div><small class="hint" id="aiMicHint"></small><div id="aiEntryMsg" class="ai-output" role="status"></div></div></details>
+
   <form class="clock-card manual-card" id="manualForm">
     <div class="manual-head"><h2>Arbeitszeit eintragen</h2><label class="manual-date">Datum<input id="manualDate" type="date" min="2000-01-01" max="2200-12-31" required></label></div>
+<details id="smartEntry" class="ai-card entry-assist"><summary>Mit Text oder Sprache ausfüllen</summary><div class="ai-body"><label>Arbeitszeit beschreiben<input id="aiEntry" maxlength="240" placeholder="Gestern von 7:15 bis 16:30, 45 Minuten Pause"></label><div class="actions"><button type="button" class="secondary" id="aiFill">Eingabe prüfen</button><button type="button" class="secondary" id="aiMic">Diktieren</button></div><small class="hint" id="aiMicHint"></small><div id="aiEntryMsg" class="ai-output" role="status"></div></div></details>
     <div class="manual-switch" role="group" aria-label="Eingabeart"><button id="byRange" type="button" aria-pressed="true">Von – bis</button><button id="byDuration" type="button" aria-pressed="false">Dauer</button></div>
     <div class="manual-fields"><label id="startLabel">Beginn<input id="manualStart" type="time" required></label><label id="endLabel">Ende<input id="manualEnd" type="time" required></label><label class="hidden" id="durationLabel">Dauer vor Pause (Std.)<input id="manualDuration" type="number" min="0.01" max="24" step="0.01" placeholder="7,5" disabled></label><label>Pause (Min.)<input id="manualPause" type="number" min="0" max="1439" step="1" value="0"></label></div>
     <div id="manualPlannedHint" class="planned-hint hidden"><span id="manualPlannedText"></span><button id="manualUsePlan" type="button" class="secondary small">Geplante Zeit übernehmen</button></div>
@@ -1571,7 +1599,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
   </form>
   <section class="panel hidden" id="oldShift"><h2>Offene Schicht aus der Vorversion</h2><p class="hint" id="oldShiftStart"></p><label for="oldEnd">Tatsächliches Ende</label><input type="datetime-local" id="oldEnd"><div class="actions"><button type="button" id="recoverShift">Schicht übernehmen</button><button type="button" class="secondary" id="forgetShift">Verwerfen</button></div></section>
   <div class="day-metrics flex-metrics"><div><span>Heute gearbeitet</span><strong id="todayWorked"></strong></div><div><span id="bookedMonth"></span><strong id="monthWorked"></strong></div></div>
-  <section class="panel"><div class="section-head"><h2>Heutige Einträge</h2></div><div id="timeline"></div></section>
+  <section id="todayAssistance" class="panel hidden"><h3>Für deinen Tag</h3><div id="todayAssistanceContent"></div></section><section class="panel"><div class="section-head"><h2>Heutige Einträge</h2></div><div id="timeline"></div></section>
   <section class="panel account-line"><span id="balanceLabel">Zeitkonto</span><strong id="todayBalance"></strong></section>
 </section>
 
@@ -1604,29 +1632,30 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     </section>
 
     <section id="analyticsPanel" class="view-stack hidden" aria-labelledby="analyticsIntro">
+      <div class="panel analysis-scope"><div><h2>Analysen</h2><span class="hint">Ausgewähltes Jahr</span></div>        <div class="analysis-year-picker" role="group" aria-label="Analysejahr">
+          <button id="analysisYearPrev" class="secondary" type="button" aria-label="Vorheriges Jahr">‹</button>
+          <strong id="analysisYearText" aria-live="polite">–</strong><input id="analysisYear" type="hidden">
+          <button id="analysisYearNext" class="secondary" type="button" aria-label="Nächstes Jahr">›</button>
+        </div><button type="button" id="aiSettingsJump" class="secondary small">Assistenz einstellen</button></div>
       <div class="clock-card insight-hero"><span class="eyebrow">DEIN ZEITKONTO</span>
         <h2 id="analyticsIntro">Alles im Blick.</h2><p id="insightHeroCaption">Letzter abgeschlossener Monat</p>
         <strong class="insight-number" id="insightBalance">–</strong>
         <div class="insight-subline"><span id="insightForecast">Ohne laufenden Monat oder Prognose.</span></div>
       </div>
-<details id="smartChat" class="panel ai-card" open><summary>KI-Assistent</summary><div class="ai-body"><label>Frage zu deinen Arbeitszeiten<input id="aiQuestion" maxlength="320" placeholder="Wann arbeite ich im Schnitt am längsten?"></label><div class="actions"><button type="button" class="secondary" id="aiAsk">Antwort anzeigen</button><button type="button" class="secondary" id="aiOnline">Mit OpenRouter fragen</button></div><div class="actions" id="aiPrompts"></div><div id="aiAnswer" class="ai-output" role="status"></div></div></details><details id="smartReport" class="panel ai-card"><summary>Monats- und Jahresbericht</summary><div class="ai-body"><label>Berichtsmonat<input type="month" id="aiMonth"></label><div id="aiMonthly" class="ai-output" role="status"></div><div id="aiReportChart"></div><div id="aiYearly" class="ai-output" role="status"></div><button type="button" class="secondary" id="aiNarrate">Bericht mit OpenRouter formulieren</button><div id="aiNarrative" class="ai-output" role="status"></div></div></details><details id="smartChecks" class="panel ai-card"><summary>Einträge prüfen</summary><div class="ai-body"><p class="hint">Hinweise aus den letzten 90 Tagen. Mehrere Buchungen pro Tag werden zusammen betrachtet.</p><div id="aiChecks" class="ai-output" role="status"></div></div></details>
+<details id="smartChecks" class="panel ai-card"><summary>Einträge prüfen</summary><div class="ai-body"><p class="hint">Auffällige Buchungen und mögliche Lücken. Zeitraum und Empfindlichkeit kannst du in den Assistenz-Einstellungen ändern.</p><div id="aiChecks" class="ai-output" role="status"></div></div></details>
       <div class="grid two-dashboard" id="analyticsQuickStats">
-        <div class="metric"><span>Gearbeitet dieses Jahr</span><strong id="statYearWork">–</strong></div>
+        <div class="metric"><span>Gearbeitet im gewählten Jahr</span><strong id="statYearWork">–</strong></div>
         <div class="metric"><span>Resturlaub</span><strong id="statVacation">–</strong></div>
         <div class="metric"><span>Ø Arbeitstag</span><strong id="statAverage">–</strong></div>
         <div class="metric"><span>Urlaub gebucht</span><strong id="statVacationUsed">–</strong></div>
       </div>
-      <section class="panel"><div class="section-head"><h2>Überstundenentwicklung</h2><span class="mini-label">12 Monate</span></div>
+<section id="smartReport" class="panel ai-card"><h2>Was sich bei dir verändert</h2><div class="ai-body"><label>Berichtsmonat<select id="aiMonth" aria-label="Berichtsmonat im ausgewählten Jahr"></select></label><div id="aiInsightCards" class="insight-cards"></div><div id="aiMonthly" class="ai-output" role="status"></div><div id="aiReportChart"></div><div id="aiYearly" class="ai-output" role="status"></div><button type="button" class="secondary" id="aiNarrate">Zusammenhänge mit KI einordnen</button><small class="hint">KI-Einordnung · Die berechneten Kennzahlen stehen darüber.</small><div id="aiNarrative" class="ai-output" role="status"></div></div></section><section id="smartChat" class="panel ai-card"><h2>Deine Zeit verstehen</h2><div class="ai-body"><label>Frage zu deinen Arbeitszeiten<input id="aiQuestion" maxlength="600" placeholder="Wann arbeite ich im Schnitt am längsten?"></label><div class="actions"><button type="button" class="secondary" id="aiAsk">Fragen</button><button type="button" class="secondary" id="aiOnline">Lokal auswerten</button></div><div class="actions" id="aiPrompts"></div><div id="aiAnswerActions" class="actions"></div><div id="aiAnswer" class="ai-output" role="status"></div><details id="aiEvidence" class="hidden"><summary>Berechnungsgrundlage ansehen</summary><div id="aiEvidenceText" class="ai-output"></div></details></div></section>      <section class="panel"><div class="section-head"><h2>Überstundenentwicklung</h2><span class="mini-label">Gewähltes Jahr</span></div>
         <div id="balanceChart" class="insight-chart" role="img" aria-label="Entwicklung des Zeitkontos"></div>
         <p class="hint">Nur abgeschlossene Monate – keine Hochrechnung für den laufenden Monat.</p>
       </section>
       <section class="panel">
         <div class="section-head"><h2>Jahresanalyse</h2></div>
-        <div class="analysis-year-picker" role="group" aria-label="Analysejahr">
-          <button id="analysisYearPrev" class="secondary" type="button" aria-label="Vorheriges Jahr">‹</button>
-          <strong id="analysisYearText" aria-live="polite">–</strong><input id="analysisYear" type="hidden">
-          <button id="analysisYearNext" class="secondary" type="button" aria-label="Nächstes Jahr">›</button>
-        </div>
+
         <div class="grid two-dashboard">
           <div class="metric"><span>Arbeitstage erfasst</span><strong id="statDays">–</strong></div>
           <div class="metric"><span>Längster Arbeitstag</span><strong id="statLongest">–</strong></div>
@@ -1673,7 +1702,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       <p id="vacationBalance" class="hint"></p>
 
       </div>
-      <div class="panel"><h3>Einträge des Monats</h3>
+      <section id="monthAssistance" class="panel hidden"><h3>Dein Monat im Blick</h3><div id="monthAssistanceContent"></div></section><div class="panel"><h3>Einträge des Monats</h3>
       <div id="entriesList"></div></div>
     </section>
 
@@ -1685,7 +1714,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
 
     <section id="planningPanel" class="view-stack hidden" aria-labelledby="planningTitle">
       <div class="clock-card planning-hero"><span class="eyebrow">VORAUSDENKEN</span><h2 id="planningTitle">Zeit clever planen.</h2><p class="clock-caption">Arbeitszeiten vorausplanen – strikt getrennt von tatsächlichen Buchungen und Überstunden.</p></div>
-<details id="smartPlan" class="panel ai-card"><summary>Intelligenter Arbeitszeitplaner</summary><div class="ai-body"><label>Planungsziel<select id="aiPlanMode"><option value="delta">Zusätzliche Überstunden bis Monatsende</option><option value="balance">Gewünschter Gesamtstand bis Monatsende</option><option value="week">Typische Schichten für nächste Woche</option></select></label><p class="hint">Neue Schichten verteilen sich auf deine in den Urlaubseinstellungen gewählten Wochentage. Gebuchte Tage, Feiertage und vorhandene Schichten bleiben frei von neuen Vorschlägen.</p><div class="two-col"><label>Zielmonat<input id="aiDeadline" type="month"></label><label>Überstundenziel (Std.)<input id="aiTarget" type="number" value="15" step="0.25"></label></div><label>Freitags höchstens (Nettostunden)<input id="aiFriday" type="number" min="0" max="10" step="0.25" value="6"></label><button type="button" class="secondary" id="aiPlanGo">Vorschlag berechnen</button><div id="aiPlanResult" class="ai-output" role="status"></div><button type="button" class="secondary" id="aiPlanSave">Als Schichtplanung speichern</button></div></details><details id="smartLeave" class="panel ai-card"><summary>Urlaubsassistent</summary><div class="ai-body"><div class="two-col"><label>Frühester Beginn<input id="aiFrom" type="date"></label><label>Spätestes Ende<input id="aiUntil" type="date"></label></div><label>Zusammenhängende freie Tage<input id="aiLength" type="number" min="1" max="60" value="10"></label><button type="button" class="secondary" id="aiLeaveGo">Zeiträume vergleichen</button><div id="aiLeaves" class="ai-output" role="status"></div></div></details>
+<details id="smartPlan" class="panel ai-card"><summary>Intelligenter Arbeitszeitplaner</summary><div class="ai-body"><label>Dein Wunsch<input id="aiPlanRequest" maxlength="600" placeholder="Bis Ende Dezember 15 Überstunden aufbauen, freitags höchstens 6 Stunden"></label><button type="button" id="aiPlanInterpret" class="secondary">Wunsch übernehmen</button><div id="aiPlanRequestStatus" role="status"></div><label>Planungsziel<select id="aiPlanMode"><option value="delta">Zusätzliche Überstunden bis Monatsende</option><option value="balance">Gewünschter Gesamtstand bis Monatsende</option><option value="week">Typische Schichten für nächste Woche</option></select></label><p class="hint">Deine Arbeitstage, Schichtzeiten und Tagesgrenzen kommen aus den Assistenz-Einstellungen. Der Vorschlag berücksichtigt bestehende Schichten, Feiertage und Abwesenheiten.</p><div class="two-col"><label id="aiDeadlineLabel">Zielmonat<input id="aiDeadline" type="month"></label><label id="aiTargetLabel">Überstundenziel (Std.)<input id="aiTarget" type="number" value="15" step="0.25"></label></div><label>Freitags höchstens (Nettostunden)<input id="aiFriday" type="number" min="0" max="10" step="0.25" value="6"></label><button type="button" class="secondary" id="aiPlanGo">Vorschlag berechnen</button><div id="aiPlanSummary" class="ai-output"></div><div id="aiPlanResult" class="ai-output" role="status"></div><button type="button" class="secondary" id="aiPlanSave">Als Schichtplanung speichern</button></div></details><details id="smartLeave" class="panel ai-card"><summary>Urlaubsassistent</summary><div class="ai-body"><label>Dein Urlaubswunsch<input id="aiLeaveRequest" maxlength="600" placeholder="Im Frühjahr zehn Tage frei mit möglichst wenig Urlaub"></label><button type="button" id="aiLeaveInterpret" class="secondary">Zeiträume vorschlagen</button><div id="aiLeaveRequestStatus" role="status"></div><div class="two-col"><label>Frühester Beginn<input id="aiFrom" type="date"></label><label>Spätestes Ende<input id="aiUntil" type="date"></label></div><label>Zusammenhängende freie Tage<input id="aiLength" type="number" min="1" max="60" value="10"></label><button type="button" class="secondary" id="aiLeaveGo">Zeiträume vergleichen</button><div id="aiLeaves" class="ai-output" role="status"></div></div></details>
       <section class="panel" id="workPlanPanel">
         <div class="section-head"><h2>Arbeitszeiten planen</h2><span class="mini-label">Keine Buchung</span></div>
         <p class="hint">Geplante Schichten bleiben getrennt: keine Anrechnung auf das Stundenkonto, keine Übertragung in den Kalender oder nach Apple Kalender. Erst wenn du sie bewusst übernimmst und speicherst, werden sie zu einer echten Buchung.</p>
@@ -1737,6 +1766,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     </section>
 
     <section id="morePanel" class="view-stack hidden">
+<section id="aiPreferences" class="panel ai-card"><h2>Assistenz &amp; KI</h2><div class="ai-body"><div id="aiSwitches"></div><details class="assist-options"><summary>Hinweise, Vorlagen und Planung anpassen</summary><form id="aiOptionsForm"><h3>Deine Vorgaben</h3><div id="aiOptionFields"></div><button type="submit">Vorgaben speichern</button><div id="aiOptionsStatus" role="status"></div></form></details><p class="hint">Bei aktiver Online-KI werden deine Fragen und auf Wunsch die berechneten Berichte an OpenRouter übermittelt. Automatische KI-Berichte kannst du unter den Vorgaben einschalten.</p></div></section>
       <div class="feature-intro"><span class="eyebrow">PERSÖNLICH</span><h2>Deine App. Deine Regeln.</h2><p class="hint">Konto, Automatisierungen, Vorlagen und Einstellungen – an einem Ort.</p></div>
       <section id="appearancePanel" class="panel"><h2>Darstellung</h2>
             <fieldset class="theme-picker" aria-describedby="themeHelp">
@@ -1915,7 +1945,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         </div>
 
         <div id="settingsContent" class="hidden">
-<details id="aiPreferences" class="panel ai-card"><summary>Assistenzfunktionen</summary><div class="ai-body"><div id="aiSwitches"></div><p class="hint">OpenRouter ist optional. Nur auf Knopfdruck wird der Fragetext oder der angezeigte Monatsbericht gesendet.</p></div></details>
+
           <form id="settingsForm">
 
             <div class="two-col">
@@ -2378,6 +2408,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         seenIds.add(item.id);seenDates.add(item.date);
         return {id:item.id,date:item.date,start:item.start,end:item.end,breakMinutes:item.breakMinutes,note:item.note||''};
       });
+      settings.assistanceOptions=cleanAssistOptions(settings.assistanceOptions);
       return { settings, records, stamps, plans:cleanPlans };
     }
 
@@ -2877,7 +2908,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $("headerSettings").setAttribute("aria-label", tab === "more" ? "Einstellungen geöffnet" : "Einstellungen und Konto öffnen");
       if (tab === "calendar") renderCalendar();
       if (tab === "analytics") renderAnalytics();
-      if (tab === "details") renderOverview();
+      if (tab === "details") {renderOverview();renderContextAssistance();}
       if (tab === "planning") renderPlanning();
       if (tab === "more" && cloudSession) void primePushKey();
       window.scrollTo({top:0,behavior:"instant"});
@@ -3164,7 +3195,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       if(manualMode==="range") Object.assign(record,{start:$("manualStart").value,end:$("manualEnd").value});
       const conflict=absenceError(record);
       if(conflict){status.textContent=conflict;return;}
-      if(overlapsExistingRange(record) && !confirm("Der Zeitraum überschneidet sich mit einem Eintrag. Trotzdem speichern?")) return;
+      if(!confirmWorkEntry(record))return;
       const previous=state.records;
       state.records=[...previous,record];
       try { await persistState(); }
@@ -3270,6 +3301,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       renderPlanning();
       renderExtrasSettings();
       updateEmptyTimes();
+      renderContextAssistance();
       void maybeNotifyThreshold();
     }
 
@@ -3335,13 +3367,14 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     }
     function renderAnalytics() {
       if(!$('analysisYear').value)$('analysisYear').value=String(new Date().getFullYear());
+      syncReportYear();
       const now=currentMonth(),last=addMonths(now,-1),year=Number($('analysisYear').value)||new Date().getFullYear();
       renderSmartReports(year);
       $('analysisYearText').textContent=String(year);
       $('analysisYearPrev').disabled=year<=2000;$('analysisYearNext').disabled=year>=2200;
-      const start=state.settings.accountStartMonth,balance=balanceBeforeMonth(now);
-      $('insightBalance').textContent=start>last?'Noch kein Abschluss':signedHoursText(balance);
-      $('insightHeroCaption').textContent='Überstunden · Stand '+monthTitle(last);
+      const endMonth=[year+'-12',last].sort()[0],start=state.settings.accountStartMonth,balance=balanceBeforeMonth(addMonths(endMonth,1));
+      $('insightBalance').textContent=start>endMonth||endMonth<year+'-01'?'Noch kein Abschluss':signedHoursText(balance);
+      $('insightHeroCaption').textContent='Überstunden · Stand '+monthTitle(endMonth);
       $('insightForecast').textContent='Laufender Monat und Planungen bleiben unberücksichtigt.';
       const months=Array.from({length:12},(_,m)=>`${year}-${String(m+1).padStart(2,'0')}`);
       const monthly=months.map(ym=>monthStats(ym).work),yearWork=monthly.reduce((a,b)=>a+b,0);
@@ -3363,7 +3396,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $('statLongest').textContent=days?displayTime(Math.max(...byDay.values())):'–';
       $('statBreaks').textContent=displayTime(breaks/60);
       const until=year===new Date().getFullYear()?localDateString():`${year}-12-31`;
-      const lastYearEnd=`${year-1}${until.slice(4)}`;
+      const lastYearEnd=[monthEnd((year-1)+until.slice(4,7)),`${year-1}${until.slice(4)}`].sort()[0];
       const prev=state.records.filter(r=>r.type==='work'&&r.date.startsWith((year-1)+'-')&&r.date<=lastYearEnd).reduce((sum,r)=>sum+Number(r.hours||0),0);
       const currentComparable=state.records.filter(r=>r.type==='work'&&r.date.startsWith(year+'-')&&r.date<=until).reduce((sum,r)=>sum+Number(r.hours||0),0);
       $('statYoY').textContent=prev?((currentComparable-prev>=0?'+':'')+displayTime(currentComparable-prev)):'–';
@@ -3375,8 +3408,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       $('statBusiestWeekday').textContent=maximum?dayName[byWeekday.indexOf(maximum)]+' · '+displayTime(maximum):'–';
       const count=year===new Date().getFullYear()?new Date().getMonth()+1:12;
       $('statMonthlyAverage').textContent=displayTime(yearWork/Math.max(1,count));
-      $('balanceChart').innerHTML=lineChart(lastMonths().filter(ym=>ym>=start).map(ym=>({v:closingBalanceForMonth(ym),title:monthTitle(ym),ym})).filter(d=>d.v!==null),d=>new Intl.DateTimeFormat('de-DE',{month:'short'}).format(parseDate(d.ym+'-01')).replace('.',''));
+      $('balanceChart').innerHTML=lineChart(months.filter(ym=>ym>=start&&ym<now).map(ym=>({v:closingBalanceForMonth(ym),title:monthTitle(ym),ym})).filter(d=>d.v!==null),d=>new Intl.DateTimeFormat('de-DE',{month:'short'}).format(parseDate(d.ym+'-01')).replace('.',''));
       $('monthlyChart').innerHTML=barChart(months.map((ym,m)=>({label:new Date(year,m,1).toLocaleString('de-DE',{month:'short'}).replace('.',''),v:monthly[m],title:monthTitle(ym)})));
+      if(enabled('Report')&&enabled('Online')&&assistOptions().autoReports)queueMicrotask(()=>void maybeAutoReport());
       $('weekdayChart').innerHTML=barChart([1,2,3,4,5,6,0].map(d=>({label:dayName[d],v:byWeekday[d],title:['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'][d]})));
     }
     function bridgeSuggestions(year) {
@@ -3938,8 +3972,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         record.note = $("workNote").value.trim();
         if(entryAppliedPlanDate===date || (editingId && state.records.find(r=>r.id===editingId)?.fromPlan))record.fromPlan=true;
 
-        if (overlapsExistingRange(record) &&
-            !confirm("Diese Arbeitszeit überschneidet sich mit einem anderen Arbeitsblock. Trotzdem speichern?")) {
+        if (!confirmWorkEntry(record)) {
           return;
         }
       } else if (type === "vacation") {
@@ -5460,6 +5493,183 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }
     });
 
+    const ASSIST_DEFAULTS={checkDays:90,deviationMinutes:120,templateWeeks:16,templateSamples:8,templateMin:3,planStart:'07:00',planPause:30,planHours:8,planMax:10,planFriday:6,planWeekdays:[1,2,3,4,5],autoReports:false};
+    const ASSIST_RANGES={checkDays:[14,365],deviationMinutes:[30,480],templateWeeks:[4,52],templateSamples:[3,24],templateMin:[2,12],planPause:[0,180],planHours:[1,12],planMax:[1,12],planFriday:[0,12]};
+    function cleanAssistOptions(value){
+      const input=value&&typeof value==='object'?value:{},result={...ASSIST_DEFAULTS};
+      for(const [key,[min,max]] of Object.entries(ASSIST_RANGES)){
+        if(Number.isFinite(input[key])&&input[key]>=min&&input[key]<=max)result[key]=input[key];
+      }
+      if(/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(input.planStart))result.planStart=input.planStart;
+      if(Array.isArray(input.planWeekdays)&&input.planWeekdays.length&&input.planWeekdays.every(n=>Number.isInteger(n)&&n>=0&&n<=6))result.planWeekdays=[...new Set(input.planWeekdays)];
+      result.autoReports=input.autoReports===true;
+      result.templateMin=Math.min(result.templateMin,result.templateSamples);
+      result.planHours=Math.min(result.planHours,result.planMax);result.planFriday=Math.min(result.planFriday,result.planMax);
+      return result;
+    }
+    const assistOptions=()=>cleanAssistOptions(state.settings.assistanceOptions);
+    let reportYearScope='',optionsStamp='',onlinePending=false;
+    const autoReportAttempts=new Set();
+    const narrativeCache=new Map();
+    function syncReportYear(){
+      const year=$('analysisYear').value;
+      if(reportYearScope===year)return;
+      $('aiMonth').innerHTML=Array.from({length:12},(_,m)=>{const ym=year+'-'+String(m+1).padStart(2,'0');return '<option value="'+ym+'">'+escapeHtml(monthTitle(ym))+'</option>';}).join('');
+      reportYearScope=year;onlineGeneration++;message('aiNarrative','');message('aiAnswer','');message('aiAnswerActions','');$('aiEvidence').classList.add('hidden');message('aiEvidenceText','');
+      $('aiMonth').value=year===String(new Date().getFullYear())?addMonths(currentMonth(),-1).startsWith(year)?addMonths(currentMonth(),-1):currentMonth():year+'-12';
+    }
+    function renderAssistOptions(){
+      const options=assistOptions(),stamp=activeStorageKey+JSON.stringify(options);
+      if(optionsStamp===stamp)return;
+      optionsStamp=stamp;
+      for(const key of Object.keys(ASSIST_DEFAULTS)){
+        if(key==='planWeekdays'){
+          for(const el of document.querySelectorAll('[data-assist-day]'))el.checked=options.planWeekdays.includes(Number(el.dataset.assistDay));
+        }else if($('assist_'+key)){
+          if(key==='autoReports')$('assist_'+key).checked=options[key];else $('assist_'+key).value=options[key];
+        }
+      }
+      $('aiFriday').max=String(options.planMax);$('aiFriday').value=options.planFriday;
+    }
+    function openAssistSettings(){
+      setActiveTab('more');$('aiPreferences').scrollIntoView({block:'start',behavior:'smooth'});
+    }
+    function infoCard(host,title,value,detail){
+      const article=document.createElement('article');article.className='assist-insight';
+      const heading=document.createElement('h3'),strong=document.createElement('strong'),small=document.createElement('p');
+      heading.textContent=title;strong.textContent=value;small.textContent=detail;article.append(heading,strong,small);$(host).append(article);
+    }
+    function periodInsight(host,from,to,previousFrom,previousTo){
+      const p=describePeriod(from,to),prior=describePeriod(previousFrom,previousTo);
+      message(host,'');if(!p.n||from>to)return;
+      infoCard(host,'Dein Arbeitstag',fmtMin(p.avg),'Durchschnitt aus '+p.n+' gebuchten Arbeitstagen.');
+      if(prior.n){const delta=Math.round(p.avg-prior.avg);
+        infoCard(host,'Veränderung',delta===0?'Gleich geblieben':Math.abs(delta)+' Min. '+(delta>0?'länger':'kürzer'),'Je Arbeitstag gegenüber '+displayDay(previousFrom)+' – '+displayDay(previousTo)+'.');}
+      const weekday=p.sorted[0];
+      if(weekday?.n>=2)infoCard(host,'Dein längster Wochentag',WEEKDAYS[weekday.i],fmtMin(weekday.avg)+' im Schnitt an '+weekday.n+' erfassten Tagen.');
+    }
+    function confirmWorkEntry(record){
+      const hints=[];
+      if(overlapsExistingRange(record))hints.push('Der Zeitraum überschneidet sich mit einem vorhandenen Eintrag.');
+      if(enabled('Checks')){
+        const sameDay=state.records.filter(r=>r.id!==record.id&&r.type==='work'&&r.date===record.date);
+        const total=record.hours+sameDay.reduce((sum,r)=>sum+r.hours,0);
+        if(total>assistOptions().planMax)hints.push('Für diesen Tag ergeben sich insgesamt '+displayTime(total)+' Arbeit.');
+        if(total>6&&!record.breakMinutes&&!sameDay.some(r=>r.breakMinutes))hints.push('Für diesen Tag ist keine Pause erfasst.');
+        if(sameDay.some(r=>r.hours===record.hours&&r.start===record.start&&r.end===record.end&&r.breakMinutes===record.breakMinutes))hints.push('Es gibt bereits einen gleichartigen Eintrag.');
+      }
+      return !hints.length||confirm(hints.join('\n')+'\nIst die Eingabe korrekt und soll sie gespeichert werden?');
+    }
+    function renderContextAssistance(){
+      const today=localDateString(),issues=enabled('Checks')?checkEntries():[];
+      $('todayAssistance').classList.toggle('hidden',!issues.length);message('todayAssistanceContent','');
+      for(const issue of issues.slice(0,2))addAction('todayAssistanceContent',displayDay(issue.date)+' · '+issue.note,()=>{
+        selectedCalendarDate=issue.date;selectedMonth=issue.date.slice(0,7);setActiveTab('calendar');renderAll();
+      });
+      if(issues.length>2)addAction('todayAssistanceContent','Alle '+issues.length+' Hinweise ansehen',()=>openHelper('Checks'));
+      const end=[monthEnd(selectedMonth),today].sort()[0],previous=addMonths(selectedMonth,-1);
+      const prevEnd=[monthEnd(previous),previous+end.slice(7)].sort()[0];
+      $('monthAssistance').classList.toggle('hidden',!enabled('Report')||selectedMonth>currentMonth());
+      if(enabled('Report')){
+        message('monthAssistanceContent',reportText(selectedMonth+'-01',end,previous+'-01',selectedMonth===currentMonth()?prevEnd:monthEnd(previous)));
+        addAction('monthAssistanceContent','Monatsauswertung öffnen',()=>{setActiveTab('analytics');$('analysisYear').value=selectedMonth.slice(0,4);renderAnalytics();$('aiMonth').value=selectedMonth;renderSmartReports(+selectedMonth.slice(0,4));$('smartReport').open=true;$('smartReport').scrollIntoView({block:'start'});});
+      }
+    }
+    function renderPlanDraft(){
+      if(!planDraft)return;
+      message('aiPlanSummary',planDraft.summary);message('aiPlanResult','');
+      const total=planDraft.rows.reduce((sum,p)=>sum+timeToMinutes(p.end)-timeToMinutes(p.start)-p.breakMinutes,0);
+      infoCard('aiPlanResult','Dein Vorschlag',planDraft.rows.length+' Schichten',fmtMin(total)+' Nettoarbeitszeit · Vorschau prüfen und als Planung speichern.');
+      for(const p of planDraft.rows){
+        const row=document.createElement('div');row.className='plan-list-item';
+        const label=document.createElement('span');label.textContent=displayDay(p.date)+' · '+p.start+'–'+p.end+' · '+p.breakMinutes+' Min. Pause';row.append(label);
+        const b=document.createElement('button');b.type='button';b.className='secondary small';b.textContent='Anpassen';
+        b.addEventListener('click',()=>{
+          $('workPlanDate').value=p.date;$('workPlanEndDate').value='';$('workPlanStart').value=p.start;$('workPlanEnd').value=p.end;$('workPlanBreak').value=p.breakMinutes;
+          updateWorkPlanPreview();updateEmptyTimes();$('workPlanForm').scrollIntoView({block:'start'});
+          showStatus($('workPlanStatus'),'Vorschlag für diesen Tag geladen. Mit „Planung speichern“ einzeln übernehmen.','');
+        });row.append(b);$('aiPlanResult').append(row);
+      }
+    }
+    function showAnswer(text,intent){
+      message('aiAnswer',text);message('aiAnswerActions','');$('aiEvidence').classList.add('hidden');message('aiEvidenceText','');
+      if(intent?.kind==='goal'&&enabled('Plan'))addAction('aiAnswerActions','Arbeitszeiten für dieses Ziel vorschlagen',()=>{openHelper('Plan');$('aiPlanGo').click();});
+      if(intent?.kind==='work'||intent?.kind==='weekday'){
+        const from=intent.from,to=[intent.to,localDateString()].sort()[0];
+        if(validDate(from)&&validDate(to)){
+          const p=describePeriod(from,to);
+          if(p.sorted.length>1)$('aiAnswerActions').insertAdjacentHTML('beforeend',barChart(p.sorted.map(x=>({label:WEEKDAYS[x.i].slice(0,2),title:WEEKDAYS[x.i],v:x.avg/60}))));
+        }
+      }
+    }
+    function applyAssistantIntent(intent){
+      if(!intent||typeof intent!=='object')throw Error('Die KI-Antwort war unvollständig. Bitte formuliere deinen Wunsch erneut.');
+      if(intent.kind==='entry'){
+        if(!enabled('Entry'))return 'Die Schnelleingabe ist ausgeschaltet.';
+        if(!Number.isInteger(intent.breakMinutes))throw Error('Bitte die Pause in Minuten angeben, auch wenn sie null beträgt.');
+        const r=validateState({...state,records:[{...intent,id:makeId(),type:'work',mode:'range'}]}).records[0];
+        setActiveTab('overview');fillManual(r.date,r);
+        $('manualForm').scrollIntoView({block:'start'});
+        return 'Für '+displayDay(r.date)+' sind '+r.start+'–'+r.end+' Uhr mit '+r.breakMinutes+' Min. Pause vorausgefüllt. Bitte prüfen und speichern.';
+      }
+      if(intent.kind==='plan'){
+        if(!enabled('Plan'))return 'Die Planungshilfe ist ausgeschaltet.';
+        if(Number.isFinite(intent.friday))$('aiFriday').value=Math.min(assistOptions().planMax,Math.max(0,intent.friday));
+      }
+      if(intent.kind==='leave'&&enabled('Leave')){
+        if(validDate(intent.from)&&validDate(intent.to)&&intent.from>=localDateString()&&intent.to>=intent.from){$('aiFrom').value=intent.from;$('aiUntil').value=intent.to;}
+      }
+      return answerIntent(intent);
+    }
+    async function invokeAssistant(action,input){
+      if(!cloudSession)throw Error('Melde dich in deinem Cloud-Konto an, um die KI zu nutzen.');
+      const {data,error}=await configuredSupabase().functions.invoke('arbeitszeit-assistent',{body:{action,input,today:localDateString(),analysisYear:Number($('analysisYear').value)||new Date().getFullYear()}});
+      if(error){
+        let reason='';try{const payload=await error.context?.json();reason=payload?.error||'';}catch{}
+        throw Error(reason||'Die KI ist gerade nicht erreichbar. Prüfe die Verbindung und die Einrichtung der Edge Function.');
+      }
+      if(!data)throw Error('Die KI hat keine Antwort geliefert. Bitte erneut versuchen.');
+      return data;
+    }
+    async function requestIntent(text,statusId,expected){
+      if(!text.trim()){message(statusId,'Beschreibe zuerst deinen Wunsch.');return;}
+      if(onlinePending){message(statusId,'Eine KI-Anfrage läuft bereits.');return;}
+      const token=++onlineGeneration,owner=activeStorageKey;
+      try{
+        let intent;
+        if(enabled('Online')){
+          onlinePending=true;message(statusId,'Dein Wunsch wird ausgewertet …');
+          intent=(await invokeAssistant(expected==='entry'?'entry':'question',text)).intent;
+          if(token!==onlineGeneration||owner!==activeStorageKey)return;
+        }else if(expected==='entry')intent={...parseQuickEntry(text),kind:'entry'};
+        else intent=localIntent(text);
+        if(expected==='plan'&&!['plan','goal'].includes(intent.kind))throw Error('Nenne eine Woche oder ein Überstundenziel mit Zielmonat.');
+        if(expected==='leave'&&intent.kind!=='leave')throw Error('Nenne einen Urlaubszeitraum und die gewünschte Zahl freier Tage.');
+        const answer=applyAssistantIntent(intent);showAnswer(answer,intent);message(statusId,answer);
+        if(enabled('Online')&&!expected&&['work','weekday','balance','overtime','comparison','goal'].includes(intent.kind)){
+          try{
+            const explained=await invokeAssistant('explain',JSON.stringify({question:text,calculated:answer}));
+            if(token!==onlineGeneration||owner!==activeStorageKey)return;
+            if(typeof explained.text==='string'){
+              message('aiAnswer',explained.text);message('aiEvidenceText',answer);$('aiEvidence').classList.remove('hidden');
+            }
+          }catch{
+            if(token===onlineGeneration&&owner===activeStorageKey)message('aiAnswer',answer+'\nDie ergänzende KI-Einordnung ist gerade nicht verfügbar.');
+          }
+        }
+        if(intent.kind==='goal'&&expected==='plan'){openHelper('Plan');$('aiPlanGo').click();}
+      }catch(error){if(token===onlineGeneration&&owner===activeStorageKey)message(statusId,error.message);}
+      finally{onlinePending=false;}
+    }
+    async function maybeAutoReport(){
+      if(activeTab!=='analytics'||!enabled('Online')||!enabled('Report')||!assistOptions().autoReports||onlinePending||!cloudSession)return;
+      const key=activeStorageKey+'|'+$('aiMonthly').textContent+'|'+$('aiYearly').textContent;
+      if(narrativeCache.has(key)){message('aiNarrative',narrativeCache.get(key));return;}
+      if(autoReportAttempts.has(key))return;
+      if(!describePeriod($('aiMonth').value+'-01',monthEnd($('aiMonth').value)).n)return;
+      autoReportAttempts.add(key);await askOnline('report');
+    }
+
     // Assistance uses the same local ledger as V6. Only explicit UI actions persist data.
     const features = {
       Chat:'Persönlicher Assistent', Entry:'Text- und Spracheingabe', Checks:'Fehlerhinweise',
@@ -5477,6 +5687,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     const dow = date => parseDate(date).getDay();
     const clock = min => [Math.floor(min/60),min%60].map(n=>String(n).padStart(2,'0')).join(':');
     const workdays = () => state.settings.leaveDays ?? [1,2,3,4,5];
+    const planDays = () => assistOptions().planWeekdays;
     function dailyWork(start,end) {
       const days=new Map();
       for(const r of state.records) {
@@ -5501,11 +5712,14 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const period=displayDay(from)+' – '+displayDay(to);
       if(from>to||!p.n)return period+' · Keine gebuchten Arbeitstage im Zeitraum.';
       const top=p.sorted[0],change=Math.round(p.avg-prior.avg);
-      const trend=prior.n?' Gegenüber '+displayDay(previousFrom)+' – '+displayDay(previousTo)+
-        (change?' sind das '+Math.abs(change)+' Min. '+(change>0?'mehr':'weniger')+' pro Arbeitstag.':' ist der Tagesdurchschnitt gleich geblieben.'):' Für den Vergleichszeitraum fehlen Buchungen.';
-      return period+' · '+fmtMin(p.minutes)+' tatsächlich gearbeitet an '+p.n+' Tagen, im Schnitt '+fmtMin(p.avg)+'.'+trend+
-        ' Höchster Wochentagsschnitt: '+WEEKDAYS[top.i]+' ('+fmtMin(top.avg)+', '+top.n+' erfasste Tage).';
+      const trend=prior.n?(change===0?'Deine Arbeitstage sind im Schnitt gleich lang geblieben.':
+        'Im Vergleich zum vorherigen Zeitraum arbeitest du pro Tag rund '+Math.abs(change)+' Minuten '+(change>0?'länger.':'kürzer.')):
+        'Für einen Vergleich fehlen Buchungen im vorherigen Zeitraum.';
+      const pattern=top.n>=2?' '+WEEKDAYS[top.i]+' ist dein längster Wochentag: durchschnittlich '+fmtMin(top.avg)+' aus '+top.n+' Tagen.':'';
+      return period+'\nDu hast an '+p.n+' Tagen insgesamt '+fmtMin(p.minutes)+' gearbeitet. Dein Arbeitstag dauert im Schnitt '+fmtMin(p.avg)+'. '+trend+pattern+
+        (prior.n?' Vergleich: '+displayDay(previousFrom)+' – '+displayDay(previousTo)+'.':'');
     }
+
     function renderSmartReports(year) {
       if(!enabled('Report'))return;
       const today=localDateString(),m=$('aiMonth').value||addMonths(currentMonth(),-1);
@@ -5513,19 +5727,27 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const comparison=addMonths(m,-1);
       const periodEnd=monthEnd(m)<today?monthEnd(m):today;
       const prevEnd=m===currentMonth()?[monthEnd(comparison),comparison+today.slice(7)].sort()[0]:monthEnd(comparison);
-      message('aiMonthly',m>currentMonth()?'Der Berichtsmonat liegt in der Zukunft.':reportText(m+'-01',periodEnd,comparison+'-01',prevEnd));
+      let monthlyText=m>currentMonth()?'Der Berichtsmonat liegt in der Zukunft.':reportText(m+'-01',periodEnd,comparison+'-01',prevEnd);
+      if(m<=currentMonth()){
+        const stats=monthStats(m),creditedAbsence=stats.vacationHours+stats.sickHours+stats.holidayHours;
+        if(creditedAbsence)monthlyText+=' Zum Monatssoll zählen zusätzlich '+displayTime(creditedAbsence)+' aus Urlaub, Krankheit und den Feiertagen des Monats.';
+        if(monthIsClosed(m))monthlyText+=' Der Monat ist mit '+signedHoursText(stats.delta)+' abgeschlossen.';
+        else monthlyText+=' Zum Monatssoll von '+displayTime(stats.target)+' fehlen unter Einbeziehung der Monatsgutschriften '+displayTime(Math.max(0,stats.target-stats.credited))+'.';
+      }
+      message('aiMonthly',monthlyText);
       const compare=[{month:comparison,to:prevEnd},{month:m,to:periodEnd}].map(({month,to})=>{
         const data=describePeriod(month+'-01',to);
         return {n:data.n,v:data.avg/60,title:monthTitle(month),label:parseDate(month+'-01').toLocaleDateString('de-DE',{month:'short'})};
       });
       $('aiReportChart').innerHTML=compare.every(x=>x.n)?'<small>Durchschnitt je gebuchtem Arbeitstag</small>'+barChart(compare):'';
+      periodInsight('aiInsightCards',m+'-01',periodEnd,comparison+'-01',prevEnd);
       const end=[year+'-12-31',today].sort()[0],priorMonth=(year-1)+end.slice(4,7);
       message('aiYearly',year>Number(today.slice(0,4))?'Das Berichtsjahr liegt in der Zukunft.':'Jahr '+year+' · '+reportText(year+'-01-01',end,(year-1)+'-01-01',[monthEnd(priorMonth),(year-1)+end.slice(4)].sort()[0]));
     }
     function typicalShift(date) {
       const cutoff=[date,localDateString()].sort()[0];
-      const days=[...dailyWork(shiftDate(cutoff,-112),shiftDate(cutoff,-1))].filter(([d])=>dow(d)===dow(date))
-        .sort(([a],[b])=>b.localeCompare(a)).slice(0,8);
+      const days=[...dailyWork(shiftDate(cutoff,-assistOptions().templateWeeks*7),shiftDate(cutoff,-1))].filter(([d])=>dow(d)===dow(date))
+        .sort(([a],[b])=>b.localeCompare(a)).slice(0,assistOptions().templateSamples);
       const counts=new Map();
       for(const [,day] of days){
         if(day.rows.length!==1||!day.rows[0].start)continue;
@@ -5533,7 +5755,16 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         counts.set(key,(counts.get(key)||0)+1);
       }
       const best=[...counts].sort((a,b)=>b[1]-a[1])[0];
-      if(!best||best[1]<3||best[1]<=days.length/2)return null;
+      if(!best||best[1]<assistOptions().templateMin||best[1]<=days.length/2){
+        const rows=days.map(([,day])=>day.rows.length===1?day.rows[0]:null).filter(r=>r?.start);
+        if(rows.length<assistOptions().templateMin||rows.length<=days.length/2)return null;
+        const median=values=>{const sorted=values.sort((a,b)=>a-b);return sorted[Math.floor(sorted.length/2)];};
+        const start=median(rows.map(r=>timeToMinutes(r.start))),end=median(rows.map(r=>timeToMinutes(r.end))),pause=median(rows.map(r=>r.breakMinutes));
+        const matching=rows.filter(r=>Math.abs(timeToMinutes(r.start)-start)<=15&&Math.abs(timeToMinutes(r.end)-end)<=15&&Math.abs(r.breakMinutes-pause)<=10);
+        if(matching.length<assistOptions().templateMin||matching.length<=days.length/2||end-start<=pause)return null;
+        return {start:clock(start),end:clock(end),breakMinutes:pause,count:matching.length,sample:days.length};
+      }
+
       const [start,end,pause]=best[0].split('/');
       return {start,end,breakMinutes:Number(pause),count:best[1],sample:days.length};
     }
@@ -5578,7 +5809,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       return {date,start:clock(start),end:clock(end),breakMinutes};
     }
     function checkEntries() {
-      const today=localDateString(),begin=shiftDate(today,-89),days=dailyWork(shiftDate(begin,-84),today),issues=[];
+      const today=localDateString(),begin=shiftDate(today,-(assistOptions().checkDays-1)),days=dailyWork(shiftDate(begin,-84),today),issues=[];
       for(const [date,day] of days){
         if(date<begin)continue;
         const labels=new Set(),seen=new Set(),ranges=[];
@@ -5593,7 +5824,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         if(day.minutes>360&&!day.pause)labels.add('keine Pause bei mehr als 6 Std. erfasst');
         const sample=[...days].filter(([d])=>d<date&&d>=shiftDate(date,-84)&&dow(d)===dow(date)).map(([,d])=>d.minutes).sort((a,b)=>a-b);
         const typical=sample[Math.floor(sample.length/2)];
-        if(sample.length>=3&&Math.abs(day.minutes-typical)>=120)labels.add(fmtMin(day.minutes)+' erfasst, für '+WEEKDAYS[dow(date)]+' typisch '+fmtMin(typical));
+        if(sample.length>=3&&Math.abs(day.minutes-typical)>=assistOptions().deviationMinutes)labels.add(fmtMin(day.minutes)+' erfasst, für '+WEEKDAYS[dow(date)]+' typisch '+fmtMin(typical));
         else if(day.minutes>600)labels.add('langer Tag mit '+fmtMin(day.minutes));
         if(labels.size)issues.push({date,note:[...labels].join(' · ')});
       }
@@ -5625,20 +5856,20 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
     function computePlan() {
       const mode=$('aiPlanMode').value,weekly=mode==='week',today=localDateString();
       const deadline=$('aiDeadline').value,goal=$('aiTarget').valueAsNumber,friday=$('aiFriday').valueAsNumber;
-      if(!Number.isFinite(friday)||friday<0||friday>10||(!weekly&&!Number.isFinite(goal)))throw Error('Bitte Ziel und Freitagsgrenze prüfen.');
+      if(!Number.isFinite(friday)||friday<0||friday>assistOptions().planMax||(!weekly&&!Number.isFinite(goal)))throw Error('Bitte Ziel und Freitagsgrenze prüfen.');
       const projection=weekly?null:monthProjection(deadline);
       const first=weekly?shiftDate(today,8-(dow(today)||7)):[today,projection.first+'-01'].sort().at(-1);
       const end=weekly?shiftDate(first,6):monthEnd(deadline);
       const occupied=new Set([...state.records,...(state.plans||[])].map(r=>r.date)),slots=[],typicalByWeekday=new Map();
       for(let date=first;date<=end;date=shiftDate(date,1)){
-        if(!workdays().includes(dow(date))||occupied.has(date)||holidayNameForDate(date))continue;
+        if(!planDays().includes(dow(date))||occupied.has(date)||holidayNameForDate(date))continue;
         const weekday=dow(date);
         if(!typicalByWeekday.has(weekday))typicalByWeekday.set(weekday,enabled('Template')?typicalShift(date):null);
-        const t=typicalByWeekday.get(weekday),start=t?timeToMinutes(t.start):420,pause=t?.breakMinutes??30;
-        const cap=Math.min(dow(date)===5?Math.round(friday*60):600,1439-start-pause);
-        if(cap>0)slots.push({date,start,pause,cap,minutes:weekly?Math.min(cap,t?timeToMinutes(t.end)-start-pause:480):0});
+        const t=typicalByWeekday.get(weekday),start=t?timeToMinutes(t.start):timeToMinutes(assistOptions().planStart),pause=t?.breakMinutes??assistOptions().planPause;
+        const cap=Math.min(dow(date)===5?Math.round(friday*60):assistOptions().planMax*60,assistOptions().planMax*60,1439-start-pause);
+        if(cap>0)slots.push({date,start,pause,cap,minutes:weekly?Math.min(cap,t?timeToMinutes(t.end)-start-pause:assistOptions().planHours*60):0});
       }
-      let summary='Nächste Woche · bekannte Wochentagsvorlagen oder 07:00 Uhr, 8 Std. netto und 30 Min. Pause.';
+      let summary='Deine nächste Woche nutzt gelernte Schichten und deine gespeicherten Planungsvorgaben.';
       if(!weekly){
         const delta=mode==='balance'?goal-projection.opening:goal;
         const required=Math.max(0,Math.round((projection.target+delta-projection.credited)*60)-projection.planned);
@@ -5731,6 +5962,9 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const friday=s.match(/freitag\w*[^\d]{0,35}(\d+(?:[.,]\d+)?)\s*(?:stunden|std|h)/);
       const target=s.match(/(-?\d+(?:[.,]\d+)?)\s*(?:stunden\s+)?überstunden/);
       if(target&&/ziel|bis|müsste|möchte/.test(s))return {kind:'goal',month:named||(/jahresende/.test(s)?year+'-12':now),goal:Number(target[1].replace(',','.')),additional:/aufbauen|zusätzlich|weitere/.test(s),friday:friday?Number(friday[1].replace(',','.')):null};
+      if(!named&&!count&&!/heute|gestern|woche|monat|jahr|20\d{2}|21\d{2}/.test(s)){
+        const selected=$('analysisYear').value||now.slice(0,4);from=selected+'-01-01';to=[selected+'-12-31',today].sort()[0];
+      }
       if(/urlaub|frei haben/.test(s)){
         const amount=s.match(/(\d+|zehn|sieben|vierzehn)\s+tage/);
         const days=amount?(Number(amount[1])||({zehn:10,sieben:7,vierzehn:14}[amount[1]])):null;
@@ -5738,6 +5972,10 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }
       if(/ungewöhn|fehler|auffällig/.test(s))return {kind:'checks'};
       if(/plan|nächste woche/.test(s))return {kind:'plan'};
+      if(/verändert|vergleich|entwicklung|mehr als|weniger als/.test(s)){
+        const month=from.slice(0,7),previous=addMonths(month,-1);
+        return {kind:'comparison',from,to,previousFrom:previous+'-01',previousTo:monthEnd(previous)};
+      }
       if(/wochentag|am längsten/.test(s))return {kind:'weekday',from,to};
       if(/überstunden|zeitkonto/.test(s))return {kind:/stand|zeitkonto|insgesamt/.test(s)?'balance':'overtime',from,to};
       if(/bericht|analysiere|gearbeitet|arbeitsstunden/.test(s))return {kind:'work',from,to};
@@ -5750,10 +5988,15 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         const p=monthProjection(i.month);
         if(!Number.isFinite(i.goal)||Math.abs(i.goal)>10000)throw Error('Bitte ein gültiges Stundenziel angeben.');
         const h=Math.max(0,p.target-p.credited+i.goal-(i.additional?0:p.opening)-p.planned/60);
-        if(Number.isFinite(i.friday)&&i.friday>=0&&i.friday<=10)$('aiFriday').value=i.friday;
+        if(Number.isFinite(i.friday)&&i.friday>=0&&i.friday<=assistOptions().planMax)$('aiFriday').value=i.friday;
         $('aiDeadline').value=i.month;$('aiTarget').value=i.goal;$('aiPlanMode').value=i.additional?'delta':'balance';resetPlan();
         const conditional=i.month>currentMonth()?' Für '+monthTitle(i.month)+' allein: Wenn alle vorangehenden offenen Monate genau ihr Soll erreichen, fehlen dort '+displayTime(Math.max(0,monthStats(i.month).target-monthStats(i.month).credited+i.goal-(i.additional?0:p.opening)))+' Nettoarbeitsstunden vor Abzug geplanter Schichten.':'';
         return 'Prognose bis '+monthTitle(i.month)+': '+displayTime(h)+' zusätzliche Nettoarbeit über vorhandene Pläne hinaus. Ausgangsstand '+signedHoursText(p.opening)+', Soll '+displayTime(p.target)+', angerechnet '+displayTime(p.credited)+', bereits geplant '+fmtMin(p.planned)+'. Ziel: '+displayTime(i.goal)+(i.additional?' zusätzlich.':' Gesamtstand.')+' Verteilung unter Planen → Intelligenter Arbeitszeitplaner.'+conditional;
+      }
+      if(i.kind==='comparison'){
+        if(![i.from,i.to,i.previousFrom,i.previousTo].every(validDate)||i.from>i.to||i.previousFrom>i.previousTo)throw Error('Bitte zwei gültige Vergleichszeiträume angeben.');
+        const until=[i.to,today].sort()[0],previousUntil=[i.previousTo,today].sort()[0];
+        return reportText(i.from,until,i.previousFrom,previousUntil);
       }
       if(i.kind==='checks')return enabled('Checks')?(checkEntries().slice(0,5).map(x=>displayDay(x.date)+' · '+x.note).join('\n')||'Keine Auffälligkeiten in den letzten 90 Tagen.'):'Fehlerhinweise sind ausgeschaltet.';
       if(i.kind==='plan'){if(!enabled('Plan'))return openHelper('Plan');$('aiPlanMode').value='week';openHelper('Plan');$('aiPlanGo').click();return 'Wochenvorschlag unter Planen geöffnet.';}
@@ -5766,7 +6009,7 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         }
         openHelper('Leave');$('aiLeaveGo').click();return 'Urlaubsvorschläge unter Planen geöffnet.';
       }
-      if(i.kind==='unknown')return 'Nenne einen Zeitraum und eine Kennzahl, etwa „Überstunden in den letzten drei Monaten“ oder „Arbeitsstunden im Oktober“.';
+      if(i.kind==='unknown')return typeof i.message==='string'?i.message:'Nenne einen Zeitraum und eine Kennzahl, etwa „Überstunden in den letzten drei Monaten“ oder „Arbeitsstunden im Oktober“.';
       if(!validDate(i.from)||!validDate(i.to)||i.to<i.from)throw Error('Der angefragte Zeitraum ist unklar.');
       if(i.kind==='balance'||i.kind==='overtime'){
         const first=[i.from.endsWith('-01')?i.from.slice(0,7):addMonths(i.from.slice(0,7),1),state.settings.accountStartMonth].sort().at(-1);
@@ -5777,23 +6020,26 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
           'Abgeschlossene Monate '+monthTitle(first)+' bis '+monthTitle(last)+': '+signedHoursText(close-balanceBeforeMonth(first))+'. Anfangsstand '+signedHoursText(balanceBeforeMonth(first))+', Endstand '+signedHoursText(close)+'.';
       }
       const end=[i.to,today].sort()[0],p=describePeriod(i.from,end);
-      if(!p.n)return 'Keine gebuchten Arbeitstage im angefragten Zeitraum.';
+      if(Number.isInteger(i.weekday)&&i.weekday>=0&&i.weekday<=6)p.sorted=p.sorted.filter(b=>b.i===i.weekday);
+      if(!p.n||!p.sorted.length)return 'Keine gebuchten Arbeitstage für diese Auswahl.';
       return displayDay(i.from)+' – '+displayDay(end)+' · '+(i.kind==='weekday'?p.sorted.map(b=>WEEKDAYS[b.i]+': '+fmtMin(b.avg)+' im Schnitt ('+b.n+' Tage)').join('\n'):
         fmtMin(p.minutes)+' tatsächlich gearbeitet an '+p.n+' Tagen, durchschnittlich '+fmtMin(p.avg)+' pro Tag.');
     }
     let planDraft=null, contextStamp='', speech=null, onlineGeneration=0;
     function resetPlan(){
-      planDraft=null;message('aiPlanResult','');$('aiPlanSave').hidden=true;
+      planDraft=null;message('aiPlanResult','');message('aiPlanSummary','');$('aiPlanSave').hidden=true;
     }
     function renderIntelligence(){
       const stamp=[activeStorageKey,revision,localDateString()].join('|');
       if(contextStamp!==stamp){
         onlineGeneration++;speech?.abort();resetPlan();
-        for(const id of ['aiLeaves','aiAnswer','aiNarrative','aiEntryMsg'])message(id,'');
+        $('aiEvidence').classList.add('hidden');message('aiEvidenceText','');
+        for(const id of ['aiLeaves','aiAnswer','aiAnswerActions','aiNarrative','aiEntryMsg'])message(id,'');
         if(contextStamp.split('|')[0]!==activeStorageKey){
           $('aiEntry').value='';$('aiQuestion').value='';
           $('aiTarget').value=15;$('aiFriday').value=6;$('aiDeadline').value=currentMonth();
-          $('aiPlanMode').value='delta';$('aiMonth').value=addMonths(currentMonth(),-1);
+          $('aiPlanMode').value='delta';reportYearScope='';$('aiMonth').value=addMonths(currentMonth(),-1);
+          $('aiPlanRequest').value='';$('aiLeaveRequest').value='';message('aiAnswerActions','');narrativeCache.clear();autoReportAttempts.clear();
           $('aiLength').value=10;$('aiFrom').value=localDateString();$('aiUntil').value=shiftDate(localDateString(),120);
         }
         contextStamp=stamp;
@@ -5802,8 +6048,11 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         $('aiSwitch'+key).checked=enabled(key);
         if(key!=='Online')$('smart'+key).classList.toggle('hidden',!enabled(key));
       }
-      $('aiOnline').hidden=!enabled('Online');$('aiNarrate').hidden=!enabled('Online');
+      $('aiOnline').hidden=!enabled('Online');
+      $('aiAsk').textContent=enabled('Online')?'Mit KI fragen':'Fragen';
+      $('aiNarrate').disabled=!enabled('Online');$('aiNarrate').hidden=!enabled('Online');
       if(!enabled('Entry'))speech?.abort();
+      renderAssistOptions();
       renderLearned();
       if(enabled('Checks')){
         const issues=checkEntries();message('aiChecks',issues.length?issues.length+' Hinweise':'Keine Auffälligkeiten gefunden.');
@@ -5813,11 +6062,15 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       }
     }
     for(const [key,name] of Object.entries(features)){
-      const label=document.createElement('label'),box=document.createElement('input');
-      box.type='checkbox';box.id='aiSwitch'+key;label.append(box,name);$('aiSwitches').append(label);
+      const row=document.createElement('div');row.className='assist-setting';
+      const text=document.createElement('div'),label=document.createElement('label'),hint=document.createElement('p'),box=document.createElement('input');
+      box.type='checkbox';box.id='aiSwitch'+key;label.htmlFor=box.id;label.textContent=name;
+      hint.textContent=({Chat:'Fragen zu deiner Zeit und konkrete nächste Schritte.',Entry:'Sätze oder Diktat vor dem Speichern prüfen.',Checks:'Auffällige Buchungen direkt auf Heute und im Kalender finden.',Report:'Entwicklungen in Analysen und Monatsdetails erklären.',Plan:'Wochen und Überstundenziele als Vorschau berechnen.',Template:'Deine üblichen Schichten aus Buchungen lernen.',Leave:'Freie Zeiträume mit deinem Resturlaub vergleichen.',Online:'KI-Anfragen über dein eingerichtetes OpenRouter-Modell. Lokale Hilfen funktionieren auch bei ausgeschalteter KI.'})[key];
+      text.append(label,hint);row.append(text,box);$('aiSwitches').append(row);
       box.addEventListener('change',withWriteLock(async()=>{
         const previous=state.settings.assistance;
         state.settings.assistance={...previous,[key]:box.checked};
+        narrativeCache.clear();autoReportAttempts.clear();
         try{await persistState();}catch(e){state.settings.assistance=previous;renderIntelligence();throw e;}
         renderAll();
       }));
@@ -5827,8 +6080,12 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
       const date=$('manualDate').value,t=typicalShift(date);if(t&&enabled('Template'))fillManual(date,t);
     });
     $('aiFill').addEventListener('click',()=>{
-      try{const r=parseQuickEntry($('aiEntry').value);fillManual(r.date,r);message('aiEntryMsg',displayDay(r.date)+' · '+r.start+'–'+r.end+' · '+r.breakMinutes+' Min. Pause. Formular unten prüfen.');}
-      catch(e){message('aiEntryMsg',e.message);}
+      try{
+        const r=parseQuickEntry($('aiEntry').value);fillManual(r.date,r);
+        message('aiEntryMsg',displayDay(r.date)+' · '+r.start+'–'+r.end+' · '+r.breakMinutes+' Min. Pause · '+fmtMin(timeToMinutes(r.end)-timeToMinutes(r.start)-r.breakMinutes)+' netto. Prüfe die ausgefüllten Felder.');
+      }catch(error){
+        if(enabled('Online'))void requestIntent($('aiEntry').value,'aiEntryMsg','entry');else message('aiEntryMsg',error.message);
+      }
     });
     const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
     $('aiMic').hidden=!Recognition;
@@ -5843,39 +6100,36 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         r.start();message('aiMic','Diktat beenden');
       }catch{speech=null;message('aiEntryMsg','Bitte das Mikrofon der Tastatur verwenden.');}
     });
-    $('aiMonth').addEventListener('change',()=>{onlineGeneration++;message('aiNarrative','');renderSmartReports(+$('analysisYear').value);});
+    $('aiMonth').addEventListener('change',()=>{onlineGeneration++;message('aiNarrative','');renderSmartReports(+$('analysisYear').value);void maybeAutoReport();});
     for(const [label,q] of [['Letzte drei Monate','Überstunden in den letzten drei Monaten'],['Längste Arbeitstage','An welchen Wochentagen arbeite ich durchschnittlich am längsten?'],['Nächste Woche','Plane nächste Woche'],['Resturlaub','Wie nutze ich meinen Resturlaub?']])
       addAction('aiPrompts',label,()=>{$('aiQuestion').value=q;$('aiAsk').click();});
-    $('aiAsk').addEventListener('click',()=>{
-      onlineGeneration++;
-      try{message('aiAnswer',answerIntent(localIntent($('aiQuestion').value)));}
-      catch(e){message('aiAnswer',e.message);}
-    });
+    $('aiAsk').addEventListener('click',()=>requestIntent($('aiQuestion').value,'aiAnswer'));
     async function askOnline(action){
-      const isReport=action==='report',key=isReport?'Report':'Chat',id=isReport?'aiNarrative':'aiAnswer';
-      if(!enabled('Online')||!enabled(key))return;
-      if(!cloudSession){message(id,'Bitte zuerst im Supabase-Konto anmelden. Die lokale Assistenz ist verfügbar.');return;}
-      const input=(isReport?$('aiMonthly').textContent:$('aiQuestion').value).trim();
-      if(!input){message(id,'Bitte eine Frage eingeben.');return;}
+      if(!enabled('Online')||!enabled('Report')||onlinePending)return;
+      const input=[$('aiMonthly').textContent,$('aiYearly').textContent].join('\n');
+      const key=activeStorageKey+'|'+$('aiMonthly').textContent+'|'+$('aiYearly').textContent;
       const generation=++onlineGeneration,owner=activeStorageKey;
-      message(id,'OpenRouter verarbeitet die Anfrage …');
-      try {
-        const {data,error}=await configuredSupabase().functions.invoke('arbeitszeit-assistent',{body:{action,input,today:localDateString()}});
+      onlinePending=true;message('aiNarrative','Deine Entwicklung wird eingeordnet …');
+      try{
+        const data=await invokeAssistant('report',input);
         if(generation!==onlineGeneration||owner!==activeStorageKey)return;
-        if(error||!data)throw Error();
-        message(id,isReport?data.text:answerIntent(data.intent));
-      }catch{if(generation===onlineGeneration&&owner===activeStorageKey)message(id,'Online-Anfrage fehlgeschlagen. Anmeldung, Funktionsbereitstellung und OpenRouter-Budget prüfen. Lokale Auswertungen bleiben verfügbar.');}
+        if(typeof data.text!=='string')throw Error('Der KI-Bericht war unvollständig.');
+        narrativeCache.set(key,data.text);message('aiNarrative',data.text);
+      }catch(error){if(generation===onlineGeneration&&owner===activeStorageKey)message('aiNarrative',error.message);}
+      finally{onlinePending=false;}
     }
-    $('aiOnline').addEventListener('click',()=>askOnline('question'));
+    $('aiOnline').addEventListener('click',()=>{
+      onlineGeneration++;
+      try{const intent=localIntent($('aiQuestion').value);showAnswer(applyAssistantIntent(intent),intent);}catch(error){message('aiAnswer',error.message);}
+    });
     $('aiNarrate').addEventListener('click',()=>askOnline('report'));
     $('aiDeadline').value=currentMonth();
     for(const id of ['aiDeadline','aiTarget','aiFriday','aiPlanMode'])$(id).addEventListener('input',resetPlan);
     $('aiPlanGo').addEventListener('click',()=>{
       resetPlan();
       try {
-        planDraft=computePlan();
-        message('aiPlanResult',[planDraft.summary,planDraft.rows.length+' neue Schichten · maximal 10 Std. netto pro Tag.',
-          ...planDraft.rows.map(p=>displayDay(p.date)+' · '+p.start+'–'+p.end+' · '+p.breakMinutes+' Min. Pause')].join('\n'));
+        updatePlanMode();planDraft=computePlan();
+        renderPlanDraft();
         $('aiPlanSave').hidden=!planDraft.rows.length;
       }catch(e){message('aiPlanResult',e.message);}
     });
@@ -5901,6 +6155,48 @@ input[type="time"],#manualForm input[type="time"],#rangeFields input[type="time"
         });
       }catch(e){message('aiLeaves',e.message);}
     });
+
+    $('aiSettingsJump').addEventListener('click',openAssistSettings);
+    for(const [key,label,unit] of [
+      ['checkDays','Hinweise rückblickend','Tage'],['deviationMinutes','Ungewöhnliche Abweichung ab','Minuten'],
+      ['templateWeeks','Vorlagen lernen aus','Wochen'],['templateSamples','Gleiche Wochentage betrachten','Tage'],['templateMin','Mindestens gleiche Schichten','Tage'],
+      ['planStart','Üblicher Arbeitsbeginn','time'],['planPause','Übliche Pause','Minuten'],['planHours','Üblicher Arbeitstag netto','Stunden'],['planMax','Höchstens netto pro Tag','Stunden'],['planFriday','Freitags höchstens netto','Stunden']]){
+      const wrap=document.createElement('label');wrap.textContent=label+(unit==='time'?'':' ('+unit+')');
+      const input=document.createElement('input');input.id='assist_'+key;input.required=true;
+      input.type=unit==='time'?'time':'number';
+      if(ASSIST_RANGES[key]){[input.min,input.max]=ASSIST_RANGES[key];input.step=['planHours','planMax','planFriday'].includes(key)?'.25':'1';}
+      wrap.append(input);$('aiOptionFields').append(wrap);
+    }
+    const weekdays=document.createElement('fieldset'),legend=document.createElement('legend');legend.textContent='Arbeitstage für neue Planungsvorschläge';weekdays.append(legend);
+    const choices=document.createElement('div');choices.className='weekday-options';
+    for(const day of [1,2,3,4,5,6,0]){
+      const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.dataset.assistDay=String(day);label.append(input,WEEKDAYS[day].slice(0,2));choices.append(label);
+    }
+    weekdays.append(choices);$('aiOptionFields').append(weekdays);
+    const autoLabel=document.createElement('label');autoLabel.className='wide';
+    const auto=document.createElement('input');auto.type='checkbox';auto.id='assist_autoReports';
+    autoLabel.append(auto,'KI-Bericht beim Öffnen der Analysen automatisch erstellen. Dabei werden die berechneten Monats- und Jahreskennzahlen an OpenRouter gesendet.');$('aiOptionFields').append(autoLabel);
+    $('aiOptionsForm').addEventListener('submit',withWriteLock(async()=>{
+      const input={};
+      for(const key of Object.keys(ASSIST_RANGES))input[key]=$('assist_'+key).valueAsNumber;
+      input.planStart=$('assist_planStart').value;input.autoReports=$('assist_autoReports').checked;
+      input.planWeekdays=[...document.querySelectorAll('[data-assist-day]:checked')].map(el=>Number(el.dataset.assistDay));
+      if(!input.planWeekdays.length){message('aiOptionsStatus','Wähle mindestens einen Arbeitstag für Planungsvorschläge.');return;}
+      if(input.templateMin>input.templateSamples||input.planHours>input.planMax||input.planFriday>input.planMax){message('aiOptionsStatus','Die Mindestzahl gleicher Schichten muss in den Betrachtungsumfang passen. Tagesdauer und Freitagsgrenze dürfen die Tageshöchstgrenze nicht überschreiten.');return;}
+      const previous=state.settings.assistanceOptions;state.settings.assistanceOptions=cleanAssistOptions(input);
+      try{await persistState();}catch(error){state.settings.assistanceOptions=previous;throw error;}
+      narrativeCache.clear();autoReportAttempts.clear();optionsStamp='';renderAll();message('aiOptionsStatus','Deine Vorgaben sind gespeichert.');
+    }));
+    function updatePlanMode(){
+      const weekly=$('aiPlanMode').value==='week';
+      $('aiDeadlineLabel').hidden=weekly;$('aiTargetLabel').hidden=weekly;
+    }
+    $('aiPlanMode').addEventListener('change',()=>{resetPlan();updatePlanMode();});
+    updatePlanMode();
+    $('aiPlanInterpret').addEventListener('click',()=>requestIntent($('aiPlanRequest').value,'aiPlanRequestStatus','plan'));
+    $('aiLeaveInterpret').addEventListener('click',()=>requestIntent($('aiLeaveRequest').value,'aiLeaveRequestStatus','leave'));
+    $('aiQuestion').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('aiAsk').click();}});
+    $('aiEntry').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('aiFill').click();}});
 
     initialize();
   </script>
