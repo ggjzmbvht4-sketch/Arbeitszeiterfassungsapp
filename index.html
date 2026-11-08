@@ -1079,6 +1079,29 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 .plan-list-item small{display:block;margin-top:4px;color:var(--muted);line-height:1.4}
 .plan-list-item button{min-height:35px}
 @media(max-width:360px){.five-tabs{width:calc(100% - 8px);gap:0}.five-tabs .tab-icon{font-size:1.07rem}.five-tabs .tab{min-height:52px}}
+/* NEXT V3: Monatsabschluss, differenzierte Planung und sichtbare Übernahme. */
+.closed-hero-balance{display:flex;flex-direction:column;gap:4px;margin-top:19px;padding-top:17px;border-top:1px solid rgba(16,83,78,.22)}
+.closed-hero-balance span{font-size:.85rem;font-weight:610;opacity:.9}
+.closed-hero-balance strong{font-size:clamp(1.35rem,5.5vw,1.9rem);line-height:1.2;font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:-.035em}
+.closed-hero-balance strong.positive{color:#075f55}
+.closed-hero-balance strong.negative{color:#92413d}
+.plan-weekday-block{margin:13px 0;padding:14px;border:1px solid var(--control-edge);border-radius:17px;background:var(--field-glass)}
+.plan-weekday-fieldset{border:0;margin:0;padding:0;min-width:0}
+.plan-weekday-fieldset legend{font-size:.9rem;font-weight:680;padding:0 0 10px}
+.plan-weekday-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.plan-weekday-grid label{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-width:0;margin:0;padding:10px 0;background:var(--surface);border:1px solid var(--control-edge);border-radius:11px;font-size:.79rem;font-weight:670;cursor:pointer}
+.plan-weekday-grid label:has(input:checked){background:var(--accent-light);border-color:var(--accent)}
+.plan-weekday-grid input{width:18px;min-height:18px;accent-color:var(--accent);margin:0}
+.plan-day-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.plan-day-actions button{min-height:38px}
+.plan-preview{background:var(--accent-light);border:1px solid var(--control-edge);padding:10px 12px;margin:11px 0 16px;border-radius:13px;font-size:.82rem;line-height:1.45;color:var(--ink)}
+.plan-preview.invalid{background:var(--red-light);color:var(--text)}
+.plan-applied-banner{display:flex;flex-direction:column;gap:5px;margin:10px 0 12px;padding:13px 15px;border:2px solid #1b887d;background:var(--accent-light);border-radius:16px;line-height:1.4;color:var(--ink);box-shadow:inset 3px 0 #1b887d}
+.plan-applied-banner strong{font-size:.93rem}
+.plan-applied-banner span{font-size:.82rem}
+.entry-plan-tag{display:inline-block;margin-left:4px;padding:2px 7px;border-radius:8px;background:var(--accent-light);color:var(--ink);font-size:.72rem;font-weight:700}
+@media(max-width:360px){.plan-weekday-grid{gap:3px}.plan-weekday-grid label{font-size:.7rem;padding:9px 0}}
+@media(prefers-color-scheme:dark){.closed-hero-balance strong.positive{color:#8bf0e2}.closed-hero-balance strong.negative{color:#ffc6a2}.plan-weekday-grid label{background:var(--surface-muted)}}
 </style>
 </head>
 
@@ -1097,6 +1120,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     <div class="manual-switch" role="group" aria-label="Eingabeart"><button id="byRange" type="button" aria-pressed="true">Von – bis</button><button id="byDuration" type="button" aria-pressed="false">Dauer</button></div>
     <div class="manual-fields"><label id="startLabel">Beginn<input id="manualStart" type="time" required></label><label id="endLabel">Ende<input id="manualEnd" type="time" required></label><label class="hidden" id="durationLabel">Dauer vor Pause (Std.)<input id="manualDuration" type="number" min="0.01" max="24" step="0.01" placeholder="7,5" disabled></label><label>Pause (Min.)<input id="manualPause" type="number" min="0" max="1439" step="1" value="0"></label></div>
     <div id="manualPlannedHint" class="planned-hint hidden"><span id="manualPlannedText"></span><button id="manualUsePlan" type="button" class="secondary small">Geplante Zeit übernehmen</button></div>
+    <div id="manualPlanApplied" class="plan-applied-banner hidden" role="status"><strong>✓ Geplante Zeit übernommen</strong><span>Die Zeiten sind vorausgefüllt. Erst mit „Eintrag speichern“ wird die Arbeitszeit gebucht.</span></div>
     <div class="quick-templates" id="quickTemplates" aria-label="Gespeicherte Arbeitszeitvorlagen"></div>
     <div class="manual-footer"><div><span class="clock-caption">Nettoarbeitszeit</span><output id="manualNet" aria-live="polite">—</output></div><button type="submit">Eintrag speichern</button></div>
     <div id="manualStatus" role="status"></div>
@@ -1183,14 +1207,17 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       </div>
     <section id="overviewPanel" class="view-stack">
       <div class="clock-card report-hero"><h2 id="overviewHeading">Monatsübersicht</h2>
-        <strong class="report-total" id="creditedMetric">–</strong><span class="clock-caption">Angerechnete Zeit</span></div>
+        <strong class="report-total" id="creditedMetric">–</strong><span class="clock-caption">Geleistete Arbeitszeit</span>
+        <div id="closedHeroBalance" class="closed-hero-balance hidden" aria-live="polite">
+          <span>Überstunden am Monatsende</span><strong id="heroBalanceValue">–</strong>
+        </div></div>
       <div class="panel">
       <div class="grid">
         <div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
         <div class="metric"><span>Noch bis zum Soll</span><strong id="remainingMetric">–</strong></div>
         <div class="metric" id="closedDelta"><span>Abgeschlossene Monatsdifferenz</span><strong id="deltaMetric">–</strong></div>
-        <div class="metric"><span>Überstunden am Ende des Vormonats</span><strong id="carryMetric">–</strong></div>
-        <div class="metric"><span id="closingLabel">Zeitkonto Monatsende</span><strong id="closingMetric">–</strong></div>
+        <div class="metric" id="carryMetricCard"><span>Überstunden am Ende des Vormonats</span><strong id="carryMetric">–</strong></div>
+        <div class="metric" id="closingMetricCard"><span id="closingLabel">Zeitkonto Monatsende</span><strong id="closingMetric">–</strong></div>
       </div>
       <p id="accountExplanation" class="hint"></p>
       <p id="vacationBalance" class="hint"></p>
@@ -1213,7 +1240,26 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
         <p class="hint">Geplante Schichten bleiben getrennt: keine Anrechnung auf das Stundenkonto, keine Übertragung in den Kalender oder nach Apple Kalender. Erst wenn du sie bewusst übernimmst und speicherst, werden sie zu einer echten Buchung.</p>
         <form id="workPlanForm">
           <div class="plan-range"><label>Datum<input id="workPlanDate" type="date" required></label><label>Wiederholen bis (optional)<input id="workPlanEndDate" type="date"></label></div>
-          <p class="hint">Bei einem Zeitraum nur die unter Einstellungen gewählten Urlaub-/Arbeitstage, bis maximal 90 Tage. Bestehende Planungen werden nur nach Bestätigung ersetzt.</p>
+          <p class="hint">Einzelnen Tag oder Zeitraum von maximal 90 Kalendertagen planen. Die Auswahl gilt nur für Planungen, niemals für deine gebuchten Arbeitszeiten.</p>
+          <label for="workPlanTemplate">Gespeicherte Vorauswahl nutzen (optional)</label>
+          <select id="workPlanTemplate"><option value="">Eigene Zeiten eingeben</option></select>
+          <div class="plan-day-actions" style="margin-top:5px"><span class="hint" style="flex:1">Vorlagen findest du unter „Mehr“.</span><button id="workPlanManageTemplates" type="button" class="secondary small">Vorlagen verwalten</button></div>
+          <div id="workPlanRangeOptions" class="plan-weekday-block hidden">
+            <fieldset class="plan-weekday-fieldset">
+              <legend>Für welche Tage im Zeitraum?</legend>
+              <div class="plan-weekday-grid" id="workPlanDays">
+                <label><input type="checkbox" name="workPlanWeekday" value="1" checked>Mo</label>
+                <label><input type="checkbox" name="workPlanWeekday" value="2" checked>Di</label>
+                <label><input type="checkbox" name="workPlanWeekday" value="3" checked>Mi</label>
+                <label><input type="checkbox" name="workPlanWeekday" value="4" checked>Do</label>
+                <label><input type="checkbox" name="workPlanWeekday" value="5" checked>Fr</label>
+                <label><input type="checkbox" name="workPlanWeekday" value="6">Sa</label>
+                <label><input type="checkbox" name="workPlanWeekday" value="0">So</label>
+              </div>
+            </fieldset>
+            <div class="plan-day-actions"><button type="button" id="planWeekdaysWeek" class="secondary small">Mo–Fr</button><button type="button" id="planWeekdaysAll" class="secondary small">Alle Tage</button><button type="button" id="planWeekdaysClear" class="secondary small">Keine</button></div>
+          </div>
+          <p class="plan-preview" id="workPlanPreview" role="status" aria-live="polite">1 Tag wird geplant · noch keine Buchung.</p>
           <div class="plan-range"><label>Beginn<input id="workPlanStart" type="time" required></label><label>Ende<input id="workPlanEnd" type="time" required></label></div>
           <div class="plan-range"><label>Pause (Min.)<input id="workPlanBreak" type="number" min="0" max="1439" step="1" inputmode="numeric" value="30" required></label><label>Notiz (optional)<input id="workPlanNote" type="text" maxlength="100" placeholder="z. B. Frühschicht"></label></div>
           <button type="submit">Nur Planung speichern</button>
@@ -1458,6 +1504,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 
         <div id="workFields">
           <div id="entryPlannedHint" class="planned-hint hidden"><span id="entryPlannedText"></span><button id="entryUsePlan" type="button" class="secondary small">Geplante Zeit übernehmen</button></div>
+          <div id="entryPlanApplied" class="plan-applied-banner hidden" role="status"><strong>✓ Geplante Zeit übernommen</strong><span>Zeiten vorausgefüllt – bitte prüfen und anschließend ausdrücklich speichern.</span></div>
           <label for="workMode">Arbeitszeit eingeben als</label>
           <select id="workMode">
             <option value="range">Beginn und Ende</option>
@@ -1764,7 +1811,10 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
             throw new Error("Ungültige Arbeitsdauer.");
           }
           if (record.note != null && typeof record.note !== "string") throw new Error("Ungültige Notiz.");
+          if(record.fromPlan != null && typeof record.fromPlan !== 'boolean')
+            throw new Error('Ungültige Herkunftskennzeichnung.');
           Object.assign(result, { mode, breakMinutes: pause, hours, note: (record.note || "").slice(0, 200) });
+          if(record.fromPlan === true)result.fromPlan=true;
         }
         return result;
       });
@@ -2066,7 +2116,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
           ? `${record.start}–${record.end}`
           : "Dauer direkt eingegeben";
         const note = record.note ? ` · ${escapeHtml(record.note)}` : "";
-        return `${time} · Gesamtpause ${Number(record.breakMinutes || 0)} Min.${note}`;
+        return `${time} · Gesamtpause ${Number(record.breakMinutes || 0)} Min.${note}${record.fromPlan ? ' · ✓ Aus Planung übernommen' : ''}`;
       }
       if (record.type === "vacation") {
         return `${Number(record.days) === 0.5 ? "Halber Urlaubstag" : "Urlaub"} · ${hoursText(recordHours(record))}`;
@@ -2090,10 +2140,19 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       $("deltaMetric").textContent = signedHoursText(stats.delta);
       $("deltaMetric").className = stats.delta >= 0 ? "positive" : "negative";
 
-      $("carryMetric").textContent = signedHoursText(opening);
+      // Nur abgeschlossene Monate besitzen einen endgültigen Saldo.
+      // Der Monatsendstand steht dann gut sichtbar in der großen Monatskarte.
+      const showClosing = closed && closing !== null;
+      $("closedHeroBalance").classList.toggle("hidden", !showClosing);
+      $("heroBalanceValue").textContent = showClosing ? signedHoursText(closing) : "–";
+      $("heroBalanceValue").className = showClosing ? (closing >= 0 ? "positive" : "negative") : "";
+      // Vormonats-Übertrag nur im laufenden Monat – in abgeschlossenen Monaten redundant.
+      $("carryMetricCard").classList.toggle("hidden", selectedMonth !== currentMonth() || !active);
+      $("carryMetric").textContent = active ? signedHoursText(opening) : "Noch kein Abschluss";
+      $("closingMetricCard").classList.toggle("hidden", showClosing);
       $("closingLabel").textContent = "Überstunden gesamt am Monatsende";
-      $("closingMetric").textContent = closed && closing !== null ? signedHoursText(closing) : active ? "Noch offen" : "Nicht aktiv";
-      $("closingMetric").className = !closed || closing === null ? "" : closing >= 0 ? "positive" : "negative";
+      $("closingMetric").textContent = "Noch offen";
+      $("closingMetric").className = "";
 
       $("accountExplanation").textContent = !active
         ? "Dieser Monat liegt vor dem Start des Zeitkontos und wird nicht in den Saldo übernommen."
@@ -2324,6 +2383,8 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       $("vacationFields").classList.toggle("hidden", type !== "vacation");
       $("sickFields").classList.toggle("hidden", type !== "sick");
       setWorkModeVisibility();
+      if(type !== 'work')entryAppliedPlanDate=null;
+      showEntryPlanApplied();
       $("vacationDays").disabled = type !== "vacation";
       $("vacationEnd").disabled = type !== "vacation" || Boolean(editingId);
       $("vacationInterval").classList.toggle("hidden", Boolean(editingId));
@@ -2344,6 +2405,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     function openEntry(date = localDateString()) {
       returnFocus = document.activeElement;
       editingId = null;
+      entryAppliedPlanDate=null;showEntryPlanApplied();
       $("entryForm").reset();
       $("entryDate").value = date;
       $("entryType").value = "work";
@@ -2371,6 +2433,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       returnFocus = document.activeElement;
       $("entryStatus").textContent = "";
       editingId = id;
+      entryAppliedPlanDate=null;showEntryPlanApplied();
       $("entryForm").reset();
       $("entryDate").value = record.date;
       $("entryType").value = record.type;
@@ -2406,6 +2469,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       document.body.style.overflow = "";
       returnFocus?.focus({ preventScroll: true });
       editingId = null;
+      entryAppliedPlanDate=null;showEntryPlanApplied();
     }
 
     function overlapsExistingRange(record) {
@@ -2526,6 +2590,15 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       return records;
     }
     let manualMode = "range";
+    let manualAppliedPlanDate = null;
+    let entryAppliedPlanDate = null;
+    function showManualPlanApplied() {
+      $('manualPlanApplied').classList.toggle('hidden', manualAppliedPlanDate !== $('manualDate').value);
+    }
+    function showEntryPlanApplied() {
+      $('entryPlanApplied').classList.toggle('hidden',
+        entryAppliedPlanDate !== $('entryDate').value || $('entryType').value !== 'work' || Boolean(editingId));
+    }
     function netMinutes() {
       const pause = Number($("manualPause").value || 0);
       const start = $("manualStart").value, end = $("manualEnd").value;
@@ -2550,13 +2623,18 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       previewManual();
     }
     $("byRange").addEventListener("click",()=>setManualMode("range"));
-    $("byDuration").addEventListener("click",()=>setManualMode("duration"));
+    $("byDuration").addEventListener("click",()=>{
+      manualAppliedPlanDate=null;showManualPlanApplied();setManualMode("duration");
+    });
     $("manualForm").addEventListener("input",previewManual);
-    $("manualDate").addEventListener("change",refreshManualPlanHint);
+    $("manualDate").addEventListener("change",()=>{
+      manualAppliedPlanDate=null;showManualPlanApplied();refreshManualPlanHint();
+    });
     $("manualForm").addEventListener("submit",withWriteLock(async()=>{
       const net=netMinutes(), date=$("manualDate").value, status=$("manualStatus");
       if(!validDate(date) || !net) { status.textContent="Bitte Datum und Arbeitszeit prüfen. Die Pause muss kürzer als die Anwesenheit sein."; return; }
       const record={id:makeId(),date,type:"work",mode:manualMode,hours:net/60,breakMinutes:Number($("manualPause").value||0),note:""};
+      if(manualAppliedPlanDate===date)record.fromPlan=true;
       if(manualMode==="range") Object.assign(record,{start:$("manualStart").value,end:$("manualEnd").value});
       const conflict=absenceError(record);
       if(conflict){status.textContent=conflict;return;}
@@ -2567,6 +2645,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       catch(error){state.records=previous;status.textContent="Speichern fehlgeschlagen. "+error.message;return;}
       for(const id of ["manualStart","manualEnd","manualDuration"]) $(id).value="";
       $("manualPause").value="0";
+      manualAppliedPlanDate=null;showManualPlanApplied();
       selectedMonth=date.slice(0,7);selectedCalendarDate=date;
       renderAll();previewManual();
       status.textContent=durationLabel(net)+" Std. für "+parseDate(date).toLocaleDateString("de-DE")+" gespeichert.";
@@ -2579,7 +2658,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
       $("todayWorked").textContent=durationLabel(records.reduce((sum,r)=>sum+(r.type==="work"?r.hours:0),0)*60)+" Std.";
       $("bookedMonth").textContent="Gearbeitet · "+monthTitle(month);
       $("monthWorked").textContent=durationLabel(monthStats(month).work*60)+" Std.";
-      $("timeline").innerHTML=records.map(r=>'<div class="stamp"><span>'+recordTypeName(r)+(r.mode==='range'?' '+escapeHtml(r.start)+'–'+escapeHtml(r.end):'')+' · '+durationLabel(recordHours(r)*60)+' Std.</span><button class="quiet" data-today-edit="'+escapeHtml(r.id)+'">Bearbeiten</button></div>').join("") || '<p class="hint">Heute sind noch keine Zeiten erfasst.</p>';
+      $("timeline").innerHTML=records.map(r=>'<div class="stamp"><span>'+recordTypeName(r)+(r.mode==='range'?' '+escapeHtml(r.start)+'–'+escapeHtml(r.end):'')+' · '+durationLabel(recordHours(r)*60)+' Std.'+(r.fromPlan?' <small class="entry-plan-tag">Aus Planung</small>':'')+'</span><button class="quiet" data-today-edit="'+escapeHtml(r.id)+'">Bearbeiten</button></div>').join("") || '<p class="hint">Heute sind noch keine Zeiten erfasst.</p>';
       $("timeline").querySelectorAll("[data-today-edit]").forEach(b=>b.addEventListener("click",()=>openEditor(b.dataset.todayEdit)));
       $("oldShift").classList.toggle("hidden",!state.stamps?.length);
       if(state.stamps?.length) $("oldShiftStart").textContent="Beginn: "+new Date(state.stamps[0]).toLocaleString("de-DE")+". Trage das Ende ein, um die bereits erfassten Zeiten zu übernehmen.";
@@ -2671,11 +2750,15 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     function storedTemplates(){return Array.isArray(state.settings.quickTemplates)?state.settings.quickTemplates:[];}
     function renderQuickTemplates() {
       const quick=$('quickTemplates'), templates=storedTemplates();
+      const planSelect=$('workPlanTemplate'), oldTemplate=planSelect.value;
+      planSelect.innerHTML='<option value="">Eigene Zeiten eingeben</option>'+templates.map(t=>`<option value="${escapeHtml(t.id)}">${escapeHtml(t.name)} · ${escapeHtml(t.start)}–${escapeHtml(t.end)}</option>`).join('');
+      planSelect.value=templates.some(t=>t.id===oldTemplate)?oldTemplate:'';
       quick.innerHTML=templates.map(t=>`<button type="button" class="template-pill" data-template="${escapeHtml(t.id)}">⚡ ${escapeHtml(t.name)}</button>`).join('');
       quick.querySelectorAll('[data-template]').forEach(btn=>btn.addEventListener('click',()=>{
         const t=storedTemplates().find(x=>x.id===btn.dataset.template);if(!t)return;
         setManualMode('range');$('manualStart').value=t.start;$('manualEnd').value=t.end;
         $('manualPause').value=String(t.breakMinutes);previewManual();
+        manualAppliedPlanDate=null;showManualPlanApplied();
         $('manualStatus').textContent=`${t.name} eingesetzt – bitte noch speichern.`;
       }));
       $('templateList').innerHTML=templates.map(t=>`<div class="template-list-row"><div><strong>${escapeHtml(t.name)}</strong><small>${escapeHtml(t.start)}–${escapeHtml(t.end)} · ${t.breakMinutes} Min. Pause</small></div><button type="button" class="secondary" data-remove-template="${escapeHtml(t.id)}">Entfernen</button></div>`).join('') || '<p class="hint">Noch keine Vorlagen gespeichert.</p>';
@@ -2833,20 +2916,73 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
     function applyPlanToManual(plan) {
       setManualMode('range');$('manualStart').value=plan.start;$('manualEnd').value=plan.end;
       $('manualPause').value=String(plan.breakMinutes);previewManual();
+      manualAppliedPlanDate=plan.date;showManualPlanApplied();
       $('manualStatus').textContent='Plan übernommen – erst nach „Eintrag speichern“ wird die Zeit gebucht.';
     }
     function applyPlanToEntry(plan) {
       $('entryType').value='work';$('workMode').value='range';setEntryTypeVisibility();
       $('startTime').value=plan.start;$('endTime').value=plan.end;
       $('breakMinutes').value=String(plan.breakMinutes);$('workNote').value=plan.note||'';
+      entryAppliedPlanDate=plan.date;showEntryPlanApplied();
       showStatus($('entryStatus'),'Plan vorausgewählt. Bitte tatsächliche Zeiten prüfen und erst dann speichern.','success');
     }
+    $('entryDate').addEventListener('change',()=>{
+      entryAppliedPlanDate=null;showEntryPlanApplied();refreshEntryPlanHint();
+    });
     $('manualUsePlan').addEventListener('click',()=>{
       const plan=planForDate($('manualDate').value);if(plan)applyPlanToManual(plan);
     });
     $('entryUsePlan').addEventListener('click',()=>{
       const plan=planForDate($('entryDate').value);if(plan&&!editingId)applyPlanToEntry(plan);
     });
+    function selectedWorkPlanDays(){
+      return [...document.querySelectorAll('input[name="workPlanWeekday"]:checked')].map(el=>Number(el.value));
+    }
+    function workPlanDates(start,end,weekdays){
+      if(!validDate(start)||!validDate(end)||end<start)throw new Error('Bitte einen gültigen Zeitraum auswählen.');
+      const first=parseDate(start),last=parseDate(end);
+      const span=Math.round((Date.UTC(last.getFullYear(),last.getMonth(),last.getDate())-Date.UTC(first.getFullYear(),first.getMonth(),first.getDate()))/86400000);
+      if(span>89)throw new Error('Bitte höchstens 90 Kalendertage auf einmal planen.');
+      if(start===end)return [start];
+      const chosen=new Set(weekdays),dates=[];
+      if(!chosen.size)throw new Error('Bitte mindestens einen Wochentag auswählen.');
+      const cursor=parseDate(start);
+      for(let i=0;i<=span;i++){
+        if(chosen.has(cursor.getDay()))dates.push(localDateString(cursor));
+        cursor.setDate(cursor.getDate()+1);
+      }
+      if(!dates.length)throw new Error('Im Zeitraum liegt keiner deiner ausgewählten Wochentage.');
+      return dates;
+    }
+    function updateWorkPlanPreview(){
+      const from=$('workPlanDate').value,to=$('workPlanEndDate').value||from;
+      const isInterval=Boolean($('workPlanEndDate').value)&&$('workPlanEndDate').value!==from;
+      $('workPlanRangeOptions').classList.toggle('hidden',!isInterval);
+      const out=$('workPlanPreview');
+      if(!from){out.textContent='Datum auswählen. Keine Arbeitszeit wird gebucht.';out.classList.remove('invalid');return;}
+      try{
+        const dates=workPlanDates(from,to,selectedWorkPlanDays());
+        out.textContent=`${dates.length} ${dates.length===1?'Tag wird':'Tage werden'} geplant · ${dates[0]===dates.at(-1)?displayDay(dates[0]):displayDay(dates[0])+' bis '+displayDay(dates.at(-1))}. Keine Buchung.`;
+        out.classList.remove('invalid');
+      }catch(e){out.textContent=e.message;out.classList.add('invalid');}
+    }
+    $('workPlanManageTemplates').addEventListener('click',()=>{
+      setActiveTab('more');$('templatePanel').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    $('workPlanTemplate').addEventListener('change',()=>{
+      const t=storedTemplates().find(x=>x.id===$('workPlanTemplate').value);
+      if(!t)return;
+      $('workPlanStart').value=t.start;$('workPlanEnd').value=t.end;$('workPlanBreak').value=String(t.breakMinutes);
+      showStatus($('workPlanStatus'),`Vorauswahl „${t.name}“ geladen. Noch keine Planung gespeichert.`,'success');
+    });
+    for(const id of ['workPlanDate','workPlanEndDate'])$(id).addEventListener('change',updateWorkPlanPreview);
+    $('workPlanDays').addEventListener('change',updateWorkPlanPreview);
+    for(const [id,days] of [['planWeekdaysWeek',[1,2,3,4,5]],['planWeekdaysAll',[0,1,2,3,4,5,6]],['planWeekdaysClear',[]]]) {
+      $(id).addEventListener('click',()=>{
+        document.querySelectorAll('input[name="workPlanWeekday"]').forEach(box=>box.checked=days.includes(Number(box.value)));
+        updateWorkPlanPreview();
+      });
+    }
     function renderWorkPlans() {
       const month=$('workPlanMonth').value||currentMonth(),out=$('workPlanList');
       const list=(state.plans||[]).filter(p=>p.date.startsWith(month)).sort((a,b)=>a.date.localeCompare(b.date));
@@ -2856,6 +2992,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
         $('workPlanDate').value=plan.date;$('workPlanEndDate').value='';
         $('workPlanStart').value=plan.start;$('workPlanEnd').value=plan.end;
         $('workPlanBreak').value=String(plan.breakMinutes);$('workPlanNote').value=plan.note;
+        $('workPlanTemplate').value='';updateWorkPlanPreview();
         $('workPlanForm').scrollIntoView({behavior:'smooth',block:'center'});
         showStatus($('workPlanStatus'),'Du bearbeitest die Planung für '+displayDay(plan.date)+'.','');
       }));
@@ -2868,6 +3005,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
         catch(error){state.plans=previous;throw error;}
       })));
       refreshManualPlanHint();
+      updateWorkPlanPreview();
     }
     $('workPlanMonth').addEventListener('change',renderWorkPlans);
     $('workPlanForm').addEventListener('submit',withWriteLock(async()=>{
@@ -2880,15 +3018,9 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
          !Number.isInteger(pause)||pause<0||pause>1439||timeToMinutes(end)-timeToMinutes(start)<=pause){
         showStatus(status,'Beginn, Ende oder Pause ungültig. Ende muss nach Beginn liegen.','error');return;
       }
-      const dates=[],cursor=parseDate(date);
-      while(localDateString(cursor)<=endDate && dates.length<91){
-        const day=localDateString(cursor);
-        if(date===endDate || workDates().includes(cursor.getDay()))dates.push(day);
-        cursor.setDate(cursor.getDate()+1);
-        if((cursor.getTime()-parseDate(date).getTime())>92*86400000)break;
-      }
-      if((parseDate(endDate).getTime()-parseDate(date).getTime())/86400000>89){showStatus(status,'Bitte höchstens 90 Kalendertage auf einmal planen.','error');return;}
-      if(!dates.length){showStatus(status,'Im Zeitraum gibt es keine ausgewählten Arbeitstage.','error');return;}
+      let dates;
+      try{dates=workPlanDates(date,endDate,selectedWorkPlanDays());}
+      catch(error){showStatus(status,error.message,'error');return;}
       const existing=dates.filter(d=>planForDate(d));
       if(existing.length&&!confirm(`${existing.length} vorhandene Planung(en) werden ersetzt. Fortfahren?`))return;
       const previous=state.plans||[];
@@ -3201,6 +3333,7 @@ body { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 
         record.hours = hours;
         record.note = $("workNote").value.trim();
+        if(entryAppliedPlanDate===date || (editingId && state.records.find(r=>r.id===editingId)?.fromPlan))record.fromPlan=true;
 
         if (overlapsExistingRange(record) &&
             !confirm("Diese Arbeitszeit überschneidet sich mit einem anderen Arbeitsblock. Trotzdem speichern?")) {
