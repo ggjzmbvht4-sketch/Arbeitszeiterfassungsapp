@@ -1813,10 +1813,20 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 #overviewPanel details .panel{border:0;box-shadow:none;padding:8px 0}#smartReport .report-story p{margin:.45em 0}
 .batch-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:.6rem 0}.batch-row input{min-width:0;width:100%;box-sizing:border-box}
 </style>
+<style>
+.brand-block{min-width:0;display:grid;gap:1px}
+.legal-links{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:.68rem;font-weight:650;line-height:1.3}
+.legal-links a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.cloud-privacy-ack{display:flex;gap:10px;align-items:flex-start;margin:12px 0 4px;font-size:.88rem;line-height:1.45}
+.cloud-privacy-ack input{width:1.15rem;height:1.15rem;margin-top:.2rem;flex:none;accent-color:var(--green)}
+</style>
 </head>
 <body>
 <header class="app-header">
+<div class="brand-block">
 <h1>Arbeitszeit</h1>
+<nav aria-label="Rechtliches" class="legal-links"><a href="./impressum.html">Impressum</a><a href="./datenschutz.html">Datenschutz</a></nav>
+</div>
 <button aria-label="KI-Assistent öffnen" class="header-assistant" id="headerAssistant" title="KI-Assistent öffnen" type="button"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="m12 2 1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9L12 2Z"></path><path d="m19 17 .8 2.2L22 20l-2.2.8L19 23l-.8-2.2L16 20l2.2-.8L19 17Z"></path></svg><span class="header-assistant-label">KI</span></button><button aria-label="Einstellungen und Konto öffnen" class="header-settings" id="headerSettings" title="Einstellungen und Konto öffnen" type="button">
 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" viewbox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8"></path><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l-1.88 1.88a1.65 1.65 0 0 0-1.82-.33l-.1.04A1.65 1.65 0 0 0 15 19.9V20h-6v-.1a1.65 1.65 0 0 0-.93-1.49l-.1-.04a1.65 1.65 0 0 0-1.82.33l-1.88-1.88A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.5-1H3v-4h.1a1.65 1.65 0 0 0 1.5-1 1.65 1.65 0 0 0-.33-1.82L6.15 5.3a1.65 1.65 0 0 0 1.82.33A1.65 1.65 0 0 0 9 4.1V4h6v.1a1.65 1.65 0 0 0 1.03 1.53 1.65 1.65 0 0 0 1.82-.33l1.88 1.88A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.5 1h.1v4h-.1a1.65 1.65 0 0 0-1.5 1Z"></path></svg>
 </button>
@@ -2046,6 +2056,9 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 <label for="cloudProjectKey">Publishable Key (öffentlich)</label>
 <input autocapitalize="none" autocomplete="off" id="cloudProjectKey" placeholder="sb_publishable_… oder anon key" spellcheck="false" type="text"/>
 <p class="hint">Beide Werte findest du unter Supabase → Project Settings → API Keys. Niemals einen Secret Key oder service_role Key eingeben.</p>
+<p class="hint">Es wird kein Skript von jsDelivr oder einem anderen Fremdserver geladen. Die Bibliothek liegt auf dieser Website und wird erst geladen, wenn du die Verbindung bestätigst. Vorher verlassen keine Arbeitszeiten dein Gerät.</p>
+<label class="cloud-privacy-ack"><input id="cloudPrivacyAck" type="checkbox"/> <span>Ich willige ein, dass E-Mail, Anmeldung und meine Arbeitszeiten an das von mir angegebene Supabase-Projekt übertragen werden.</span></label>
+<p class="hint">Bitte vorher die <a href="./datenschutz.html">Datenschutzerklärung</a> lesen. Ohne diese Bestätigung bleibt alles nur auf diesem Gerät.</p>
 <button class="secondary" id="cloudSaveConfig" type="button">Verbindung speichern</button>
 </details>
 <div aria-label="Kontoaktion" class="cloud-switch" role="group">
@@ -2319,7 +2332,6 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 <span>Eintrag gelöscht.</span>
 <button id="undoDeleteButton" type="button">Rückgängig</button>
 </div>
-<script defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <div class="assistant-overlay hidden" id="assistantOverlay" role="presentation">
 <section aria-labelledby="assistantTitle" aria-modal="true" class="assistant-dialog" id="smartChat" role="dialog" tabindex="-1">
 <div class="assistant-top"><div aria-hidden="true" class="assistant-symbol">✦</div><div><h2 id="assistantTitle">Dein Zeit-Assistent</h2><p>Frag mich alles rund um deine Arbeitszeiten.</p></div><button aria-label="Assistent schließen" class="assistant-close secondary" id="assistantClose" type="button">✕</button></div>
@@ -4136,7 +4148,12 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     $('passkeyLogin').addEventListener('click',()=>void passkeyAction('login'));
     $('cloudPasskeyLogin').addEventListener('click',async()=>{
       try{
-        if(!cloudClient){const conf=cloudConfigFromInputs();setSupabaseConfig(conf);}
+        assertCloudPrivacyAck();
+        if(!cloudClient){
+          const conf=cloudConfigFromInputs();
+          await loadSupabaseSdkIfNeeded();
+          setSupabaseConfig(conf);
+        }
         await passkeyAction('login','cloudStatus');
       }catch(e){showCloudStatus(e.message,'error');}
     });
@@ -5105,6 +5122,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
        Ein CAS-RPC verhindert lautloses Überschreiben bei mehreren Geräten. */
     const SUPABASE_CONFIG_KEY = "arbeitszeit-supabase-config-v1";
     const SUPABASE_LAST_USER_KEY = "arbeitszeit-supabase-last-user-v1";
+    const CLOUD_PRIVACY_ACK_KEY = "arbeitszeit-cloud-privacy-ack-v1";
     const CALENDAR_TOKEN_PREFIX = "arbeitszeit-supabase-calendar-token:";
     const LAST_SYNC_PREFIX = "arbeitszeit-last-sync:";
     // Optional hier eintragen, damit die Verbindung auf allen Geräten schon vorausgefüllt ist.
@@ -5154,6 +5172,16 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     }
 
     function showCloudStatus(message, kind = "") { showStatus($("cloudStatus"),message,kind); }
+
+    function assertCloudPrivacyAck() {
+      const box=$("cloudPrivacyAck");
+      if(box?.checked) {
+        localStorage.setItem(CLOUD_PRIVACY_ACK_KEY, new Date().toISOString());
+        return;
+      }
+      if(localStorage.getItem(CLOUD_PRIVACY_ACK_KEY)) return;
+      throw new Error("Bitte zuerst die Übertragung an dein Supabase-Projekt bestätigen. Ohne diese Einwilligung wird keine Verbindung aufgebaut.");
+    }
 
     function setCloudStatusError(error, prefix="Cloud-Fehler") {
       const code=error?.code || error?.status;
@@ -5263,7 +5291,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 
     function setSupabaseConfig(config) {
       if(typeof window.supabase?.createClient!=="function") {
-        throw new Error("Supabase-Bibliothek konnte nicht geladen werden. Prüfe deine Internetverbindung und lade die App neu.");
+        throw new Error("Supabase-Bibliothek ist noch nicht geladen. Bitte die Datenschutz-Bestätigung setzen und die Verbindung erneut speichern.");
       }
       const url=normalizedProjectUrl(config.url), key=validatePublicKey(config.key);
       if(cloudClient && cloudConfiguredUrl===url && cloudConfiguredKey===key) return cloudClient;
@@ -5344,8 +5372,10 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       $("cloudProjectUrl").value=config?.url||"";
       $("cloudProjectKey").value=config?.key||"";
       $("cloudConnectionDetails").open=!Boolean(config?.url&&config?.key);
+      if(localStorage.getItem(CLOUD_PRIVACY_ACK_KEY)) $("cloudPrivacyAck").checked=true;
       if(config?.url && config?.key) {
         try {
+          await loadSupabaseSdkIfNeeded();
           const client=setSupabaseConfig(config);
           const {data,error}=await client.auth.getSession();
           if(error)throw error;
@@ -5485,10 +5515,12 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       if(cloudSyncQueued && !cloudConflict)queueCloudSync(true);
     }
 
-    $("cloudSaveConfig").addEventListener("click",()=>{
+    $("cloudSaveConfig").addEventListener("click",async()=>{
       try {
         if(cloudSession)throw new Error("Bitte zuerst abmelden, um das Projekt zu wechseln.");
+        assertCloudPrivacyAck();
         const config=cloudConfigFromInputs();
+        await loadSupabaseSdkIfNeeded();
         localStorage.setItem(SUPABASE_CONFIG_KEY,JSON.stringify(config));
         setSupabaseConfig(config);
         $("cloudConnectionDetails").open=false;
@@ -5501,7 +5533,9 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       if(cloudConnecting || cloudSyncBusy)return;
       cloudConnecting=true;$("cloudAuthSubmit").disabled=true;
       try {
+        assertCloudPrivacyAck();
         const config=cloudConfigFromInputs();
+        await loadSupabaseSdkIfNeeded();
         localStorage.setItem(SUPABASE_CONFIG_KEY,JSON.stringify(config));
         const client=setSupabaseConfig(config);
         const email=$("cloudEmailInput").value.trim(),password=$("cloudPasswordInput").value;
@@ -5525,9 +5559,11 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 
     $("cloudForgotPassword").addEventListener("click",async()=>{
       try {
+        assertCloudPrivacyAck();
         const config=cloudConfigFromInputs();
         const email=$("cloudEmailInput").value.trim();
         if(!email || !$("cloudEmailInput").checkValidity())throw new Error("Bitte zuerst eine gültige E-Mail-Adresse eingeben.");
+        await loadSupabaseSdkIfNeeded();
         const client=setSupabaseConfig(config);
         const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
         if(error)throw error;
@@ -5782,9 +5818,13 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       if(sdkReloadInProgress)return sdkReloadInProgress;
       sdkReloadInProgress=new Promise((resolve,reject)=>{
         const script=document.createElement("script");
-        script.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-        script.onload=()=>resolve();
-        script.onerror=()=>reject(new Error("Supabase konnte nicht geladen werden. Bitte später erneut öffnen."));
+        // Gleiche Origin: kein IP-Transfer an jsDelivr/Cloudflare. Nur nach ausdrücklicher Cloud-Nutzung.
+        script.src="./vendor/supabase.js";
+        script.onload=()=>{
+          if(typeof window.supabase?.createClient==="function")resolve();
+          else reject(new Error("Die lokale Supabase-Bibliothek ist unvollständig."));
+        };
+        script.onerror=()=>reject(new Error("Die lokale Supabase-Bibliothek konnte nicht geladen werden."));
         document.head.append(script);
       }).finally(()=>{sdkReloadInProgress=null;});
       return sdkReloadInProgress;
