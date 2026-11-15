@@ -1,7 +1,7 @@
 /* Arbeitszeit PWA – versionsgeprüfter Offline-Start.
  * Cache nur die eigene HTML-Oberfläche, niemals Supabase-API-Antworten
  * oder private Apple-Kalender-Links. IndexedDB bleibt unberührt. */
-const SHELL_CACHE = 'arbeitszeit-shell-next-v15-legal';
+const SHELL_CACHE = 'arbeitszeit-shell-next-v16-legal';
 const SHELL_URL = new URL('./index.html', self.registration.scope).href;
 
 self.addEventListener('install', (event) => {
@@ -23,18 +23,46 @@ self.addEventListener('activate', (event) => {
   })());
 });
 
+function isLegalPage(url) {
+  return /\/(?:impressum|datenschutz)\.html$/i.test(url.pathname);
+}
+
+function isAppShell(url) {
+  return url.href === SHELL_URL || url.pathname.endsWith('/');
+}
+
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
-  if (!(req.mode === 'navigate' || url.href === SHELL_URL)) return;
+
+  // Rechtstexte nie als App-Hülle cachen und nie durch die App ersetzen.
+  if (isLegalPage(url)) {
+    event.respondWith((async () => {
+      const cache = await caches.open(SHELL_CACHE);
+      try {
+        const response = await fetch(req, {cache:'no-store'});
+        if (response.ok && response.type === 'basic') await cache.put(req, response.clone());
+        return response;
+      } catch (_) {
+        const offline = await cache.match(req);
+        if (offline) return offline;
+        return new Response('Diese Seite ist offline noch nicht gespeichert. Bitte einmal mit Internet öffnen.', {
+          status:503, headers:{'Content-Type':'text/plain; charset=utf-8'}
+        });
+      }
+    })());
+    return;
+  }
+
+  if (!(req.mode === 'navigate' ? isAppShell(url) : url.href === SHELL_URL)) return;
 
   event.respondWith((async () => {
     const cache = await caches.open(SHELL_CACHE);
     try {
       const response = await fetch(req, {cache:'no-store'});
-      if (response.ok && response.type === 'basic') {
+      if (response.ok && response.type === 'basic' && isAppShell(url)) {
         await cache.put(SHELL_URL, response.clone());
       }
       return response;
