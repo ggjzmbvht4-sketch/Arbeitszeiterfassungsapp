@@ -1892,6 +1892,14 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 <div class="insight-subline"><span id="insightForecast">Ohne laufenden Monat oder Prognose.</span></div>
 </div>
 
+<section class="panel" aria-labelledby="monthlySummaryTitle">
+<h2 id="monthlySummaryTitle">Monate im Überblick</h2>
+<p class="hint" id="monthlySummaryHelp">Gearbeitet zeigt die erfasste Nettoarbeitszeit. Plus/Minus ist die angerechnete Zeit inklusive Urlaub, Krankheit und Feiertagen abzüglich Monatssoll. Das Zeitkonto enthält den Übertrag. Abschlüsse gibt es erst nach Monatsende und ab Start des Zeitkontos.</p>
+<div class="monthly-summary-scroll" tabindex="0" role="region" aria-label="Monatswerte" aria-describedby="monthlySummaryHelp">
+<table class="monthly-summary"><caption class="sr-only">Arbeitszeit und Überstunden pro Monat</caption><thead><tr><th scope="col">Monat</th><th scope="col">Gearbeitet</th><th scope="col">Plus/Minus</th><th scope="col">Zeitkonto</th></tr></thead><tbody id="yearMonths"></tbody></table>
+</div>
+<p class="hint">Tippe auf einen Monat, um die Buchungen und den Monatsabschluss zu öffnen. Laufende Monate sind noch offen, zukünftige Monate ausstehend.</p>
+</section>
 <div class="grid two-dashboard" id="analyticsQuickStats">
 <div class="metric"><span>Gearbeitet im gewählten Jahr</span><strong id="statYearWork">–</strong></div>
 <div class="metric"><span>Resturlaub</span><strong id="statVacation">–</strong></div>
@@ -1912,7 +1920,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 </div>
 <h3>Gearbeitete Stunden je Monat</h3>
 <div aria-label="Gearbeitete Stunden pro Monat mit Stundenachse" class="insight-chart" id="monthlyChart" role="img"></div>
-<div class="month-links" id="yearMonths"></div><p class="hint">Skala links in Stunden. Der laufende Monat zeigt nur tatsächlich erfasste Arbeitszeit.</p>
+<p class="hint">Skala links in Stunden. Der laufende Monat zeigt nur tatsächlich erfasste Arbeitszeit.</p>
 </section>
 <details class="panel analytics-more" id="analyticsMore"><summary>Weitere Kennzahlen zum Arbeitsrhythmus</summary><div class="analytics-more-content"><h2>Arbeitsrhythmus</h2>
 <div class="grid two-dashboard">
@@ -1929,7 +1937,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 <section aria-label="Monatsübersicht und Buchungen" class="view-stack hidden" id="detailsPanel">
 <div aria-label="Monat für Details auswählen" class="month-bar" id="detailMonthBar">
 <button aria-label="Vorheriger Monat" class="secondary" id="detailsPreviousMonth" type="button">‹</button>
-<div class="month-control"><span aria-hidden="true" id="detailsMonthText"></span><input aria-label="Monat für Details auswählen" id="detailsMonthPicker" max="2200-12" min="2000-01" tabindex="-1" type="month"/></div>
+<div class="month-control"><span aria-live="polite" id="detailsMonthText"></span><input aria-label="Monat für Details auswählen" id="detailsMonthPicker" max="2200-12" min="2000-01" type="month"/></div>
 <button aria-label="Nächster Monat" class="secondary" id="detailsNextMonth" type="button">›</button>
 </div><p class="view-lead">Monatsabschluss, Sollstunden und alle Buchungen auf einen Blick.</p><div class="month-quick-actions"><button class="secondary small" id="monthOpenCalendar" type="button">Kalender öffnen</button><button class="secondary small" id="monthAddEntry" type="button">Zeit eintragen</button></div>
 <section class="view-stack" id="overviewPanel">
@@ -1940,6 +1948,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 </div><p class="hint" id="monthMovement"></p><p class="hint" id="monthWorkStory"></p></div>
 <div class="panel">
 <div class="grid">
+<div class="metric"><span>Tatsächlich gearbeitet</span><strong id="workedMetric">–</strong></div>
 <div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
 <div class="metric"><span>Noch bis zum Soll</span><strong id="remainingMetric">–</strong></div>
 <div class="metric" id="closedDelta"><span>Abgeschlossene Monatsdifferenz</span><strong id="deltaMetric">–</strong></div>
@@ -2975,6 +2984,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 
       $("overviewHeading").textContent = monthTitle(selectedMonth);
       $("targetMetric").textContent = hoursText(stats.target);
+      $("workedMetric").textContent = hoursText(stats.work);
       $("creditedMetric").textContent = hoursText(stats.credited);
       $("remainingMetric").textContent = hoursText(Math.max(0, stats.target - stats.credited));
 
@@ -3674,6 +3684,8 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       $("detailsMonthPicker").value=selectedMonth;
       $("detailsMonthText").textContent=monthTitle(selectedMonth);
       $("reportYear").value = Number(selectedMonth.slice(0, 4));
+      for (const id of ["previousMonth", "detailsPreviousMonth"]) $(id).disabled = !validMonth(addMonths(selectedMonth, -1));
+      for (const id of ["nextMonth", "detailsNextMonth"]) $(id).disabled = !validMonth(addMonths(selectedMonth, 1));
       renderOverview();
       renderCalendar();
       renderQuickTemplates();
@@ -3770,7 +3782,12 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       $('insightForecast').textContent='Laufender Monat und Planungen bleiben unberücksichtigt.';
       const months=Array.from({length:12},(_,m)=>`${year}-${String(m+1).padStart(2,'0')}`);
       const monthly=months.map(ym=>monthStats(ym).work),yearWork=monthly.reduce((a,b)=>a+b,0);
-      $('yearMonths').innerHTML=months.map((m,i)=>`<button type="button" class="secondary" data-month="${m}"><span>${parseDate(m+'-01').toLocaleDateString('de-DE',{month:'short'})}</span> <strong>${hoursText(monthly[i])}</strong></button>`).join('');
+      $('yearMonths').innerHTML=months.map((m,i)=>{
+        const closed=monthIsClosed(m),stats=monthStats(m);
+        const status=m<start?'Nicht aktiv':m===now?'Offen':m>now?'Ausstehend':'';
+        const closing=closed?closingBalanceForMonth(m):null;
+        return `<tr><th scope="row"><button type="button" class="secondary" data-month="${m}" aria-label="${monthTitle(m)} öffnen">${parseDate(m+'-01').toLocaleDateString('de-DE',{month:'short'})}</button></th><td>${hoursText(monthly[i])}</td><td class="${closed?(stats.delta>=0?'positive':'negative'):''}">${closed?signedHoursText(stats.delta):status}</td><td class="${closed?(closing>=0?'positive':'negative'):''}">${closed?signedHoursText(closing):status}</td></tr>`;
+      }).join('');
       $('statYearWork').textContent=displayTime(yearWork);
       const vacation=vacationBreakdown(year);
       $('statVacation').textContent=vacation.active?vacation.remaining.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage':'–';
@@ -4287,38 +4304,19 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       if (opening) renderSettings();
     });
 
-    $("previousMonth").addEventListener("click", () => {
-      if (!validMonth(addMonths(selectedMonth, -1))) return;
-      selectedMonth = addMonths(selectedMonth, -1);
-      selectedCalendarDate = `${selectedMonth}-01`;
+    function selectMonth(value) {
+      if (!validMonth(value)) return;
+      selectedMonth = value;
+      selectedCalendarDate = `${value}-01`;
       renderAll();
-    });
+    }
 
-    $("nextMonth").addEventListener("click", () => {
-      if (!validMonth(addMonths(selectedMonth, 1))) return;
-      selectedMonth = addMonths(selectedMonth, 1);
-      selectedCalendarDate = `${selectedMonth}-01`;
-      renderAll();
-    });
-
-    $("detailsPreviousMonth").addEventListener("click",()=>{
-      const value=addMonths(selectedMonth,-1);if(!validMonth(value))return;
-      selectedMonth=value;analysisMonth=value;renderAll();
-    });
-    $("detailsNextMonth").addEventListener("click",()=>{
-      const value=addMonths(selectedMonth,1);if(!validMonth(value))return;
-      selectedMonth=value;analysisMonth=value;renderAll();
-    });
-    $("detailsMonthPicker").addEventListener("change",()=>{
-      const value=$("detailsMonthPicker").value;if(!validMonth(value))return;
-      selectedMonth=value;analysisMonth=value;renderAll();
-    });
-    $("monthPicker").addEventListener("change", () => {
-      if (!validMonth($("monthPicker").value)) return;
-      selectedMonth = $("monthPicker").value;
-      selectedCalendarDate = `${selectedMonth}-01`;
-      renderAll();
-    });
+    $("previousMonth").addEventListener("click", () => selectMonth(addMonths(selectedMonth, -1)));
+    $("nextMonth").addEventListener("click", () => selectMonth(addMonths(selectedMonth, 1)));
+    $("detailsPreviousMonth").addEventListener("click", () => selectMonth(addMonths(selectedMonth, -1)));
+    $("detailsNextMonth").addEventListener("click", () => selectMonth(addMonths(selectedMonth, 1)));
+    $("detailsMonthPicker").addEventListener("change", () => selectMonth($("detailsMonthPicker").value));
+    $("monthPicker").addEventListener("change", () => selectMonth($("monthPicker").value));
 
     $("entryForm").addEventListener("submit", withWriteLock(async (event) => {
       event.preventDefault();
@@ -7121,7 +7119,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     $('aiEntry').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('aiFill').click();}});
 
     function openMonth(month){
-      selectedMonth=month;scrollPositions.delete('details');
+      selectedMonth=month;selectedCalendarDate=month+'-01';scrollPositions.delete('details');
       setActiveTab('details');
     }
     function openCalendarDate(date){
@@ -7243,7 +7241,6 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 #aiMic:disabled,#assistantMic:disabled{opacity:.65}
 .view-lead{font-size:.88rem;color:var(--muted);margin:0 0 12px;line-height:1.5}
 #detailsPanel .month-bar{margin-bottom:6px}
-#detailsMonthPicker{display:none!important}
 #detailMonthBar .month-control{display:flex;align-items:center;justify-content:center}
 #detailMonthBar #detailsMonthText{font-weight:800;white-space:nowrap;font-size:1.03rem}
 .month-quick-actions{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
@@ -7258,7 +7255,14 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 #monthExtras #smartReport h2{font-size:1rem}
 #analyticsPanel .analysis-scope{margin-bottom:3px}
 #analyticsPanel .insight-hero{margin-top:7px}
-#analyticsPanel #yearMonths button{min-height:54px}
+.monthly-summary-scroll{max-width:100%;overflow-x:auto;border-radius:12px}
+.monthly-summary{width:100%;border-collapse:collapse;font-size:.85rem;font-variant-numeric:tabular-nums}
+.monthly-summary th,.monthly-summary td{padding:10px 6px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
+.monthly-summary thead th{font-size:.75rem;color:var(--muted)}
+.monthly-summary th:first-child{text-align:left}
+#analyticsPanel #yearMonths{display:table-row-group}
+#analyticsPanel #yearMonths button{display:inline-flex;min-height:44px;min-width:52px;padding:8px;text-align:left}
+.monthly-summary-scroll:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #morePanel .settings-intro h2{font-size:1.45rem;letter-spacing:-.03em;margin-bottom:4px}
 #morePanel .settings-intro p{margin:0 0 12px}
 #morePanel #settingsTopics{gap:8px}
