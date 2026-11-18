@@ -1818,6 +1818,13 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 .legal-links{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:.68rem;font-weight:650;line-height:1.3}
 .legal-links a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
 .cloud-privacy-ack{display:flex;gap:10px;align-items:flex-start;margin:12px 0 4px;font-size:.88rem;line-height:1.45}
+.app-update[hidden]{display:none!important}
+.app-update{margin-bottom:16px;border:1px solid var(--accent)}
+.app-update .hint{margin:6px 0 12px}
+.app-update-actions{display:flex;flex-wrap:wrap;gap:8px}
+.app-update-actions button{min-height:44px;flex:1}
+.app-update-check{margin-top:14px}
+.app-update-check button{width:100%}
 .cloud-privacy-ack input{width:1.15rem;height:1.15rem;margin-top:.2rem;flex:none;accent-color:var(--green)}
 </style>
 </head>
@@ -1832,6 +1839,10 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 </button>
 </header>
 <main>
+<aside class="app-update panel" id="appUpdateBanner" hidden aria-labelledby="appUpdateTitle">
+<div role="status"><strong id="appUpdateTitle">Update verfügbar</strong><p class="hint" id="appUpdateMessage">Eine neue Version ist bereit. Deine gespeicherten Zeiten bleiben erhalten.</p></div>
+<div class="app-update-actions"><button id="appUpdateApply" type="button">Jetzt aktualisieren</button><button class="secondary" id="appUpdateLater" type="button">Später</button></div>
+</aside>
 
 <section id="todayPanel">
 <div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div></div>
@@ -2031,7 +2042,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 </div>
 </section>
 <section class="view-stack hidden" id="morePanel">
-<div class="settings-intro"><h2>Einstellungen</h2><p class="hint">Alles an einem Ort. Wähle den Bereich, den du ändern möchtest.</p></div><div class="topic-list" id="settingsTopics"></div><div class="settings-account-overview" id="settingsAccountOverview"><button aria-label="Cloud-Konto und Synchronisierung öffnen" class="cloud-banner" id="cloudBanner" type="button"><span class="cloud-badge"><i class="cloud-dot" id="cloudBannerDot"></i><span id="cloudBannerLabel">Nur auf diesem Gerät</span></span><small id="cloudBannerDetail">Konto einrichten ›</small></button></div>
+<div class="settings-intro"><h2>Einstellungen</h2><p class="hint">Alles an einem Ort. Wähle den Bereich, den du ändern möchtest.</p></div><div class="topic-list" id="settingsTopics"></div><div class="settings-account-overview" id="settingsAccountOverview"><button aria-label="Cloud-Konto und Synchronisierung öffnen" class="cloud-banner" id="cloudBanner" type="button"><span class="cloud-badge"><i class="cloud-dot" id="cloudBannerDot"></i><span id="cloudBannerLabel">Nur auf diesem Gerät</span></span><small id="cloudBannerDetail">Konto einrichten ›</small></button><div class="app-update-check"><button class="secondary" id="appUpdateCheck" type="button">Auf Updates prüfen</button><p class="hint" id="appUpdateStatus" role="status">Die App prüft beim Öffnen automatisch auf neue Versionen.</p></div></div>
 <button class="settings-back" hidden="" id="settingsBack" type="button">← Zurück zu Einstellungen</button>
 
 <section class="panel" id="appearancePanel"><h2>Darstellung</h2>
@@ -5921,8 +5932,115 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       }
 
       if (cloudSession) void resumeCloudConnection();
-      if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      void setupAppUpdates();
+    }
+
+    // Updates are downloaded in the background, then activated by the user.
+    let appRegistration = null, appUpdateReady = false, appUpdateApplying = false;
+    let appUpdateTimer = null, appUpdateChecking = false;
+    const editedUpdateFields = new Map();
+    const updateFieldValue = field => field.type === 'checkbox' || field.type === 'radio' ? field.checked : field.value;
+    document.addEventListener('focusin', event => {
+      const field = event.target;
+      if (field.matches?.('input:not([type="hidden"]), textarea, select') && !editedUpdateFields.has(field)) {
+        editedUpdateFields.set(field, updateFieldValue(field));
+      }
+    });
+    function showAppUpdate() {
+      appUpdateReady = true;
+      $('appUpdateBanner').hidden = false;
+      $('appUpdateTitle').textContent = 'Update verfügbar';
+      $('appUpdateMessage').textContent = 'Eine neue Version ist bereit. Deine gespeicherten Zeiten bleiben erhalten.';
+      $('appUpdateStatus').textContent = 'Ein Update ist bereit. Über „Jetzt aktualisieren“ kannst du es laden.';
+    }
+    async function checkAppUpdate(manual = false) {
+      if (appUpdateChecking || appUpdateApplying) return;
+      if (!navigator.onLine) {
+        if (manual) $('appUpdateStatus').textContent = 'Du bist offline. Bitte prüfe mit Internetverbindung erneut.';
+        return;
+      }
+      appUpdateChecking = true;
+      $('appUpdateCheck').disabled = true;
+      if (manual) $('appUpdateStatus').textContent = 'Suche nach Updates …';
+      try {
+        if (!appRegistration) throw new Error('not registered');
+        await appRegistration.update();
+        if (appRegistration.waiting || appUpdateReady) showAppUpdate();
+        else if (manual) $('appUpdateStatus').textContent = appRegistration.installing
+          ? 'Das Update wird heruntergeladen …' : 'Die App ist auf dem neuesten Stand.';
+      } catch {
+        if (manual) $('appUpdateStatus').textContent = 'Updates konnten nicht geprüft werden. Bitte versuche es später erneut.';
+      } finally {
+        appUpdateChecking = false;
+        $('appUpdateCheck').disabled = false;
+      }
+    }
+    function reloadUpdatedApp() {
+      if (!appUpdateApplying) return;
+      clearTimeout(appUpdateTimer);
+      location.reload();
+    }
+    async function applyAppUpdate() {
+      if (!appUpdateReady || appUpdateApplying) return;
+      if (writeBusy) {
+        $('appUpdateMessage').textContent = 'Deine Änderungen werden gerade gespeichert. Bitte warte kurz und versuche es erneut.';
+        return;
+      }
+      const edited = [...editedUpdateFields].some(([field, value]) => field.isConnected && updateFieldValue(field) !== value);
+      if (edited && !confirm('Die App wird neu geladen. Nicht gespeicherte Eingaben gehen dabei verloren. Jetzt aktualisieren?')) return;
+      appUpdateApplying = true;
+      $('appUpdateApply').disabled = true;
+      $('appUpdateLater').disabled = true;
+      $('appUpdateMessage').textContent = 'Update wird übernommen …';
+      const waiting = appRegistration?.waiting;
+      if (!waiting) { reloadUpdatedApp(); return; }
+      appUpdateTimer = setTimeout(() => {
+        appUpdateApplying = false;
+        $('appUpdateApply').disabled = false;
+        $('appUpdateLater').disabled = false;
+        $('appUpdateMessage').textContent = 'Das Update dauert länger als erwartet. Bitte versuche es erneut.';
+      }, 15000);
+      waiting.postMessage({type: 'ACTIVATE_UPDATE'});
+    }
+    async function setupAppUpdates() {
+      $('appUpdateApply').addEventListener('click', applyAppUpdate);
+      $('appUpdateLater').addEventListener('click', () => { $('appUpdateBanner').hidden = true; });
+      $('appUpdateCheck').addEventListener('click', () => void checkAppUpdate(true));
+      if (!('serviceWorker' in navigator) || !location.protocol.startsWith('http')) {
+        $('appUpdateCheck').disabled = true;
+        $('appUpdateStatus').textContent = 'Automatische App-Updates werden in diesem Browser nicht unterstützt.';
+        return;
+      }
+      let previousController = navigator.serviceWorker.controller;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        const hadController = Boolean(previousController);
+        previousController = navigator.serviceWorker.controller;
+        if (appUpdateApplying) reloadUpdatedApp();
+        else if (hadController) showAppUpdate(); // Another tab activated the update; preserve this tab's inputs.
+      });
+      try {
+        appRegistration = await navigator.serviceWorker.register('./sw.js', {updateViaCache:'none'});
+        const watchInstalling = () => {
+          const worker = appRegistration.installing;
+          if (!worker) return;
+          worker.addEventListener('statechange', () => {
+            if (worker.state === 'installed' && navigator.serviceWorker.controller) showAppUpdate();
+            if (worker.state === 'redundant' && !appUpdateReady) $('appUpdateStatus').textContent = 'Das Update konnte nicht geladen werden. Bitte prüfe später erneut.';
+          });
+        };
+        appRegistration.addEventListener('updatefound', watchInstalling);
+        watchInstalling();
+        if (appRegistration.waiting) showAppUpdate();
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'visible') void checkAppUpdate();
+        });
+        window.addEventListener('online', () => void checkAppUpdate());
+        setInterval(() => {
+          if (document.visibilityState === 'visible') void checkAppUpdate();
+        }, 5 * 60 * 1000);
+        void checkAppUpdate();
+      } catch {
+        $('appUpdateStatus').textContent = 'Updates konnten nicht eingerichtet werden. Bitte lade die App mit Internetverbindung neu.';
       }
     }
 
