@@ -1,0 +1,45 @@
+.tutorial-dialog {
+  box-sizing: border-box;
+  width: min(96vw, 760px);
+  max-width: 760px;
+  height: min(94dvh, 940px);
+  max-height: 94dvh;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #b7dcd7;
+  border-radius: 24px;
+  color: #203331;
+  background: #f4faf9;
+  box-shadow: 0 22px 90px #092a2860;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.tutorial-dialog::backdrop { background: #092a287d; }
+.tutorial-dialog[open] { display: flex; flex-direction: column; }
+.tutorial-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px 10px; }
+.tutorial-badge { font-size: .76rem; font-weight: 800; letter-spacing: .04em; color: #176c65; }
+.tutorial-dialog button { min-height: 44px; padding: 10px 16px; border: 1px solid #b5d6d1; border-radius: 12px; background: white; color: #176c65; font: inherit; font-weight: 700; cursor: pointer; }
+.tutorial-dialog button:focus-visible { outline: 3px solid #177d73; outline-offset: 3px; }
+.tutorial-dialog button:disabled { opacity: .45; cursor: default; }
+.tutorial-dialog .tutorial-skip { min-height: 44px; padding: 8px; border-color: transparent; background: transparent; font-size: .83rem; }
+.tutorial-progress { width: calc(100% - 40px); height: 5px; margin: 0 20px; border: 0; border-radius: 6px; background: #deece8; accent-color: #248179; }
+.tutorial-progress::-webkit-progress-bar { background: #deece8; border-radius: 6px; }
+.tutorial-progress::-webkit-progress-value { background: #248179; border-radius: 6px; }
+.tutorial-progress::-moz-progress-bar { background: #248179; border-radius: 6px; }
+.tutorial-instruction { padding: 12px 20px 10px; }
+.tutorial-instruction h2 { margin: 0 0 6px; font-size: clamp(1.15rem, 4vw, 1.5rem); line-height: 1.2; letter-spacing: -.02em; }
+.tutorial-instruction p { margin: 0; font-size: .9rem; line-height: 1.5; color: #526b67; }
+.tutorial-counter { margin: 0 0 4px; font-size: .73rem; color: #526b67; }
+.tutorial-frame { display: block; width: calc(100% - 24px); flex: 1; min-height: 140px; margin: 0 12px; border: 1px solid #d8e9e5; border-radius: 16px; background: white; }
+.tutorial-footer { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 12px 20px max(14px, env(safe-area-inset-bottom)); }
+.tutorial-footer .tutorial-next { background: #248179; color: white; border-color: #248179; }
+.tutorial-task-status { margin: 0; font-size: .75rem; line-height: 1.4; text-align: center; color: #526b67; }
+@media (max-width: 480px) {
+  .tutorial-dialog { width: 100%; max-width: 100%; height: 100dvh; max-height: 100dvh; border-radius: 0; border: 0; }
+  .tutorial-header { padding: max(10px, env(safe-area-inset-top)) 14px 8px; }
+  .tutorial-instruction { padding: 10px 14px; }
+  .tutorial-progress { width: calc(100% - 28px); margin-inline: 14px; }
+  .tutorial-footer { padding-inline: 14px; gap: 8px; grid-template-columns: auto minmax(0, 1fr) auto; }
+  .tutorial-footer button { padding-inline: 12px; }
+  .tutorial-task-status { font-size: .69rem; }
+}
+@media (prefers-reduced-motion: reduce) { .tutorial-dialog * { scroll-behavior: auto; } }

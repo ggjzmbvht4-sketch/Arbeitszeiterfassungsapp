@@ -1,14 +1,15 @@
 /* Arbeitszeit PWA – versionsgeprüfter Offline-Start.
  * Cache nur die eigene HTML-Oberfläche, niemals Supabase-API-Antworten
  * oder private Apple-Kalender-Links. IndexedDB bleibt unberührt. */
-const SHELL_CACHE = 'arbeitszeit-shell-next-v19-credited-time';
+const SHELL_CACHE = 'arbeitszeit-shell-next-v20-invited-onboarding';
 const SHELL_URL = new URL('./index.html', self.registration.scope).href;
+const OFFLINE_ASSETS = ['access.js','access.css','tutorial.js','tutorial.css','vendor/supabase.js','nutzungsbedingungen.html','datenschutz.html','impressum.html'].map(path => new URL(path,self.registration.scope).href);
 
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     // Activate only when the replacement shell is ready for offline use.
     const cache = await caches.open(SHELL_CACHE);
-    await cache.add(new Request(SHELL_URL, {cache: 'reload'}));
+    await cache.addAll([SHELL_URL,...OFFLINE_ASSETS].map(url => new Request(url, {cache:'reload'})));
     // A replacement waits until the user chooses “Jetzt aktualisieren”.
   })());
 });
@@ -28,11 +29,11 @@ self.addEventListener('activate', (event) => {
 });
 
 function isLegalPage(url) {
-  return /\/(?:impressum|datenschutz)\.html$/i.test(url.pathname);
+  return /\/(?:impressum|datenschutz|nutzungsbedingungen)\.html$/i.test(url.pathname);
 }
 
 function isAppShell(url) {
-  return url.href === SHELL_URL || url.pathname.endsWith('/');
+  return url.pathname === new URL(SHELL_URL).pathname || url.pathname === new URL(self.registration.scope).pathname;
 }
 
 self.addEventListener('fetch', (event) => {
@@ -42,7 +43,7 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin) return;
 
   // Rechtstexte nie als App-Hülle cachen und nie durch die App ersetzen.
-  if (isLegalPage(url)) {
+  if (isLegalPage(url) || OFFLINE_ASSETS.includes(url.href)) {
     event.respondWith((async () => {
       const cache = await caches.open(SHELL_CACHE);
       try {

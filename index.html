@@ -1827,12 +1827,17 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 .app-update-check button{width:100%}
 .cloud-privacy-ack input{width:1.15rem;height:1.15rem;margin-top:.2rem;flex:none;accent-color:var(--green)}
 </style>
+<link rel="stylesheet" href="./access.css"/>
+<link rel="stylesheet" href="./tutorial.css" data-tutorial-styles/>
 </head>
 <body>
+<section id="accessGate" aria-label="Anmeldung"><p role="status">Arbeitszeit wird geladen …</p></section>
+<noscript><p>Bitte aktiviere JavaScript, um dich anzumelden. <a href="./datenschutz.html">Datenschutz</a></p></noscript>
+<div id="appWorkspace" hidden inert>
 <header class="app-header">
 <div class="brand-block">
 <h1>Arbeitszeit</h1>
-<nav aria-label="Rechtliches" class="legal-links"><a href="./impressum.html">Impressum</a><a href="./datenschutz.html">Datenschutz</a></nav>
+<nav aria-label="Rechtliches" class="legal-links"><a href="./impressum.html">Anbieterhinweise</a><a href="./datenschutz.html">Datenschutz</a><a href="./nutzungsbedingungen.html">Nutzungsbedingungen</a></nav>
 </div>
 <button aria-label="KI-Assistent öffnen" class="header-assistant" id="headerAssistant" title="KI-Assistent öffnen" type="button"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="m12 2 1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9L12 2Z"></path><path d="m19 17 .8 2.2L22 20l-2.2.8L19 23l-.8-2.2L16 20l2.2-.8L19 17Z"></path></svg><span class="header-assistant-label">KI</span></button><button aria-label="Einstellungen und Konto öffnen" class="header-settings" id="headerSettings" title="Einstellungen und Konto öffnen" type="button">
 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" viewbox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8"></path><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l-1.88 1.88a1.65 1.65 0 0 0-1.82-.33l-.1.04A1.65 1.65 0 0 0 15 19.9V20h-6v-.1a1.65 1.65 0 0 0-.93-1.49l-.1-.04a1.65 1.65 0 0 0-1.82.33l-1.88-1.88A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.5-1H3v-4h.1a1.65 1.65 0 0 0 1.5-1 1.65 1.65 0 0 0-.33-1.82L6.15 5.3a1.65 1.65 0 0 0 1.82.33A1.65 1.65 0 0 0 9 4.1V4h6v.1a1.65 1.65 0 0 0 1.03 1.53 1.65 1.65 0 0 0 1.82-.33l1.88 1.88A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.5 1h.1v4h-.1a1.65 1.65 0 0 0-1.5 1Z"></path></svg>
@@ -2066,10 +2071,11 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 <div aria-label="Darstellung" class="appearance-mode"><strong>Darstellungsmodus</strong><div aria-label="Hell, Dunkel oder automatisch" class="appearance-switch" role="group"><button class="secondary" data-appearance-choice="auto" type="button">Automatisch</button><button class="secondary" data-appearance-choice="light" type="button">Hell</button><button class="secondary" data-appearance-choice="dark" type="button">Dunkel</button></div><p class="hint">Automatisch übernimmt die Einstellung deines Geräts.</p></div>
 </fieldset>
 </section>
+<section class="panel" id="tutorialSettings"><h2>Hilfe &amp; Einführung</h2><p class="hint">Entdecke die App Schritt für Schritt mit getrennten Beispieldaten. Deine echten Zeiten bleiben unverändert.</p><button id="tutorialRestart" type="button">Tutorial erneut starten</button><p class="hint" id="tutorialSettingsStatus" role="status"></p></section>
 <section class="panel" id="cloudPanel">
 <div class="cloud-heading"><span aria-hidden="true" class="cloud-hero-icon">☁</span><div><h3>Konto &amp; Cloud</h3><p class="hint">Deine Arbeitszeiten auf allen Geräten – automatisch gesichert.</p></div></div>
 <div id="cloudLoggedOut">
-<details class="calendar-sync-setup" id="cloudConnectionDetails">
+<details class="calendar-sync-setup" id="cloudConnectionDetails" hidden>
 <summary>Supabase-Projekt verbinden</summary>
 <label for="cloudProjectUrl">Supabase-Projekt-URL</label>
 <input autocapitalize="none" autocomplete="url" id="cloudProjectUrl" inputmode="url" placeholder="https://xxxxxxxx.supabase.co" spellcheck="false" type="url"/>
@@ -2083,7 +2089,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 </details>
 <div aria-label="Kontoaktion" class="cloud-switch" role="group">
 <button aria-pressed="true" class="secondary" id="cloudLoginMode" type="button">Anmelden</button>
-<button aria-pressed="false" class="secondary" id="cloudRegisterMode" type="button">Registrieren</button>
+<button aria-pressed="false" class="secondary" id="cloudRegisterMode" hidden type="button">Registrieren</button>
 </div>
 <form autocomplete="on" class="cloud-form" id="cloudAuthForm">
 <label for="cloudEmailInput">E-Mail-Adresse</label>
@@ -2369,7 +2375,9 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 <button class="assistant-bottom-link" id="assistantSettingsLink" type="button">KI-Einstellungen</button>
 </section>
 </div>
+</div>
 <script type="module">
+    import { createAccessController } from './access.js';
     const DB_NAME = "arbeitszeit-app";
     const DB_VERSION = 1;
     const STORE_NAME = "state";
@@ -2411,6 +2419,8 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       appAppearance: 'auto'
     };
 
+    let appAccess = null;
+    let appAccountEpoch = 0;
     let state = { settings: { ...DEFAULT_SETTINGS }, records: [], plans: [] };
     let db;
     let revision = 0;
@@ -2421,7 +2431,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     function withWriteLock(handler) {
       return async function(event) {
         event?.preventDefault?.();
-        if (writeBusy || !db) return;
+        if (writeBusy || !db || !appAccess?.isReady()) return;
         writeBusy = true;
         const controls = [...document.querySelectorAll("button, input, select")];
         const disabled = controls.map(control => control.disabled);
@@ -2508,6 +2518,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
         const remoteVersion = store.get(verKey);
         const pending = store.get(dirtyKey);
         tx.oncomplete = () => {
+          if (activeStorageKey !== key) { reject(new Error("Konto wurde gewechselt.")); return; }
           revision = localRevision.result || 0;
           cloudVersion = remoteVersion.result || 0;
           cloudDirty = pending.result === true;
@@ -2519,6 +2530,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     }
 
     function persistState() {
+      if (!cloudSession || !appAccess?.isReady()) return Promise.reject(new Error("Bitte zuerst anmelden."));
       const snapshot = structuredClone(state);
       const key=activeStorageKey, revKey=localRevisionKey(), dirtyKey=cloudDirtyKey();
       const startedRevision=revision;
@@ -2563,6 +2575,8 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     }
 
     function replaceLocalSnapshot(snapshot, version, dirty=false) {
+      if (!appAccess?.isReady() || !cloudSession) return Promise.reject(new Error("Bitte zuerst anmelden."));
+      const owner = cloudSession.user.id, operationEpoch = appAccountEpoch;
       const sanitized=validateState(snapshot);
       const key=activeStorageKey, revKey=localRevisionKey(), verKey=cloudVersionKey(), dirtyKey=cloudDirtyKey();
       const oldRevision=revision;
@@ -2576,6 +2590,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
           store.put(version,verKey);store.put(dirty,dirtyKey);
         };
         tx.oncomplete=()=>{
+          if (activeStorageKey !== key || appAccountEpoch !== operationEpoch || cloudSession?.user.id !== owner) { resolve(); return; }
           state=sanitized;revision=oldRevision+1;cloudVersion=version;cloudDirty=dirty;
           renderSettings();renderAll();updateCloudUI();resolve();
         };
@@ -4147,11 +4162,13 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       catch(error){state.settings=previous;throw error;}
     }));
     async function restoreHistoryVersion(id){
+      const owner=cloudSession?.user.id, operationEpoch=appAccountEpoch;
       if(!cloudSession)throw new Error('Bitte zuerst anmelden.');
       if(cloudDirty||cloudConflict)throw new Error('Erst alle lokalen Änderungen synchronisieren bzw. einen Konflikt lösen.');
       const table=id.startsWith('daily:')?'daily_snapshots':'snapshot_history';
       const actualId=id.startsWith('daily:')?id.slice(6):id;
       const {data,error}=await configuredSupabase().from(table).select('state,version,created_at').eq('id',actualId).single();
+      assertAccountOwner(owner,operationEpoch);
       if(error)throw error;
       const recovered=validateState(data.state);
       if(!confirm('Diese Version vom '+new Date(data.created_at).toLocaleString('de-DE')+' wiederherstellen? Dein aktueller Cloudstand wird dabei durch diese Version ersetzt. Eine Kopie des aktuellen Stands bleibt im Versionsverlauf.'))return;
@@ -4188,7 +4205,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
         if(action==='register'&&!cloudSession)throw new Error('Bitte zuerst mit Passwort anmelden.');
         const response=action==='register'?await client.auth.registerPasskey():await client.auth.signInWithPasskey();
         if(response.error)throw response.error;
-        if(action==='login'&&response.data?.session)await activateCloudSession({user:response.data.session.user});
+        if(action==='login'&&response.data?.session)await appAccess.checkSession(response.data.session);
         showStatus(status,action==='register'?'Passkey eingerichtet. Du kannst künftig damit einloggen.':'Mit Passkey angemeldet.','success');
       }catch(e){showStatus(status,'Passkey: '+e.message+'. Prüfe die Passkey-Einstellungen im Supabase Dashboard.','error');}
     }
@@ -5154,9 +5171,9 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     const CLOUD_PRIVACY_ACK_KEY = "arbeitszeit-cloud-privacy-ack-v1";
     const CALENDAR_TOKEN_PREFIX = "arbeitszeit-supabase-calendar-token:";
     const LAST_SYNC_PREFIX = "arbeitszeit-last-sync:";
-    // Optional hier eintragen, damit die Verbindung auf allen Geräten schon vorausgefüllt ist.
-    const SUPABASE_DEFAULT_URL = "";
-    const SUPABASE_DEFAULT_PUBLISHABLE_KEY = "";
+    // Zentrales Projekt: Nur der öffentliche Publishable Key gehört in den Client.
+    const SUPABASE_DEFAULT_URL = "https://qiquwspmgxcldtoevjxw.supabase.co";
+    const SUPABASE_DEFAULT_PUBLISHABLE_KEY = "sb_publishable_VIhlya8LcZVUIAAQ4_dnoQ_Q_4flLtX";
     let cloudClient = null;
     let cloudSession = null;
     let cloudAuthMode = "login";
@@ -5197,19 +5214,12 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     }
 
     function cloudConfigFromInputs() {
-      return {url:normalizedProjectUrl($("cloudProjectUrl").value), key:validatePublicKey($("cloudProjectKey").value)};
+      return {url:SUPABASE_DEFAULT_URL, key:SUPABASE_DEFAULT_PUBLISHABLE_KEY};
     }
 
     function showCloudStatus(message, kind = "") { showStatus($("cloudStatus"),message,kind); }
-
     function assertCloudPrivacyAck() {
-      const box=$("cloudPrivacyAck");
-      if(box?.checked) {
-        localStorage.setItem(CLOUD_PRIVACY_ACK_KEY, new Date().toISOString());
-        return;
-      }
-      if(localStorage.getItem(CLOUD_PRIVACY_ACK_KEY)) return;
-      throw new Error("Bitte zuerst die Übertragung an dein Supabase-Projekt bestätigen. Ohne diese Einwilligung wird keine Verbindung aufgebaut.");
+      if (!appAccess?.isReady()) throw new Error("Bitte zuerst anmelden und die Nutzungshinweise bestätigen.");
     }
 
     function setCloudStatusError(error, prefix="Cloud-Fehler") {
@@ -5280,6 +5290,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     }
 
     function changeCloudAuthMode(mode) {
+      mode="login";
       cloudAuthMode=mode;
       $("cloudLoginMode").setAttribute("aria-pressed",String(mode==="login"));
       $("cloudRegisterMode").setAttribute("aria-pressed",String(mode==="register"));
@@ -5332,37 +5343,15 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
           experimental:{passkey:true},
           storageKey:`arbeitszeit-supabase-auth-${new URL(url).hostname}`}
       });
-      cloudClient.auth.onAuthStateChange((event,session)=>{
-        // Supabase empfiehlt, im Auth-Callback selbst keine weiteren API-Aufrufe zu awaiten.
-        if(event==="PASSWORD_RECOVERY") {
-          setTimeout(()=>{
-            setActiveTab("more");showSettingsTopic("data");
-            $("cloudRecoveryGroup").classList.remove("hidden");
-            showCloudStatus("Neues Passwort vergeben und speichern.");
-          },0);
-        }
-        if(event==="SIGNED_IN" && session?.user && !cloudConnecting) {
-          setTimeout(()=>{
-            if(cloudConnecting)return;
-            if(cloudSession?.user.id===session.user.id) {
-              cloudAccountIsOfflineCache=false;
-              updateCloudUI();
-              if(navigator.onLine)void reconcileCloud();
-            } else if (!cloudSession) {
-              void activateCloudSession({user:session.user}).catch(e=>setCloudStatusError(e));
-            }
-          },0);
-        }
-        if(event==="SIGNED_OUT" && cloudSession && !cloudConnecting) {
-          setTimeout(()=>{ if(cloudSession && !cloudConnecting)void switchToGuest(); },0);
-        }
-      });
       return cloudClient;
     }
 
     async function activateCloudSession(session,options={}) {
+      if (!appAccess?.isReady() || options.isCurrent && !options.isCurrent()) throw new Error("Die Anmeldung wurde noch nicht freigegeben.");
       if(!session?.user?.id)throw new Error("Benutzerkonto ohne ID.");
-      cloudSession={user:{id:session.user.id,email:session.user.email||""}};
+      const operationEpoch = ++appAccountEpoch;
+      const owner = session.user.id;
+      cloudSession={user:{id:owner,email:session.user.email||""}};
       activeStorageKey=`account:${cloudSession.user.id}`;
       localStorage.setItem(SUPABASE_LAST_USER_KEY,JSON.stringify(cloudSession.user));
       cloudConflict=false;cloudSyncQueued=false;cloudCalendarLink="";
@@ -5370,64 +5359,24 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       cloudAccountIsOfflineCache=Boolean(options.offlineCache);
       clearTimeout(cloudSyncTimer);
       const cached=await loadState();
-      state=cached?validateState(cached):initialCloudState();
+      assertAccountOwner(owner,operationEpoch);
       const guest=await guestData();
+      assertAccountOwner(owner,operationEpoch);
+      state=cached?validateState(cached):initialCloudState();
       cloudGuestCount=Array.isArray(guest?.records)?guest.records.length:0;
       renderSettings();renderAll();updateCloudUI();
-      void primePushKey();
+      if (!options.offlineCache && navigator.onLine) void primePushKey();
       $("cloudCalendarUrl").value="";
       showCloudStatus(cached?"Kontodaten vom Gerät geladen. Prüfe die Cloud …":"Konto geöffnet. Prüfe die Cloud …");
       if(!options.skipNetwork && navigator.onLine) await reconcileCloud();
     }
 
     async function switchToGuest() {
-      clearTimeout(cloudSyncTimer);
-      cloudSession=null;cloudConflict=false;cloudSyncQueued=false;cloudCalendarLink="";
-      cloudLastFetch=0;cloudAccountIsOfflineCache=false;cloudGuestCount=0;
-      localStorage.removeItem(SUPABASE_LAST_USER_KEY);
-      activeStorageKey=STATE_KEY;
-      const saved=await loadState();
-      state=saved?validateState(saved):initialCloudState();
-      renderSettings();renderAll();updateCloudUI();
+      appAccess?.lock('Bitte melde dich an.', true);
     }
 
     async function restoreStoredCloudSession() {
-      let config=null;
-      try { config=JSON.parse(localStorage.getItem(SUPABASE_CONFIG_KEY)||"null"); }
-      catch (_) { /* beschädigte gespeicherte Konfiguration ignorieren */ }
-      if(!config?.url && SUPABASE_DEFAULT_URL && SUPABASE_DEFAULT_PUBLISHABLE_KEY) {
-        config={url:SUPABASE_DEFAULT_URL,key:SUPABASE_DEFAULT_PUBLISHABLE_KEY};
-      }
-      $("cloudProjectUrl").value=config?.url||"";
-      $("cloudProjectKey").value=config?.key||"";
-      $("cloudConnectionDetails").open=!Boolean(config?.url&&config?.key);
-      if(localStorage.getItem(CLOUD_PRIVACY_ACK_KEY)) $("cloudPrivacyAck").checked=true;
-      if(config?.url && config?.key) {
-        try {
-          await loadSupabaseSdkIfNeeded();
-          const client=setSupabaseConfig(config);
-          const {data,error}=await client.auth.getSession();
-          if(error)throw error;
-          if(data?.session?.user) {
-            await activateCloudSession({user:data.session.user},{skipNetwork:true});
-            return;
-          }
-        } catch(error) {
-          // Offline können bekannte Kontodaten lokal genutzt werden, ohne so zu tun,
-          // als wäre die Anmeldung bereits online validiert.
-          if(!navigator.onLine || typeof window.supabase?.createClient!=="function") {
-            let user=null;
-            try {user=JSON.parse(localStorage.getItem(SUPABASE_LAST_USER_KEY)||"null");}catch(_){}
-            if(user?.id) {
-              await activateCloudSession({user},{skipNetwork:true,offlineCache:true});
-              showCloudStatus("Offline: Deine Kontodaten sind lokal verfügbar. Bei Internetverbindung prüfen wir die Anmeldung.");
-              return;
-            }
-          }
-          setCloudStatusError(error,"Anmeldung konnte nicht wiederhergestellt werden");
-        }
-      }
-      updateCloudUI();
+      await appAccess.init();
     }
 
     async function guestData() {
@@ -5439,18 +5388,30 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       });
     }
 
+    function assertAccountOwner(owner, operationEpoch = appAccountEpoch) {
+      if (!owner || !appAccess?.isReady() || cloudSession?.user.id !== owner || operationEpoch !== appAccountEpoch) throw new Error("Die Anmeldung hat sich geändert. Bitte erneut versuchen.");
+    }
     async function getCloudSnapshot() {
-      const client=configuredSupabase();
-      const {data,error}=await client.from("user_snapshots")
-        .select("state,version").eq("user_id",cloudSession.user.id).maybeSingle();
+      const owner=cloudSession?.user.id, operationEpoch=appAccountEpoch;
+      assertAccountOwner(owner,operationEpoch);
+      const {data,error}=await configuredSupabase().from("user_snapshots")
+        .select("state,version").eq("user_id",owner).maybeSingle();
+      assertAccountOwner(owner,operationEpoch);
       if(error)throw error;
       return {state:data?.state || null,version:Number(data?.version||0)};
     }
 
     async function putCloudSnapshot(snapshot,expected) {
+      const owner=cloudSession?.user.id, operationEpoch=appAccountEpoch;
+      assertAccountOwner(owner,operationEpoch);
+      const auth = await configuredSupabase().auth.getSession();
+      assertAccountOwner(owner,operationEpoch);
+      if (auth.error || auth.data?.session?.user.id !== owner || !auth.data.session.access_token) throw new Error("Bitte erneut anmelden.");
+      // Bind this write to the captured user's token, even if another tab changes accounts.
       const {data,error}=await configuredSupabase().rpc("save_snapshot",{
         p_expected_version:expected,p_state:snapshot
-      });
+      }).setHeader('Authorization','Bearer '+auth.data.session.access_token);
+      assertAccountOwner(owner,operationEpoch);
       if(error) {
         if(error.message?.includes("SYNC_CONFLICT")) error.status=409;
         throw error;
@@ -5570,9 +5531,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
         const email=$("cloudEmailInput").value.trim(),password=$("cloudPasswordInput").value;
         if(cloudAuthMode==="register" && $("cloudConfirmPassword").value!==password)
           throw new Error("Die beiden Passwörter stimmen nicht überein.");
-        const response=cloudAuthMode==="register"
-          ? await client.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}})
-          : await client.auth.signInWithPassword({email,password});
+        const response=await client.auth.signInWithPassword({email,password});
         if(response.error)throw response.error;
         $("cloudPasswordInput").value="";$("cloudConfirmPassword").value="";
         if(!response.data?.session) {
@@ -5580,7 +5539,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
           showCloudStatus("Bitte bestätige deine E-Mail-Adresse über den Link im Posteingang und melde dich anschließend an.","success");
         }else {
           cloudConnecting=false;
-          await activateCloudSession({user:response.data.session.user});
+          await appAccess.checkSession(response.data.session);
         }
       }catch(error){setCloudStatusError(error,"Anmeldung fehlgeschlagen");}
       finally{cloudConnecting=false;$("cloudAuthSubmit").disabled=false;}
@@ -5649,8 +5608,10 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     $("cloudImportGuest").addEventListener("click",async()=>{
       if(!cloudSession || cloudConnecting || cloudSyncBusy)return;
       cloudConnecting=true;
+      const owner=cloudSession.user.id, operationEpoch=appAccountEpoch;
       try {
         const guest=await guestData();
+        assertAccountOwner(owner,operationEpoch);
         if(!guest || !Array.isArray(guest.records))throw new Error("Es sind keine alten lokalen Daten vorhanden.");
         const remote=await getCloudSnapshot();
         if(remote.state && (remote.state.records?.length || remote.version>0))
@@ -5732,19 +5693,11 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     });
 
     $("cloudLogout").addEventListener("click",async()=>{
-      if(!cloudSession || cloudSyncBusy || cloudConnecting)return;
+      if(!cloudSession || writeBusy)return;
       if(cloudDirty && !confirm("Einträge wurden noch nicht hochgeladen. Sie bleiben auf diesem Gerät im Konto gespeichert. Trotzdem abmelden?"))return;
-      cloudConnecting=true;
-      try {
-        await removePushSubscriptionFromDevice();
-        const {error}=await configuredSupabase().auth.signOut({scope:"local"});
-        // Supabase löscht bei "local" die Sitzung dieses Geräts bereits vor
-        // einem etwaigen Netzwerkfehler beim Widerruf des Refresh Tokens.
-        await switchToGuest();
-        if(error) showCloudStatus("Auf diesem Gerät abgemeldet. Der serverseitige Widerruf konnte nicht bestätigt werden.","error");
-        else showCloudStatus("Auf diesem Gerät abgemeldet. Andere Geräte bleiben angemeldet.","success");
-      }catch(error){setCloudStatusError(error,"Abmelden");}
-      finally{cloudConnecting=false;}
+      // Push cleanup is best effort; offline logout must never depend on a network call.
+      void removePushSubscriptionFromDevice();
+      await appAccess.signOut();
     });
 
     function calendarTokenKey() {return `${CALENDAR_TOKEN_PREFIX}${cloudSession?.user.id||""}`;}
@@ -5860,28 +5813,9 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     }
 
     async function resumeCloudConnection() {
-      if(!cloudSession || !navigator.onLine)return;
-      if(!cloudClient) {
-        try {
-          await loadSupabaseSdkIfNeeded();
-          let config=JSON.parse(localStorage.getItem(SUPABASE_CONFIG_KEY)||"null");
-          if(!config?.url && SUPABASE_DEFAULT_URL && SUPABASE_DEFAULT_PUBLISHABLE_KEY)
-            config={url:SUPABASE_DEFAULT_URL,key:SUPABASE_DEFAULT_PUBLISHABLE_KEY};
-          if(config?.url && config?.key)setSupabaseConfig(config);
-        } catch(error) {setCloudStatusError(error,"Verbindung wiederherstellen");return;}
-      }
-      if(!cloudClient)return;
-      if(cloudAccountIsOfflineCache) {
-        try {
-          const {data,error}=await cloudClient.auth.getSession();
-          if(error)throw error;
-          if(!data?.session?.user || data.session.user.id!==cloudSession.user.id) {
-            showCloudStatus("Deine Anmeldung muss erneuert werden. Deine lokalen Daten bleiben vorhanden.","error");
-            return;
-          }
-          cloudAccountIsOfflineCache=false;
-        }catch(error){setCloudStatusError(error,"Verbindung wiederherstellen");return;}
-      }
+      if (!cloudSession || !navigator.onLine || !appAccess?.isReady()) return;
+      await appAccess.checkSession();
+      if (!cloudSession || !appAccess.isReady()) return;
       if(cloudDirty && !cloudConflict)queueCloudSync(true);
       else void reconcileCloud();
     }
@@ -5902,17 +5836,44 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
         setupWorkspaceViews();
         db = await openDatabase();
         db.onversionchange = () => { db.close(); alert("Die App wurde aktualisiert. Bitte neu laden."); };
-        const saved = await loadState();
-
-        if (saved?.settings && Array.isArray(saved.records)) {
-          state = validateState(saved);
-          if(saved.settings.targetMode==="week") await persistState();
-        } else if (saved != null) {
-          throw new Error("Gespeicherte Daten sind unvollständig. Sie wurden nicht überschrieben.");
-        } else {
-          await persistState();
-        }
-
+        appAccess = createAccessController({
+          storageKey:'arbeitszeit-supabase-auth-qiquwspmgxcldtoevjxw.supabase.co',
+          projectUrl:SUPABASE_DEFAULT_URL,
+          getClient:async()=>{
+            await loadSupabaseSdkIfNeeded();
+            return setSupabaseConfig(cloudConfigFromInputs());
+          },
+          onReady:async(session,options)=>{
+            const started = Date.now();
+            while (writeBusy) {
+              if (Date.now() - started > 15000) throw new Error("Ein Speichervorgang läuft noch. Bitte erneut versuchen.");
+              await new Promise(resolve=>setTimeout(resolve,25));
+            }
+            if (!options.isCurrent()) return;
+            if (options.alreadyReady && cloudSession?.user.id===session.user.id) {
+              cloudAccountIsOfflineCache=options.offline;
+              updateCloudUI();
+              return;
+            }
+            await activateCloudSession(session,{skipNetwork:true,offlineCache:options.offline,isCurrent:options.isCurrent});
+            setActiveTab('overview');
+            if (!options.offline) void reconcileCloud();
+          },
+          onLock:()=>{
+            appAccountEpoch++;
+            clearTimeout(cloudSyncTimer);
+            cloudSession=null;cloudConflict=false;cloudSyncQueued=false;cloudCalendarLink='';
+            cloudLastFetch=0;cloudAccountIsOfflineCache=false;cloudGuestCount=0;
+            localStorage.removeItem(SUPABASE_LAST_USER_KEY);
+            activeStorageKey=STATE_KEY;
+            state=initialCloudState();
+            for(const form of $('appWorkspace').querySelectorAll('form'))form.reset();
+            $('entryOverlay').classList.add('hidden');
+            $('assistantOverlay').classList.add('hidden');
+            document.body.style.overflow='';
+            renderSettings();renderAll();updateCloudUI();
+          }
+        });
         selectedMonth = currentMonth();
         selectedCalendarDate = localDateString();
         $("entryDate").value = selectedCalendarDate;
@@ -5951,7 +5912,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
         document.body.inert = false;
       }
 
-      if (cloudSession) void resumeCloudConnection();
+      if (cloudSession && navigator.onLine) void reconcileCloud();
       void setupAppUpdates();
     }
 
@@ -7289,11 +7250,13 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       wrapper.open=false;
     }
     function setupWorkspaceViews(){
+      $('tutorialRestart').onclick=()=>void appAccess?.startTutorial();
       $('moreToday').onclick=()=>{$('manualDate').value=localDateString();refreshManualPlanHint();$('manualForm').scrollIntoView({block:'start'});};
       $('editCarryover').onclick=()=>{setActiveTab('more');showSettingsTopic('work');$('vacationCarryoverMode').focus();};
       const topics=[
         ['work','Arbeitszeit & Urlaub','Sollstunden, Zeitkonto, Urlaub und Übertrag','◷',['settingsForm']],
         ['templates','Vorlagen & Erinnerungen','Zeiten speichern und an Einträge erinnern','▤',['templatePanel','automationPanel']],
+        ['help','Hilfe & Einführung','Mit Beispieldaten sicher ausprobieren','?',['tutorialSettings']],
         ['appearance','Darstellung','Farben und Hell-/Dunkelmodus','◐',['appearancePanel']],
         ['assistant','KI & Sprache','Assistent, KI-Funktionen und Diktat','✦',['aiPreferences']],
         ['data','Konto & Daten','Synchronisation, Kalender, Sicherheit, Backups','☁',['cloudPanel','appleCalendarPanel','securityPanel','historyPanel','monthlyPdfButton','exportBackupButton']]

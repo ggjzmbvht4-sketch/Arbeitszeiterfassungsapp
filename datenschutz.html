@@ -4,6 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="theme-color" content="#eef8f6"/>
+<meta name="legal-version" content="2026-11-18"/>
 <title>Datenschutz – Arbeitszeit</title>
 <link href="./icon.svg" rel="icon" type="image/svg+xml"/>
 <style>
@@ -11,7 +12,7 @@
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.55; }
   main { width: min(100%, 720px); margin: 0 auto; padding: 28px 18px 56px; }
-  a { color: var(--accent); }
+  a { color: var(--accent); overflow-wrap: anywhere; }
   h1 { font-size: 1.6rem; letter-spacing: -.03em; margin: 0 0 8px; }
   h2 { font-size: 1.08rem; margin: 28px 0 8px; }
   .nav { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; font-size: .92rem; }
@@ -24,70 +25,88 @@
 <main>
 <nav class="nav" aria-label="Rechtliches">
   <a href="./index.html">Zur App</a>
-  <a href="./impressum.html">Impressum</a>
+  <a href="./impressum.html">Anbieterhinweise</a>
+  <a href="./nutzungsbedingungen.html">Nutzungsbedingungen</a>
 </nav>
-<h1>Datenschutzerklärung</h1>
-<p>Stand: 15. November 2026. Diese Erklärung beschreibt, was die Arbeitszeit-App mit personenbezogenen Daten macht. Sie ist bewusst konkret und folgt dem, was die App tatsächlich tut.</p>
+<h1>Datenschutzhinweise</h1>
+<p>Stand und Dokumentversion: 18. November 2026 / 2026-11-18.</p>
+<p>Diese Hinweise beschreiben die Verarbeitung von Daten in der Arbeitszeit-App. Das kostenlose Angebot richtet sich ausschließlich an einen persönlich eingeladenen Familien- und engen Freundeskreis.</p>
 
 <div class="card">
-<h2>1. Verantwortlicher</h2>
-<p>Fabian Hirth<br/>[Straße und Hausnummer, Postleitzahl und Ort]<br/>E-Mail: [E-Mail-Adresse]</p>
-<p>Solange die eckigen Platzhalter nicht ersetzt sind, ist die Pflichtinformation nach Art. 13 DSGVO unvollständig. Bitte die Angaben im Impressum und hier gleichzeitig ergänzen.</p>
+<h2>1. Anbieter und Kontakt</h2>
+<p>Die App wird privat von Fabian Hirth bereitgestellt. Bei Fragen zu deinen Daten oder zum Zugang wende dich über den dir bekannten persönlichen Kontakt an Fabian Hirth beziehungsweise an die Person, die dich eingeladen hat.</p>
+<p>Die Angaben beschreiben den vorgesehenen privaten Nutzerkreis. Daraus folgt keine pauschale Aussage, dass gesetzliche Datenschutz- oder Informationspflichten in jedem Einzelfall entfallen.</p>
 </div>
 
 <h2>2. Kurzüberblick</h2>
 <ul>
-  <li>Ohne Cloud-Anmeldung bleiben Arbeitszeiten auf dem Gerät (IndexedDB). Sie werden nicht an den Betreiber dieser Website übertragen.</li>
-  <li>Es gibt keine Reichweitenmessung, keine Tracking-Pixel, keine Social-Media-Einbindungen und keine Werbung.</li>
-  <li>Es werden keine Google Fonts und keine Skripte von jsDelivr, unpkg, Cloudflare CDN oder vergleichbaren Fremdservern geladen. Schriften sind Systemschriften des Geräts.</li>
-  <li>Eine Verbindung zu Supabase entsteht erst, wenn du selbst eine Projekt-URL einträgst und die Übertragung ausdrücklich bestätigst.</li>
+  <li>Für die Nutzung ist ein eingeladenes Konto mit Anmeldung erforderlich. Eine öffentliche Registrierung oder frei nutzbare Gastansicht gibt es nicht.</li>
+  <li>Arbeitszeiten werden lokal auf dem Gerät gespeichert und mit dem zentralen Supabase-Projekt der App synchronisiert. Die Konten sind voneinander getrennt.</li>
+  <li>Nach einer zuvor bestätigten Anmeldung ist die App auch offline nutzbar. Lokale Änderungen werden bei wiederhergestellter Verbindung synchronisiert.</li>
+  <li>Das Tutorial verwendet ausschließlich getrennte Beispieldaten. Diese werden nicht in dein Arbeitszeitkonto übernommen.</li>
+  <li>Es gibt keine Reichweitenmessung, Tracking-Pixel, Social-Media-Einbindungen oder Werbung.</li>
+  <li>Die App verwendet Systemschriften und lokal mitgelieferte Skripte, keine extern geladenen Schriftarten oder Skript-CDNs.</li>
 </ul>
 
-<h2>3. Hosting</h2>
+<h2>3. Hosting der Website</h2>
 <p>Die Website wird über GitHub Pages bereitgestellt (GitHub, Inc., ein Unternehmen der Microsoft-Unternehmensgruppe, USA). Beim Aufruf verarbeitet der Hoster technisch erforderliche Verbindungsdaten, insbesondere IP-Adresse, Datum und Uhrzeit, aufgerufene Adresse und Browserkennung, um die Seite auszuliefern und den Betrieb abzusichern.</p>
-<p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (Betrieb der Website). Eine Übermittlung in die USA kann stattfinden. GitHub bzw. Microsoft stützen solche Übermittlungen, soweit einschlägig, auf das EU-US Data Privacy Framework und ergänzend auf Standardvertragsklauseln. Einzelheiten: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">Datenschutzerklärung von GitHub</a>. Der Link wird erst geladen, wenn du ihn öffnest.</p>
+<p>Soweit die DSGVO auf die Verarbeitung Anwendung findet, dient diese Verarbeitung dem sicheren Betrieb und der Bereitstellung der Website (Art. 6 Abs. 1 lit. f DSGVO). Eine Übermittlung in die USA kann stattfinden. Informationen zu Empfängern und Übermittlungsgrundlagen veröffentlicht GitHub in seiner <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">Datenschutzerklärung</a>. Externe Informationsseiten werden erst aufgerufen, wenn du ihren Link öffnest.</p>
 
-<h2>4. Lokale Speicherung</h2>
+<h2>4. Anmeldung, Konto und zentrale Synchronisation</h2>
+<p>Die Anmeldung und die Kontodaten werden über das zentrale Supabase-Projekt der App verarbeitet. Die Datenbank ist in der EU-Region <code>eu-west-1</code> eingerichtet. Du musst kein eigenes Supabase-Projekt verbinden. Die Supabase-Bibliothek liegt unter <code>vendor/supabase.js</code> auf derselben Website; sie wird nicht von einem CDN geladen.</p>
+<p>Bei der Anmeldung und Prüfung einer bestehenden Sitzung werden Verbindungen zu Supabase aufgebaut. Verarbeitet werden insbesondere:</p>
+<ul>
+  <li>deine E-Mail-Adresse, Konto-ID sowie Angaben zur Einladung und Anmeldung;</li>
+  <li>dein Passwort durch Supabase Auth; es wird dort gehasht und nicht als Arbeitszeiteintrag oder im Klartext von der App gespeichert;</li>
+  <li>Sitzungs- und Erneuerungstoken, damit du auf dem Gerät angemeldet bleiben kannst;</li>
+  <li>Arbeitszeiten, Pausen, freiwillige Notizen, Urlaub, Krankheitseinträge, geplante Schichten, Sollstunden und Einstellungen;</li>
+  <li>Versionsstände und Sicherungen, mit denen sich Änderungen synchronisieren und frühere Stände wiederherstellen lassen;</li>
+  <li>technische Verbindungs- und Fehlerdaten, soweit sie für Anmeldung, Versand und Betrieb anfallen.</li>
+</ul>
+<p>Einladungs- und Passwortwiederherstellungs-E-Mails werden über den im Supabase-Projekt eingerichteten E-Mail-Versand zugestellt. Sie enthalten deine E-Mail-Adresse und einen zeitlich begrenzten Link zum jeweiligen Kontovorgang. Die Anmeldung ist keine Erlaubnis für Werbe-E-Mails.</p>
+<p>Die Verarbeitung dient der von dir angeforderten Kontonutzung, Speicherung und Synchronisation (soweit anwendbar Art. 6 Abs. 1 lit. b DSGVO); technische Sicherheitsmaßnahmen dienen dem sicheren Betrieb (Art. 6 Abs. 1 lit. f DSGVO). Mit der Kenntnisnahme dieser Hinweise erteilst du keine pauschale Einwilligung in alle denkbaren Verarbeitungen.</p>
+<p>Supabase stellt die technische Plattform bereit (Supabase Inc. / Supabase Pte. Ltd.). Der Anbieter der App verwaltet das Projekt und dessen Daten. Die Trennung der Konten verhindert, dass andere eingeladene Nutzer deine Daten über die normale App-Nutzung lesen können; sie ist keine Ende-zu-Ende-Verschlüsselung gegenüber dem Projektbetreiber. Weitere Informationen: <a href="https://supabase.com/privacy">Datenschutzhinweise von Supabase</a>. Die gewählte EU-Datenbankregion bedeutet nicht, dass sämtliche Support-, E-Mail- oder optionalen Zusatzdienste ausschließlich innerhalb der EU arbeiten.</p>
+<p>Trage keine Diagnosen, medizinischen Unterlagen oder Daten anderer Personen in Notizen ein. Krankheitseinträge sind freiwillig und dienen nur der Erfassung eigener Abwesenheit und Zeitgutschriften.</p>
+
+<h2>5. Bestätigung der Texte und Einführung</h2>
+<p>Vor der ersten Freigabe bestätigst du die Nutzungsbedingungen und nimmst die Datenschutzhinweise zur Kenntnis. Gespeichert werden deine Konto-ID, die Versionen beider Texte und ein serverseitiger Zeitpunkt. Diese Angaben liegen getrennt von den Arbeitszeit-Backups, damit eine Wiederherstellung die Bestätigung nicht zurücksetzt. Wenn eine neue erforderliche Dokumentversion eingeführt wird, kann die App eine erneute Bestätigung verlangen.</p>
+<p>Für das Tutorial wird gespeichert, welche Version du abgeschlossen oder übersprungen hast und wann dies geschah. Der Status ist kontobezogen und wird auch auf dem Gerät vorgehalten. Er verhindert, dass die Einführung bei jedem Öffnen erneut startet. Du kannst das Tutorial in den Einstellungen wieder aufrufen.</p>
+<p>Die Beispieldaten des Tutorials befinden sich nur im Arbeitsspeicher der getrennten Demo-Ansicht. Demo-Eingaben werden weder mit deinem Konto synchronisiert noch an KI-, Push- oder Kalenderdienste gesendet. Beim Beenden, Überspringen oder Neuladen werden die Demo-Daten verworfen. Nur der Tutorialstatus wird außerhalb der Demo gespeichert.</p>
+
+<h2>6. Speicherung auf deinem Gerät und Offline-Nutzung</h2>
 <p>Die App speichert auf deinem Gerät:</p>
 <ul>
-  <li>Arbeitszeiten, Pausen, Notizen, Urlaub, Krankheit, Schichten, Sollstunden und weitere Einstellungen in IndexedDB</li>
-  <li>Darstellung, Chatverläufe des Assistenten und technische Merker in localStorage</li>
-  <li>eine Kopie der Oberfläche im Cache des Service Workers, damit die App offline startet</li>
+  <li>die zu deinem Konto gehörenden Arbeitszeitdaten und Synchronisationsstände in IndexedDB;</li>
+  <li>Anmeldetoken, Darstellung, lokale Assistenten-Chatverläufe, Bestätigungs- und Tutorialstatus sowie technische Merker im lokalen Speicher;</li>
+  <li>die Oberfläche und erforderliche Dateien im Service-Worker-Cache, damit die App offline startet.</li>
 </ul>
-<p>Das ist für die von dir verlangte Funktion erforderlich (Art. 6 Abs. 1 lit. b DSGVO). Es werden dabei keine Daten an den Betreiber geschickt. Exportierte JSON- oder PDF-Dateien bleiben dort, wo du sie speicherst. Du kannst die Daten löschen, indem du die Website-Daten im Browser entfernst oder ein leeres Backup importierst.</p>
-<p>Die App setzt selbst keine Cookies zur Analyse. localStorage und IndexedDB sind technisch erforderlich für die Zeiterfassung. Ein Einwilligungsbanner für Tracking ist deshalb nicht eingebaut, weil kein Tracking stattfindet.</p>
+<p>Diese Speicherung ist für die angeforderten Funktionen erforderlich. Die App verwendet keine Analyse-Cookies und kein Tracking. Ein Tracking-Einwilligungsbanner ist deshalb nicht eingebaut.</p>
+<p>Die Offline-Freigabe setzt eine frühere bestätigte Anmeldung und die erforderliche Textbestätigung auf diesem Gerät voraus. Bei einer ausdrücklichen Abmeldung wird der Arbeitsbereich gesperrt. Noch nicht synchronisierte Kontodaten können auf dem Gerät erhalten bleiben, damit sie bei einer erneuten Anmeldung nicht verloren gehen. Eine offline noch nicht bekannte serverseitige Abmeldung kann erst nach Wiederherstellung der Verbindung berücksichtigt werden.</p>
+<p>Auf gemeinsam genutzten Geräten können lokal gespeicherte Daten über die Browserdaten oder den Zugriff auf das Gerät erreichbar sein. Verwende deshalb eine Gerätesperre und entferne die Website-Daten vor einer Weitergabe des Geräts. Exportierte JSON- und PDF-Dateien liegen dort, wo du sie speicherst, und sind nicht automatisch durch dein App-Passwort geschützt.</p>
+<p>Bereits aus älteren App-Versionen vorhandene lokale Gastdaten bleiben erhalten. Sie werden nicht automatisch hochgeladen; nach Anmeldung kann eine ausdrückliche Übernahme in ein leeres Konto angeboten werden.</p>
 
-<h2>5. Optionale Cloud (Supabase)</h2>
-<p>Die Cloud ist aus. Erst wenn du eine Supabase-Projekt-URL und einen öffentlichen Schlüssel speicherst und das Kontrollkästchen zur Übertragung aktivierst, wird die lokal mitgelieferte Bibliothek <code>vendor/supabase.js</code> geladen und eine Verbindung zu genau diesem Projekt aufgebaut. Die Bibliothek kommt von derselben Website, nicht von einem CDN.</p>
-<p>Übertragen werden dann insbesondere:</p>
-<ul>
-  <li>E-Mail-Adresse und Passwort an die Authentifizierung deines Supabase-Projekts (das Passwort wird dort gehasht, nicht im Klartext in der App gespeichert)</li>
-  <li>Sitzungstoken im lokalen Speicher dieses Geräts</li>
-  <li>deine Arbeitszeitdaten einschließlich Notizen, Einstellungen, Planungen und Sicherungsstände</li>
-  <li>bei aktivierten Mitteilungen die Push-Subscription</li>
-  <li>ein Hash des privaten Kalenderlinks, wenn du ein Kalenderabo erzeugst</li>
-</ul>
-<p>Rechtsgrundlage ist deine Einwilligung, Art. 6 Abs. 1 lit. a DSGVO, die du vor dem ersten Verbindungsaufbau erteilst und die du widerrufen kannst, indem du dich abmeldest und die gespeicherte Projektverbindung auf dem Gerät entfernst (Website-Daten löschen). Die weitere Verarbeitung im Projekt richtet sich nach den Einstellungen, die du in Supabase triffst. Empfänger ist der Betreiber des von dir gewählten Projekts; bei einem Projekt von Supabase ist das Supabase (Supabase Inc. / Supabase Pte. Ltd.). Ob die Daten die EU verlassen, hängt von der Region ab, die du im Projekt wählst. Informationen: <a href="https://supabase.com/privacy">supabase.com/privacy</a>.</p>
-<p>Diese Website betreibt selbst kein zentrales Nutzerkonto. Die Felder für eine voreingestellte Projekt-URL sind leer.</p>
+<h2>7. Optionale KI und Sprache</h2>
+<p>Die Zeiterfassung und Berechnungen laufen ohne Online-KI. Online-KI und Spracherkennung sind zusätzliche, getrennt aktivierte Funktionen. Die allgemeine Anmeldung oder Bestätigung der Nutzungsbedingungen aktiviert sie nicht.</p>
+<p>Mit einer Chat- oder Auswertungsanfrage können insbesondere Datum, Beginn, Ende, Pause, Nettozeiten, Urlaubs- und Krankheitstage ohne Freitext-Arbeitsnotiz, Monatssummen, Planungen und die letzten Chatnachrichten über eine Supabase-Funktion an OpenRouter und das konfigurierte Modell übertragen werden. Fragst du nach Geld oder Stundensatz, kann auch der hinterlegte Stundensatz mitgehen. Freitext-Arbeitsnotizen und deine E-Mail-Adresse werden für die Antwort nicht mitgeschickt. Inhalte, die du selbst in die Chatfrage schreibst, sind dagegen Bestandteil der Anfrage.</p>
+<p>Bei der Spracherkennung wird die nach deiner Aktion aufgenommene Audiodatei an die Transkriptionsfunktion gesendet. Der erkannte Text wird dir zur Prüfung angezeigt und nicht automatisch als Arbeitszeit gespeichert.</p>
+<p>Wenn du den automatischen KI-Bericht einschaltest, werden berechnete Monats- und Jahreskennzahlen bereits beim Öffnen der betreffenden Auswertung übertragen. Ohne diese Aktivierung erfolgt dies nicht. Die zusätzliche Verarbeitung wird durch deine Aktivierung und Nutzung angefordert; soweit eine Einwilligung erforderlich ist, ist Art. 6 Abs. 1 lit. a DSGVO maßgeblich. Du kannst die Funktionen in den Einstellungen wieder ausschalten.</p>
+<p>OpenRouter und der konfigurierte Modellanbieter können Daten außerhalb der EU verarbeiten. Ihre Aufbewahrungs- und Übermittlungsbedingungen hängen vom eingesetzten Dienst und Modell ab. Weitere Informationen: <a href="https://openrouter.ai/privacy">Datenschutzhinweise von OpenRouter</a>. Verzichte in Chat und Audio auf Angaben, die du nicht an diese Dienste übertragen möchtest.</p>
 
-<h2>6. Optionale KI und Sprache</h2>
-<p>Normale Erfassung, Auswertungen und viele Assistentenfragen laufen lokal. Online-KI und Spracherkennung sind extra eingeschaltet und brauchen ein angemeldetes Cloud-Konto. Erst dann ruft die App eine Funktion in deinem Supabase-Projekt auf. Diese Funktion kann die Anfrage an OpenRouter weiterleiten, wenn du dort einen Schlüssel hinterlegt hast. Der Schlüssel liegt nicht in dieser Website.</p>
-<p>Mit einer Chat- oder Auswertungsanfrage können insbesondere Datum, Beginn, Ende, Pause, Nettozeiten, Urlaubs- und Krankheitstage ohne Freitextnotiz, Monatssummen, Planungen und die letzten Chatnachrichten übertragen werden. Fragst du nach Geld oder Stundensatz, kann auch der hinterlegte Stundensatz mitgehen. Freitext-Arbeitsnotizen und deine E-Mail-Adresse werden für die Antwort nicht mitgeschickt. Bei der Spracherkennung wird die Aufnahme (Audio) an die Transkriptionsfunktion deines Projekts gesendet; der erkannte Text wird dir zum Prüfen gezeigt und nicht automatisch gespeichert.</p>
-<p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO: du aktivierst die Online-KI und sendest eine Anfrage, oder du schaltest den automatischen KI-Bericht ein. In dem Fall werden die berechneten Monats- und Jahreskennzahlen schon beim Öffnen der Analyse übertragen. OpenRouter kann die Inhalte an das von dir gewählte Modell und damit gegebenenfalls in ein Drittland weitergeben. Ohne Aktivierung findet diese Übermittlung nicht statt.</p>
+<h2>8. Mitteilungen und Kalender</h2>
+<p>Push-Mitteilungen gibt es nur nach deiner Aktivierung in der App und Freigabe im System. Dazu werden eine Push-Subscription und deine Konto-ID im Supabase-Projekt gespeichert. Der Browser spricht zusätzlich den Mitteilungsdienst des Geräts an: bei Chrome und Android ist das Google (Firebase Cloud Messaging), bei Safari Apple, bei Firefox Mozilla. Die Anmeldung allein aktiviert keine Push-Mitteilungen.</p>
+<p>Wenn du einen privaten Kalenderlink erstellst, wird dessen Hash im Projekt gespeichert. Der Kalenderdienst, bei dem du den Link abonnierst, kann Arbeitszeiten und Abwesenheiten abrufen. Jeder mit diesem Link kann die darüber bereitgestellten Zeiten lesen. Du kannst den Link erneuern; der alte wird dann ungültig. Teile ihn deshalb nicht öffentlich.</p>
 
-<h2>7. Mitteilungen und Apple Kalender</h2>
-<p>Push-Mitteilungen gibt es nur, nachdem du sie im System freigibst, und nur über die Push-Funktion deines Supabase-Projekts. Der Browser spricht dafür zusätzlich den Mitteilungsdienst des Geräts an: bei Chrome und Android ist das Google (Firebase Cloud Messaging), bei Safari Apple, bei Firefox Mozilla. Ohne diese Freigabe entsteht kein Kontakt dorthin. Der private Kalenderlink erlaubt jedem, der den Link kennt, das Lesen der Arbeitszeiten. Du kannst den Link erneuern; der alte wird dann ungültig.</p>
+<h2>9. Speicherdauer und Löschung</h2>
+<p>Lokale Daten bleiben bestehen, bis du sie in der App oder über die Website-Daten deines Browsers entfernst. Kontodaten und Sicherungsstände werden im Supabase-Projekt gespeichert, bis sie über die vorgesehenen Daten- beziehungsweise Kontolöschfunktionen gelöscht werden. Abmelden allein löscht dein Konto nicht.</p>
+<p>Bestätigungen und Tutorialstatus liegen getrennt von Arbeitszeit-Backups und werden bei einer Löschung des Benutzerkontos mit entfernt. Der Hoster und beteiligte technische Dienste können Verbindungs- und Sicherheitsprotokolle nach ihren eigenen Aufbewahrungsregeln führen. Bereits von dir exportierte Dateien oder in anderen Diensten abgelegte Kopien musst du dort selbst entfernen.</p>
 
-<h2>8. Speicherdauer</h2>
-<p>Lokal gespeicherte Daten bleiben, bis du sie löschst oder die Browserdaten entfernst. Cloud-Daten bleiben in deinem Supabase-Projekt, bis du sie dort leerst oder das Konto löschst. Der Hoster speichert Verbindungsdaten nach seinen eigenen Fristen.</p>
+<h2>10. Auskunft und weitere Rechte</h2>
+<p>Wende dich bei Fragen, Auskunfts- oder Löschwünschen über den bekannten persönlichen Kontakt an Fabian Hirth. Du kannst deine Arbeitszeitdaten in der App exportieren und Daten beziehungsweise das Konto über die Kontoverwaltung löschen.</p>
+<p>Soweit die DSGVO Anwendung findet, bestehen insbesondere Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch bei Verarbeitungen auf Grundlage berechtigter Interessen (Art. 15 bis 21 DSGVO). Eine für eine optionale Funktion erteilte Einwilligung kannst du mit Wirkung für die Zukunft widerrufen (Art. 7 Abs. 3 DSGVO). Du kannst dich zudem bei einer Datenschutzaufsichtsbehörde beschweren (Art. 77 DSGVO).</p>
+<p>Es findet keine automatisierte Entscheidung mit rechtlicher Wirkung im Sinne von Art. 22 DSGVO statt. Die App berechnet Zeiten; sie trifft keine Entscheidungen über dich.</p>
 
-<h2>9. Deine Rechte</h2>
-<p>Du hast gegenüber dem Verantwortlichen das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch gegen Verarbeitungen auf Basis von Art. 6 Abs. 1 lit. f DSGVO, außerdem das Recht, eine Einwilligung mit Wirkung für die Zukunft zu widerrufen (Art. 15 bis 21 und Art. 7 Abs. 3 DSGVO). Die lokalen Daten kannst du selbst exportieren und löschen. Cloud-Daten löschst du in der App unter Konto & Cloud.</p>
-<p>Du hast das Recht, dich bei einer Datenschutzaufsichtsbehörde zu beschweren (Art. 77 DSGVO). Für eine verantwortliche Stelle in Baden-Württemberg ist das der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg.</p>
-<p>Es findet keine automatisierte Entscheidung mit rechtlicher Wirkung im Sinne von Art. 22 DSGVO statt. Die App rechnet Zeiten; sie trifft keine Entscheidungen über dich.</p>
-
-<h2>10. Pflicht zur Bereitstellung</h2>
-<p>Du musst keine Daten angeben, um die App lokal zu nutzen. E-Mail und Passwort sind nur nötig, wenn du die optionale Cloud verwenden willst.</p>
+<h2>11. Erforderliche und freiwillige Angaben</h2>
+<p>Ohne Einladung, E-Mail-Adresse und Anmeldung ist der Arbeitsbereich nicht nutzbar. Für ein Konto mit Passwort wird außerdem ein Passwort benötigt. Eigene Zeit- und Abwesenheitseinträge sowie Notizen gibst du nach deinem Bedarf ein. KI, Sprache, Push und Kalenderabo bleiben optional.</p>
 </main>
 </body>
 </html>
