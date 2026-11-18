@@ -1848,7 +1848,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 <div class="today-title"><div><span id="todayDate"></span><h2>Heute</h2></div></div>
 
 <button class="assistant-invite" hidden="True" id="todayAskAssistant" type="button"><span aria-hidden="true" class="assistant-invite-icon">✦</span><span><strong>Fragen zu deinen Zeiten?</strong><small>Stunden, Urlaub, Überstunden und mehr mit KI verstehen</small></span><span aria-hidden="true">›</span></button>
-<div class="day-metrics flex-metrics"><div><span>Heute gearbeitet</span><strong id="todayWorked"></strong></div><div><span id="bookedMonth"></span><strong id="monthWorked"></strong></div></div><form aria-label="Arbeitszeit erfassen" class="clock-card manual-card" id="manualForm">
+<div class="day-metrics flex-metrics"><div><span>Heute inkl. Gutschriften</span><strong id="todayWorked"></strong></div><div><span id="bookedMonth"></span><strong id="monthWorked"></strong></div></div><form aria-label="Arbeitszeit erfassen" class="clock-card manual-card" id="manualForm">
 <div class="manual-head"><h2>Arbeitszeit erfassen</h2><label class="manual-date">Datum<input id="manualDate" max="2200-12-31" min="2000-01-01" required="" type="date"/></label></div>
 <details class="ai-card entry-assist" id="smartEntry"><summary>Mit Text oder Sprache erfassen</summary><div class="ai-body"><p class="hint">Zum Beispiel: „Gestern von 7 bis 16 Uhr, 45 Minuten Pause.“ Erst der geprüfte Eintrag wird gespeichert.</p><label for="aiEntry">Deine Arbeitszeit</label><textarea id="aiEntry" maxlength="600" placeholder="Ich habe gestern um halb acht angefangen, war bis Viertel nach vier da und hatte eine Dreiviertelstunde Pause." rows="2"></textarea><div class="entry-assist-actions"><button id="aiFill" type="button">✦ Mit KI auswerten</button><button class="secondary" id="aiMic" type="button">Aufnehmen</button></div><small class="hint" id="aiMicHint">KI-Spracherkennung: Audio aufnehmen, Text prüfen und erst danach Zeiten übernehmen. Anmeldung und Online-KI erforderlich.</small><div aria-live="polite" aria-atomic="true" class="entry-feedback" id="aiEntryMsg" role="status"></div><div aria-label="Überprüfte Arbeitszeitvorschläge" class="batch-preview" id="aiBatchPreview" role="group"></div></div></details>
 <div aria-label="Eingabeart" class="manual-switch" role="group"><button aria-pressed="true" id="byRange" type="button">Von – bis</button><button aria-pressed="false" id="byDuration" type="button">Dauer</button></div>
@@ -1905,43 +1905,43 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 
 <section class="panel" aria-labelledby="monthlySummaryTitle">
 <h2 id="monthlySummaryTitle">Monate im Überblick</h2>
-<p class="hint" id="monthlySummaryHelp">Gearbeitet zeigt die erfasste Nettoarbeitszeit. Plus/Minus ist die angerechnete Zeit inklusive Urlaub, Krankheit und Feiertagen abzüglich Monatssoll. Das Zeitkonto enthält den Übertrag. Abschlüsse gibt es erst nach Monatsende und ab Start des Zeitkontos.</p>
+<p class="hint" id="monthlySummaryHelp">* Gearbeitet enthält Arbeitszeit sowie angerechneten Urlaub, Krankheit und Feiertage. Plus/Minus ist diese Summe abzüglich Monatssoll. Das Zeitkonto enthält den Übertrag. Abschlüsse gibt es erst nach Monatsende und ab Start des Zeitkontos.</p>
 <div class="monthly-summary-scroll" tabindex="0" role="region" aria-label="Monatswerte" aria-describedby="monthlySummaryHelp">
-<table class="monthly-summary"><caption class="sr-only">Arbeitszeit und Überstunden pro Monat</caption><thead><tr><th scope="col">Monat</th><th scope="col">Gearbeitet</th><th scope="col">Plus/Minus</th><th scope="col">Zeitkonto</th></tr></thead><tbody id="yearMonths"></tbody></table>
+<table class="monthly-summary"><caption class="sr-only">Arbeitszeit und Überstunden pro Monat</caption><thead><tr><th scope="col">Monat</th><th scope="col">Gearbeitet*</th><th scope="col">Plus/Minus</th><th scope="col">Zeitkonto</th></tr></thead><tbody id="yearMonths"></tbody></table>
 </div>
 <p class="hint">Tippe auf einen Monat, um die Buchungen und den Monatsabschluss zu öffnen. Laufende Monate sind noch offen, zukünftige Monate ausstehend.</p>
 </section>
 <div class="grid two-dashboard" id="analyticsQuickStats">
-<div class="metric"><span>Gearbeitet im gewählten Jahr</span><strong id="statYearWork">–</strong></div>
+<div class="metric"><span>Gearbeitet im Jahr inkl. Gutschriften</span><strong id="statYearWork">–</strong></div>
 <div class="metric"><span>Resturlaub</span><strong id="statVacation">–</strong></div>
-<div class="metric"><span>Ø Arbeitstag</span><strong id="statAverage">–</strong></div>
+<div class="metric"><span>Ø angerechneter Tag</span><strong id="statAverage">–</strong></div>
 <div class="metric"><span>Urlaub gebucht</span><strong id="statVacationUsed">–</strong></div>
 </div>
-<section class="panel ai-card" id="smartReport"><h2>Arbeitsrhythmus im Monat</h2><div class="ai-body"><div class="report-period-selector"><span class="hint">Berichtsmonat</span><div aria-label="Berichtsmonat wählen" class="month-stepper" role="group"><button aria-label="Vorheriger Monat" class="secondary" id="aiMonthPrev" type="button">‹</button><strong aria-live="polite" id="aiMonthLabel">–</strong><input id="aiMonth" type="hidden"/><button aria-label="Nächster Monat" class="secondary" id="aiMonthNext" type="button">›</button></div></div><div class="insight-cards" id="aiInsightCards"></div><div class="report-card"><div class="report-card-heading"><strong>Vergleich zum Vormonat</strong><small>Ø Nettoarbeitszeit je erfasstem Arbeitstag</small></div><div aria-label="Vergleich der durchschnittlichen Arbeitstage" id="aiReportChart" role="img"></div></div><p class="hint" id="monthCompareStory"></p><div class="report-story" hidden="" id="aiMonthly" role="status"></div><details class="report-year-details"><summary>Jahresüberblick ansehen</summary><div class="report-story" id="aiYearly" role="status"></div></details><button class="secondary" id="aiNarrate" type="button">✦ Entwicklung von KI erklären lassen</button><div class="report-story" id="aiNarrative" role="status"></div><button class="secondary small" id="aiSettingsJump" type="button">KI-Einstellungen</button></div></section><button class="assistant-invite assistant-invite-analysis" id="analyticsAskAssistant" type="button"><span aria-hidden="true" class="assistant-invite-icon">✦</span><span><strong>Mehr über deine Zeiten erfahren</strong><small>Stelle dem Assistenten jede Frage zu deinen Buchungen.</small></span><span aria-hidden="true">›</span></button> <section class="panel"><div class="section-head"><h2>Überstundenentwicklung</h2><span class="mini-label">Gewähltes Jahr</span></div>
+<section class="panel ai-card" id="smartReport"><h2>Arbeitsrhythmus im Monat</h2><div class="ai-body"><div class="report-period-selector"><span class="hint">Berichtsmonat</span><div aria-label="Berichtsmonat wählen" class="month-stepper" role="group"><button aria-label="Vorheriger Monat" class="secondary" id="aiMonthPrev" type="button">‹</button><strong aria-live="polite" id="aiMonthLabel">–</strong><input id="aiMonth" type="hidden"/><button aria-label="Nächster Monat" class="secondary" id="aiMonthNext" type="button">›</button></div></div><div class="insight-cards" id="aiInsightCards"></div><div class="report-card"><div class="report-card-heading"><strong>Vergleich zum Vormonat</strong><small>Ø Zeit inkl. Gutschriften je angerechnetem Tag</small></div><div aria-label="Vergleich der durchschnittlichen Tagesgutschriften" id="aiReportChart" role="img"></div></div><p class="hint" id="monthCompareStory"></p><div class="report-story" hidden="" id="aiMonthly" role="status"></div><details class="report-year-details"><summary>Jahresüberblick ansehen</summary><div class="report-story" id="aiYearly" role="status"></div></details><button class="secondary" id="aiNarrate" type="button">✦ Entwicklung von KI erklären lassen</button><div class="report-story" id="aiNarrative" role="status"></div><button class="secondary small" id="aiSettingsJump" type="button">KI-Einstellungen</button></div></section><button class="assistant-invite assistant-invite-analysis" id="analyticsAskAssistant" type="button"><span aria-hidden="true" class="assistant-invite-icon">✦</span><span><strong>Mehr über deine Zeiten erfahren</strong><small>Stelle dem Assistenten jede Frage zu deinen Buchungen.</small></span><span aria-hidden="true">›</span></button> <section class="panel"><div class="section-head"><h2>Überstundenentwicklung</h2><span class="mini-label">Gewähltes Jahr</span></div>
 <div aria-label="Entwicklung des Zeitkontos" class="insight-chart" id="balanceChart" role="img"></div>
 <p class="hint">Nur abgeschlossene Monate – keine Hochrechnung für den laufenden Monat.</p>
 </section>
 <section class="panel">
 <div class="section-head"><h2>Jahresanalyse</h2></div>
 <div class="grid two-dashboard">
-<div class="metric"><span>Arbeitstage erfasst</span><strong id="statDays">–</strong></div>
-<div class="metric"><span>Längster Arbeitstag</span><strong id="statLongest">–</strong></div>
+<div class="metric"><span>Tage mit Zeitgutschrift</span><strong id="statDays">–</strong></div>
+<div class="metric"><span>Höchste Tagesgutschrift</span><strong id="statLongest">–</strong></div>
 <div class="metric"><span>Pausen gesamt</span><strong id="statBreaks">–</strong></div>
 <div class="metric"><span>Zum Vorjahr</span><strong id="statYoY">–</strong></div>
 </div>
-<h3>Gearbeitete Stunden je Monat</h3>
-<div aria-label="Gearbeitete Stunden pro Monat mit Stundenachse" class="insight-chart" id="monthlyChart" role="img"></div>
-<p class="hint">Skala links in Stunden. Der laufende Monat zeigt nur tatsächlich erfasste Arbeitszeit.</p>
+<h3>Gearbeitete Stunden inkl. Gutschriften je Monat</h3>
+<div aria-label="Gearbeitete Stunden inklusive Urlaub, Krankheit und Feiertagen pro Monat mit Stundenachse" class="insight-chart" id="monthlyChart" role="img"></div>
+<p class="hint">Skala links in Stunden. Alle Werte enthalten Arbeitszeit sowie angerechneten Urlaub, Krankheit und Feiertage, einschließlich bereits gebuchter Abwesenheiten im gewählten Zeitraum.</p>
 </section>
 <details class="panel analytics-more" id="analyticsMore"><summary>Weitere Kennzahlen zum Arbeitsrhythmus</summary><div class="analytics-more-content"><h2>Arbeitsrhythmus</h2>
 <div class="grid two-dashboard">
-<div class="metric"><span>Ø Pause je Arbeitstag</span><strong id="statAvgBreak">–</strong></div>
+<div class="metric"><span>Ø Pause je Schichttag</span><strong id="statAvgBreak">–</strong></div>
 <div class="metric"><span>Typischer Arbeitsbeginn</span><strong id="statTypicalStart">–</strong></div>
 <div class="metric"><span>Stärkster Wochentag</span><strong id="statBusiestWeekday">–</strong></div>
 <div class="metric"><span>Ø Stunden je Monat</span><strong id="statMonthlyAverage">–</strong></div>
 </div>
-<h3>Arbeitsstunden nach Wochentag</h3>
-<div aria-label="Arbeitsstunden je Wochentag mit Stundenachse" class="insight-chart" id="weekdayChart" role="img"></div>
+<h3>Stunden inkl. Gutschriften nach Wochentag</h3>
+<div aria-label="Stunden inklusive Urlaub, Krankheit und Feiertagen je Wochentag mit Stundenachse" class="insight-chart" id="weekdayChart" role="img"></div>
 <details class="panel ai-card" id="smartChecks"><summary>Einträge prüfen</summary><div class="ai-body"><p class="hint">Auffällige Buchungen und mögliche Lücken. Zeitraum und Empfindlichkeit kannst du in den Assistenz-Einstellungen ändern.</p><div class="ai-output" id="aiChecks" role="status"></div></div></details>
 </div></details>
 </section>
@@ -1959,7 +1959,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 </div><p class="hint" id="monthMovement"></p><p class="hint" id="monthWorkStory"></p></div>
 <div class="panel">
 <div class="grid">
-<div class="metric"><span>Tatsächlich gearbeitet</span><strong id="workedMetric">–</strong></div>
+<div class="metric"><span>Gearbeitet inkl. Gutschriften</span><strong id="workedMetric">–</strong></div>
 <div class="metric"><span>Monatssoll</span><strong id="targetMetric">–</strong></div>
 <div class="metric"><span>Noch bis zum Soll</span><strong id="remainingMetric">–</strong></div>
 <div class="metric" id="closedDelta"><span>Abgeschlossene Monatsdifferenz</span><strong id="deltaMetric">–</strong></div>
@@ -2927,12 +2927,32 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
         .sort((a, b) => String(a.start || "").localeCompare(String(b.start || "")));
     }
 
+    function creditedDays(start, end) {
+      const days = new Map();
+      if (start > end) return days;
+      const add = (date, hours) => {
+        if (hours > 0) days.set(date, (days.get(date) || 0) + Number(hours));
+      };
+      for (const record of state.records) {
+        if (record.date >= start && record.date <= end) add(record.date, recordHours(record));
+      }
+      for (const date = parseDate(start); localDateString(date) <= end; date.setDate(date.getDate() + 1)) {
+        const key = localDateString(date);
+        add(key, holidayCreditForDate(key)?.hours || 0);
+      }
+      return days;
+    }
+    function creditedHoursForPeriod(start, end) {
+      return [...creditedDays(start, end).values()].reduce((sum, hours) => sum + hours, 0);
+    }
+
     function dayInfo(dateKey) {
       const records = dateRecords(dateKey);
       const workRecords = records.filter((record) => record.type === "work");
       return {
         records,
         workRecords,
+        creditedHours: records.reduce((sum, record) => sum + recordHours(record), 0) + (holidayCreditForDate(dateKey)?.hours || 0),
         workHours: workRecords.reduce((sum, record) => sum + Number(record.hours || 0), 0),
         vacationDays: records.filter((record) => record.type === "vacation")
           .reduce((sum, record) => sum + Number(record.days || 0), 0),
@@ -2995,7 +3015,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 
       $("overviewHeading").textContent = monthTitle(selectedMonth);
       $("targetMetric").textContent = hoursText(stats.target);
-      $("workedMetric").textContent = hoursText(stats.work);
+      $("workedMetric").textContent = hoursText(stats.credited);
       $("creditedMetric").textContent = hoursText(stats.credited);
       $("remainingMetric").textContent = hoursText(Math.max(0, stats.target - stats.credited));
 
@@ -3090,7 +3110,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 
     function calendarStatus(info) {
       if (info.workHours > 0) {
-        return `Arbeit ${info.workHours.toLocaleString("de-DE", { maximumFractionDigits: 1 })}h`;
+        return `Gearbeitet inkl. Gutschriften ${info.creditedHours.toLocaleString("de-DE", { maximumFractionDigits: 1 })}h`;
       }
       if (info.vacationDays > 0) return "Urlaub";
       if (info.sick) return "Krankheit";
@@ -3141,7 +3161,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
             aria-label="${escapeHtml(dateKey)}: ${escapeHtml(plan && status === "Frei" ? "Geplante Schicht, nicht gebucht" : status === "Frei" ? "Keine Buchung" : status)}${info.holidayName ? `, Feiertag ${escapeHtml(info.holidayName)}` : ""}${escapeHtml(planLabel)}">
             <span class="day-number">${day}</span>
             ${status !== "Frei" ? `<span class="day-status">${escapeHtml(shortStatus)}</span>` : ""}
-            ${info.workHours > 0 ? `<span class="day-hours">${escapeHtml(durationLabel(info.workHours * 60))} h</span>` : ""}
+            ${info.creditedHours > 0 ? `<span class="day-hours">${escapeHtml(durationLabel(info.creditedHours * 60))} h</span>` : ""}
             ${plan && info.workHours <= 0 ? `<span class="day-plan-chip" aria-hidden="true">Plan</span>` : ""}
             ${plan && info.workHours <= 0 ? `<span class="day-plan-time" aria-hidden="true">${escapeHtml(plan.start)}</span>` : ""}
           </button>`);
@@ -3572,9 +3592,9 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       if(!$("manualDate").value) $("manualDate").value=today;
       $("todayDate").textContent=parseDate(today).toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long"});
       const records=dateRecords(today);
-      $("todayWorked").textContent=durationLabel(records.reduce((sum,r)=>sum+(r.type==="work"?r.hours:0),0)*60)+" Std.";
-      $("bookedMonth").textContent="Gearbeitet · "+monthTitle(month);
-      $("monthWorked").textContent=durationLabel(monthStats(month).work*60)+" Std.";
+      $("todayWorked").textContent=durationLabel(dayInfo(today).creditedHours*60)+" Std.";
+      $("bookedMonth").textContent="Inkl. Gutschriften · "+monthTitle(month);
+      $("monthWorked").textContent=durationLabel(monthStats(month).credited*60)+" Std.";
       $("timeline").innerHTML=records.map(r=>'<div class="stamp"><span>'+recordTypeName(r)+(r.mode==='range'?' '+escapeHtml(r.start)+'–'+escapeHtml(r.end):'')+' · '+durationLabel(recordHours(r)*60)+' Std.'+(r.fromPlan?' <small class="entry-plan-tag">Aus Planung</small>':'')+'</span><button class="quiet" data-today-edit="'+escapeHtml(r.id)+'">Bearbeiten</button></div>').join("") || '<p class="hint">Heute sind noch keine Zeiten erfasst.</p>';
       const work=records.filter(r=>r.type==='work');
       const timeline=$('todayBookings'),form=$('manualForm');
@@ -3792,7 +3812,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       $('insightHeroCaption').textContent='Überstunden · Stand '+monthTitle(endMonth);
       $('insightForecast').textContent='Laufender Monat und Planungen bleiben unberücksichtigt.';
       const months=Array.from({length:12},(_,m)=>`${year}-${String(m+1).padStart(2,'0')}`);
-      const monthly=months.map(ym=>monthStats(ym).work),yearWork=monthly.reduce((a,b)=>a+b,0);
+      const monthly=months.map(ym=>monthStats(ym).credited),yearWork=monthly.reduce((a,b)=>a+b,0);
       $('yearMonths').innerHTML=months.map((m,i)=>{
         const closed=monthIsClosed(m),stats=monthStats(m);
         const status=m<start?'Nicht aktiv':m===now?'Offen':m>now?'Ausstehend':'';
@@ -3804,13 +3824,12 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       $('statVacation').textContent=vacation.active?vacation.remaining.toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage':'–';
       $('statVacationUsed').textContent=vacation.active?(vacation.taken+vacation.planned).toLocaleString('de-DE',{maximumFractionDigits:1})+' Tage':'–';
       const records=state.records.filter(r=>r.type==='work'&&r.date.startsWith(year+'-'));
-      const byDay=new Map(),byWeekday=[0,0,0,0,0,0,0],starts=[];let breaks=0;
+      const byDay=creditedDays(year+'-01-01',year+'-12-31'),byWeekday=[0,0,0,0,0,0,0],starts=[];let breaks=0;
       for(const r of records){
-        byDay.set(r.date,(byDay.get(r.date)||0)+Number(r.hours||0));
-        byWeekday[parseDate(r.date).getDay()]+=Number(r.hours||0);
         breaks+=Number(r.breakMinutes||0);
         if(r.mode==='range'&&r.start)starts.push(timeToMinutes(r.start));
       }
+      for (const [date, hours] of byDay) byWeekday[parseDate(date).getDay()] += hours;
       const total=[...byDay.values()].reduce((a,b)=>a+b,0),days=byDay.size;
       $('statAverage').textContent=days?displayTime(total/days):'–';
       $('statDays').textContent=String(days);
@@ -3818,11 +3837,12 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       $('statBreaks').textContent=displayTime(breaks/60);
       const until=year===new Date().getFullYear()?localDateString():`${year}-12-31`;
       const lastYearEnd=[monthEnd((year-1)+until.slice(4,7)),`${year-1}${until.slice(4)}`].sort()[0];
-      const prev=state.records.filter(r=>r.type==='work'&&r.date.startsWith((year-1)+'-')&&r.date<=lastYearEnd).reduce((sum,r)=>sum+Number(r.hours||0),0);
-      const currentComparable=state.records.filter(r=>r.type==='work'&&r.date.startsWith(year+'-')&&r.date<=until).reduce((sum,r)=>sum+Number(r.hours||0),0);
+      const prev=creditedHoursForPeriod((year-1)+'-01-01',lastYearEnd);
+      const currentComparable=creditedHoursForPeriod(year+'-01-01',until);
       $('statYoY').textContent=prev?((currentComparable-prev>=0?'+':'')+displayTime(currentComparable-prev)):'–';
       $('statYoY').parentElement.title=year===new Date().getFullYear()?'Gleiche Kalendertage bis heute im Vorjahr':'Vergleich vollständiger Jahre';
-      $('statAvgBreak').textContent=days?Math.round(breaks/days)+' Min.':'–';
+      const shiftDays = new Set(records.map(r=>r.date)).size;
+      $('statAvgBreak').textContent=shiftDays?Math.round(breaks/shiftDays)+' Min.':'–';
       if(starts.length){starts.sort((a,b)=>a-b);const n=starts[Math.floor(starts.length/2)];$('statTypicalStart').textContent=String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');}
       else $('statTypicalStart').textContent='–';
       const maximum=Math.max(...byWeekday),dayName=['So','Mo','Di','Mi','Do','Fr','Sa'];
@@ -4658,8 +4678,8 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 
       const stats = monthStats(ym);
       pdfText(c,
-        `Soll ${hoursText(stats.target)} | Gearbeitet ${hoursText(stats.work)} | ` +
-        `Angerechnet ${hoursText(stats.credited)} | Monatsdifferenz ${signedHoursText(stats.delta)}`,
+        `Soll ${hoursText(stats.target)} | Gearbeitet inkl. Gutschriften ${hoursText(stats.credited)} | ` +
+        `Davon Schichten ${hoursText(stats.work)} | Monatsdifferenz ${signedHoursText(stats.delta)}`,
         8, 28, 7.5, true, 297
       );
 
@@ -4699,8 +4719,8 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 
         pdfText(c, status, x + 2, y + 11, 6.2, false, 297, [0.32, 0.44, 0.43]);
 
-        if (info.workHours > 0) {
-          pdfText(c, hoursText(info.workHours), x + 2, y + 17, 6.2, true, 297, [0.091, 0.609, 0.566]);
+        if (info.creditedHours > 0) {
+          pdfText(c, hoursText(info.creditedHours), x + 2, y + 17, 6.2, true, 297, [0.091, 0.609, 0.566]);
         }
 
         if (info.holidayName) {
@@ -4727,7 +4747,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       const page = newPdfPage(297, 210);
       const c = page.commands;
       pdfText(c, `Jahreskalender ${year}`, 8, 9, 14, true, 210, [0.082, 0.548, 0.509]);
-      pdfText(c, "W = gearbeitet (mit Stunden) · F = frei · U = Urlaub · K = Krankheit · H = Feiertag", 8, 15, 6.6, false, 210, [0.4, 0.5, 0.492]);
+      pdfText(c, "W = Arbeit (Stunden inkl. Gutschriften) · F = frei · U = Urlaub · K = Krankheit · H = Feiertag", 8, 15, 6.6, false, 210, [0.4, 0.5, 0.492]);
 
       const margin = 8;
       const gapX = 3;
@@ -4745,7 +4765,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
 
         pdfRect(c, x, y, boxW, boxH, 210, [0.991, 0.999, 0.998], [0.83, 0.9, 0.894]);
         pdfText(c, monthTitle(ym).split(" ")[0], x + 2, y + 4, 7, true, 210, [0.082, 0.548, 0.509]);
-        pdfText(c, `Soll ${stats.target}h · Ist ${stats.work.toLocaleString("de-DE", { maximumFractionDigits: 1 })}h`, x + 2, y + 8, 4.8, false, 210, [0.38, 0.49, 0.481]);
+        pdfText(c, `Soll ${stats.target}h · Ist inkl. Gutschriften ${stats.credited.toLocaleString("de-DE", { maximumFractionDigits: 1 })}h`, x + 2, y + 8, 4.8, false, 210, [0.38, 0.49, 0.481]);
 
         const gridX = x + 1.5;
         const gridY = y + 11;
@@ -4773,8 +4793,8 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
             : info.vacationDays > 0 ? "U"
               : info.sick ? "K"
                 : info.holidayName ? "H" : "F";
-          const label = info.workHours > 0
-            ? `${day} ${info.workHours.toLocaleString("de-DE", { maximumFractionDigits: 1 })}`
+          const label = info.creditedHours > 0
+            ? `${day} ${info.creditedHours.toLocaleString("de-DE", { maximumFractionDigits: 1 })}`
             : `${day} ${marker}`;
 
           pdfRect(c, cellX, cellY, cellW - .3, cellH - .3, 210, pdfDayColor(info), null);
@@ -4950,7 +4970,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
         const lines = [
           { text: `Erstellt am ${formatReportDate(localDateString())}`, kind: "normal" },
           { text: "Monatszusammenfassung", kind: "section" },
-          { text: `Soll ${hoursText(stats.target)} · Gearbeitet ${hoursText(stats.work)} · Angerechnet ${hoursText(stats.credited)}`, kind: "summary" },
+          { text: `Soll ${hoursText(stats.target)} · Gearbeitet inkl. Gutschriften ${hoursText(stats.credited)} · Davon Schichten ${hoursText(stats.work)}`, kind: "summary" },
           { text: `Feiertage ${hoursText(stats.holidayHours)} · Urlaub ${hoursText(stats.vacationHours)} · Krankheit ${hoursText(stats.sickHours)}`, kind: "normal" },
           { text: closed ? `Abgeschlossene Monatsdifferenz ${signedHoursText(stats.delta)} · Übertrag aus Vormonat ${signedHoursText(opening)}` : `Monatsdifferenz: noch offen · Überstunden zum Ende des Vormonats ${signedHoursText(opening)}`, kind: "summary" },
           { text: `Überstunden gesamt am Monatsende ${reportClosing(ym, closing)}`, kind: "normal" },
@@ -4992,7 +5012,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
         const lines = [
           { text: `Erstellt am ${formatReportDate(localDateString())}`, kind: "normal" },
           { text: "Jahreszusammenfassung", kind: "section" },
-          { text: `Jahressoll ${hoursText(target)} · Gearbeitet ${hoursText(worked)} · Angerechnet ${hoursText(credited)}`, kind: "summary" },
+          { text: `Jahressoll ${hoursText(target)} · Gearbeitet inkl. Gutschriften ${hoursText(credited)} · Davon Schichten ${hoursText(worked)}`, kind: "summary" },
           { text: `Feiertage ${hoursText(holiday)} · Urlaub ${hoursText(vacation)} · Krankheit ${hoursText(sick)}`, kind: "normal" },
           { text: `Differenz abgeschlossener Monate ${signedHoursText(annualDelta)} · Aktueller Zeitkontostand: nur abgeschlossene Monate`, kind: "summary" },
           { text: `Zeitkonto Jahresende ${reportClosing(`${year}-12`, closingBalanceForMonth(`${year}-12`))}`, kind: "normal" },
@@ -5008,8 +5028,8 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
           const closing = closingBalanceForMonth(ym);
 
           lines.push({
-            text: `${monthTitle(ym)} | Soll ${hoursText(stats.target)} | Gearbeitet ${hoursText(stats.work)} | ` +
-              `Angerechnet ${hoursText(stats.credited)} | Differenz ${monthIsClosed(ym)?signedHoursText(stats.delta):'Noch offen'} | ` +
+            text: `${monthTitle(ym)} | Soll ${hoursText(stats.target)} | Gearbeitet inkl. Gutschriften ${hoursText(stats.credited)} | ` +
+              `Davon Schichten ${hoursText(stats.work)} | Differenz ${monthIsClosed(ym)?signedHoursText(stats.delta):'Noch offen'} | ` +
               `Übertrag ${signedHoursText(opening)} | Gesamtstand am Monatsende ${reportClosing(ym, closing)}`,
             kind: "normal"
           });
@@ -6125,9 +6145,9 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     function periodInsight(host,from,to,previousFrom,previousTo){
       const p=describePeriod(from,to),prior=describePeriod(previousFrom,previousTo);
       message(host,'');if(!p.n||from>to)return;
-      infoCard(host,'Dein Arbeitstag',fmtMin(p.avg),'Durchschnitt aus '+p.n+' gebuchten Arbeitstagen.');
+      infoCard(host,'Deine Tagesgutschrift',fmtMin(p.avg),'Durchschnitt aus '+p.n+' angerechneten Tagen.');
       if(prior.n){const delta=Math.round(p.avg-prior.avg);
-        infoCard(host,'Veränderung',delta===0?'Gleich geblieben':Math.abs(delta)+' Min. '+(delta>0?'länger':'kürzer'),'Je Arbeitstag gegenüber '+displayDay(previousFrom)+' – '+displayDay(previousTo)+'.');}
+        infoCard(host,'Veränderung',delta===0?'Gleich geblieben':Math.abs(delta)+' Min. '+(delta>0?'länger':'kürzer'),'Je angerechnetem Tag gegenüber '+displayDay(previousFrom)+' – '+displayDay(previousTo)+'.');}
       const weekday=p.sorted[0];
       if(weekday?.n>=2)infoCard(host,'Dein längster Wochentag',WEEKDAYS[weekday.i],fmtMin(weekday.avg)+' im Schnitt an '+weekday.n+' erfassten Tagen.');
     }
@@ -6275,10 +6295,10 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       return days;
     }
     function describePeriod(start,end) {
-      const days=dailyWork(start,end), bins=Array.from({length:7},()=>({sum:0,n:0}));
+      const days=creditedDays(start,end), bins=Array.from({length:7},()=>({sum:0,n:0}));
       let minutes=0;
-      for(const [date,day] of days){
-        minutes+=day.minutes;const b=bins[dow(date)];b.sum+=day.minutes;b.n++;
+      for(const [date,hours] of days){
+        minutes+=hours*60;const b=bins[dow(date)];b.sum+=hours*60;b.n++;
       }
       const sorted=bins.map((b,i)=>({i,avg:b.n?b.sum/b.n:0,n:b.n})).filter(b=>b.n).sort((a,b)=>b.avg-a.avg);
       return {n:days.size,minutes,avg:days.size?minutes/days.size:0,sorted};
@@ -6286,18 +6306,18 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
     function reportText(from,to,previousFrom,previousTo) {
       const p=describePeriod(from,to), prior=describePeriod(previousFrom,previousTo);
       const period=displayDay(from)+' – '+displayDay(to);
-      if(from>to||!p.n)return period+' · Keine gebuchten Arbeitstage im Zeitraum.';
+      if(from>to||!p.n)return period+' · Keine Arbeitszeit oder Zeitgutschriften im Zeitraum.';
       const top=p.sorted[0],change=Math.round(p.avg-prior.avg);
-      const trend=prior.n?(change===0?'Deine Arbeitstage sind im Schnitt gleich lang geblieben.':
-        'Im Vergleich zum vorherigen Zeitraum arbeitest du pro Tag rund '+Math.abs(change)+' Minuten '+(change>0?'länger.':'kürzer.')):
+      const trend=prior.n?(change===0?'Deine angerechneten Tage sind im Schnitt gleich lang geblieben.':
+        'Im Vergleich zum vorherigen Zeitraum werden dir pro Tag rund '+Math.abs(change)+' Minuten '+(change>0?'mehr angerechnet.':'weniger angerechnet.')):
         'Für einen Vergleich fehlen Buchungen im vorherigen Zeitraum.';
       const pattern=top.n>=2?' '+WEEKDAYS[top.i]+' ist dein längster Wochentag: durchschnittlich '+fmtMin(top.avg)+' aus '+top.n+' Tagen.':'';
-      return period+'\nDu hast an '+p.n+' Tagen insgesamt '+fmtMin(p.minutes)+' gearbeitet. Dein Arbeitstag dauert im Schnitt '+fmtMin(p.avg)+'. '+trend+pattern+
+      return period+'\nDeine gearbeitete Zeit inkl. Urlaub, Krankheit und Feiertagen beträgt '+fmtMin(p.minutes)+' an '+p.n+' angerechneten Tagen. Pro Tag sind das im Schnitt '+fmtMin(p.avg)+'. '+trend+pattern+
         (prior.n?' Vergleich: '+displayDay(previousFrom)+' – '+displayDay(previousTo)+'.':'');
     }
 
     function compareAverageChart(data){
-      if(data.some(x=>!x.n))return '<p class="hint">Zum Vergleich fehlen noch erfasste Arbeitstage in einem der Monate.</p>';
+      if(data.some(x=>!x.n))return '<p class="hint">Zum Vergleich fehlen noch Tage mit Zeitgutschrift in einem der Monate.</p>';
       const maximum=Math.max(2,...data.map(x=>x.v)),limit=Math.ceil(maximum/2)*2;
       const baseline=173,top=26,height=baseline-top;
       const bars=data.map((d,i)=>{
@@ -6320,12 +6340,12 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       if(m>currentMonth())story.push('Dieser Monat liegt noch in der Zukunft. Hier erscheinen deine Werte, sobald Buchungen vorliegen.');
       else if(!total.n)story.push('Für '+monthTitleText+' sind noch keine Arbeitszeiten erfasst.');
       else {
-        story.push('Im '+monthTitleText+' hast du an '+total.n+' Tagen insgesamt '+fmtMin(total.minutes)+' gearbeitet.');
-        if(previous.n){const diff=Math.round(total.avg-previous.avg);story.push('Verglichen mit '+monthTitle(comparison)+' war dein erfasster Arbeitstag im Schnitt '+(diff===0?'gleich lang.':Math.abs(diff)+' Minuten '+(diff>0?'länger.':'kürzer.')));}
+        story.push('Im '+monthTitleText+' beträgt deine gearbeitete Zeit inkl. Urlaub, Krankheit und Feiertagen '+fmtMin(total.minutes)+' an '+total.n+' angerechneten Tagen (bis '+displayDay(periodEnd)+').');
+        if(previous.n){const diff=Math.round(total.avg-previous.avg);story.push('Verglichen mit '+monthTitle(comparison)+' war deine Tagesgutschrift im Schnitt '+(diff===0?'gleich lang.':Math.abs(diff)+' Minuten '+(diff>0?'länger.':'kürzer.')));}
         else story.push('Für einen Vergleich mit dem Vormonat fehlen noch Arbeitszeiten.');
       }
       if(m<=currentMonth()){
-        if(creditedAbsence)story.push('Zusätzlich zum Arbeiten wurden '+displayTime(creditedAbsence)+' aus Urlaub, Krankheit und Feiertagen angerechnet.');
+        if(creditedAbsence)story.push('Für den gesamten Monat werden '+displayTime(creditedAbsence)+' aus Urlaub, Krankheit und Feiertagen angerechnet; diese Gutschriften sind in den Zeitwerten bereits enthalten.');
         if(monthIsClosed(m)&&m>=state.settings.accountStartMonth)story.push('Monatsveränderung deines Zeitkontos: '+signedHoursText(stats.delta)+'.');
         else if(!monthIsClosed(m))story.push('Der Monat ist noch nicht abgeschlossen; eine endgültige Überstundenbilanz gibt es erst danach.');
       }
@@ -6623,9 +6643,9 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       }
       const end=[i.to,today].sort()[0],p=describePeriod(i.from,end);
       if(Number.isInteger(i.weekday)&&i.weekday>=0&&i.weekday<=6)p.sorted=p.sorted.filter(b=>b.i===i.weekday);
-      if(!p.n||!p.sorted.length)return 'Keine gebuchten Arbeitstage für diese Auswahl.';
+      if(!p.n||!p.sorted.length)return 'Keine Arbeitszeit oder Zeitgutschriften für diese Auswahl.';
       return displayDay(i.from)+' – '+displayDay(end)+' · '+(i.kind==='weekday'?p.sorted.map(b=>WEEKDAYS[b.i]+': '+fmtMin(b.avg)+' im Schnitt ('+b.n+' Tage)').join('\n'):
-        fmtMin(p.minutes)+' tatsächlich gearbeitet an '+p.n+' Tagen, durchschnittlich '+fmtMin(p.avg)+' pro Tag.');
+        fmtMin(p.minutes)+' gearbeitet inkl. Urlaub, Krankheit und Feiertagen an '+p.n+' angerechneten Tagen, durchschnittlich '+fmtMin(p.avg)+' pro Tag.');
     }
     let planDraft=null, contextStamp='', speech=null, onlineGeneration=0;
     function resetPlan(){
@@ -6886,7 +6906,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       while(cur<=currentMonth()&&limit++<120){months.add(cur);cur=addMonths(cur,1);}
       const monthList=[...months].filter(validMonth).sort();
       const monthly=monthList.slice(-300).map(m=>{
-        const p=monthStats(m);return {month:m,workedHours:r2(p.work),workDays:describePeriod(m+'-01',monthEnd(m)).n,
+        const p=monthStats(m);return {month:m,workedHours:r2(p.credited),shiftHours:r2(p.work),workDays:describePeriod(m+'-01',monthEnd(m)).n,
           vacationDays:r2(p.vacationDays),vacationCreditHours:r2(p.vacationHours),sickCreditHours:r2(p.sickHours),holidayCreditHours:r2(p.holidayHours),targetHours:r2(p.target),creditedTotalHours:r2(p.credited),changeHours:r2(p.delta),
           closingBalanceHours:monthIsClosed(m)?r2(closingBalanceForMonth(m)):null,closed:monthIsClosed(m)};
       });
@@ -6895,13 +6915,17 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
         return {year:y,workedHours:r2(p.minutes/60),workDays:p.n,averageWorkdayHours:r2(p.avg/60),weekdayAverages:p.sorted.map(x=>({weekday:WEEKDAYS[x.i],hours:r2(x.avg/60),days:x.n})),vacationRemainingDays:v.active?r2(v.remaining):null,vacationTakenDays:v.active?r2(v.taken):null};
       });
       const planned=(state.plans||[]).filter(p=>p.date>=today).slice(0,300).map(p=>({date:p.date,start:p.start,end:p.end,breakMinutes:p.breakMinutes}));
-      const allDays=[...dailyWork('2000-01-01','2200-12-31')].sort(([a],[b])=>b.localeCompare(a));
+      const shifts=dailyWork('2000-01-01','2200-12-31');
+      const allDays=[...yearSet].filter(y=>y>=2000&&y<=2200)
+        .flatMap(y=>[...creditedDays(y+'-01-01',y+'-12-31')])
+        .sort(([a],[b])=>b.localeCompare(a));
       const prioritizedDays=mentionedYears.length?allDays.filter(([date])=>mentionedYears.includes(date.slice(0,4))):[];
       const perDay=[...new Set([...prioritizedDays,...allDays])].slice(0,1200)
-        .map(([date,d])=>({date,netHours:r2(d.minutes/60),breakMinutes:d.pause,entries:d.rows.length}));
+        .map(([date,hours])=>({date,workedHours:r2(hours),creditedTotalHours:r2(hours),netHours:r2((shifts.get(date)?.minutes||0)/60),breakMinutes:shifts.get(date)?.pause||0,entries:shifts.get(date)?.rows.length||0}));
       const pageContext={page:activeTab,selectedMonth,selectedCalendarDate,
         analysisYear:year,analysisMode:activeTab==='details'?'month':activeTab==='analytics'?'year':null,
         reportMonth:activeTab==='details'?selectedMonth:null,comparisonMonth:activeTab==='details'?addMonths(selectedMonth,-1):null,
+        selectedDayWorkedHours:r2(dayInfo(selectedCalendarDate).creditedHours),
         selectedDayPlan:dayComparison(selectedCalendarDate),planningMonth:$('workPlanMonth')?.value||currentMonth(),
         selectedDayBookings:state.records.filter(r=>r.date===selectedCalendarDate).map(r=>({type:r.type,date:r.date,...(r.type==='work'?{start:r.start||null,end:r.end||null,breakMinutes:r.breakMinutes||0,netHours:r2(r.hours)}:{days:r.days||0})}))};
       const y=Number(today.slice(0,4)),vacation=vacationBreakdown(y);
@@ -6913,6 +6937,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
         account:{startMonth:state.settings.accountStartMonth,openingHours:r2(state.settings.openingBalance),defaultMonthlyTargetHours:r2(state.settings.monthlyTarget),
           ...(payQuery?{hourlyRateEUR:r2(state.settings.hourlyRate),overtimeBonusPercent:r2(state.settings.overtimeBonus)}:{}),
           latestClosedMonth:addMonths(currentMonth(),-1),latestClosedBalanceHours:r2(balanceBeforeMonth(currentMonth()))},
+        workedHoursDefinition:'Arbeitszeit plus angerechneter Urlaub, Krankheit und Feiertage; Gutschriften sind in workedHours bereits enthalten und dürfen nicht erneut addiert werden. Tages- und Einzeleintrags-netHours bleiben reine Schichtzeiten.',
         monthly,annual,daily:perDay,entries:compact,upcomingPlans:planned};
       // Begrenze den Kontext so, dass Chat-Anfragen auch bei langjähriger Erfassung funktionieren.
       // Die Monatssummen bleiben vollständig im gewählten 300-Monatsfenster.
@@ -7001,7 +7026,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       const data=[];
       for(let offset=spec.months-1;offset>=0;offset--){
         const month=addMonths(end,-offset);
-        const m=monthStats(month),value=spec.metric==='worked'?m.work:spec.metric==='credited'?m.credited:
+        const m=monthStats(month),value=spec.metric==='worked'?m.credited:spec.metric==='credited'?m.credited:
           spec.metric==='delta'?m.delta:(monthIsClosed(month)?closingBalanceForMonth(month):null);
         data.push({month,value});
       }
@@ -7011,7 +7036,7 @@ button.topic,.widget-row,.chat-tools{display:flex;align-items:center;gap:10px}.t
       const data=points||chartPoints(spec);if(!data?.length)return;
       const max=Math.max(1,...data.map(x=>Math.abs(x.value||0)));
       const node=document.createElement('section');node.className='assistant-chart';
-      const heading=document.createElement('strong');heading.textContent=({worked:'Tatsächlich gearbeitet',credited:'Angerechnete Zeit',delta:'Monatliche Überstundenänderung',balance:'Zeitkonto am Monatsende'})[spec.metric]+' · Stunden';node.append(heading);
+      const heading=document.createElement('strong');heading.textContent=({worked:'Gearbeitet inkl. Gutschriften',credited:'Angerechnete Zeit',delta:'Monatliche Überstundenänderung',balance:'Zeitkonto am Monatsende'})[spec.metric]+' · Stunden';node.append(heading);
       for(const item of data){
         const r=document.createElement('div');r.className='assistant-chart-row';
         const label=document.createElement('span');label.textContent=monthTitle(item.month);
